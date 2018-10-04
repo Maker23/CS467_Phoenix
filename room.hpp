@@ -6,6 +6,6 @@ class Room
 	public:
 
 	private:
-}
+};
 
 #endif

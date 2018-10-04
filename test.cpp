@@ -4,7 +4,7 @@
 
 int main()
 {
-	Room room("foyer");
+	Room room("rooms/foyer");
 
 	return 0;
 }

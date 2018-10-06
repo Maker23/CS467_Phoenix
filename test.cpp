@@ -1,20 +1,26 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <map>
 #include "room.hpp"
+#include "house.hpp"
 
 int main()
 {
-	Room *room;
-	room = new Room("rooms/foyer");
+	House *house;
+	house = new House();
+	house->buildHouse("rooms/foyer");
 
-	std::cout << room->getRoomName() << "\n\n";
-	std::cout << room->getLongDesc() << "\n\n";
-	std::cout << room->getShortDesc() << "\n\n";
-	std::cout << room->getAdditionalDesc() << "\n\n";
-	std::cout << room->getLongExitDesc() << "\n\n";
-	std::cout << room->getShortExitDesc() << "\n";
-	delete room;
+	Room *roomPtr;
+	roomPtr = house->getRoomPtr("Foyer");
+
+	std::cout << roomPtr->getRoomName() << std::endl;
+	//std::cout << roomPtr->getLongDesc() << "\n\n";
+	//std::cout << roomPtr->getShortDesc() << "\n\n";
+	//std::cout << roomPtr->getAdditionalDesc() << "\n\n";
+	//std::cout << roomPtr->getLongExitDesc() << "\n\n";
+	//std::cout << roomPtr->getShortExitDesc() << "\n";
+	delete house;
 
 	return 0;
 }

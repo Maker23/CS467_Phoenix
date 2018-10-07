@@ -8,19 +8,29 @@
 int main()
 {
 	House *house;
-	house = new House();
-	house->buildHouse("rooms/foyer");
-
 	Room *roomPtr;
 	Doorway *doorway;
-	roomPtr = house->getRoomPtr("Foyer");
 
-	std::cout << roomPtr->getRoomName() << std::endl;
+	house = new House();
+	house->buildHouse("rooms/ballroom");
+	house->buildHouse("rooms/foyer");
+	house->buildHouse("rooms/conservatory");
 
-	for (int r = 0; r < MAX_RM_CONNECTIONS; r++){
-		doorway =  roomPtr->Connections[r];
-		if (doorway != NULL) {
-			std::cout << "\tDoorway " << doorway->direction << ": " << doorway->roomName << std::endl;
+  std::string readRooms[] = {"Foyer", "Ballroom", "Conservatory"};
+
+  for (int i=0; i<3; i++){
+		roomPtr = house->getRoomPtr(readRooms[i]);
+
+		if ( roomPtr != NULL )
+		{
+			std::cout << roomPtr->getRoomName() << std::endl;
+	
+			for (int r = 0; r < MAX_RM_CONNECTIONS; r++){
+				doorway =  roomPtr->Connections[r];
+				if (doorway != NULL) {
+					std::cout << "\tDoorway " << doorway->direction << ": " << doorway->roomName << std::endl;
+				}
+			}
 		}
 	}
 	

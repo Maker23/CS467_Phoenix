@@ -31,7 +31,7 @@ class Room
 		Room(std::string); // constructor
 		~Room();	// destructor
 
-		Doorway * Connections[];
+		Doorway * Connections[MAX_RM_CONNECTIONS];
 		std::string getRoomName();
 		std::string getLongDesc();
 		std::string getShortDesc();

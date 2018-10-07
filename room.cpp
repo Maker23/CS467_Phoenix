@@ -15,6 +15,10 @@ Room::Room(string filename)
 	string lineStr, str;
 	int roomCount=0;
 
+	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
+	{
+  	Connections[i] = NULL;
+	}
 
 	// Iterate through the room file and set values
 	roomfile.open(filename.c_str());  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
@@ -54,25 +58,27 @@ Room::Room(string filename)
    			shortExitDesc = lineStr.substr(17, lineStr.length()-1);
 				continue;
    		}
-			//if(lineStr.compare(0, std::string::npos, "CONNECTION ") == 0 )
    		if(lineStr.find("CONNECTION") != std::string::npos)
 			{
-				if (roomCount >= MAX_RM_CONNECTIONS)
+				if (roomCount < MAX_RM_CONNECTIONS)
 				{
-					continue;  // error, actually :)
-				}
 				size_t startDirection = lineStr.find_last_of(" ") + 1;
 				size_t startName = lineStr.find_last_of("|") + 1;
 				Connections[roomCount] = new Doorway();
 				Connections[roomCount]->direction = lineStr.substr(startDirection, startName - startDirection - 1);
 				Connections[roomCount]->roomName = lineStr.substr(startName, lineStr.length() -1);
 				roomCount++;
+				}
+				else
+				{
+					// should error ;)
+				}
 			}
    	}
 	}
 	else
 	{
-		cout << "Error opening room file. Exiting...\n";
+		cout << "Error opening room file '" <<  filename << "'. Exiting...\n";
 		exit(1);
 	}
 

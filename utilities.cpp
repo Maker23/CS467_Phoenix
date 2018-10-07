@@ -32,7 +32,8 @@ void UpdateGameState(int &GameClock, GameState* PlayerState, Room* currentRoom)
 }
 
 /* ***************************************************************
- * Get Yes or No answer from user  TODO: do we use this in Phoenix?
+ * Get Yes or No answer from user  
+ * TODO: do we use this in Phoenix? it can be useful for automated testing
  *************************************************************** */
 bool getUserYN(const char Default)
 {

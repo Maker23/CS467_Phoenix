@@ -13,6 +13,8 @@ class Doorway; // Forward declaration
 class Room; // Forward declaration
 class Choice; // Forward declaration
 
+// TODO : Is this the right set of verbs
+enum validVerbs { look, go, use, take, drop, open, hurl, hit, eat, inventory, help, quit };
 
 class Actions {
   public: 
@@ -30,12 +32,14 @@ class Actions {
 struct Choice {
 	Room  * nextRoom;
 	Thing * useThing;
+	Doorway * useDoorway;
 	int verb;
 
 	// Default constructor
 	Choice() {
 		nextRoom = NULL;
 		useThing = NULL;
+		useDoorway = NULL;
 		verb = -1;
 	};
 };

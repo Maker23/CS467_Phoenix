@@ -33,7 +33,9 @@ int main()
 			}
 		}
 	}
-	
+
+	house->printRooms();
+
 	//std::cout << roomPtr->getLongDesc() << "\n\n";
 	//std::cout << roomPtr->getShortDesc() << "\n\n";
 	//std::cout << roomPtr->getAdditionalDesc() << "\n\n";

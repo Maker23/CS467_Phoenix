@@ -62,3 +62,13 @@ Room * House::getRoomPtr(string roomName)
 		return NULL;
 	}
 }
+
+bool House::printRooms()
+{
+	// Print all the keys in the houseMap
+	std::cout << "--- House rooms: ---" << std::endl;
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
+		std::cout << it->first << std::endl;
+	}
+	return true;
+}

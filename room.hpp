@@ -1,10 +1,12 @@
 #ifndef ROOM_HPP
 #define ROOM_HPP
 
-
 #include <string>
 
 #define MAX_RM_CONNECTIONS 5
+
+class GameState; // Forward declaration
+class Actions; // Forward declaration
 
 class Doorway 
 {
@@ -38,6 +40,9 @@ class Room
 		std::string getAdditionalDesc();
 		std::string getLongExitDesc();
 		std::string getShortExitDesc();
+
+		Room * userAction(GameState *);
+		Actions * Examine();
 };
 
 

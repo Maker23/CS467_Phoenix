@@ -14,7 +14,7 @@ class Room; // Forward declaration
 class Choice; // Forward declaration
 
 // TODO : Is this the right set of verbs
-enum validVerbs { look, go, use, take, drop, open, hurl, hit, eat, inventory, help, quit };
+enum validVerbs { look, go, use, take, drop, open, hurl, hit, eat, inventory, help, save, load, quit };
 
 class Actions {
   public: 

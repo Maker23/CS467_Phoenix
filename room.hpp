@@ -1,7 +1,20 @@
 #ifndef ROOM_HPP
 #define ROOM_HPP
 
+
 #include <string>
+
+#define MAX_RM_CONNECTIONS 5
+
+class Doorway 
+{
+  public:
+		Doorway(); // constructor
+		~Doorway(); // destructor
+	 	std::string roomName;
+		std::string direction;
+	
+};
 
 class Room
 {
@@ -17,6 +30,8 @@ class Room
 	public:
 		Room(std::string); // constructor
 		~Room();	// destructor
+
+		Doorway * Connections[];
 		std::string getRoomName();
 		std::string getLongDesc();
 		std::string getShortDesc();
@@ -24,5 +39,7 @@ class Room
 		std::string getLongExitDesc();
 		std::string getShortExitDesc();
 };
+
+
 
 #endif

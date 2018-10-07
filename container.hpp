@@ -20,7 +20,7 @@ public:
 	bool Open;
 
 	Thing (std::string Na, std::string St); // constructor
-	~Thing();
+	virtual ~Thing();
 
 	bool (*UseFunc)(Room *, Container *);	//Does this thing do something? Most do not
 	bool (*OpenFunc)(Container *); // Does this thing open? Most do not

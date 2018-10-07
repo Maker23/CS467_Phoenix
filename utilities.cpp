@@ -26,7 +26,7 @@ void UpdateGameState(int &GameClock, GameState* PlayerState, Room* currentRoom)
   int points = PlayerState->getGameTaskStatus();
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin Utilities::UpdateGameState" << std::endl;
-	if(false) points = 0; // TODO... silence compile-time warnings...
+	if(points) {} // TODO... silence compile-time warnings...
 	GameClock++;
 	// Can check on or update various GameTasks here
 }

@@ -12,9 +12,9 @@ int main()
 	Doorway *doorway;
 
 	house = new House();
-	house->buildHouse("rooms/ballroom");
-	house->buildHouse("rooms/foyer");
-	house->buildHouse("rooms/conservatory");
+	house->buildRoom("rooms/ballroom");
+	house->buildRoom("rooms/foyer");
+	house->buildRoom("rooms/conservatory");
 
   std::string readRooms[] = {"Foyer", "Ballroom", "Conservatory"};
 

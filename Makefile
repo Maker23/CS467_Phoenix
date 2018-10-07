@@ -3,6 +3,9 @@ CFLAGS= -Wall -g -std=c++11
 test: room.o test.o house.o
 	g++ -o test test.o room.o house.o $(CFLAGS)
 
+game: room.o main.o house.o
+	g++ -o game test.o room.o house.o $(CFLAGS)
+
 room.o: room.cpp room.hpp
 	g++ -c room.cpp $(CFLAGS)
 
@@ -13,4 +16,4 @@ house.o: house.cpp house.hpp
 	g++ -c house.cpp $(CFLAGS)
 
 clean:
-	rm *.o
+	rm *.o game

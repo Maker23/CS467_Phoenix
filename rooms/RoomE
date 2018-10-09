@@ -1,0 +1,9 @@
+ROOM NAME: RoomE
+CONNECTION 1: nw|2ndFloorHallway
+CONNECTION 2: ne|Balcony
+CONNECTION 3: west|RoomD
+LONG DESC: RoomE Long Desc
+SHORT DESC: RoomE Short Desc
+ADITIONAL DESC: RoomE Additional Desc
+LONG EXIT DESC: RoomE Long Desc
+SHORT EXIT DESC: Door west, door nw corner and ne corner

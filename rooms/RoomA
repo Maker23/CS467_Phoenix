@@ -1,0 +1,8 @@
+ROOM NAME: RoomA
+CONNECTION 1: east|2ndFloorHallway
+CONNECTION 2: south|RoomB
+LONG DESC: RoomA Long Desc
+SHORT DESC: RoomA Short Desc
+ADITIONAL DESC: RoomA Additional Desc
+LONG EXIT DESC: RoomA Long Desc
+SHORT EXIT DESC: RoomA Door East and South

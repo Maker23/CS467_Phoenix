@@ -2,7 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
-#include<map>
+#include <map>
+#include <stack>
+#include <vector>
 #include <typeindex>
 #include "house.hpp"
 #include "room.hpp"
@@ -26,16 +28,48 @@ House::~House()
  * directory to pass on to buildRoom(). TODO_FEATURE 
  */
 
-Room * House::buildHouse(){  
+Room *House::buildHouse(string startingRoom){  
 
-	buildRoom("rooms/ballroom");
-	buildRoom("rooms/foyer");
-	buildRoom("rooms/conservatory");
+	//buildRoom("rooms/ballroom");
+	//buildRoom("rooms/foyer");
+	//buildRoom("rooms/conservatory");
 
-	return  getRoomPtr("Foyer");
+	stack<string> roomsToLoad;
+	string roomName;
+
+	// Load the first room, and get its pointer for the return.
+	Room *startingRoomPtr=NULL;
+	Room *roomPtr=NULL;
+	roomPtr = new Room(startingRoom);
+	startingRoomPtr = roomPtr;
+
+	roomPtr->getExists(roomsToLoad);
+	if(!hasRoom(roomPtr->getRoomName()))
+	{
+		houseMap[roomPtr->getRoomName()] = roomPtr;
+	}
+
+	while (!roomsToLoad.empty())
+	{
+		roomName=roomsToLoad.top();
+		roomsToLoad.pop();
+		string str;
+		str.append("rooms/");
+		str.append(roomName);
+		if(!hasRoom(roomName))
+		{
+			roomPtr = new Room(str);
+			roomPtr->getExists(roomsToLoad);
+			houseMap[roomPtr->getRoomName()] = roomPtr;
+		}
+	}
+
+
+	return  startingRoomPtr;
 
 }
 
+/*
 bool House::buildRoom(string roomToLoad)
 {
 	Room *roomPtr=NULL;
@@ -54,6 +88,7 @@ bool House::buildRoom(string roomToLoad)
 	else
 		return false;
 }
+*/
 
 bool House::hasRoom(string key)
 {

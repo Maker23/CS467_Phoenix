@@ -1,9 +1,5 @@
 ROOM NAME: RoomH
-CONNECTION 1: north|3rdFloorHallway
-CONNECTION 2: aaaa
-CONNECTION 3: aaaa
-CONNECTION 4: aaaa
-CONNECTION 5: aaaa
+CONNECTION 1: north|3rd Floor Hallway
 LONG DESC: RoomH Long Desc
 SHORT DESC: RoomH Short Desc
 ADITIONAL DESC: RoomH Additional Desc

@@ -1,5 +1,5 @@
 ROOM NAME: RoomD
-CONNECTION 1: north|2ndFloorHallway
+CONNECTION 1: north|2nd Floor Hallway
 CONNECTION 2: east|RoomE
 LONG DESC: RoomD Long Desc
 SHORT DESC: RoomD Short Desc

@@ -12,10 +12,9 @@ int main()
 	Doorway *doorway;
 
 	house = new House();
-	house->buildRoom("rooms/ballroom");
-	house->buildRoom("rooms/foyer");
-	house->buildRoom("rooms/conservatory");
+	roomPtr = house->buildHouse("rooms/foyer");
 
+/*
   std::string readRooms[] = {"Foyer", "Ballroom", "Conservatory"};
 
   for (int i=0; i<3; i++){
@@ -33,8 +32,12 @@ int main()
 			}
 		}
 	}
-
+*/
 	house->printRooms();
+
+	std::cout << "Starting Room: " << roomPtr->getRoomName() << "\n\n";
+
+
 
 	//std::cout << roomPtr->getLongDesc() << "\n\n";
 	//std::cout << roomPtr->getShortDesc() << "\n\n";

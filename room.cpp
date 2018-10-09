@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
+#include <stack>
+#include <vector>
 #include "room.hpp"
 #include "container.hpp"
 #include "actions.hpp"
@@ -16,6 +18,7 @@ Room::Room(string filename)
 	ifstream roomfile;
 	string lineStr, str;
 	int roomCount=0;
+	numExits = 0;
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
 	{
@@ -76,6 +79,7 @@ Room::Room(string filename)
 					// should error ;)
 				}
 			}
+			numExits = roomCount;
    	}
 	}
 	else
@@ -147,6 +151,16 @@ Actions * Room::Examine (){
 
 	return returnActions;
 	
+
+}
+
+void Room::getExists(std::stack<std::string> &exits)
+{
+	int i;
+	for(i=0; i<numExits; i++)
+	{
+		exits.push(Connections[i]->roomName);
+	}
 
 }
 

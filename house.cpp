@@ -18,7 +18,9 @@ House::House()
 
 House::~House()
 {
-	// need to delete the memory allocated	
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
+		delete(it->second);
+	}
 }
 
 /*
@@ -29,10 +31,6 @@ House::~House()
  */
 
 Room *House::buildHouse(string startingRoom){  
-
-	//buildRoom("rooms/ballroom");
-	//buildRoom("rooms/foyer");
-	//buildRoom("rooms/conservatory");
 
 	stack<string> roomsToLoad;
 	string roomName;
@@ -68,27 +66,6 @@ Room *House::buildHouse(string startingRoom){
 	return  startingRoomPtr;
 
 }
-
-/*
-bool House::buildRoom(string roomToLoad)
-{
-	Room *roomPtr=NULL;
-	roomPtr = new Room(roomToLoad);
-
-	if(!hasRoom(roomPtr->getRoomName()))
-	{
-		houseMap[roomPtr->getRoomName()] = roomPtr;
-		if(hasRoom(roomPtr->getRoomName()))
-		{
-			return true;
-		}
-		else
-			return false;
-	}
-	else
-		return false;
-}
-*/
 
 bool House::hasRoom(string key)
 {

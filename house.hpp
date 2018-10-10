@@ -14,7 +14,6 @@ class House
 	public:
 		House(); // constructor
 		~House();	// destructor
-		bool buildRoom(std::string);
 		bool hasRoom(std::string);   			// returns true if room ("Foyer" for instance) is found in the houseMap
 		bool printRooms();								// for debugging really
 		Room *getRoomPtr(std::string);      // retruns the ptr of the Room object for the requested room.

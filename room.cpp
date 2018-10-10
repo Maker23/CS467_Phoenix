@@ -93,7 +93,14 @@ Room::Room(string filename)
 
 Room::~Room()
 {
-
+	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
+	{
+  		//Connections[i] = NULL;
+  		if(Connections[i] != NULL)
+  		{
+	  		delete(Connections[i]);
+  		}
+  }
 }
 
 std::string Room::getRoomName()
@@ -188,4 +195,10 @@ Doorway::Doorway()
 	std::string roomName = "";
 	std::string direction = "";
 	
+}
+
+// Destructor for Doorway class. 
+Doorway::~Doorway()
+{
+
 }

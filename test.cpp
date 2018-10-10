@@ -14,6 +14,10 @@ int main()
 	house = new House();
 	roomPtr = house->buildHouse("rooms/foyer");
 
+	std::string lineStr="rooms/Foyer";
+	size_t startName = lineStr.find_last_of("/") + 1;
+	std::cout << lineStr << ": " << lineStr.substr(startName, lineStr.length() -1) << std::endl;
+
 /*
   std::string readRooms[] = {"Foyer", "Ballroom", "Conservatory"};
 

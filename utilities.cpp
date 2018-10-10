@@ -17,6 +17,14 @@
 #include "room.hpp"
 #include "house.hpp"
 
+enum GameTaskMarker 
+{
+	Task1,
+	Task2,
+	Task3,
+	Task4,
+	Task5
+};
 
 /* ***************************************************************
  * UpdateGameState - runs after every player turn

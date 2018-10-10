@@ -4,8 +4,8 @@ CONNECTION 2: aaaa
 CONNECTION 3: aaaa
 CONNECTION 4: aaaa
 CONNECTION 5: aaaa
-LONG DESC: aaaaaaaaaaaaaa
-SHORT DESC: aaaa
-ADITIONAL DESC: aaaaa
-LONG EXIT DESC: aaaaa
+LONG DESC: room Long Desc
+SHORT DESC: room Short Desc
+ADITIONAL DESC: Room Additional Desc
+LONG EXIT DESC: Room Long Desc
 SHORT EXIT DESC: aaaaa

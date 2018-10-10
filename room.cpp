@@ -1,28 +1,58 @@
+ /*
+ * File name: room.cpp
+ *
+ * Overview:
+ *   General functions that work on rooms.
+ *
+ * 	 Room::getRoomName Returns the room's name
+ *
+ * 	 Room::getLongDesc Returns the long description of the room
+ *
+ * 	 Room::getShortDesc Returns the short description of the room
+ *
+ * 	 Room::getAdditionalDesc Returns the additional description of the room
+ *
+ * 	 Room::getLongExitDesc Returns the detailed exits of the room
+ *
+ * 	 Room::getShortExitDesc Returns the short description of the exits
+ *
+ * 	 Room::addExitsToStack Adds this room's exits (room names) to the given stack
+ *
+ *		 Room::userAction  -- TODO
+ *
+ *		 Room::Examine  -- TODO
+ */
+
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
+#include <stack>
+#include <vector>
 #include "room.hpp"
 #include "container.hpp"
 #include "actions.hpp"
 
 using namespace std;
 
-// Constructor for Room class. 
-// It opens the room file and parses the lines.
-// Info on files from http://www.cplusplus.com/doc/tutorial/files/ 
+/*
+ * Constructor for Room class
+ * It opens the room file and parses the lines.
+ * Info on files from http://www.cplusplus.com/doc/tutorial/files/ 
+ */
 Room::Room(string filename)
 {
 	ifstream roomfile;
 	string lineStr, str;
 	int roomCount=0;
+	numExits = 0;
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
 	{
   	Connections[i] = NULL;
 	}
 
-	// Iterate through the room file and set values
+	// Iterate through the room file line by line and set Room values
 	roomfile.open(filename.c_str());  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
 	if (roomfile.is_open())
 	{
@@ -76,6 +106,7 @@ Room::Room(string filename)
 					// should error ;)
 				}
 			}
+			numExits = roomCount;
    	}
 	}
 	else
@@ -87,9 +118,20 @@ Room::Room(string filename)
 	roomSeen = false;
 }
 
+
+/*
+ * Destructor for Room class
+ * Frees up the memory allocated in the Constructor
+ */
 Room::~Room()
 {
-
+	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
+	{
+  		if(Connections[i] != NULL)
+  		{
+	  		delete(Connections[i]);
+  		}
+  }
 }
 
 std::string Room::getRoomName()
@@ -122,6 +164,10 @@ std::string Room::getShortExitDesc()
 	return this->shortExitDesc;
 }
 
+
+/*
+ * TODO: Function info goes here
+ */
 Actions * Room::Examine (){
 	if (DEBUG_FUNCTION) std::cout << "===== begin Room::Examine" << std::endl;
 
@@ -150,6 +196,22 @@ Actions * Room::Examine (){
 
 }
 
+/*
+ * Adds this room's exits to the given stack. 
+ */
+void Room::addExitsToStack(std::stack<std::string> &exits)
+{
+	int i;
+	for(i=0; i<numExits; i++)
+	{
+		exits.push(Connections[i]->roomName);
+	}
+
+}
+
+/*
+ * TODO: Function info goes here
+ */
 Room * Room::userAction(GameState * PlayerState)
 {
 	if (DEBUG_FUNCTION) std::cout << "===== begin Room::userAction" << std::endl;
@@ -174,4 +236,10 @@ Doorway::Doorway()
 	std::string roomName = "";
 	std::string direction = "";
 	
+}
+
+// Destructor for Doorway class. 
+Doorway::~Doorway()
+{
+
 }

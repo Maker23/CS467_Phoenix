@@ -17,7 +17,7 @@ Actions::Actions()
 
 Actions::~Actions()
 {
-
+  // TODO: Delete userChoice from userChooses()
 }
 
 Choice * Actions::userChooses()

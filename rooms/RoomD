@@ -1,0 +1,8 @@
+ROOM NAME: RoomD
+CONNECTION 1: north|2nd Floor Hallway
+CONNECTION 2: east|RoomE
+LONG DESC: RoomD Long Desc
+SHORT DESC: RoomD Short Desc
+ADITIONAL DESC: RoomD Additional Desc
+LONG EXIT DESC: RoomD Long Desc
+SHORT EXIT DESC: Door north and east

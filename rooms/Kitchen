@@ -1,0 +1,8 @@
+ROOM NAME: Kitchen
+CONNECTION 1: west|Ballroom
+CONNECTION 2: east|Pantry
+LONG DESC: Kitchen long desc
+SHORT DESC: Kitchen short desc
+ADITIONAL DESC: Kitchen Additional Desc
+LONG EXIT DESC: Kitcen Long Exit
+SHORT EXIT DESC: Doors east and west

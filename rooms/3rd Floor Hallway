@@ -1,0 +1,11 @@
+ROOM NAME: 3rd Floor Hallway
+CONNECTION 1: east1|RoomF
+CONNECTION 2: south1|RoomG
+CONNECTION 3: south2|RoomH
+CONNECTION 4: east2|Balcony
+CONNECTION 4: down|2nd Floor Hallway
+LONG DESC: 3rd Floor Hallway Long Desc
+SHORT DESC: 3rd Floor Hallway Short Desc
+ADITIONAL DESC: 3rd Floor Hallway Additional Desc
+LONG EXIT DESC: 3rd Floor Hallway Long Desc
+SHORT EXIT DESC: Door east, 2 doors to the south, and another outside

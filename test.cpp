@@ -12,11 +12,9 @@ int main()
 	Doorway *doorway;
 
 	house = new House();
-	roomPtr = house->buildHouse("rooms/foyer");
+	roomPtr = house->buildHouse("Foyer");
 
-	std::string lineStr="rooms/Foyer";
-	size_t startName = lineStr.find_last_of("/") + 1;
-	std::cout << lineStr << ": " << lineStr.substr(startName, lineStr.length() -1) << std::endl;
+
 
 /*
   std::string readRooms[] = {"Foyer", "Ballroom", "Conservatory"};
@@ -48,7 +46,7 @@ int main()
 	//std::cout << roomPtr->getAdditionalDesc() << "\n\n";
 	//std::cout << roomPtr->getLongExitDesc() << "\n\n";
 	//std::cout << roomPtr->getShortExitDesc() << "\n";
-	delete house;
+	delete(house);
 
 	return 0;
 }

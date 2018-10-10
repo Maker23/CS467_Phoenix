@@ -95,7 +95,6 @@ Room::~Room()
 {
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
 	{
-  		//Connections[i] = NULL;
   		if(Connections[i] != NULL)
   		{
 	  		delete(Connections[i]);

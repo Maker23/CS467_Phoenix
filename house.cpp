@@ -21,6 +21,7 @@ House::~House()
 	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
 		delete(it->second);
 	}
+	houseMap.clear();
 }
 
 /*
@@ -31,40 +32,35 @@ House::~House()
  */
 
 Room *House::buildHouse(string startingRoom){  
-
 	stack<string> roomsToLoad;
 	string roomName;
-
-	// Load the first room, and get its pointer for the return.
 	Room *startingRoomPtr=NULL;
 	Room *roomPtr=NULL;
-	roomPtr = new Room(startingRoom);
-	startingRoomPtr = roomPtr;
 
-	roomPtr->getExists(roomsToLoad);
-	if(!hasRoom(roomPtr->getRoomName()))
-	{
-		houseMap[roomPtr->getRoomName()] = roomPtr;
-	}
+	// Push the startingRoom to the stack
+	roomsToLoad.push(startingRoom);
 
+	// Pull from the stack. If it's not already in the houseMap, load the data file, create
+	// the room object, add the new room's connections to the stack, and add to houseMap.
 	while (!roomsToLoad.empty())
 	{
 		roomName=roomsToLoad.top();
 		roomsToLoad.pop();
-		string str;
-		str.append("rooms/");
-		str.append(roomName);
 		if(!hasRoom(roomName))
 		{
+			string str;
+			str.append("rooms/");
+			str.append(roomName);
 			roomPtr = new Room(str);
+			if (startingRoomPtr == NULL)
+			{
+				startingRoomPtr = roomPtr;  // sets the starting room pointer for the return
+			}
 			roomPtr->getExists(roomsToLoad);
 			houseMap[roomPtr->getRoomName()] = roomPtr;
 		}
 	}
-
-
 	return  startingRoomPtr;
-
 }
 
 bool House::hasRoom(string key)

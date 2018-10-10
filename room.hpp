@@ -34,10 +34,12 @@ class Room
 		int numExits;
 
 	public:
-		Room(std::string); // constructor
-		~Room();	// destructor
+		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
+		
+		Room(std::string); 									// constructor
+		~Room();													// destructor
 
-		Doorway * Connections[MAX_RM_CONNECTIONS];
+
 		std::string getRoomName();
 		std::string getLongDesc();
 		std::string getShortDesc();
@@ -45,7 +47,7 @@ class Room
 		std::string getLongExitDesc();
 		std::string getShortExitDesc();
 
-		void getExists(std::stack<std::string> &);
+		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack
 
 		Room * userAction(GameState *);
 		Actions * Examine();

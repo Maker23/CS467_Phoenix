@@ -19,24 +19,7 @@ House::~House()
 	// need to delete the memory allocated	
 }
 
-/*
- * Function that builds the entire house and returns a pointer to the
- * starting room.  IRL this function should probably take a string argument
- * that is the directory of room files, and then look for files in that 
- * directory to pass on to buildRoom(). TODO_FEATURE 
- */
-
-Room * House::buildHouse(){  
-
-	buildRoom("rooms/ballroom");
-	buildRoom("rooms/foyer");
-	buildRoom("rooms/conservatory");
-
-	return  getRoomPtr("Foyer");
-
-}
-
-bool House::buildRoom(string roomToLoad)
+bool House::buildHouse(string roomToLoad)
 {
 	Room *roomPtr=NULL;
 	roomPtr = new Room(roomToLoad);

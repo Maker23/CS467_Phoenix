@@ -4,6 +4,7 @@
 #include <map>
 #include "room.hpp"
 #include "house.hpp"
+#include "parser.hpp"
 
 int main()
 {
@@ -12,9 +13,9 @@ int main()
 	Doorway *doorway;
 
 	house = new House();
-	house->buildRoom("rooms/ballroom");
-	house->buildRoom("rooms/foyer");
-	house->buildRoom("rooms/conservatory");
+	house->buildHouse("rooms/ballroom");
+	house->buildHouse("rooms/foyer");
+	house->buildHouse("rooms/conservatory");
 
   std::string readRooms[] = {"Foyer", "Ballroom", "Conservatory"};
 
@@ -24,7 +25,7 @@ int main()
 		if ( roomPtr != NULL )
 		{
 			std::cout << roomPtr->getRoomName() << std::endl;
-	
+
 			for (int r = 0; r < MAX_RM_CONNECTIONS; r++){
 				doorway =  roomPtr->Connections[r];
 				if (doorway != NULL) {
@@ -35,6 +36,13 @@ int main()
 	}
 
 	house->printRooms();
+
+
+	Parser *parse;
+	parse = new Parser();
+
+	parse->ParseLine();
+
 
 	//std::cout << roomPtr->getLongDesc() << "\n\n";
 	//std::cout << roomPtr->getShortDesc() << "\n\n";

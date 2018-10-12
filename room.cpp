@@ -3,8 +3,6 @@
 #include <fstream>
 #include <stdlib.h>
 #include "room.hpp"
-#include "container.hpp"
-#include "actions.hpp"
 
 using namespace std;
 
@@ -120,52 +118,6 @@ std::string Room::getLongExitDesc()
 std::string Room::getShortExitDesc()
 {
 	return this->shortExitDesc;
-}
-
-Actions * Room::Examine (){
-	if (DEBUG_FUNCTION) std::cout << "===== begin Room::Examine" << std::endl;
-
-	Actions * returnActions = new Actions();
-	Doorway * tmpDoor;
-	std::vector<Thing*> thingList;
-	std::vector<Doorway*> doorList;
-
-  /* Right now we're ignoring Things since Room-Things haven't been implemented */
-
-	for (int r=0; r < MAX_RM_CONNECTIONS; r++){
-		tmpDoor = this->Connections[r];
-		if ( tmpDoor != NULL ) {
-			if (DEBUG_EXAMINE) std::cout << "found doorway " << tmpDoor->roomName << "; adding to doorList" << std::endl;
-			//doorList.push_back(tmpDoor);
-			returnActions->Doors.push_back(tmpDoor);
-		}
-	}
-
-	//returnActions->Doors = doorList;
-	returnActions->Things = thingList;
-	if (DEBUG_FUNCTION) std::cout << "===== end Room::Examine" << std::endl;
-
-	return returnActions;
-	
-
-}
-
-Room * Room::userAction(GameState * PlayerState)
-{
-	if (DEBUG_FUNCTION) std::cout << "===== begin Room::userAction" << std::endl;
-	// TODO: all the magic
-	
-	Choice * userChoice;
-	Room * nextRoom = this;
-	Actions * possibleActions; // lists of Things and Doorways that the user can act on
-
-	possibleActions = this->Examine(); // get Doorways and Things from this Room
-
-	userChoice = possibleActions->userChooses();
-	
-	// And now we do stuff.
-	
-	return nextRoom;
 }
 
 // Constructor for Doorway class. 

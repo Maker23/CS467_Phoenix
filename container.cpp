@@ -54,13 +54,13 @@ Container::Container (std::string Na, std::string St) : Thing (Na, St)
 
 GameState::GameState(std::string Na) : Container (Na,"")
 {
-	Capacity = 1; // Default
 	GameTask[0] = false;
 	GameTask[1] = false;
 	GameTask[2] = false;
 	GameTask[3] = false;
 	GameTask[4] = false;
 }
+
 /* ***********************************************************
  * Destructors
  * ********************************************************* */

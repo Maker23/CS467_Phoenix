@@ -12,13 +12,20 @@
 #include "container.hpp"
 
 void printGameEnding();
-
+/* TODO 
+ * 	Make sure the GameStateconstructor deals with game saved files
+ *
+ *
+ *
+ *
+ *
+ */
 int main()
 {
 	int GameClock=0;
 	House *house = NULL;
 	Room 	*currentRoom = NULL;
-	GameState PlayerState("player");
+	GameState PlayerState("player"); 
 
 	house = new House();
 	currentRoom = house->buildHouse();

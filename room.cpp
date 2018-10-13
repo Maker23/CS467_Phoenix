@@ -30,8 +30,6 @@
 #include <stack>
 #include <vector>
 #include "room.hpp"
-#include "container.hpp"
-#include "actions.hpp"
 
 using namespace std;
 
@@ -164,6 +162,7 @@ std::string Room::getShortExitDesc()
 	return this->shortExitDesc;
 }
 
+<<<<<<< HEAD
 
 /*
  * TODO: Function info goes here
@@ -230,6 +229,8 @@ Room * Room::userAction(GameState * PlayerState)
 	return nextRoom;
 }
 
+=======
+>>>>>>> dc8970063b7b2c123f70cf049b513c83b2be613c
 // Constructor for Doorway class. 
 Doorway::Doorway()
 {

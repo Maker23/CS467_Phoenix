@@ -48,8 +48,6 @@ House::~House()
 	houseMap.clear();
 }
 
-<<<<<<< HEAD
-
 /*
  * Function that builds the entire house and returns a pointer to the
  * starting room.  
@@ -60,10 +58,6 @@ Room *House::buildHouse(string startingRoom){
 	stack<string> roomsToLoad;
 	string roomName;
 	Room *startingRoomPtr=NULL;
-=======
-bool House::buildHouse(string roomToLoad)
-{
->>>>>>> dc8970063b7b2c123f70cf049b513c83b2be613c
 	Room *roomPtr=NULL;
 
 	// Push the startingRoom to the stack

@@ -1,7 +1,7 @@
 CFLAGS= -Wall -g -std=c++11
 
 test: room.o test.o house.o parser.o container.o utilities.o actions.o
-	g++ -o test test.o room.o house.o parser.o $(CFLAGS)
+	g++ -o test test.o room.o house.o parser.o container.o utilities.o actions.o $(CFLAGS)
 
 game: main.o room.o house.o parser.o container.o utilities.o actions.o
 	g++ -o game $^ $(CFLAGS)

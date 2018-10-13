@@ -13,13 +13,7 @@ int main()
 	Doorway *doorway;
 
 	house = new House();
-<<<<<<< HEAD
 	roomPtr = house->buildHouse("Foyer");
-=======
-	house->buildHouse("rooms/ballroom");
-	house->buildHouse("rooms/foyer");
-	house->buildHouse("rooms/conservatory");
->>>>>>> dc8970063b7b2c123f70cf049b513c83b2be613c
 
 
 
@@ -44,16 +38,13 @@ int main()
 */
 	house->printRooms();
 
-<<<<<<< HEAD
 	std::cout << "Starting Room: " << roomPtr->getRoomName() << "\n\n";
 
-=======
 
 	Parser *parse;
 	parse = new Parser();
 
 	parse->ParseLine();
->>>>>>> dc8970063b7b2c123f70cf049b513c83b2be613c
 
 
 	//std::cout << roomPtr->getLongDesc() << "\n\n";

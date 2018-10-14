@@ -15,42 +15,34 @@ class Thing {
 public:
 	std::string Name;
 	std::string Story;
-	int Weight;
 	bool isContainer;
 	bool Open;
+	int Weight;	// We may not use weight and capacity - TBD. 
+	int Capacity;
 
 	Thing (std::string Na, std::string St); // constructor
-	Thing (std::string Na); // constructor
-	virtual ~Thing();
+	Thing (std::string Na);	// constructor
+	virtual ~Thing();				// destructor
 
-	bool (*UseFunc)(Room *, Container *);	//Does this thing do something? Most do not
-	bool (*OpenFunc)(Container *); // Does this thing open? Most do not
-	virtual void Print();
-	virtual std::vector<Thing*> Examine(int &counter, bool verbose=true, bool silent=false);
+	std::vector<Thing*> Contents; 				  // Objects held by container
+	void Print();
+
+	// Don't know if we're going to use these
+	bool (*UseFunc)(Room *, Thing *);	//Does this thing do something? Most do not
+	bool (*OpenFunc)(Thing *); 				// Does this thing open? Most do not
+	virtual std::vector<Thing*> Examine(bool reCursive=true, bool verbose=true, bool silent=false); 
 	virtual int getWeight() {return Weight;};
-};
-
-
-class Container : public Thing {
-public:
-
-	Container (std::string Na, std::string St); // constructor
-	virtual ~Container (); // destructor
-
-	bool 	Open;
-	int 	Capacity; // How much can it hold
-	std::list<Thing*> Contents; // Objects held by container
-
-	bool (*OpenFunc)(Container*);
-	bool (*UseFunc)(Room *, Container*);
-	virtual int getCapacity() { return Capacity;}
-	virtual std::vector<Thing*> Examine(int &counter, bool verbose=true, bool silent=false);
-	virtual void Print();
-	virtual Container * FindByPtr(Thing *);
 	virtual Thing * FindByName(std::string);
 };
 
-class GameState : public Container {
+
+/*
+ * The GameState is just a Feature with a few special options.
+ *
+ * It's a container, and contains the things that the Player is carrying.
+ *
+ */
+class GameState : public Thing {
 public:
 	GameState(std::string Na);
 	~GameState();

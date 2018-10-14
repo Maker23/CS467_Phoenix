@@ -1,0 +1,8 @@
+ROOM NAME: Ballroom
+CONNECTION 1: ne|Kitchen
+CONNECTION 2: se|Foyer
+LONG DESC: The Ballroom was once the center for entertainment in the House back in its day. The spacious common room was perfect for guests to mingle and dance, either with a full band or from the record player that sits in the corner. Often times, guests would enter from the Foyer, and appetizers would be served from the Kitchen next door. The vaulted ceiling carried the music evenly across the room to set up the perfect celebration, yet to this day all that remains is a lone record player. There's no records to place on it, but it appears to be in excellent in condition.
+SHORT DESC: The Ballroom is tailor-made to house excellent sound, live or recorded. The record player appears to work fine, however no records are to be found in this empty, echoing chamber.  
+ADITIONAL DESC: Music once filled the Ballroom, but now all that echoes is the floorboards and wind from outside.
+LONG EXIT DESC: Both Foyer and Kitchen are East of the Ballroom, so user will have to type out which room they want to go into.
+SHORT EXIT DESC: Doors on the NE wall and the SE wall.

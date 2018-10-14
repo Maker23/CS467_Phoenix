@@ -184,6 +184,7 @@ Thing * Room::getFeature (std::string featureFileName){
 	string lineStr, str;
 	string featureDir = FEATURE_DIRECTORY;
 	Thing * newThing = NULL;
+	Thing * tmpThing = NULL;
 
 	thingfile.open( (featureDir.append(featureFileName)).c_str()); 
 	if (thingfile.is_open()) {
@@ -194,17 +195,35 @@ Thing * Room::getFeature (std::string featureFileName){
 				// TODO: test for failure...
 				newThing = new Thing(lineStr.substr(6, lineStr.length()-1));
 			}
+			else if ( newThing == NULL ) {
+				continue;
+			}
+
+			// Only go past this point if we've found the Name and created the Feature
 			if(lineStr.find("DESCRIPTION: ") != std::string::npos) 
 			{
-				if (newThing != NULL )
-				{
-					newThing->Story = (lineStr.substr(13, lineStr.length()-1));
+				newThing->Story = (lineStr.substr(13, lineStr.length()-1));
+			}
+			else if(lineStr.find("OPEN: ") != std::string::npos) 
+			{
+				if ( stoi(lineStr.substr(6, lineStr.length()-1)) > 0  ) 
+				{ newThing->Open = true;}
+				else
+				{ newThing->Open = false;}
+			}
+   		else if(lineStr.find("FEATURE: ") != std::string::npos)
+			{
+				// recursion :)
+				newThing->isContainer = true;
+				tmpThing = getFeature( lineStr.substr(9, lineStr.length()-1));
+				if ( tmpThing != NULL ) {
+					newThing->Contents.push_back(tmpThing);
 				}
 			}
 		}
 	}
 	else {
-		//TODO useful error
+		//Print useful error, but don't exit
 		cout << "Error opening feature file '" <<  featureDir << "\n";
 	}
 

@@ -5,13 +5,10 @@
  * Overview:
  *   General functions that work on containers.
  *
- * 	 Container::Examine prints the contents of a container, recursively,
+ * 	 Thing::Examine prints the contents of a container, recursively,
  * 	 and returns a Thing* vector.
  *
- * 	 Container::FindByPtr searches for an object by pointer and returns
- * 	 the holding container if it's found, NULL if not
- *
- * 	 Container::FindByName searches for an object by name and returns
+ * 	 Thing::FindByName searches for an object by name and returns
  * 	 a pointer to the object if found, NULL if not
  *
  * 	 GameState:: functions apply to the derived class which is the player's
@@ -20,7 +17,7 @@
  */
 
 #include <iostream> // for debugging
-#include <list>
+#include <vector>
 #include <string>
 
 #include "container.hpp"
@@ -51,6 +48,8 @@ Thing::Thing (std::string Na, std::string St)
 	Open=true;
 }
 
+/*
+
 Container::Container (std::string Na, std::string St) : Thing (Na, St)
 {
 	Name=Na;
@@ -62,8 +61,9 @@ Container::Container (std::string Na, std::string St) : Thing (Na, St)
 	OpenFunc = NULL;
 	isContainer = true;
 }
+*/
 
-GameState::GameState(std::string Na) : Container (Na,"")
+GameState::GameState(std::string Na) : Thing (Na,"")
 {
 	GameTask[0] = false;
 	GameTask[1] = false;
@@ -78,11 +78,7 @@ GameState::GameState(std::string Na) : Container (Na,"")
 Thing::~Thing()
 {
 	//TODO
-}
-
-Container::~Container()
-{
-	std::list<Thing*>::iterator iterThing;
+	std::vector<Thing*>::iterator iterThing;
 	for (iterThing=Contents.begin(); iterThing != Contents.end(); iterThing++)
 	{
 		delete (*iterThing);
@@ -91,7 +87,7 @@ Container::~Container()
 
 GameState::~GameState() 
 {
-	// No dynamic memory beyond the Container base class
+	// No dynamic memory beyond the Thing base class
 }
 
 /* ********************************************************* */
@@ -101,42 +97,49 @@ void Thing::Print ()
 }
 
 /* ********************************************************* */
-std::vector<Thing*> Thing::Examine(int &counter, bool verbose, bool silent)
+std::vector<Thing*> Thing::Examine(bool reCursive, bool verbose, bool silent)
 {
-	std::vector<Thing*> Nothing;
+  // TODO: return an empty vector for a non-container hting
+	// For a thing with is_container=true, return a vector to its Contents
+	// Should we have a recursive flag? Yes... yes we should.
+
+	std::vector<Thing*>::iterator iter;
 
 	std::cout << Name << ". " << Story << std::endl;
 
   if (DEBUG_EXAMINE) 
 	{ 
-		std::cout  << "DEBUG: from Thing::Examine " << std::endl;
+		std::cout  << "DEBUG Thing::Examine " << std::endl;
 		std::cout << "		Name = " << Name << std::endl
 			<< "		Story = " << Story << std::endl
+			<< "		isContainer = " << isContainer << std::endl
+			<< "		Open = " << Open << std::endl;
+			/*
 			<< "		Weight = " << Weight << std::endl
 			<< "		UseFunc = " << UseFunc << std::endl
 			<< "		OpenFunc = " << OpenFunc << std::endl
-			<< "		isContainer = " << isContainer << std::endl
-			<< "		Open = " << Open << std::endl;
+			*/
 	}
-	return Nothing; // return an empty vector
+	if ( isContainer && Open && reCursive ) {
+  	if (DEBUG_EXAMINE) std::cout  << "DEBUG Thing::Examine -- reCursing now " << std::endl;
+		for ( iter = Contents.begin(); iter != Contents.end(); iter ++ )
+		{
+			(*iter)->Examine(reCursive, verbose, silent);
+		}
+	}
+	return Contents; // may be empty if the Thing is not a container. Do we need this though? No we do not. TODO: this returns a void I think
 }
 
-
-/* ********************************************************* */
-void Container::Print()
-{
-	std::cout << "You are looking at a " << this->Name << std::endl;
-	std::cout << this->Story << std::endl;
-}
 
 /* ***********************************************************
  * 
  * 
  *
  * ********************************************************* */
+/*
 std::vector<Thing*> Container::Examine(int &counter, bool verbose, bool silent)
 {
-	std::list<Thing*>::iterator iter;
+	std::vector<Thing*>::iterator iter;
 	std::vector<Thing*> AllContents;
 	std::vector<Thing*> subContents;
 
@@ -213,15 +216,17 @@ std::vector<Thing*> Container::Examine(int &counter, bool verbose, bool silent)
 		<< counter << std::endl;
 	return AllContents;
 }
+*/
 
 /* ***********************************************************
  * Search inside a container for a Thing with a particulare address
  * If found, return a pointer to the holding container;
  * else return NULL
  * ********************************************************* */
+/*
 Container * Container::FindByPtr(Thing * SeekingThingPtr)
 {
-	std::list<Thing*>::iterator iter;
+	std::vector<Thing*>::iterator iter;
 	if (DEBUG_FIND) std::cout << "DEBUG: Find: Looking in " << this->Name << std::endl;
 	for (iter=Contents.begin(); iter != Contents.end(); iter++)
 	{
@@ -237,17 +242,18 @@ Container * Container::FindByPtr(Thing * SeekingThingPtr)
 	}
 	return ((Container *)0);
 }
+*/
 
 /* ***********************************************************
  * Search inside a container for a Thing with a particulare name
  * Return the pointer for that Thing
  * ********************************************************* */
-Thing * Container::FindByName(std::string SeekingThingName)
+Thing * Thing::FindByName(std::string SeekingThingName)
 {
-	std::list<Thing*>::iterator iter;
+	std::vector<Thing*>::iterator iter;
 	Thing * tmpVal;
 
-	if (DEBUG_FIND) std::cout << "===== begin Container::FindByName, looking in " << this->Name << std::endl;
+	if (DEBUG_FIND) std::cout << "===== begin Thing::FindByName, looking in " << this->Name << std::endl;
 	for (iter=Contents.begin(); iter != Contents.end(); iter++)
 	{
 			if ( ((*iter)->Name).compare(SeekingThingName) == 0 ) 
@@ -258,11 +264,11 @@ Thing * Container::FindByName(std::string SeekingThingName)
 			if ( (*iter)->isContainer )
 			{
 				if (DEBUG_FIND) std::cout << "DEBUG: Recursing FindByName into " << (*iter)->Name << std::endl;
-				tmpVal = (((Container*)(*iter))->Container::FindByName(SeekingThingName));
+				tmpVal = (((Thing*)(*iter))->Thing::FindByName(SeekingThingName));
 				if (tmpVal) return tmpVal;
 			}
 	}
-	if (DEBUG_FIND) std::cout << "===== begin Container::FindByName, looking in " << this->Name << std::endl;
+	if (DEBUG_FIND) std::cout << "===== begin Thing::FindByName, looking in " << this->Name << std::endl;
 	return ((Thing *)0);
 }
 
@@ -288,7 +294,7 @@ std::vector<Thing*> GameState::Examine(int &counter, bool verbose, bool silent)
 		counter++;
 
 	AllContents.push_back(this);
-	subContents = Container::Examine (counter, verbose, silent);
+	subContents = Thing::Examine (counter, verbose, silent);
 	AllContents.insert(AllContents.end(), subContents.begin(),subContents.end());
   if (DEBUG_FUNCTION) std::cout << "===== end GameState::Examine" << std::endl;
 

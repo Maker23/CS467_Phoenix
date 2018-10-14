@@ -72,7 +72,7 @@ Room *House::buildHouse(string startingRoom){
 		if(!hasRoom(roomName))
 		{
 			string str;
-			str.append("rooms/");
+			str.append(ROOM_DIRECTORY);
 			str.append(roomName);
 			roomPtr = new Room(str);
 			if (startingRoomPtr == NULL)
@@ -129,9 +129,10 @@ Room * House::getRoomPtr(string roomName)
 bool House::printRooms()
 {
 	// Print all the keys in the houseMap
+	if ( ! DEBUG_EXAMINE ) return true;
 	std::cout << "--- House rooms: ---" << std::endl;
 	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
-		std::cout << it->first << std::endl;
+		std::cout << "\t" << it->first << std::endl;
 	}
 	return true;
 }

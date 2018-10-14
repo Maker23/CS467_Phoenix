@@ -34,7 +34,9 @@ class Room
 		int numExits;
 
 	public:
+	 	// IRL these would be private with iterator and get/set functions. TODO
 		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
+		std::vector<Thing *> Features;
 		
 		Room(std::string); 									// constructor
 		~Room();													// destructor
@@ -46,6 +48,7 @@ class Room
 		std::string getAdditionalDesc();
 		std::string getLongExitDesc();
 		std::string getShortExitDesc();
+		Thing * getFeature(std::string);
 		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack
 		Room * userAction(GameState *);
 		Actions * Examine();

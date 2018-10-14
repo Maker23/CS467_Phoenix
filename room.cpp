@@ -44,9 +44,11 @@ Room::Room(string filename)
 	string lineStr, str;
 	int roomCount=0;
 	numExits = 0;
+	Thing * newFeature;
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
 	{
+		//TODO: fix this by doing it in the constructor #facepalm
   	Connections[i] = NULL;
 	}
 
@@ -58,6 +60,11 @@ Room::Room(string filename)
 		// http://www.cplusplus.com/reference/string/string/substr/
 	   while (std::getline(roomfile, lineStr))  
    	{
+			if (lineStr.substr(0,1).find("#") != std::string::npos )
+			{
+				// Skip lines that begin with # for comments
+				continue;
+			}
    		if(lineStr.find("ROOM NAME: ") != std::string::npos)
    		{
    			roomName = lineStr.substr(11, lineStr.length()-1);
@@ -88,8 +95,18 @@ Room::Room(string filename)
    			shortExitDesc = lineStr.substr(17, lineStr.length()-1);
 				continue;
    		}
+   		if(lineStr.find("FEATURE: ") != std::string::npos)
+			{
+				//TODO: get features here
+				newFeature = getFeature( lineStr.substr(9, lineStr.length()-1));
+				if ( newFeature != NULL ) {
+					// Add this to the vector of features in the room
+					Features.push_back(newFeature);
+				}
+			}
    		if(lineStr.find("CONNECTION") != std::string::npos)
 			{
+				// TODO: We dont' need numbers on the CONNECTION lines in the room files, should eliminate those
 				if (roomCount < MAX_RM_CONNECTIONS)
 				{
 				size_t startDirection = lineStr.find_last_of(" ") + 1;
@@ -162,6 +179,38 @@ std::string Room::getShortExitDesc()
 	return this->shortExitDesc;
 }
 
+Thing * Room::getFeature (std::string featureFileName){
+	ifstream thingfile;
+	string lineStr, str;
+	string featureDir = FEATURE_DIRECTORY;
+	Thing * newThing = NULL;
+
+	thingfile.open( (featureDir.append(featureFileName)).c_str()); 
+	if (thingfile.is_open()) {
+		while (std::getline(thingfile, lineStr))  {
+			if(lineStr.find("NAME: ") != std::string::npos) 
+			{
+				// Make a new Thing.
+				// TODO: test for failure...
+				newThing = new Thing(lineStr.substr(6, lineStr.length()-1));
+			}
+			if(lineStr.find("DESCRIPTION: ") != std::string::npos) 
+			{
+				if (newThing != NULL )
+				{
+					newThing->Story = (lineStr.substr(13, lineStr.length()-1));
+				}
+			}
+		}
+	}
+	else {
+		//TODO useful error
+		cout << "Error opening feature file '" <<  featureDir << "\n";
+	}
+
+	return newThing;
+	
+}
 
 /*
  * TODO: Function info goes here

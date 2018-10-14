@@ -1,6 +1,9 @@
 #ifndef _UTE_H
 #define _UTE_H
 
+#define FEATURE_DIRECTORY "rooms/things/"
+#define ROOM_DIRECTORY "rooms"
+
 //  Global debugging flags
 #define DEBUG_EXAMINE false
 #define DEBUG_FUNCTION true

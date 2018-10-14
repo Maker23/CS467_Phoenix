@@ -29,6 +29,17 @@
 /* ***********************************************************
  * Constructors
  * ********************************************************* */
+Thing::Thing (std::string Na)
+{
+	Name=Na;
+	Story="";
+	Weight=1;
+	UseFunc = NULL;
+	OpenFunc = NULL;
+	isContainer=false;
+	Open=true;
+}
+
 Thing::Thing (std::string Na, std::string St)
 {
 	Name=Na;

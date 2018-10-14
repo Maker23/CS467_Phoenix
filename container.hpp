@@ -20,6 +20,7 @@ public:
 	bool Open;
 
 	Thing (std::string Na, std::string St); // constructor
+	Thing (std::string Na); // constructor
 	virtual ~Thing();
 
 	bool (*UseFunc)(Room *, Container *);	//Does this thing do something? Most do not

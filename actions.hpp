@@ -1,10 +1,11 @@
+#ifndef _Actions_H
+#define _Actions_H
+
 #include <iostream>
 #include <string>
 #include <list>
 #include <vector>
-
-#ifndef _Actions_H
-#define _Actions_H
+#include <map>
 
 #include "container.hpp"
 
@@ -15,7 +16,7 @@ class Choice; // Forward declaration
 
 // TODO : Is this the right set of verbs
 //save and load added to list
-enum validVerbs { look, go, use, take, drop, open, hurl, hit, eat, inventory, help, save, load, quit };
+enum validVerbs { look, go, use, take, drop, open, hurl, hit, eat, inventory, help, save, load, quit, tst };
 
 class Actions {
   public: 
@@ -34,15 +35,17 @@ struct Choice {
 	Room  * nextRoom;
 	Thing * useThing;
 	Doorway * useDoorway;
-	int verb;
+	validVerbs verb;
 
 	// Default constructor
 	Choice() {
 		nextRoom = NULL;
 		useThing = NULL;
 		useDoorway = NULL;
-		verb = -1;
+		verb = tst;
 	};
 };
+
+
 
 #endif // _Actions_H

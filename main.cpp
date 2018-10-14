@@ -28,7 +28,7 @@ int main()
 	GameState PlayerState("player"); 
 
 	house = new House();
-	currentRoom = house->buildHouse();
+	currentRoom = house->buildHouse("Foyer");
 
 	if ( currentRoom != NULL )
 	{

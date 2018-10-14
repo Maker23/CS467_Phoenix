@@ -1,0 +1,9 @@
+NAME: Rug
+IS_CONTAINER: 1
+DESCRIPTION: A dark blue rug.
+ADDITIONAL_DESC: It's dusty, but you can make out the picture of a fiery bird - a Phoenix.
+CLOSED_DESC: The rug looks a little rumpled in one corner
+WEIGHT: 1
+CONTAINS: Note
+OPEN: 0
+OPEN_DESC:

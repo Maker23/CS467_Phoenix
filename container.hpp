@@ -1,15 +1,18 @@
+#ifndef _CONTAINER_H
+#define _CONTAINER_H
+
 #include <iostream> // for debugging
 #include <list>
 #include <string>
 
 class Room; // Forward declaration
 class Container; // Forward declaration
-
-#ifndef _CONTAINER_H
-#define _CONTAINER_H
+class House; // Forward declaration
 
 #include "actions.hpp"
 #include "utilities.hpp"
+#include "actions.hpp"
+#include "house.hpp"
 
 class Thing {
 public:
@@ -24,7 +27,10 @@ public:
 	Thing (std::string Na);	// constructor
 	virtual ~Thing();				// destructor
 
-	std::vector<Thing*> Contents; 				  // Objects held by container
+  /* ********************************************************** */
+	//std::list<validVerbs> Verbs; 		
+	std::list<int> Verbs; 		
+	std::vector<Thing*> Contents;   // Objects held by container are also Things
 	void Print();
 
 	// Don't know if we're going to use these
@@ -47,6 +53,7 @@ public:
 	GameState(std::string Na);
 	~GameState();
 
+	House * housePtr;
 	bool GameTask[numGameTasks]; // GameTasks are defined in utilities.h
 
 	int getGameTaskStatus();

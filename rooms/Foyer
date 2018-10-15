@@ -8,3 +8,4 @@ SHORT DESC: You are in the foyer that echoes the sounds from the ballroom, conse
 ADITIONAL DESC: The creaking floorboards echo through the foyer and seem to travel throughout the entire house.
 LONG EXIT DESC: Straight ahead you can see stairs going up. There is a door to the east and a door to the west. The exit out is to the south.
 SHORT EXIT DESC: Stairs Up, Doors: East, West, and South.
+FEATURE: Carpet

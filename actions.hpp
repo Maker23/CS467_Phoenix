@@ -16,7 +16,7 @@ class Choice; // Forward declaration
 
 // TODO : Is this the right set of verbs
 //save and load added to list
-enum validVerbs { look, go, use, take, drop, open, hurl, hit, eat, inventory, help, save, load, quit, tst };
+enum validVerbs { look, go, use, take, drop, open, close, hurl, hit, eat, inventory, LastAction, help, save, load, quit, tst, LastVerb};
 
 class Actions {
   public: 
@@ -34,15 +34,24 @@ class Actions {
 struct Choice {
 	Room  * nextRoom;
 	Thing * useThing;
-	Doorway * useDoorway;
-	validVerbs verb;
+	Thing * useOn;
+	Doorway * goDoorway;
+
+	validVerbs Verb;
+	std::string Noun;
+	std::string Subject;
+
+	std::string printVerb();
 
 	// Default constructor
 	Choice() {
 		nextRoom = NULL;
 		useThing = NULL;
-		useDoorway = NULL;
-		verb = tst;
+		useOn = NULL;
+		goDoorway = NULL;
+		Verb = tst;
+		Noun = "";
+		Subject = "";
 	};
 };
 

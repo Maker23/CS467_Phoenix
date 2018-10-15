@@ -21,6 +21,7 @@
 #include <string>
 
 #include "container.hpp"
+#include "house.hpp"
 
 
 /* ***********************************************************
@@ -65,6 +66,9 @@ Container::Container (std::string Na, std::string St) : Thing (Na, St)
 
 GameState::GameState(std::string Na) : Thing (Na,"")
 {
+
+	housePtr = NULL;
+
 	GameTask[0] = false;
 	GameTask[1] = false;
 	GameTask[2] = false;
@@ -114,6 +118,13 @@ std::vector<Thing*> Thing::Examine(bool reCursive, bool verbose, bool silent)
 			<< "		Story = " << Story << std::endl
 			<< "		isContainer = " << isContainer << std::endl
 			<< "		Open = " << Open << std::endl;
+		std::cout << "		Verbs = ";
+			for (std::list<int>::iterator iter = Verbs.begin(); iter != Verbs.end(); iter++)
+			{
+				std::cout << *iter << ",";
+			}
+			std::cout << std::endl;
+			
 			/*
 			<< "		Weight = " << Weight << std::endl
 			<< "		UseFunc = " << UseFunc << std::endl

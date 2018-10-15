@@ -20,6 +20,7 @@ void printGameEnding();
  *
  *
  */
+
 int main()
 {
 	int GameClock=0;
@@ -30,20 +31,21 @@ int main()
 	house = new House();
 	currentRoom = house->buildHouse("Foyer");
 
-	if ( currentRoom != NULL )
+	PlayerState.housePtr = house;
+	house->printRooms();
+	std::cout << "=============================================" << std::endl;
+	std::cout << "\n Obviously not yet finished !  You can \"go Ballroom\" but not \"go east\"" << std::endl;
+	std::cout << " Implemented commands are :" << std::endl;
+	std::cout << "   look, go, quit " <<std::endl;
+	std::cout << " Parseable but not implemented:" <<std::endl;
+	std::cout << "   throw, save, load. " << std::endl;
+	std::cout << "\n Any other command will result in a useless help message being printed." << std::endl;
+	std::cout << "=============================================" << std::endl;
+
+	currentRoom->Examine();
+	while ( currentRoom != NULL )
 	{
-		std::cout << "\nYou are in the " << currentRoom->getRoomName() << std::endl;
-		std::cout << currentRoom->getShortDesc() << "\n\n";
-		//std::cout << currentRoom->getLongDesc() << "\n\n";
-		//std::cout << currentRoom->getAdditionalDesc() << "\n\n";
-		Doorway * doorway;
-		for (int r = 0; r < MAX_RM_CONNECTIONS; r++){
-			doorway =  currentRoom->Connections[r];
-			if (doorway != NULL) {
-				std::cout << "\tDoorway " << doorway->direction << ": " << doorway->roomName << std::endl;
-			}
-		}
-		currentRoom = currentRoom->userAction(&PlayerState);
+		currentRoom = currentRoom->playerTurn(&PlayerState);
 		UpdateGameState(GameClock,&PlayerState,currentRoom);
 	}
 

@@ -16,9 +16,11 @@
  *
  * 	 Room::getShortExitDesc Returns the short description of the exits
  *
+ * 	 Room::Examine  Print a description of everything in the room
+ *
  * 	 Room::addExitsToStack Adds this room's exits (room names) to the given stack
  *
- *		 Room::userAction  -- TODO
+ *		 Room::playerTurn  -- TODO
  *
  *		 Room::Examine  -- TODO
  */
@@ -30,6 +32,8 @@
 #include <stack>
 #include <vector>
 #include "room.hpp"
+#include "parser.hpp"
+#include "actions.hpp"
 
 using namespace std;
 
@@ -179,6 +183,7 @@ std::string Room::getShortExitDesc()
 	return this->shortExitDesc;
 }
 
+
 Thing * Room::getFeature (std::string featureFileName){
 	ifstream thingfile;
 	string lineStr, str;
@@ -200,6 +205,9 @@ Thing * Room::getFeature (std::string featureFileName){
 			}
 
 			// Only go past this point if we've found the Name and created the Feature
+			// TODO: If weight < something, validVerbs = throw
+			//       if food, validVerbs = eat
+			//       or just accept a list of VERBS ?
 			if(lineStr.find("DESCRIPTION: ") != std::string::npos) 
 			{
 				newThing->Story = (lineStr.substr(13, lineStr.length()-1));
@@ -210,6 +218,18 @@ Thing * Room::getFeature (std::string featureFileName){
 				{ newThing->Open = true;}
 				else
 				{ newThing->Open = false;}
+			}
+   		else if(lineStr.find("IS_CONTAINER: ") != std::string::npos)
+			{
+				if ( stoi(lineStr.substr(14, lineStr.length()-1)) > 0  ) 
+				{ 
+					newThing->isContainer = true;
+					newThing->Verbs.push_back((validVerbs) open);
+				}
+				else
+				{ 
+					newThing->isContainer = false;
+				}
 			}
    		else if(lineStr.find("FEATURE: ") != std::string::npos)
 			{
@@ -234,32 +254,24 @@ Thing * Room::getFeature (std::string featureFileName){
 /*
  * TODO: Function info goes here
  */
-Actions * Room::Examine (){
-	if (DEBUG_FUNCTION) std::cout << "===== begin Room::Examine" << std::endl;
+void Room::Examine()
+{
+	Doorway * door;
+	std::vector<Thing*>::iterator iter;
 
-	Actions * returnActions = new Actions();
-	Doorway * tmpDoor;
-	std::vector<Thing*> thingList;
-	std::vector<Doorway*> doorList;
-
-  /* Right now we're ignoring Things since Room-Things haven't been implemented */
-
-	for (int r=0; r < MAX_RM_CONNECTIONS; r++){
-		tmpDoor = this->Connections[r];
-		if ( tmpDoor != NULL ) {
-			if (DEBUG_EXAMINE) std::cout << "found doorway " << tmpDoor->roomName << "; adding to doorList" << std::endl;
-			//doorList.push_back(tmpDoor);
-			returnActions->Doors.push_back(tmpDoor);
+	std::cout << "\nYou are in the " << getRoomName() << std::endl;
+	std::cout << getShortDesc() << std::endl;
+	
+	for (int r = 0; r < MAX_RM_CONNECTIONS; r++) {
+		door = Connections[r];
+		if (door != NULL) {
+			std::cout << "\t Doorway " << door->Examine() << std::endl;
 		}
 	}
-
-	//returnActions->Doors = doorList;
-	returnActions->Things = thingList;
-	if (DEBUG_FUNCTION) std::cout << "===== end Room::Examine" << std::endl;
-
-	return returnActions;
-	
-
+	for (iter = Features.begin(); iter != Features.end(); iter ++)
+	{
+		(*iter)->Examine(true,1,0);
+	}
 }
 
 /*
@@ -278,22 +290,97 @@ void Room::addExitsToStack(std::stack<std::string> &exits)
 /*
  * TODO: Function info goes here
  */
-Room * Room::userAction(GameState * PlayerState)
+Room * Room::playerTurn(GameState * PlayerState)
 {
-	if (DEBUG_FUNCTION) std::cout << "===== begin Room::userAction" << std::endl;
+	if (DEBUG_FUNCTION) std::cout << "===== begin Room::playerTurn" << std::endl;
 	// TODO: all the magic
-	
+	// PlayerState: What the player is holding and any state of the game
+	// this:  The room we're in
+	// Doorways : the array of doorways
+	// Features : the features, a vector of Things
+	//          : Things, with a map of verb->Action
+	// And now we do stuff.
 	Choice * userChoice;
 	Room * nextRoom = this;
-	Actions * possibleActions; // lists of Things and Doorways that the user can act on
+	Parser parse;
 
-	possibleActions = this->Examine(); // get Doorways and Things from this Room
+	userChoice = parse.ParseLine();
 
-	userChoice = possibleActions->userChooses();
-	
-	// And now we do stuff.
-	
+	// If verb = go, choice should be a door
+	// otherwise look for noun in PlayerState and then in Room
+	// If no noun - limited choices
+	if (userChoice->Verb == (validVerbs)quit)
+	{
+		return (Room *) NULL;
+	}
+	if (userChoice->Verb == (validVerbs)help)
+	{
+		std::cout << "THERE IS NO HELP FOR YOU" << std::endl;
+		return this;
+	}
+	if( (userChoice->Verb == (validVerbs)save) ||
+			(userChoice->Verb == (validVerbs)load) )
+	{
+		std::cout << "Game does not yet support Save or Load" << std::endl;
+		return this;
+	}
+
+	if ( userChoice->Noun == "" ) {
+		if (userChoice->Verb == (validVerbs)look) 
+		{
+			Examine(); // Examine this room
+		}
+		else if (userChoice->Verb == (validVerbs)go) 
+		{
+			std::cout << "Where do you want to " << userChoice->printVerb()<< "?" << std::endl;
+		}
+		else if (userChoice->Verb < (validVerbs)LastAction)
+		{
+			std::cout << "What do you want to " << userChoice->printVerb()<< "?" << std::endl;
+		}
+	}
+	else if (userChoice->Verb == (validVerbs)go) {
+		nextRoom = goRoom(userChoice->Noun, PlayerState);
+		if ( nextRoom != this ) 
+		{
+			nextRoom->Examine();
+		}
+	}
+
+	if (DEBUG_FUNCTION) std::cout << "===== end   Room::playerTurn" << std::endl;
+
 	return nextRoom;
+
+	//Actions * possibleActions; // lists of Things and Doorways that the user can act on
+	//possibleActions = this->Examine(); // get Doorways and Things from this Room
+	//userChoice = possibleActions->userChooses();
+}
+
+Room * Room::goRoom(std::string roomName, GameState * PlayerState){
+	Room * nextRoom = this;
+	Doorway * door;
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin Room::goRoom" << std::endl;
+	for (int r = 0; r < MAX_RM_CONNECTIONS; r++) {
+		door = Connections[r];
+		if (door != NULL) {
+			if (DEBUG_FUNCTION) std::cout << "\t looking at Doorway " << door->Examine() << std::endl;
+			if ( roomName.compare(door->roomName) == 0 ) {
+				nextRoom = PlayerState->housePtr->getRoomPtr(roomName);
+				if ( nextRoom != NULL ) {
+					if (DEBUG_FUNCTION) cout << "\tSUCCESS moving to room " << door->roomName << std::endl;
+					return nextRoom;
+				}
+				else 
+				{
+					cout << "\tERROR mvoing to room " << door->roomName << std::endl;
+					nextRoom=this;
+				}
+			}
+		}
+	}
+	std::cout << "Hm, I don't see a doorway that leads to the " << roomName << "...." << std::endl;
+	return this;
 }
 
 // Constructor for Doorway class. 
@@ -309,3 +396,9 @@ Doorway::~Doorway()
 {
 
 }
+
+std::string Doorway::Examine() {
+	std::string ReturnThis =  "" + direction + ":" + roomName;
+	return ReturnThis;
+}
+

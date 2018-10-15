@@ -6,7 +6,7 @@
 
 //  Global debugging flags
 #define DEBUG_EXAMINE false
-#define DEBUG_FUNCTION true
+#define DEBUG_FUNCTION false
 #define DEBUG_MENU false
 #define DEBUG_FIND false
 #define DEBUG_ROOM false

@@ -27,9 +27,11 @@ int main()
 	std::cout << "Starting Room: " << roomPtr->getRoomName() << "\n\n";
 
 	choice = parse->ParseLine();
-	if (DEBUG_FUNCTION) std::cout << "Choice verb is " << choice->verb << ", test verb is " << (validVerbs) tst << std::endl;
-	if ( choice->verb == (validVerbs)tst ) 
+	if (DEBUG_FUNCTION) std::cout << "Choice verb is " << choice->Verb << ", test verb is " << (validVerbs) tst << std::endl;
+	if (( choice->Verb == (validVerbs)tst ) ||
+			( choice->Verb == (validVerbs)look))
 	{
+			// TODO: write Room::Examine()  :)
 			std::cout << roomPtr->getRoomName() << std::endl;
 			std::cout << roomPtr->getLongDesc() << "\n\n";
 			std::cout << roomPtr->getShortDesc() << "\n\n";

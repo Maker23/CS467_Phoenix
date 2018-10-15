@@ -10,7 +10,7 @@
 
 using namespace std;
 
-// Constructor for Doorway class. 
+// Constructor for Actions class. 
 Actions::Actions()
 {
 }
@@ -30,3 +30,9 @@ Choice * Actions::userChooses()
 	return userChoice;
 }
 
+std::string Choice::printVerb()
+{
+	std::string verbPrint[] = {"look", "go", "use", "pick up or take", "drop", "open", "close", "throw", "hit", "eat", "examine"};
+
+	return verbPrint[(int)Verb];
+}

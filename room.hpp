@@ -18,7 +18,7 @@ class Doorway
 		~Doorway(); // destructor
 	 	std::string roomName;
 		std::string direction;
-	
+		std::string Examine();
 };
 
 class Room
@@ -48,10 +48,12 @@ class Room
 		std::string getAdditionalDesc();
 		std::string getLongExitDesc();
 		std::string getShortExitDesc();
+		void Examine();
+		//Actions * Examine();
 		Thing * getFeature(std::string);
 		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack
-		Room * userAction(GameState *);
-		Actions * Examine();
+		Room * playerTurn(GameState *);
+		Room * goRoom(std::string, GameState *);
 };
 
 

@@ -133,6 +133,7 @@ bool House::printRooms()
 	std::cout << "--- House rooms: ---" << std::endl;
 	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
 		std::cout << "\t" << it->first << std::endl;
+		it->second->Examine();
 	}
 	return true;
 }

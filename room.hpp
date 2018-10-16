@@ -49,7 +49,7 @@ class Room
 		std::string getShortExitDesc();
 		void Examine();
 		Feature * getFeature(std::string);
-		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack
+		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack - used in House::buildHouse -- should not be needed anywhere else
 		Room * goRoom(std::string, GameState *);
 };
 

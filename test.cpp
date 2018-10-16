@@ -5,7 +5,7 @@
 #include "room.hpp"
 #include "house.hpp"
 #include "parser.hpp"
-#include "actions.hpp"
+#include "engine.hpp"
 
 int main()
 {
@@ -14,12 +14,12 @@ int main()
 	Doorway *doorway;
 
 	Choice *choice;
-	Thing  *feature;
-	Thing  *feature2;
+	Feature  *feature;
+	Feature  *feature2;
 	Parser *parse;
 	parse = new Parser();
 	int notUsed;
-	std::vector<Thing*>::iterator iter;
+	std::vector<Feature*>::iterator iter;
 
 	house = new House();
 	roomPtr = house->buildHouse("Foyer");

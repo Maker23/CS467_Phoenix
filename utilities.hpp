@@ -2,7 +2,7 @@
 #define _UTE_H
 
 #define ROOM_DIRECTORY "rooms/"
-#define FEATURE_DIRECTORY "rooms/things/"
+#define FEATURE_DIRECTORY "rooms/features/"
 
 //  Global debugging flags
 #define DEBUG_EXAMINE false
@@ -16,19 +16,12 @@
 #define TEST false
 #endif
 
-#define numGameTasks 5
-#define GameLength 52	// Number of turns the user gets TODO: remove this
-
-#include <string>
 
 class Container; // Forward declaration
 class Room; // Forward declaration
-class Thing; // Forward declaration
+class Feature; // Forward declaration
 class GameState; // Forward declaration
 
-bool getUserYN(const char Default);
-std::string WriteTheInstructions();
-void UpdateGameState(int &GameClock, GameState* PlayerState, Room* currentRoom);
 
 
 #endif // _UTE_H

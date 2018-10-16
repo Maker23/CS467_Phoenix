@@ -4,6 +4,7 @@
 #include <string>
 #include <stack>
 #include <vector>
+#include <map>
 #include "room.hpp"
 
 class House

@@ -9,7 +9,8 @@
 #include "room.hpp"
 #include "house.hpp"
 #include "utilities.hpp"
-#include "container.hpp"
+#include "feature.hpp"
+#include "engine.hpp"
 
 void printGameEnding();
 /* TODO 
@@ -45,8 +46,9 @@ int main()
 	currentRoom->Examine();
 	while ( currentRoom != NULL )
 	{
-		currentRoom = currentRoom->playerTurn(&PlayerState);
-		UpdateGameState(GameClock,&PlayerState,currentRoom);
+		//currentRoom = currentRoom->playerTurn(&PlayerState);
+		currentRoom = PlayerState.playerTurn(currentRoom);
+		PlayerState.UpdateGameState(GameClock,currentRoom);
 	}
 
 	//house->printRooms(); // DEBUG

@@ -5,7 +5,6 @@
 #include <string>
 #include <stack>
 #include <vector>
-#include "actions.hpp"
 #include "utilities.hpp"
 
 
@@ -36,7 +35,7 @@ class Room
 	public:
 	 	// IRL these would be private with iterator and get/set functions. TODO
 		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
-		std::vector<Thing *> Features;
+		std::vector<Feature *> Features;
 		
 		Room(std::string); 									// constructor
 		~Room();													// destructor
@@ -49,10 +48,8 @@ class Room
 		std::string getLongExitDesc();
 		std::string getShortExitDesc();
 		void Examine();
-		//Actions * Examine();
-		Thing * getFeature(std::string);
+		Feature * getFeature(std::string);
 		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack
-		Room * playerTurn(GameState *);
 		Room * goRoom(std::string, GameState *);
 };
 

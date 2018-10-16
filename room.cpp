@@ -33,7 +33,6 @@
 #include <vector>
 #include "room.hpp"
 #include "parser.hpp"
-#include "actions.hpp"
 
 using namespace std;
 
@@ -48,7 +47,7 @@ Room::Room(string filename)
 	string lineStr, str;
 	int roomCount=0;
 	numExits = 0;
-	Thing * newFeature;
+	Feature * newFeature;
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
 	{
@@ -184,23 +183,23 @@ std::string Room::getShortExitDesc()
 }
 
 
-Thing * Room::getFeature (std::string featureFileName){
-	ifstream thingfile;
+Feature * Room::getFeature (std::string featureFileName){
+	ifstream featurefile;
 	string lineStr, str;
 	string featureDir = FEATURE_DIRECTORY;
-	Thing * newThing = NULL;
-	Thing * tmpThing = NULL;
+	Feature * newFeature = NULL;
+	Feature * tmpFeature = NULL;
 
-	thingfile.open( (featureDir.append(featureFileName)).c_str()); 
-	if (thingfile.is_open()) {
-		while (std::getline(thingfile, lineStr))  {
+	featurefile.open( (featureDir.append(featureFileName)).c_str()); 
+	if (featurefile.is_open()) {
+		while (std::getline(featurefile, lineStr))  {
 			if(lineStr.find("NAME: ") != std::string::npos) 
 			{
-				// Make a new Thing.
+				// Make a new Feature.
 				// TODO: test for failure...
-				newThing = new Thing(lineStr.substr(6, lineStr.length()-1));
+				newFeature = new Feature(lineStr.substr(6, lineStr.length()-1));
 			}
-			else if ( newThing == NULL ) {
+			else if ( newFeature == NULL ) {
 				continue;
 			}
 
@@ -210,34 +209,34 @@ Thing * Room::getFeature (std::string featureFileName){
 			//       or just accept a list of VERBS ?
 			if(lineStr.find("DESCRIPTION: ") != std::string::npos) 
 			{
-				newThing->Story = (lineStr.substr(13, lineStr.length()-1));
+				newFeature->Story = (lineStr.substr(13, lineStr.length()-1));
 			}
 			else if(lineStr.find("OPEN: ") != std::string::npos) 
 			{
 				if ( stoi(lineStr.substr(6, lineStr.length()-1)) > 0  ) 
-				{ newThing->Open = true;}
+				{ newFeature->Open = true;}
 				else
-				{ newThing->Open = false;}
+				{ newFeature->Open = false;}
 			}
    		else if(lineStr.find("IS_CONTAINER: ") != std::string::npos)
 			{
 				if ( stoi(lineStr.substr(14, lineStr.length()-1)) > 0  ) 
 				{ 
-					newThing->isContainer = true;
-					newThing->Verbs.push_back((validVerbs) open);
+					newFeature->isContainer = true;
+					newFeature->Verbs.push_back((validVerbs) open);
 				}
 				else
 				{ 
-					newThing->isContainer = false;
+					newFeature->isContainer = false;
 				}
 			}
    		else if(lineStr.find("FEATURE: ") != std::string::npos)
 			{
 				// recursion :)
-				newThing->isContainer = true;
-				tmpThing = getFeature( lineStr.substr(9, lineStr.length()-1));
-				if ( tmpThing != NULL ) {
-					newThing->Contents.push_back(tmpThing);
+				newFeature->isContainer = true;
+				tmpFeature = getFeature( lineStr.substr(9, lineStr.length()-1));
+				if ( tmpFeature != NULL ) {
+					newFeature->Contents.push_back(tmpFeature);
 				}
 			}
 		}
@@ -247,7 +246,7 @@ Thing * Room::getFeature (std::string featureFileName){
 		cout << "Error opening feature file '" <<  featureDir << "\n";
 	}
 
-	return newThing;
+	return newFeature;
 	
 }
 
@@ -257,7 +256,7 @@ Thing * Room::getFeature (std::string featureFileName){
 void Room::Examine()
 {
 	Doorway * door;
-	std::vector<Thing*>::iterator iter;
+	std::vector<Feature*>::iterator iter;
 
 	std::cout << "\nYou are in the " << getRoomName() << std::endl;
 	std::cout << getShortDesc() << std::endl;
@@ -285,75 +284,6 @@ void Room::addExitsToStack(std::stack<std::string> &exits)
 		exits.push(Connections[i]->roomName);
 	}
 
-}
-
-/*
- * TODO: Function info goes here
- */
-Room * Room::playerTurn(GameState * PlayerState)
-{
-	if (DEBUG_FUNCTION) std::cout << "===== begin Room::playerTurn" << std::endl;
-	// TODO: all the magic
-	// PlayerState: What the player is holding and any state of the game
-	// this:  The room we're in
-	// Doorways : the array of doorways
-	// Features : the features, a vector of Things
-	//          : Things, with a map of verb->Action
-	// And now we do stuff.
-	Choice * userChoice;
-	Room * nextRoom = this;
-	Parser parse;
-
-	userChoice = parse.ParseLine();
-
-	// If verb = go, choice should be a door
-	// otherwise look for noun in PlayerState and then in Room
-	// If no noun - limited choices
-	if (userChoice->Verb == (validVerbs)quit)
-	{
-		return (Room *) NULL;
-	}
-	if (userChoice->Verb == (validVerbs)help)
-	{
-		std::cout << "THERE IS NO HELP FOR YOU" << std::endl;
-		return this;
-	}
-	if( (userChoice->Verb == (validVerbs)save) ||
-			(userChoice->Verb == (validVerbs)load) )
-	{
-		std::cout << "Game does not yet support Save or Load" << std::endl;
-		return this;
-	}
-
-	if ( userChoice->Noun == "" ) {
-		if (userChoice->Verb == (validVerbs)look) 
-		{
-			Examine(); // Examine this room
-		}
-		else if (userChoice->Verb == (validVerbs)go) 
-		{
-			std::cout << "Where do you want to " << userChoice->printVerb()<< "?" << std::endl;
-		}
-		else if (userChoice->Verb < (validVerbs)LastAction)
-		{
-			std::cout << "What do you want to " << userChoice->printVerb()<< "?" << std::endl;
-		}
-	}
-	else if (userChoice->Verb == (validVerbs)go) {
-		nextRoom = goRoom(userChoice->Noun, PlayerState);
-		if ( nextRoom != this ) 
-		{
-			nextRoom->Examine();
-		}
-	}
-
-	if (DEBUG_FUNCTION) std::cout << "===== end   Room::playerTurn" << std::endl;
-
-	return nextRoom;
-
-	//Actions * possibleActions; // lists of Things and Doorways that the user can act on
-	//possibleActions = this->Examine(); // get Doorways and Things from this Room
-	//userChoice = possibleActions->userChooses();
 }
 
 Room * Room::goRoom(std::string roomName, GameState * PlayerState){

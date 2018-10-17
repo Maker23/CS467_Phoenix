@@ -1,0 +1,9 @@
+ROOM NAME: 3rd Floor Hallway
+CONNECTION:South Wall East door|RoomG|roomg, south wall east door, east door
+CONNECTION:South wall center door|RoomH|roomh, south wall center door, center door, center
+CONNECTION:West room door|RoomF|roomf, west room door
+CONNECTION:West door outside|Balcony|balcony, west door outside, outside
+CONNECTION:Stair down|2nd Floor Hallway|stairs, down, stairs down
+LONG DESC: 3rd Floor Hallway Long Desc. There is a door on the east wall near the stairs, on the south wall just as the hallway turns to the east. There's another in the center of the hallway and at the far end of the hallway on the east wall.
+SHORT DESC: 3rd Floor Hallway Short Desc
+ADITIONAL DESC: 3rd Floor Hallway Additional Desc

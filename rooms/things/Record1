@@ -1,0 +1,12 @@
+NAME: Record
+IS_CONTAINER: 0
+ACTION: play
+DESCRIPTION: You see an old dusty record with no center label.
+ADDITIONAL_DESC: Listening to the record, among the scratch noise, you can hear notes "E A C".
+WEIGHT: 1
+IN_ROOM: Kitchen
+CONTAINS: this,is,ignored,unless,its,a,container
+OPEN: 1
+OPEN_DESC: will only be used if this is a container
+TRIGGERS: null
+DEPENDS_ON: RecordPlayer

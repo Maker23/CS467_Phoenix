@@ -1,0 +1,5 @@
+ROOM NAME: aaaaa
+CONNECTION:ShortDisplayName|GoesToRoomNameHere|keyword1, keyword2, etc
+LONG DESC: room Long Desc. DETAILED EXIT DESCRIPTION.
+SHORT DESC: room Short Desc
+ADITIONAL DESC: Room Additional Desc

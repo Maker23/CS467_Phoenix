@@ -1,0 +1,6 @@
+ROOM NAME: RoomC
+CONNECTION:North Right Side|2nd Floor Hallway|hallway, north right side, upper right, north right
+CONNECTION:North Left Side|RoomB|roomb, north left side, upper left, north left
+LONG DESC: RoomC Long Desc.  Two doors to the north, one west side one east side.
+SHORT DESC: RoomC Short Desc
+ADITIONAL DESC: RoomC Additional Desc

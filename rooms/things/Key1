@@ -1,0 +1,12 @@
+NAME: Bronze Key
+IS_CONTAINER: 0
+ACTION: get
+DESCRIPTION: You see an old bronze key. The key is very intricate, with a shamrock shape at the top.
+ADDITIONAL_DESC: You place the key in your inventory.
+WEIGHT: 1
+IN_ROOM: Conservatory
+CONTAINS: this,is,ignored,unless,its,a,container
+OPEN: 1
+OPEN_DESC: will only be used if this is a container
+TRIGGERS: 2nd Floor Doors
+DEPENDS_ON: Piano1

@@ -1,0 +1,7 @@
+ROOM NAME: RoomE
+CONNECTION:North Wall Left|2nd Floor Hallway|hallway, upper left, north left, north wall left
+CONNECTION:North Wall Right|Balcony|balcony, upper right, north right, north east, ne, north wall right
+CONNECTION:west|RoomD|west, RoomD, west door
+LONG DESC: RoomE Long Desc. There are 3 doors in the room. There are two doors on the north wall, one on the left side of the wall and another on the right side. There is another door on the west wall.
+SHORT DESC: RoomE Short Desc
+ADITIONAL DESC: RoomE Additional Desc

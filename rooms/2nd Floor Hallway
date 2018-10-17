@@ -1,0 +1,11 @@
+ROOM NAME: 2nd Floor Hallway
+CONNECTION:Door 1, west wall|RoomA|rooma, door 1, 1
+CONNECTION:Door 2, south west wall|RoomC|roomc, door 2, 2
+CONNECTION:Door 3, south center wall|RoomD|roomd, door 3, 3
+CONNECTION:Door 4, south east wall|RoomE|roome, door 4, 4
+CONNECTION:Door 5, east wall|Balcony|balcony, door 5, 5, east, east door
+CONNECTION:Stairs down|Foyer|foyer, stairs down, down
+CONNECTION:Stairs up|3rd Floor Hallway|3rd floor, stairs up, up
+LONG DESC: 2nd Floor Hallway Long Desc. Lots of doors... need description of them.
+SHORT DESC: 2nd Floor Hallway Short Desc
+ADITIONAL DESC: 2nd Floor Hallway Additional Desc

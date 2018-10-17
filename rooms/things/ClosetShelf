@@ -1,0 +1,12 @@
+NAME: Top Shelf
+IS_CONTAINER: 1
+ACTION: look
+DESCRIPTION: On the top shelf, you find a camera.
+ADDITIONAL_DESC: A thick layer of dust covers the camera.
+WEIGHT: 1
+IN_ROOM: Closet
+CONTAINS: this,is,ignored,unless,its,a,container
+OPEN: 1
+OPEN_DESC: The camera ..... update Shelf1 OPEN_DESC here.
+TRIGGERS: Camera
+DEPENDS_ON: null

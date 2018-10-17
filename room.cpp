@@ -177,7 +177,10 @@ std::string Room::getAdditionalDesc()
 	return this->additionalDesc;
 }
 
-
+void Room::setRoomSeen()
+{
+	roomSeen = true;
+}
 
 Feature * Room::getFeature (std::string featureFileName){
 	ifstream featurefile;

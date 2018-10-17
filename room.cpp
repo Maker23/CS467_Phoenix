@@ -296,12 +296,24 @@ void Room::Examine()
  */
 void Room::addExitsToStack(std::stack<std::string> &exits)
 {
-	int i;
-	for(i=0; i<numExits; i++)
+	for(int i=0; i<numExits; i++)
 	{
 		exits.push(Connections[i]->getExitRoomName());
 	}
 
+}
+
+std::string Room::getExitsForDisplay()
+{
+	std::string exitString;
+	for(int i=0; i<numExits; i++)
+	{
+		exitString.append(Connections[i]->getDisplayName());
+		if(i < numExits-1)
+			exitString.append(", ");
+	}
+
+	return exitString;
 }
 
 Room * Room::goRoom(std::string roomName, GameState * PlayerState){
@@ -406,3 +418,4 @@ std::string Doorway::strToLowercase(std::string mixedStr)
     mixedStr[i] = std::tolower(mixedStr[i],loc);
 	return mixedStr;
 }
+

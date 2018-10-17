@@ -38,6 +38,8 @@ int main()
 			std::cout << roomPtr->getAdditionalDesc() << "\n\n";
 
 
+			std::cout << "Short Exit Desc: " << roomPtr->getExitsForDisplay() << std::endl;
+
 			for ( iter = roomPtr->Features.begin(); iter != roomPtr->Features.end(); iter ++ ) 
 			{
 				(*iter)->Examine(true,1,0);

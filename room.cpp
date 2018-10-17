@@ -32,6 +32,7 @@
 #include <stack>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 #include "room.hpp"
 #include "parser.hpp"
 
@@ -106,6 +107,7 @@ Room::Room(string filename)
 				size_t startOfConnectionInfo = lineStr.find_last_of(":") + 1;
 				string connectionInfo = lineStr.substr(startOfConnectionInfo, lineStr.length() - 1);
 				Connections[numExits]->setDoorway(connectionInfo);
+				roomCount++;
 			}
 
 			/*
@@ -245,6 +247,28 @@ Feature * Room::getFeature (std::string featureFileName){
 }
 
 /*
+ * Searches the Connections (exits) in this room by keyword and if found, will return the room object.
+ * returns null if not found.
+ */
+std::string Room::getExitRoomByKey(std::string searchKey)
+{
+	//isExitKeywordFound
+	// loop through the connections and check isExitKeywordFound(searchKey)
+	// if found, return that object.
+
+	//std::cout << "Enter Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
+	for (int r = 0; r < numExits; r++)
+	{
+		if(Connections[r]->isExitKeywordFound(searchKey))
+		{ // it is found, return the name of the room.
+			return Connections[r]->getExitRoomName();
+		}
+	}
+	//std::cout << "Exit Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
+	return "";
+}
+
+/*
  * TODO: Function info goes here
  */
 void Room::Examine()
@@ -360,3 +384,29 @@ std::string Doorway::getExitRoomName()
 	return goesTo;
 }
 
+bool Doorway::isExitKeywordFound(std::string searchFor)
+{
+
+	std::string lcSearchFor = strToLowercase(searchFor);
+
+	for (unsigned int i=0; i<keyWords.size(); i++)
+	{
+		std::string key = strToLowercase(keyWords[i]);
+		if (lcSearchFor.compare(key) == 0)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+// returns lowercase string
+// http://www.cplusplus.com/reference/locale/tolower/
+std::string Doorway::strToLowercase(std::string mixedStr)
+{
+	std::locale loc;
+
+  for (std::string::size_type i=0; i<mixedStr.length(); ++i)
+    mixedStr[i] = std::tolower(mixedStr[i],loc);
+	return mixedStr;
+}

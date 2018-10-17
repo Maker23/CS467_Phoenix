@@ -25,7 +25,8 @@ int main()
 	roomPtr = house->buildHouse("Foyer");
 	house->printRooms();
 	std::cout << "Starting Room: " << roomPtr->getRoomName() << "\n\n";
-
+	std::cout << roomPtr->getExitRoomByKey("notThere") << std::endl;
+	std::cout << roomPtr->getExitRoomByKey("SOUTH") << std::endl;
 
 	delete(house);
 

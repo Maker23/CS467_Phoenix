@@ -1,6 +1,6 @@
 ROOM NAME: Foyer
-CONNECTION:East Door|Ballroom|east
-CONNECTION:West Door|Conservatory|west
+CONNECTION:West Door|Ballroom|west,ballroom
+CONNECTION:East Door|Conservatory|conservatory,east
 CONNECTION:Stairs Up|2nd Floor Hallway|up,stairs
 CONNECTION:South Door|Porch|south,outside
 LONG DESC: You enter the Foyer of the Haunted House and the door locks behind you. The wind outside is picking up and every step taken seems to make the floor boards screech throughout the whole house. The floor and rug seem worn over the years, and also uneven in certain parts. The neighboring rooms, the Ballroom, Stairs, and Conservatory, are abandoned, but this Haunted House is home to ghosts that have appeared over the years. Now that the front entrance is locked, the only way of escape is through the house. Straight ahead you can see stairs going up. There is a door to the east and a door to the west. The exit out is to the south.

@@ -372,6 +372,17 @@ void Doorway::setDoorway(std::string connectionString)
    std::stringstream mystream (keywordStr);
 
    while(getline(mystream,tempStr,',')){  // https://stackoverflow.com/questions/40611689/c-error-in-tokenizer-variable-stdstringstream-mystream-has-initializer-b/43017562
+   		// remove leading and trailing spaces
+    		while(tempStr[0] == ' ')
+    		{
+    			tempStr = tempStr.substr(1, tempStr.length() - 1);
+    		}
+    		while(tempStr[tempStr.length() - 1] == ' ')
+    		{
+    			tempStr = tempStr.substr(0, tempStr.length() - 2);
+    		}
+
+
        keyWords.push_back(tempStr);
    }
 }

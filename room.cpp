@@ -264,12 +264,30 @@ std::string Room::getExitRoomByKey(std::string searchKey)
 	{
 		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found, return the name of the room.
-			return Connections[r]->getExitRoomName();
+			if(Connections[r]->isDoorLocked())
+				return "locked";
+			else
+				return Connections[r]->getExitRoomName();
 		}
 	}
 	//std::cout << "Exit Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
 	return "";
 }
+
+
+bool Room::lockExitDoorByKey(std::string searchKey)
+{
+	for (int r = 0; r < numExits; r++)
+	{
+		if(Connections[r]->isExitKeywordFound(searchKey))
+		{ // it is found, return the name of the room.
+			Connections[r]->lockDoor();
+			return true;
+		}
+	}
+	return false;
+}
+
 
 /*
  * TODO: Function info goes here
@@ -388,6 +406,7 @@ void Doorway::setDoorway(std::string connectionString)
 
        keyWords.push_back(tempStr);
    }
+   doorLocked = false;
 }
 
 std::string Doorway::Examine() {
@@ -433,3 +452,17 @@ std::string Doorway::strToLowercase(std::string mixedStr)
 	return mixedStr;
 }
 
+void Doorway::lockDoor()
+{
+	doorLocked = true;
+}
+
+void Doorway::unlockDoor()
+{
+	doorLocked = false;
+}
+
+bool Doorway::isDoorLocked()
+{
+	return doorLocked;
+}

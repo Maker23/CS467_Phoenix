@@ -38,7 +38,11 @@ int main()
 	std::cout << "Command (" << roomPtr->getRoomName() << "): ";
    std::getline (std::cin,userCommand);
 
+   // lock ballroom door to kitchen
+   roomPtr = house->getRoomPtr("Ballroom");
+   roomPtr->lockExitDoorByKey("kitchen");
 
+   // take simple commands to move through the house.
    while (userCommand.compare("quit") != 0)
    {
    	exitStringReturned = roomPtr->getExitRoomByKey(userCommand);

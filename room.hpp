@@ -17,6 +17,7 @@ class Doorway
 		std::string goesTo;
 		std::vector<std::string> keyWords;
 		std::string strToLowercase(std::string);
+		bool doorLocked;
 
   public:
 		Doorway(); // constructor
@@ -26,6 +27,9 @@ class Doorway
 		std::string getExitRoomName();
 		bool isExitKeywordFound(std::string); // looks in keywords to see if found. returns true if so, false otherwise.
 		std::string Examine();
+		void lockDoor();
+		void unlockDoor();
+		bool isDoorLocked();
 
 };
 
@@ -61,6 +65,7 @@ class Room
 		Room * goRoom(std::string, GameState *);
 		std::string getExitRoomByKey(std::string);			// searches exits by keyword (such as south) and if found, returns the room name. If not found, returns null.
 		std::string getExitsForDisplay();
+		bool lockExitDoorByKey(std::string);
 
 };
 

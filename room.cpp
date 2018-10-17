@@ -306,7 +306,6 @@ void Room::addExitsToStack(std::stack<std::string> &exits)
 
 Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 	Room * nextRoom = this;
-	/* TODO: DOORWAY REFACTOR FIX
 	Doorway * door;
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin Room::goRoom" << std::endl;
@@ -314,22 +313,21 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 		door = Connections[r];
 		if (door != NULL) {
 			if (DEBUG_FUNCTION) std::cout << "\t looking at Doorway " << door->Examine() << std::endl;
-			if ( roomName.compare(door->roomName) == 0 ) {
+			if ( roomName.compare(door->getDisplayName()) == 0 ) {
 				nextRoom = PlayerState->housePtr->getRoomPtr(roomName);
 				if ( nextRoom != NULL ) {
-					if (DEBUG_FUNCTION) cout << "\tSUCCESS moving to room " << door->roomName << std::endl;
+					if (DEBUG_FUNCTION) cout << "\tSUCCESS moving to room " << door->getDisplayName() << std::endl;
 					return nextRoom;
 				}
 				else 
 				{
-					cout << "\tERROR mvoing to room " << door->roomName << std::endl;
+					cout << "\tERROR mvoing to room " << door->getDisplayName() << std::endl;
 					nextRoom=this;
 				}
 			}
 		}
 	}
 	std::cout << "Hm, I don't see a doorway that leads to the " << roomName << "...." << std::endl;
-	*/
 	return this;
 }
 
@@ -367,9 +365,7 @@ void Doorway::setDoorway(std::string connectionString)
 }
 
 std::string Doorway::Examine() {
-	// TODO: DOORWAY REFACTOR FIX
-	//std::string ReturnThis =  "" + direction + ":" + roomName;
-	std::string ReturnThis = "Placeholder until doorway refactor fix is completed.";
+	std::string ReturnThis =  "" + displayName;
 	return ReturnThis;
 }
 

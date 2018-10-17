@@ -9,7 +9,7 @@
 #define DEBUG_FUNCTION false
 #define DEBUG_MENU false
 #define DEBUG_FIND false
-#define DEBUG_ROOM false
+#define DEBUG_ROOM true
 #define DEBUG_USE false
 
 #ifndef TEST

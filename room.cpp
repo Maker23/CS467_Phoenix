@@ -185,11 +185,13 @@ void Room::setRoomSeen()
 Feature * Room::getFeature (std::string featureFileName){
 	ifstream featurefile;
 	string lineStr, str;
-	string featureDir = FEATURE_DIRECTORY;
+	string featureFile = FEATURE_DIRECTORY + featureFileName;
 	Feature * newFeature = NULL;
 	Feature * tmpFeature = NULL;
 
-	featurefile.open( (featureDir.append(featureFileName)).c_str()); 
+
+	featurefile.open(featureFile);
+
 	if (featurefile.is_open()) {
 		while (std::getline(featurefile, lineStr))  {
 			if(lineStr.find("NAME: ") != std::string::npos) 
@@ -242,7 +244,7 @@ Feature * Room::getFeature (std::string featureFileName){
 	}
 	else {
 		//Print useful error, but don't exit
-		cout << "Error opening feature file '" <<  featureDir << "\n";
+		cout << "Error opening feature file '" <<  featureFile << "\n";
 	}
 
 	return newFeature;
@@ -377,6 +379,7 @@ void Room::displayRoom()
 	std::cout << additionalDesc << std::endl;
 
 	// this we may want to only show if user asks for the exits.
+	if (DEBUG_ROOM) std::cout << "# of Features in Room: " << Features.size() << std::endl;
 	std::cout << "Exits: " << getExitsForDisplay() << std::endl;
 }
 

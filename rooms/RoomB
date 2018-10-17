@@ -1,8 +1,0 @@
-ROOM NAME: RoomB
-CONNECTION 1: north|RoomA
-CONNECTION 2: south|RoomC
-LONG DESC: RoomB Long Desc
-SHORT DESC: RoomB Short Desc
-ADITIONAL DESC: RoomB Additional Desc
-LONG EXIT DESC: RoomB Long Desc
-SHORT EXIT DESC: Door North and Door South

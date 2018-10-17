@@ -130,7 +130,7 @@ bool House::printRooms()
 {
 	// Print all the keys in the houseMap
 	cout << "printRooms()" << endl;
-	//if ( ! DEBUG_EXAMINE ) return true;
+	if ( ! DEBUG_EXAMINE ) return true;
 	std::cout << "--- House rooms: ---" << std::endl;
 	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
 		std::cout << "\t" << it->first << std::endl;

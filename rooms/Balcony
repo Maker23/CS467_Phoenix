@@ -1,8 +1,0 @@
-ROOM NAME: Balcony
-CONNECTION 1: west|2nd Floor Hallway
-CONNECTION 2: up|3rd Floor Hallway
-LONG DESC: Balcony Long Desc
-SHORT DESC: Balcony Short Desc
-ADITIONAL DESC: Balcony Additional Desc
-LONG EXIT DESC: Balcony Long Desc
-SHORT EXIT DESC: up, west

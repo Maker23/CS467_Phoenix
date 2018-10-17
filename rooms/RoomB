@@ -1,6 +1,0 @@
-ROOM NAME: RoomB
-CONNECTION:North Door|RoomA|rooma, north, north door
-CONNECTION:South Door|RoomC|roomc, south, south door
-LONG DESC: RoomB Long Desc. There are two doors in this room. One is on the north wall and another on the south wall.
-SHORT DESC: RoomB Short Desc
-ADITIONAL DESC: RoomB Additional Desc

@@ -1,0 +1,12 @@
+NAME: Dirty Dishes
+IS_CONTAINER: 1
+ACTION: move
+DESCRIPTION: The counter and sink are piled with dirty, dusty, dishes.
+ADDITIONAL_DESC: It appears somebody didn't want to clean them.
+WEIGHT: 50
+IN_ROOM: Kitchen
+CONTAINS: Record1
+OPEN: 1
+OPEN_DESC: You find a record sitting on the bottome of one of the piles.
+TRIGGERS: Record1
+DEPENDS_ON: null

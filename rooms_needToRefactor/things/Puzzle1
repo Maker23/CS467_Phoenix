@@ -1,0 +1,12 @@
+NAME: Puzzle of some kind
+IS_CONTAINER: 1
+ACTION: solve
+DESCRIPTION: you see generic puzzle1. 
+ADDITIONAL_DESC: You solved it, now something happens
+WEIGHT: 1
+IN_ROOM: Foyer
+CONTAINS: Firestarter
+OPEN: 1
+OPEN_DESC: This opens up and now you see flint and steel.
+TRIGGERS: Firestarter
+DEPENDS_ON: SolvingPuzzle1

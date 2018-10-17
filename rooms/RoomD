@@ -1,6 +1,0 @@
-ROOM NAME: RoomD
-CONNECTION:North Door|2nd Floor Hallway|hallway, north, north door
-CONNECTION:East Door|RoomE|east, east door, roome, 
-LONG DESC: RoomD Long Desc. There are doors on the north wall and the east wall.
-SHORT DESC: RoomD Short Desc
-ADITIONAL DESC: RoomD Additional Desc

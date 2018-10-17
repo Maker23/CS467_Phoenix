@@ -62,10 +62,11 @@ class Room
 		void Examine();
 		Feature * getFeature(std::string);
 		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack - used in House::buildHouse -- should not be needed anywhere else
-		Room * goRoom(std::string, GameState *);
 		std::string getExitRoomByKey(std::string);			// searches exits by keyword (such as south) and if found, returns the room name. If not found, returns null.
 		std::string getExitsForDisplay();
-		bool lockExitDoorByKey(std::string);
+		bool lockExitDoorByKey(std::string);			// will lock the door to one of the rooms based on a doorway keyword.
+		void displayRoom();
+		Room * goRoom(std::string, GameState *);
 
 };
 

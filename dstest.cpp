@@ -10,7 +10,7 @@
 int main()
 {
 	House *house;
-	Room *roomPtr;
+	Room *roomPtr, *lockRoom;
 	Doorway *doorway;
 
 	Choice *choice;
@@ -24,9 +24,10 @@ int main()
 	house = new House();
 	roomPtr = house->buildHouse("Foyer");
 	house->printRooms();
-	std::cout << "Starting Room: " << roomPtr->getRoomName() << "\n\n";
-	//std::cout << roomPtr->getExitRoomByKey("notThere") << std::endl;
-	//std::cout << roomPtr->getExitRoomByKey("SOUTH") << std::endl;
+
+   // lock ballroom door to kitchen
+   lockRoom = house->getRoomPtr("Ballroom");
+   lockRoom->lockExitDoorByKey("kitchen");
 
 
 	std::string userCommand;
@@ -35,12 +36,15 @@ int main()
    std::cout << roomPtr->getRoomName() << std::endl;
    std::cout << roomPtr->getExitsForDisplay() << std::endl;
 
+
+   roomPtr->displayRoom();
+   roomPtr->setRoomSeen();
 	std::cout << "Command (" << roomPtr->getRoomName() << "): ";
    std::getline (std::cin,userCommand);
 
-   // lock ballroom door to kitchen
-   roomPtr = house->getRoomPtr("Ballroom");
-   roomPtr->lockExitDoorByKey("kitchen");
+
+
+
 
    // take simple commands to move through the house.
    while (userCommand.compare("quit") != 0)
@@ -57,7 +61,8 @@ int main()
    		if(exitStringReturned.length() > 0)
    		{
 	     		roomPtr = house->getRoomPtr(exitStringReturned);
-	   		std::cout << roomPtr->getExitsForDisplay() << std::endl; 			
+	     		roomPtr->displayRoom();
+   			roomPtr->setRoomSeen();
    		}
    	}
 

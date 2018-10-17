@@ -364,6 +364,22 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 	return this;
 }
 
+// prints the room.
+// TODO: game engine should correctly word wrap in the terminal.
+void Room::displayRoom()
+{
+	std::cout << std::endl;
+	if(roomSeen)
+		std::cout << shortDesc << std::endl;
+	else
+		std::cout << longDesc << std::endl;
+
+	std::cout << additionalDesc << std::endl;
+
+	// this we may want to only show if user asks for the exits.
+	std::cout << "Exits: " << getExitsForDisplay() << std::endl;
+}
+
 // Constructor for Doorway class. 
 Doorway::Doorway()
 {

@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <stack>
 #include <vector>
+#include <sstream>
 #include "room.hpp"
 #include "parser.hpp"
 
@@ -51,8 +52,7 @@ Room::Room(string filename)
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
 	{
-		//TODO: fix this by doing it in the constructor #facepalm
-  	Connections[i] = NULL;
+	  	Connections[i] = NULL;
 	}
 
 	// Iterate through the room file line by line and set Room values
@@ -88,16 +88,7 @@ Room::Room(string filename)
    			additionalDesc = lineStr.substr(16, lineStr.length()-1);
 				continue;
    		}
-   		if(lineStr.find("LONG EXIT DESC: ") != std::string::npos)
-   		{
-   			longExitDesc = lineStr.substr(16, lineStr.length()-1);
-				continue;
-   		}
-   		if(lineStr.find("SHORT EXIT DESC: ") != std::string::npos)
-   		{
-   			shortExitDesc = lineStr.substr(17, lineStr.length()-1);
-				continue;
-   		}
+
    		if(lineStr.find("FEATURE: ") != std::string::npos)
 			{
 				//TODO: get features here
@@ -107,6 +98,17 @@ Room::Room(string filename)
 					Features.push_back(newFeature);
 				}
 			}
+
+			if(lineStr.find("CONNECTION") != std::string::npos)
+			{
+				Connections[numExits] = new Doorway();
+
+				size_t startOfConnectionInfo = lineStr.find_last_of(":") + 1;
+				string connectionInfo = lineStr.substr(startOfConnectionInfo, lineStr.length() - 1);
+				Connections[numExits]->setDoorway(connectionInfo);
+			}
+
+			/*
    		if(lineStr.find("CONNECTION") != std::string::npos)
 			{
 				// TODO: We dont' need numbers on the CONNECTION lines in the room files, should eliminate those
@@ -124,6 +126,7 @@ Room::Room(string filename)
 					// should error ;)
 				}
 			}
+			*/
 			numExits = roomCount;
    	}
 	}
@@ -172,15 +175,6 @@ std::string Room::getAdditionalDesc()
 	return this->additionalDesc;
 }
 
-std::string Room::getLongExitDesc()
-{
-	return this->longExitDesc;
-}
-
-std::string Room::getShortExitDesc()
-{
-	return this->shortExitDesc;
-}
 
 
 Feature * Room::getFeature (std::string featureFileName){
@@ -281,13 +275,14 @@ void Room::addExitsToStack(std::stack<std::string> &exits)
 	int i;
 	for(i=0; i<numExits; i++)
 	{
-		exits.push(Connections[i]->roomName);
+		exits.push(Connections[i]->getExitRoomName());
 	}
 
 }
 
 Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 	Room * nextRoom = this;
+	/* TODO: DOORWAY REFACTOR FIX
 	Doorway * door;
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin Room::goRoom" << std::endl;
@@ -310,6 +305,7 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 		}
 	}
 	std::cout << "Hm, I don't see a doorway that leads to the " << roomName << "...." << std::endl;
+	*/
 	return this;
 }
 
@@ -327,8 +323,40 @@ Doorway::~Doorway()
 
 }
 
+void Doorway::setDoorway(std::string connectionString)
+{
+	std::string keywordStr, tempStr;
+
+	std::size_t startDisplayName = connectionString.find_last_of(":") + 1;
+	std::size_t startRoomTo = connectionString.find_first_of("|") + 1;
+	std::size_t startKeywords = connectionString.find_last_of("|") + 1;
+
+	displayName = connectionString.substr(startDisplayName, startRoomTo - startDisplayName - 1);
+	goesTo = connectionString.substr(startRoomTo, startKeywords - startRoomTo - 1);
+	keywordStr = connectionString.substr(startKeywords, connectionString.length() - 1);
+
+   std::stringstream mystream (keywordStr);
+
+   while(getline(mystream,tempStr,',')){  // https://stackoverflow.com/questions/40611689/c-error-in-tokenizer-variable-stdstringstream-mystream-has-initializer-b/43017562
+       keyWords.push_back(tempStr);
+   }
+}
+
 std::string Doorway::Examine() {
-	std::string ReturnThis =  "" + direction + ":" + roomName;
+	// TODO: DOORWAY REFACTOR FIX
+	//std::string ReturnThis =  "" + direction + ":" + roomName;
+	std::string ReturnThis = "Placeholder until doorway refactor fix is completed.";
 	return ReturnThis;
+}
+
+
+std::string Doorway::getDisplayName()
+{
+	return displayName;
+}
+
+std::string Doorway::getExitRoomName()
+{
+	return goesTo;
 }
 

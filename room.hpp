@@ -12,12 +12,20 @@
 
 class Doorway 
 {
+	private:
+		std::string displayName;
+		std::string goesTo;
+		std::vector<std::string> keyWords;
+
   public:
 		Doorway(); // constructor
 		~Doorway(); // destructor
-	 	std::string roomName;
-		std::string direction;
+		void setDoorway(std::string);  // Parses string and sets the correct values.
+		std::string getDisplayName();
+		std::string getExitRoomName();
+
 		std::string Examine();
+
 };
 
 class Room
@@ -28,13 +36,12 @@ class Room
 		std::string longDesc;
 		std::string shortDesc;
 		std::string additionalDesc;
-		std::string longExitDesc;
-		std::string shortExitDesc;
 		int numExits;
+		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
 
 	public:
 	 	// IRL these would be private with iterator and get/set functions. TODO
-		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
+
 		std::vector<Feature *> Features;
 		
 		Room(std::string); 									// constructor
@@ -45,8 +52,6 @@ class Room
 		std::string getLongDesc();
 		std::string getShortDesc();
 		std::string getAdditionalDesc();
-		std::string getLongExitDesc();
-		std::string getShortExitDesc();
 		void Examine();
 		Feature * getFeature(std::string);
 		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack - used in House::buildHouse -- should not be needed anywhere else

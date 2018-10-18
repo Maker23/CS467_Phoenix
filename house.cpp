@@ -21,6 +21,8 @@
 #include <stack>
 #include <vector>
 #include <typeindex>
+#include <sys/types.h>
+#include <dirent.h>
 #include "house.hpp"
 #include "room.hpp"
 
@@ -83,6 +85,34 @@ Room *House::buildHouse(string startingRoom){
 			houseMap[roomPtr->getRoomName()] = roomPtr;
 		}
 	}
+
+	 string featuresFolder = "features";
+	 string FeatureFileToOpen;
+    DIR* dirp = opendir(featuresFolder.c_str());
+    struct dirent * dp;
+    while ((dp = readdir(dirp)) != NULL) {
+    	if (dp->d_name[0] != '.')
+    	{
+    		std::string fileName(dp->d_name);
+    		FeatureFileToOpen = "features/" + fileName;
+    		houseFeatures[fileName] = new Feature(FeatureFileToOpen);
+    	}
+
+    }
+    closedir(dirp);
+
+    for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
+	    if ( DEBUG_FEATURES ) 
+	    {
+	    	std::cout << it->second->getName() << std::endl;;
+	    }
+	}
+    
+    if ( DEBUG_FEATURES ) 
+    {
+    	cout << "Number of Features in House: " << houseFeatures.size() << endl;
+    }
+
 	return  startingRoomPtr;
 }
 

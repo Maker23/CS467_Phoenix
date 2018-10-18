@@ -1,140 +1,172 @@
-/* vim:ts=2:
- *
- * File name: Container.cpp
- *
- * Overview:
- *   General functions that work on Features.
- *
- * 	 Feature::Examine  prints the contents of a Feature, recursively,
- * 	 and returns a Feature* vector.
- *
- * 	 Feature::FindByName searches for an object by name and returns
- * 	 a pointer to the object if found, NULL if not
- *
- * 	 GameState:: functions apply to the derived class which is the player's
- * 	 game state 
- *
- */
 
-#include <iostream> // for debugging
-#include <vector>
+
+
 #include <string>
-
-#include "feature.hpp"
+#include <iostream>
+#include <fstream>
+#include <stdlib.h>
+#include <map>
+#include <stack>
+#include <vector>
+#include <typeindex>
+#include <sstream>
+#include <algorithm>
 #include "house.hpp"
+#include "room.hpp"
+#include "feature.hpp"
 
+using namespace std;
 
-/* ***********************************************************
- * Constructors
- * ********************************************************* */
-Feature::Feature (std::string Na)
+Feature::Feature(string fileToOpen)
 {
-	Name=Na;
-	Story="";
-	Weight=1;
-	UseFunc = NULL;
-	OpenFunc = NULL;
-	isContainer=false;
-	Open=true;
-}
+	ifstream featurefile;
+	string lineStr, tempStr;
 
-Feature::Feature (std::string Na, std::string St)
-{
-	Name=Na;
-	Story=St;
-	Weight=1;
-	UseFunc = NULL;
-	OpenFunc = NULL;
-	isContainer=false;
-	Open=true;
-}
 
-/* ***********************************************************
- * Destructors
- * ********************************************************* */
-Feature::~Feature()
-{
-	//TODO
-	std::vector<Feature*>::iterator iterFeature;
-	for (iterFeature=Contents.begin(); iterFeature != Contents.end(); iterFeature++)
-	{
-		delete (*iterFeature);
-	}
-}
+	// set defaults
+	name = "";
+	solved = false;
+	unSolvedDescription = "";
+	additionalDescription = "";
+	solvedDescription = "";
+	weight = 0;
+	triggers = "";
+	dependsOn = "";
 
-/* ********************************************************* */
-void Feature::Print () 
-{
-	std::cout << Name << ". ";
-}
 
-/* ********************************************************* */
-std::vector<Feature*> Feature::Examine(bool reCursive, bool verbose, bool silent)
-{
-  // TODO: return an empty vector for a non-container hting
-	// For a feature with is_container=true, return a vector to its Contents
-	// Should we have a recursive flag? Yes... yes we should.
 
-	std::vector<Feature*>::iterator iter;
+	featurefile.open(fileToOpen);
 
-	std::cout << Name << ". " << Story << std::endl;
+	if (featurefile.is_open()) {
+		while (std::getline(featurefile, lineStr))  {
 
-  if (DEBUG_EXAMINE) 
-	{ 
-		std::cout  << "DEBUG Feature::Examine " << std::endl;
-		std::cout << "		Name = " << Name << std::endl
-			<< "		Story = " << Story << std::endl
-			<< "		isContainer = " << isContainer << std::endl
-			<< "		Open = " << Open << std::endl;
-		std::cout << "		Verbs = ";
-			for (std::list<int>::iterator iter = Verbs.begin(); iter != Verbs.end(); iter++)
+			if(lineStr.find("NAME: ") != std::string::npos) 
 			{
-				std::cout << *iter << ",";
+				tempStr = lineStr.substr(6, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found NAME " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					name = tempStr;
 			}
-			std::cout << std::endl;
+
+			if(lineStr.find("TYPE: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(6, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TYPE " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if((tempStr.length() > 0) && (tempStr.compare("null") != 0))
+				{
+					if(tempStr.compare("container") == 0)
+						type = container;
+					else if(tempStr.compare("item") == 0)
+						type = item;
+					else if(tempStr.compare("door_lock") == 0)
+						type = door_lock;
+					else if(tempStr.compare("block_room") == 0)
+						type = block_room;
+					if (DEBUG_FEATURES) { std::cout << "Feature() - Type: " << type << std::endl;}
+				}
+			}
+
+			if(lineStr.find("UNSOLVED_DESC: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(15, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found UNSOLVED_DESC " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					unSolvedDescription = tempStr;
+			}
+
+			if(lineStr.find("ADDITIONAL_DESC: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(17, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found ADDITIONAL_DESC " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					additionalDescription = tempStr;
+			}
+
+			if(lineStr.find("COMPLETED_DESC: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(16, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found COMPLETED_DESC " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					solvedDescription = tempStr;
+			}
+
+			if(lineStr.find("WEIGHT: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(8, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found WEIGHT " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					weight = stoi(tempStr);
+			}
+
+			if(lineStr.find("TRIGGERS: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(10, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TRIGGERS " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					triggers = tempStr;
+			}
+
+			if(lineStr.find("DEPENDS_ON: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(12, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DEPENDS_ON " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					dependsOn = tempStr;
+			}
+
+			if(lineStr.find("ACTIONS: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(9, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found ACTIONS " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+				{
+					std::string keywordStr = tempStr;
+				   std::stringstream mystream (keywordStr);
+
+				   while(getline(mystream,tempStr,','))
+				   {  // https://stackoverflow.com/questions/40611689/c-error-in-tokenizer-variable-stdstringstream-mystream-has-initializer-b/43017562
+				   		// remove leading and trailing spaces
+				    		while(tempStr[0] == ' ')
+				    		{
+				    			tempStr = tempStr.substr(1, tempStr.length() - 1);
+				    		}
+				    		while(tempStr[tempStr.length() - 1] == ' ')
+				    		{
+				    			tempStr = tempStr.substr(0, tempStr.length() - 2);
+				    		}
+				       actions.push_back(tempStr);
+				   }
+					//dependsOn = lineStr.substr(6, lineStr.length()-1);
+				}
+				if (DEBUG_FEATURES) { std::cout << "Total Actions " << actions.size() << std::endl;}
+
+			}
 			
-			/*
-			<< "		Weight = " << Weight << std::endl
-			<< "		UseFunc = " << UseFunc << std::endl
-			<< "		OpenFunc = " << OpenFunc << std::endl
-			*/
-	}
-	if ( isContainer && Open && reCursive ) {
-  	if (DEBUG_EXAMINE) std::cout  << "DEBUG Feature::Examine -- reCursing now " << std::endl;
-		for ( iter = Contents.begin(); iter != Contents.end(); iter ++ )
-		{
-			(*iter)->Examine(reCursive, verbose, silent);
 		}
 	}
-	return Contents; // may be empty if the Feature is not a container. Do we need this though? No we do not. TODO: this returns a void I think
-}
-
-
-/* ***********************************************************
- * Search inside a container for a Feature with a particulare name
- * Return the pointer for that Feature
- * ********************************************************* */
-Feature * Feature::FindByName(std::string SeekingFeatureName)
-{
-	std::vector<Feature*>::iterator iter;
-	Feature * tmpVal;
-
-	if (DEBUG_FIND) std::cout << "===== begin Feature::FindByName, looking in " << this->Name << std::endl;
-	for (iter=Contents.begin(); iter != Contents.end(); iter++)
+	else
 	{
-			if ( ((*iter)->Name).compare(SeekingFeatureName) == 0 ) 
-			{
-				//return this; // The Feature is in this container
-				return (*iter); // Return the pointer to feature found
-			}
-			if ( (*iter)->isContainer )
-			{
-				if (DEBUG_FIND) std::cout << "DEBUG: Recursing FindByName into " << (*iter)->Name << std::endl;
-				tmpVal = (((Feature*)(*iter))->Feature::FindByName(SeekingFeatureName));
-				if (tmpVal) return tmpVal;
-			}
+		cout << "Error opening feature file '" <<  fileToOpen << "\n";
 	}
-	if (DEBUG_FIND) std::cout << "===== begin Feature::FindByName, looking in " << this->Name << std::endl;
-	return ((Feature *)0);
+
+
 }
 
+Feature::~Feature()
+{
+
+}
+
+std::string Feature::getName()
+{
+	return name;
+}

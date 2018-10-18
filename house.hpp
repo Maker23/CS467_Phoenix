@@ -6,11 +6,13 @@
 #include <vector>
 #include <map>
 #include "room.hpp"
+#include "feature.hpp"
 
 class House
 {
 	private:
 		std::map<std::string,Room *> houseMap;   // this is a map of the house... room is key, holds the room pointer
+		std::map<std::string,Feature *> houseFeatures;   // this is a map of the house... room is key, holds the room pointer
 
 	public:
 		House(); // constructor

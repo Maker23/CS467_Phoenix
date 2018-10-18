@@ -49,7 +49,7 @@ Room::Room(string filename)
 	string lineStr, str;
 	int roomCount=0;
 	numExits = 0;
-	Feature * newFeature;
+	//Feature * newFeature;
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
 	{
@@ -90,13 +90,14 @@ Room::Room(string filename)
 				continue;
    		}
 
-   		if(lineStr.find("FEATURE: ") != std::string::npos)
-			{
+   		if(lineStr.find("FEATURE:") != std::string::npos)
+   		{
 				//TODO: get features here
-				newFeature = getFeature( lineStr.substr(9, lineStr.length()-1));
-				if ( newFeature != NULL ) {
+				str = lineStr.substr(8, lineStr.length()-1);
+				if ( str.length() > 0 ) 
+				{
 					// Add this to the vector of features in the room
-					Features.push_back(newFeature);
+					roomFeatures.push_back(str);
 				}
 			}
 
@@ -110,25 +111,6 @@ Room::Room(string filename)
 				roomCount++;
 			}
 
-			/*
-   		if(lineStr.find("CONNECTION") != std::string::npos)
-			{
-				// TODO: We dont' need numbers on the CONNECTION lines in the room files, should eliminate those
-				if (roomCount < MAX_RM_CONNECTIONS)
-				{
-				size_t startDirection = lineStr.find_last_of(" ") + 1;
-				size_t startName = lineStr.find_last_of("|") + 1;
-				Connections[roomCount] = new Doorway();
-				Connections[roomCount]->direction = lineStr.substr(startDirection, startName - startDirection - 1);
-				Connections[roomCount]->roomName = lineStr.substr(startName, lineStr.length() -1);
-				roomCount++;
-				}
-				else
-				{
-					// should error ;)
-				}
-			}
-			*/
 			numExits = roomCount;
    	}
 	}
@@ -137,6 +119,8 @@ Room::Room(string filename)
 		cout << "Error opening room file '" <<  filename << "'. Exiting...\n";
 		exit(1);
 	}
+
+	if ( DEBUG_FEATURES ) { std::cout << "Number of Features in room: " << roomFeatures.size() << endl; }
 
 	roomSeen = false;
 }
@@ -183,6 +167,8 @@ void Room::setRoomSeen()
 }
 
 Feature * Room::getFeature (std::string featureFileName){
+	Feature * newFeature = NULL;
+	/* TODO:FIX FEATURE REFACTOR
 	ifstream featurefile;
 	string lineStr, str;
 	string featureFile = FEATURE_DIRECTORY + featureFileName;
@@ -246,6 +232,7 @@ Feature * Room::getFeature (std::string featureFileName){
 		//Print useful error, but don't exit
 		cout << "Error opening feature file '" <<  featureFile << "\n";
 	}
+	*/
 
 	return newFeature;
 	
@@ -296,6 +283,7 @@ bool Room::lockExitDoorByKey(std::string searchKey)
  */
 void Room::Examine()
 {
+	/* TODO: FIX FEATURE REFACTOR
 	Doorway * door;
 	std::vector<Feature*>::iterator iter;
 
@@ -312,6 +300,7 @@ void Room::Examine()
 	{
 		(*iter)->Examine(true,1,0);
 	}
+	*/
 }
 
 /*
@@ -411,7 +400,8 @@ void Doorway::setDoorway(std::string connectionString)
 
    std::stringstream mystream (keywordStr);
 
-   while(getline(mystream,tempStr,',')){  // https://stackoverflow.com/questions/40611689/c-error-in-tokenizer-variable-stdstringstream-mystream-has-initializer-b/43017562
+   while(getline(mystream,tempStr,','))
+   {  // https://stackoverflow.com/questions/40611689/c-error-in-tokenizer-variable-stdstringstream-mystream-has-initializer-b/43017562
    		// remove leading and trailing spaces
     		while(tempStr[0] == ' ')
     		{
@@ -421,8 +411,6 @@ void Doorway::setDoorway(std::string connectionString)
     		{
     			tempStr = tempStr.substr(0, tempStr.length() - 2);
     		}
-
-
        keyWords.push_back(tempStr);
    }
    doorLocked = false;

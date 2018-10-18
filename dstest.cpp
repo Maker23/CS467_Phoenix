@@ -21,6 +21,7 @@ int main()
 	int notUsed;
 	std::vector<Feature*>::iterator iter;
 
+
 	house = new House();
 	roomPtr = house->buildHouse("Foyer");
 	house->printRooms();

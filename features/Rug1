@@ -1,0 +1,10 @@
+# Name and 'is_container' should come first
+NAME: Rug
+TYPE: container
+ACTIONS: move, push, shove
+UNSOLVED_DESC: A dark blue rug sits in the middle of the room.
+ADDITIONAL_DESC: It's dusty, but you can make out the picture of a fiery bird - a Phoenix.
+COMPLETED_DESC: The rug looks a little rumpled in one corner.
+WEIGHT: 1
+TRIGGERS: Note1
+DEPENDS_ON: null

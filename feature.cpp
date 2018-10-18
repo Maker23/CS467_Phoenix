@@ -1,4 +1,10 @@
+/*
+TODO: quite a bit, including:
+   implement each of the actions such as door locks, take item, drop item, etc.
+ 	actions for items should be how to use it. Items by default should be able to be picked up and dropped.
+	
 
+*/
 
 
 #include <string>
@@ -26,9 +32,10 @@ Feature::Feature(string fileToOpen)
 	// set defaults
 	name = "";
 	solved = false;
-	unSolvedDescription = "";
-	additionalDescription = "";
-	solvedDescription = "";
+	description1 = "";
+	description2 = "";
+	description3 = "";
+	description4 = "";
 	weight = 0;
 	triggers = "";
 	dependsOn = "";
@@ -64,39 +71,52 @@ Feature::Feature(string fileToOpen)
 						type = door_lock;
 					else if(tempStr.compare("block_room") == 0)
 						type = block_room;
-					else if(tempStr.compare("required_for_another_item") == 0)
-						type = required_for_another_item;
+					else if(tempStr.compare("used_with_another_item") == 0)
+						type = used_with_another_item;
 					else if(tempStr.compare("decoration") == 0)
 						type = decoration;
+					else if(tempStr.compare("puzzle") == 0)
+						type = puzzle;
+					else if(tempStr.compare("dropped_item") == 0)
+						type = dropped_item;
 					if (DEBUG_FEATURES) { std::cout << "Feature() - Type: " << type << std::endl;}
 				}
 			}
 
-			if(lineStr.find("UNSOLVED_DESC: ") != std::string::npos) 
+			if(lineStr.find("DESCRIPTION1: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(15, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found UNSOLVED_DESC " << tempStr << std::endl;}
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION1 " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					unSolvedDescription = tempStr;
+					description1 = tempStr;
 			}
 
-			if(lineStr.find("ADDITIONAL_DESC: ") != std::string::npos) 
+			if(lineStr.find("DESCRIPTION2: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(17, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found ADDITIONAL_DESC " << tempStr << std::endl;}
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION2 " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					additionalDescription = tempStr;
+					description2 = tempStr;
 			}
 
-			if(lineStr.find("COMPLETED_DESC: ") != std::string::npos) 
+			if(lineStr.find("DESCRIPTION3: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(16, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found COMPLETED_DESC " << tempStr << std::endl;}
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION3 " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					solvedDescription = tempStr;
+					description3 = tempStr;
+			}
+
+			if(lineStr.find("DESCRIPTION4: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(16, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION4 " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					description4 = tempStr;
 			}
 
 			if(lineStr.find("WEIGHT: ") != std::string::npos) 

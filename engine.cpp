@@ -70,7 +70,7 @@ int GameState::getGameTaskStatus()
 
 int GameState::getAvailableCapacity()
 {
-	/* TODO: FIX FEATURE REFACTOR
+	/* TODO: FIX_FEATURE_REFACTOR
 	int GameStateIsCarrying = 0;
 	std::vector<Feature*> backpackContents;
 	std::vector<Feature*>::iterator iterFeature;

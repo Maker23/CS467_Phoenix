@@ -12,7 +12,7 @@
 #define DEBUG_ROOM false
 #define DEBUG_USE false
 #define DEBUG_FEATURES false
-#define DEBUG_BRENT true
+#define DEBUG_BRENT false
 
 #ifndef TEST
 #define TEST false

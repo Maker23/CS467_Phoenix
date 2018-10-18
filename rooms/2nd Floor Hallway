@@ -9,3 +9,5 @@ CONNECTION:Stairs up|3rd Floor Hallway|3rd floor, stairs up, up
 LONG DESC: 2nd Floor Hallway Long Desc. Lots of doors... need description of them.
 SHORT DESC: 2nd Floor Hallway Short Desc
 ADITIONAL DESC: 2nd Floor Hallway Additional Desc
+FEATURE: Floor2Lamps
+FEATURE: 2ndFloorDoors

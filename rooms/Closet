@@ -4,3 +4,5 @@ CONNECTION:South Door|Nursery|nursery, south, south door
 LONG DESC: Bedroom1 Long Desc. There are two doors in this room. One is on the north wall and another on the south wall.
 SHORT DESC: Bedroom1 Short Desc
 ADITIONAL DESC: Bedroom1 Additional Desc
+FEATURE: ClosetShelf
+FEATURE: Camera

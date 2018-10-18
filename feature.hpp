@@ -7,7 +7,7 @@
 #include <vector>
 
 
-enum FeatureType { container, item, door_lock, block_room, required_for_another_item, decoration };
+enum FeatureType { container, item, door_lock, block_room, used_with_another_item, decoration, puzzle, dropped_item };
 
 
 class Feature
@@ -17,9 +17,10 @@ class Feature
 
 		FeatureType type;
 		bool solved;
-		std::string unSolvedDescription;
-		std::string additionalDescription;
-		std::string solvedDescription;
+		std::string description1;
+		std::string description2;
+		std::string description3;
+		std::string description4;
 		int weight;
 		std::string triggers;
 		std::string dependsOn;

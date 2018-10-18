@@ -168,7 +168,7 @@ void Room::setRoomSeen()
 
 Feature * Room::getFeature (std::string featureFileName){
 	Feature * newFeature = NULL;
-	/* TODO:FIX FEATURE REFACTOR
+	/* TODO: FIX_FEATURE_REFACTOR
 	ifstream featurefile;
 	string lineStr, str;
 	string featureFile = FEATURE_DIRECTORY + featureFileName;
@@ -283,7 +283,7 @@ bool Room::lockExitDoorByKey(std::string searchKey)
  */
 void Room::Examine()
 {
-	/* TODO: FIX FEATURE REFACTOR
+	/* TODO: FIX_FEATURE_REFACTOR
 	Doorway * door;
 	std::vector<Feature*>::iterator iter;
 

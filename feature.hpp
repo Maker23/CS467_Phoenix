@@ -27,7 +27,7 @@ class Feature
 
 
 	public:
-				std::vector<std::string> actions;
+		std::vector<std::string> actions;
 		Feature(std::string);
 		~Feature();
 

@@ -167,3 +167,30 @@ bool House::printRooms()
 	}
 	return true;
 }
+
+bool House::hasFeature(string key)
+{
+	// map syntax learned from: 
+	//    https://stackoverflow.com/questions/1939953/how-to-find-if-a-given-key-exists-in-a-c-stdmap
+	if ( houseFeatures.find(key) == houseFeatures.end() )
+	{
+      return false;
+   }
+	else
+	{
+		return true;
+   }
+}
+
+
+Feature * House::getFeaturePtr(string featureName)
+{
+	if(hasFeature(featureName))
+	{
+		return houseFeatures[featureName];
+	}
+	else
+	{
+		return NULL;
+	}
+}

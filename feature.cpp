@@ -1,8 +1,22 @@
 /*
+ Notes:
+ 	Everything that can be used in a room is a feature. Features have a differfent quality, check the type enum for the options.
+ 	It is loaded into a MAP of Features objects located in house (just liek the room objects)
+ 	To get a feature's object ptr, call it with house->getFeaturePtr(string key);  key is the name of the file, and is used in the rooms vector of what features it has.
+
 TODO: quite a bit, including:
+
+	Fix anything broke with prior way of doing it:  grep FIX_FEATURE_REFACTOR *.cpp for the list
+		(should be Room::Examine and GameState::getAvailableCapacity -- if we are going to bother, and i don't think we should bother with carrying capacity)
+
+	Determine for each FeatureType, how the DESCRIPTION[1-4] lines will be used and then change the feature files so they are consistent.
+
+	For a player's inventory: have a vector of strings... and use the feature name of the items they picked up, OR copy the pointer to that feature.
+
    implement each of the actions such as door locks, take item, drop item, etc.
- 	actions for items should be how to use it. Items by default should be able to be picked up and dropped.
-	
+ 	actions for items should be how to use it. Items by default should be able to be picked up and dropped.	
+
+
 
 */
 
@@ -194,3 +208,4 @@ std::string Feature::getName()
 {
 	return name;
 }
+

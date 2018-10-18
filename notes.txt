@@ -1,0 +1,13 @@
+I (Brent) refactored the features to give more options of they can be used. I had to comment out a few things that used the old version.
+Week 5 I will continue to build out on this.
+
+With the Room refactor, you should be able to build on the game engine so you can move around the house and look at the rooms.
+Look at dstest.cpp for a simplified engine to move around the house.
+Also look at the room files. The connections have a lot more information so using any of those keywords should work to get where you need to go. The DS test just used one word commands, so from the Balcony saying "west" moved to the Foyer.
+
+We don't need to code the entire time -- the 100 hours includes story building.
+We can easily change the description lines in the rooms to better tell the story as part of the game engine and parsing.
+I mean we can add more lines, and change what they do. It's easy to do. 
+
+For Week 4 I recommend getting the house (without features) traversed using the good parsing, and adding to the room files the story description, as well as adding any more description lines that are needed.
+We can have some common commands for each room... View room could give extra details, so the first time descriptions would need to be modified and then a new description line (or use additional?) will be used for that.

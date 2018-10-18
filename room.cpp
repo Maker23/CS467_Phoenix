@@ -120,7 +120,7 @@ Room::Room(string filename)
 		exit(1);
 	}
 
-	if ( DEBUG_FEATURES ) { std::cout << "Number of Features in room: " << roomFeatures.size() << endl; }
+	if (DEBUG_BRENT) { std::cout << "Number of Features in "<< roomName << ": " << roomFeatures.size() << endl; }
 
 	roomSeen = false;
 }

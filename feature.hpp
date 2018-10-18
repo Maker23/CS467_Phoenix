@@ -7,7 +7,7 @@
 #include <vector>
 
 
-enum FeatureType { container, item, door_lock, block_room };
+enum FeatureType { container, item, door_lock, block_room, required_for_another_item, decoration };
 
 
 class Feature

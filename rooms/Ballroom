@@ -4,3 +4,5 @@ CONNECTION:South Door|Foyer|foyer, se, south east, southeast, lower right, lower
 LONG DESC: The Ballroom was once the center for entertainment in the House back in its day. The spacious common room was perfect for guests to mingle and dance, either with a full band or from the record player that sits in the corner. Often times, guests would enter from the Foyer, and appetizers would be served from the Kitchen next door. The vaulted ceiling carried the music evenly across the room to set up the perfect celebration, yet to this day all that remains is a lone record player. There's no records to place on it, but it appears to be in excellent in condition. There are two exits on the east wall. One on north side of the wall, the other the south side.
 SHORT DESC: The Ballroom is tailor-made to house excellent sound, live or recorded. The record player appears to work fine, however no records are to be found in this empty, echoing chamber.  
 ADITIONAL DESC: Music once filled the Ballroom, but now all that echoes is the floorboards and wind from outside.
+FEATURE: RecordPlayer
+FEATURE: Tapestry1

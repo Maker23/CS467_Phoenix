@@ -64,6 +64,10 @@ Feature::Feature(string fileToOpen)
 						type = door_lock;
 					else if(tempStr.compare("block_room") == 0)
 						type = block_room;
+					else if(tempStr.compare("required_for_another_item") == 0)
+						type = required_for_another_item;
+					else if(tempStr.compare("decoration") == 0)
+						type = decoration;
 					if (DEBUG_FEATURES) { std::cout << "Feature() - Type: " << type << std::endl;}
 				}
 			}

@@ -1,4 +1,3 @@
-# Name and 'is_container' should come first
 NAME: Rug
 TYPE: container
 ACTIONS: move, push, shove

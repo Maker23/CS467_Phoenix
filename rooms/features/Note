@@ -1,8 +1,0 @@
-NAME: Note
-DESCRIPTION: An old piece of paper
-ADDITIONAL_DESC: The number '1894' is written on it in faded calligraphy
-WEIGHT: 1
-IN_ROOM: Foyer. This will be ignored if this object is in a container.
-IS_CONTAINER: 0
-CONTAINS: ignore
-OPEN: 1

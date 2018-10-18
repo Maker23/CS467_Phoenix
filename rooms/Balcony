@@ -1,8 +1,7 @@
 ROOM NAME: Balcony
-CONNECTION 1: west|2nd Floor Hallway
-CONNECTION 2: up|3rd Floor Hallway
-LONG DESC: Balcony Long Desc
+CONNECTION:West door|2nd Floor Hallway|2nd floor, 2nd floor hallway, hallway, west, west door
+CONNECTION:Spiral stairs up|3rd Floor Hallway|3rd floor, stairs, stairs up
+CONNECTION:South|Study|study, south, south door
+LONG DESC: Balcony Long Desc. There is a door on the west wall, a door on the south wall, and a spiral staircase going up.
 SHORT DESC: Balcony Short Desc
 ADITIONAL DESC: Balcony Additional Desc
-LONG EXIT DESC: Balcony Long Desc
-SHORT EXIT DESC: up, west

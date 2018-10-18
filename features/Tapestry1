@@ -1,0 +1,7 @@
+NAME: Tapestry
+TYPE: decoration
+ACTIONS: look, search, push, view
+DESCRIPTION1: You see a large tapestry hanging on the wall.
+DESCRIPTION2: As you look closer, you see a design of the outside of the house.
+TRIGGERS: null
+DEPENDS_ON: null

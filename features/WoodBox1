@@ -1,0 +1,6 @@
+NAME: Carved Wooden Box
+TYPE: container
+ACTIONS: open
+DESCRIPTION1: Mahogany box carved with images of ghosts flying around.
+TRIGGERS: Spectacles
+DEPENDS_ON: null

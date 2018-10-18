@@ -31,6 +31,8 @@
 #include <stdlib.h>
 #include <stack>
 #include <vector>
+#include <sstream>
+#include <algorithm>
 #include "room.hpp"
 #include "parser.hpp"
 
@@ -47,12 +49,11 @@ Room::Room(string filename)
 	string lineStr, str;
 	int roomCount=0;
 	numExits = 0;
-	Feature * newFeature;
+	//Feature * newFeature;
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
 	{
-		//TODO: fix this by doing it in the constructor #facepalm
-  	Connections[i] = NULL;
+	  	Connections[i] = NULL;
 	}
 
 	// Iterate through the room file line by line and set Room values
@@ -88,42 +89,28 @@ Room::Room(string filename)
    			additionalDesc = lineStr.substr(16, lineStr.length()-1);
 				continue;
    		}
-   		if(lineStr.find("LONG EXIT DESC: ") != std::string::npos)
+
+   		if(lineStr.find("FEATURE:") != std::string::npos)
    		{
-   			longExitDesc = lineStr.substr(16, lineStr.length()-1);
-				continue;
-   		}
-   		if(lineStr.find("SHORT EXIT DESC: ") != std::string::npos)
-   		{
-   			shortExitDesc = lineStr.substr(17, lineStr.length()-1);
-				continue;
-   		}
-   		if(lineStr.find("FEATURE: ") != std::string::npos)
-			{
 				//TODO: get features here
-				newFeature = getFeature( lineStr.substr(9, lineStr.length()-1));
-				if ( newFeature != NULL ) {
+				str = lineStr.substr(8, lineStr.length()-1);
+				if ( str.length() > 0 ) 
+				{
 					// Add this to the vector of features in the room
-					Features.push_back(newFeature);
+					roomFeatures.push_back(str);
 				}
 			}
-   		if(lineStr.find("CONNECTION") != std::string::npos)
+
+			if(lineStr.find("CONNECTION") != std::string::npos)
 			{
-				// TODO: We dont' need numbers on the CONNECTION lines in the room files, should eliminate those
-				if (roomCount < MAX_RM_CONNECTIONS)
-				{
-				size_t startDirection = lineStr.find_last_of(" ") + 1;
-				size_t startName = lineStr.find_last_of("|") + 1;
-				Connections[roomCount] = new Doorway();
-				Connections[roomCount]->direction = lineStr.substr(startDirection, startName - startDirection - 1);
-				Connections[roomCount]->roomName = lineStr.substr(startName, lineStr.length() -1);
+				Connections[numExits] = new Doorway();
+
+				size_t startOfConnectionInfo = lineStr.find_last_of(":") + 1;
+				string connectionInfo = lineStr.substr(startOfConnectionInfo, lineStr.length() - 1);
+				Connections[numExits]->setDoorway(connectionInfo);
 				roomCount++;
-				}
-				else
-				{
-					// should error ;)
-				}
 			}
+
 			numExits = roomCount;
    	}
 	}
@@ -132,6 +119,8 @@ Room::Room(string filename)
 		cout << "Error opening room file '" <<  filename << "'. Exiting...\n";
 		exit(1);
 	}
+
+	if (DEBUG_BRENT) { std::cout << "Number of Features in "<< roomName << ": " << roomFeatures.size() << endl; }
 
 	roomSeen = false;
 }
@@ -172,89 +161,58 @@ std::string Room::getAdditionalDesc()
 	return this->additionalDesc;
 }
 
-std::string Room::getLongExitDesc()
+void Room::setRoomSeen()
 {
-	return this->longExitDesc;
-}
-
-std::string Room::getShortExitDesc()
-{
-	return this->shortExitDesc;
+	roomSeen = true;
 }
 
 
-Feature * Room::getFeature (std::string featureFileName){
-	ifstream featurefile;
-	string lineStr, str;
-	string featureDir = FEATURE_DIRECTORY;
-	Feature * newFeature = NULL;
-	Feature * tmpFeature = NULL;
+/*
+ * Searches the Connections (exits) in this room by keyword and if found, will return the room object.
+ * returns null if not found.
+ */
+std::string Room::getExitRoomByKey(std::string searchKey)
+{
+	//isExitKeywordFound
+	// loop through the connections and check isExitKeywordFound(searchKey)
+	// if found, return that object.
 
-	featurefile.open( (featureDir.append(featureFileName)).c_str()); 
-	if (featurefile.is_open()) {
-		while (std::getline(featurefile, lineStr))  {
-			if(lineStr.find("NAME: ") != std::string::npos) 
-			{
-				// Make a new Feature.
-				// TODO: test for failure...
-				newFeature = new Feature(lineStr.substr(6, lineStr.length()-1));
-			}
-			else if ( newFeature == NULL ) {
-				continue;
-			}
-
-			// Only go past this point if we've found the Name and created the Feature
-			// TODO: If weight < something, validVerbs = throw
-			//       if food, validVerbs = eat
-			//       or just accept a list of VERBS ?
-			if(lineStr.find("DESCRIPTION: ") != std::string::npos) 
-			{
-				newFeature->Story = (lineStr.substr(13, lineStr.length()-1));
-			}
-			else if(lineStr.find("OPEN: ") != std::string::npos) 
-			{
-				if ( stoi(lineStr.substr(6, lineStr.length()-1)) > 0  ) 
-				{ newFeature->Open = true;}
-				else
-				{ newFeature->Open = false;}
-			}
-   		else if(lineStr.find("IS_CONTAINER: ") != std::string::npos)
-			{
-				if ( stoi(lineStr.substr(14, lineStr.length()-1)) > 0  ) 
-				{ 
-					newFeature->isContainer = true;
-					newFeature->Verbs.push_back((validVerbs) open);
-				}
-				else
-				{ 
-					newFeature->isContainer = false;
-				}
-			}
-   		else if(lineStr.find("FEATURE: ") != std::string::npos)
-			{
-				// recursion :)
-				newFeature->isContainer = true;
-				tmpFeature = getFeature( lineStr.substr(9, lineStr.length()-1));
-				if ( tmpFeature != NULL ) {
-					newFeature->Contents.push_back(tmpFeature);
-				}
-			}
+	//std::cout << "Enter Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
+	for (int r = 0; r < numExits; r++)
+	{
+		if(Connections[r]->isExitKeywordFound(searchKey))
+		{ // it is found, return the name of the room.
+			if(Connections[r]->isDoorLocked())
+				return "locked";
+			else
+				return Connections[r]->getExitRoomName();
 		}
 	}
-	else {
-		//Print useful error, but don't exit
-		cout << "Error opening feature file '" <<  featureDir << "\n";
-	}
-
-	return newFeature;
-	
+	//std::cout << "Exit Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
+	return "";
 }
+
+
+bool Room::lockExitDoorByKey(std::string searchKey)
+{
+	for (int r = 0; r < numExits; r++)
+	{
+		if(Connections[r]->isExitKeywordFound(searchKey))
+		{ // it is found, return the name of the room.
+			Connections[r]->lockDoor();
+			return true;
+		}
+	}
+	return false;
+}
+
 
 /*
  * TODO: Function info goes here
  */
 void Room::Examine()
 {
+	/* TODO: FIX_FEATURE_REFACTOR
 	Doorway * door;
 	std::vector<Feature*>::iterator iter;
 
@@ -271,6 +229,7 @@ void Room::Examine()
 	{
 		(*iter)->Examine(true,1,0);
 	}
+	*/
 }
 
 /*
@@ -278,12 +237,24 @@ void Room::Examine()
  */
 void Room::addExitsToStack(std::stack<std::string> &exits)
 {
-	int i;
-	for(i=0; i<numExits; i++)
+	for(int i=0; i<numExits; i++)
 	{
-		exits.push(Connections[i]->roomName);
+		exits.push(Connections[i]->getExitRoomName());
 	}
 
+}
+
+std::string Room::getExitsForDisplay()
+{
+	std::string exitString;
+	for(int i=0; i<numExits; i++)
+	{
+		exitString.append(Connections[i]->getDisplayName());
+		if(i < numExits-1)
+			exitString.append(", ");
+	}
+
+	return exitString;
 }
 
 Room * Room::goRoom(std::string roomName, GameState * PlayerState){
@@ -295,15 +266,15 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 		door = Connections[r];
 		if (door != NULL) {
 			if (DEBUG_FUNCTION) std::cout << "\t looking at Doorway " << door->Examine() << std::endl;
-			if ( roomName.compare(door->roomName) == 0 ) {
+			if ( roomName.compare(door->getDisplayName()) == 0 ) {
 				nextRoom = PlayerState->housePtr->getRoomPtr(roomName);
 				if ( nextRoom != NULL ) {
-					if (DEBUG_FUNCTION) cout << "\tSUCCESS moving to room " << door->roomName << std::endl;
+					if (DEBUG_FUNCTION) cout << "\tSUCCESS moving to room " << door->getDisplayName() << std::endl;
 					return nextRoom;
 				}
 				else 
 				{
-					cout << "\tERROR mvoing to room " << door->roomName << std::endl;
+					cout << "\tERROR mvoing to room " << door->getDisplayName() << std::endl;
 					nextRoom=this;
 				}
 			}
@@ -311,6 +282,23 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 	}
 	std::cout << "Hm, I don't see a doorway that leads to the " << roomName << "...." << std::endl;
 	return this;
+}
+
+// prints the room.
+// TODO: game engine should correctly word wrap in the terminal.
+void Room::displayRoom()
+{
+	std::cout << std::endl;
+	if(roomSeen)
+		std::cout << shortDesc << std::endl;
+	else
+		std::cout << longDesc << std::endl;
+
+	std::cout << additionalDesc << std::endl;
+
+	// this we may want to only show if user asks for the exits.
+	if (DEBUG_ROOM) std::cout << "# of Features in Room: " << Features.size() << std::endl;
+	std::cout << "Exits: " << getExitsForDisplay() << std::endl;
 }
 
 // Constructor for Doorway class. 
@@ -327,8 +315,90 @@ Doorway::~Doorway()
 
 }
 
+void Doorway::setDoorway(std::string connectionString)
+{
+	std::string keywordStr, tempStr;
+
+	std::size_t startDisplayName = connectionString.find_last_of(":") + 1;
+	std::size_t startRoomTo = connectionString.find_first_of("|") + 1;
+	std::size_t startKeywords = connectionString.find_last_of("|") + 1;
+
+	displayName = connectionString.substr(startDisplayName, startRoomTo - startDisplayName - 1);
+	goesTo = connectionString.substr(startRoomTo, startKeywords - startRoomTo - 1);
+	keywordStr = connectionString.substr(startKeywords, connectionString.length() - 1);
+
+   std::stringstream mystream (keywordStr);
+
+   while(getline(mystream,tempStr,','))
+   {  // https://stackoverflow.com/questions/40611689/c-error-in-tokenizer-variable-stdstringstream-mystream-has-initializer-b/43017562
+   		// remove leading and trailing spaces
+    		while(tempStr[0] == ' ')
+    		{
+    			tempStr = tempStr.substr(1, tempStr.length() - 1);
+    		}
+    		while(tempStr[tempStr.length() - 1] == ' ')
+    		{
+    			tempStr = tempStr.substr(0, tempStr.length() - 2);
+    		}
+       keyWords.push_back(tempStr);
+   }
+   doorLocked = false;
+}
+
 std::string Doorway::Examine() {
-	std::string ReturnThis =  "" + direction + ":" + roomName;
+	std::string ReturnThis =  "" + displayName;
 	return ReturnThis;
 }
 
+
+std::string Doorway::getDisplayName()
+{
+	return displayName;
+}
+
+std::string Doorway::getExitRoomName()
+{
+	return goesTo;
+}
+
+bool Doorway::isExitKeywordFound(std::string searchFor)
+{
+
+	std::string lcSearchFor = strToLowercase(searchFor);
+
+	for (unsigned int i=0; i<keyWords.size(); i++)
+	{
+		std::string key = strToLowercase(keyWords[i]);
+		if (lcSearchFor.compare(key) == 0)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+// returns lowercase string
+// http://www.cplusplus.com/reference/locale/tolower/
+std::string Doorway::strToLowercase(std::string mixedStr)
+{
+	std::locale loc;
+
+  for (std::string::size_type i=0; i<mixedStr.length(); ++i)
+    mixedStr[i] = std::tolower(mixedStr[i],loc);
+	return mixedStr;
+}
+
+void Doorway::lockDoor()
+{
+	doorLocked = true;
+}
+
+void Doorway::unlockDoor()
+{
+	doorLocked = false;
+}
+
+bool Doorway::isDoorLocked()
+{
+	return doorLocked;
+}

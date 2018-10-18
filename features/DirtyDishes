@@ -1,0 +1,8 @@
+NAME: Dirty Dishes
+TYPE: container
+ACTIONS: clean, move
+DESCRIPTION1: The counter and sink are piled with dirty, dusty, dishes.
+DESCRIPTION2: It appears somebody didn't want to clean them.
+DESCRIPTION3: After the dishes are out of the way, you see a record sitting on the counter.
+TRIGGERS: Record1
+DEPENDS_ON: null

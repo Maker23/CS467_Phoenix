@@ -36,19 +36,16 @@ int main()
 			std::cout << roomPtr->getLongDesc() << "\n\n";
 			std::cout << roomPtr->getShortDesc() << "\n\n";
 			std::cout << roomPtr->getAdditionalDesc() << "\n\n";
-			std::cout << roomPtr->getLongExitDesc() << "\n\n";
-			std::cout << roomPtr->getShortExitDesc() << "\n";
 
-			for (int r = 0; r < MAX_RM_CONNECTIONS; r++){
-				doorway =  roomPtr->Connections[r];
-				if (doorway != NULL) {
-					std::cout << "\tDoorway " << doorway->direction << ": " << doorway->roomName << std::endl;
-				}
-			}
+
+			std::cout << "Short Exit Desc: " << roomPtr->getExitsForDisplay() << std::endl;
+
+			/*
 			for ( iter = roomPtr->Features.begin(); iter != roomPtr->Features.end(); iter ++ ) 
 			{
 				(*iter)->Examine(true,1,0);
 			}
+			*/
 	}
 
 	delete(house);

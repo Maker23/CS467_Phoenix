@@ -12,12 +12,25 @@
 
 class Doorway 
 {
+	private:
+		std::string displayName;
+		std::string goesTo;
+		std::vector<std::string> keyWords;
+		std::string strToLowercase(std::string);
+		bool doorLocked;
+
   public:
 		Doorway(); // constructor
 		~Doorway(); // destructor
-	 	std::string roomName;
-		std::string direction;
+		void setDoorway(std::string);  // Parses string and sets the correct values.
+		std::string getDisplayName();
+		std::string getExitRoomName();
+		bool isExitKeywordFound(std::string); // looks in keywords to see if found. returns true if so, false otherwise.
 		std::string Examine();
+		void lockDoor();
+		void unlockDoor();
+		bool isDoorLocked();
+
 };
 
 class Room
@@ -28,29 +41,34 @@ class Room
 		std::string longDesc;
 		std::string shortDesc;
 		std::string additionalDesc;
-		std::string longExitDesc;
-		std::string shortExitDesc;
 		int numExits;
+		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
+		std::vector<std::string> roomFeatures;
+
 
 	public:
 	 	// IRL these would be private with iterator and get/set functions. TODO
-		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
+
 		std::vector<Feature *> Features;
 		
 		Room(std::string); 									// constructor
 		~Room();													// destructor
 
 
-		std::string getRoomName();
-		std::string getLongDesc();
-		std::string getShortDesc();
-		std::string getAdditionalDesc();
-		std::string getLongExitDesc();
-		std::string getShortExitDesc();
+		std::string getRoomName();							// returns name of this room.
+		std::string getLongDesc();							// returns the long description of this room.
+		std::string getShortDesc();						// returns the short description of this room.
+		std::string getAdditionalDesc();					// returns the additional description of this room.
+		void setRoomSeen();
 		void Examine();
 		Feature * getFeature(std::string);
-		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack
+		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack - used in House::buildHouse -- should not be needed anywhere else
+		std::string getExitRoomByKey(std::string);			// searches exits by keyword (such as south) and if found, returns the room name. If not found, returns null.
+		std::string getExitsForDisplay();
+		bool lockExitDoorByKey(std::string);			// will lock the door to one of the rooms based on a doorway keyword.
+		void displayRoom();
 		Room * goRoom(std::string, GameState *);
+
 };
 
 

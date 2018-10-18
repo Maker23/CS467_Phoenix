@@ -1,0 +1,8 @@
+ROOM NAME: Library
+CONNECTION:North Door|2nd Floor Hallway|hallway, north, north door
+CONNECTION:East Door|Study|study, east, east door
+LONG DESC: Library Long Desc. There are doors on the north wall and the east wall.
+SHORT DESC: Library Short Desc
+ADITIONAL DESC: Library Additional Desc
+FEATURE: LibraryShelves
+FEATURE: Book1

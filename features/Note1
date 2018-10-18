@@ -1,0 +1,10 @@
+NAME: Note
+TYPE: item
+ACTIONS: take
+DESCRIPTION1: An old piece of paper
+DESCRIPTION2: The number '1894' is written on it in faded calligraphy
+DESCRIPTION3: You take the note and see '1894' is written on it in faded calligraphy
+WEIGHT: 1
+OPEN: 1
+TRIGGERS: null
+DEPENDS_ON: Rug1

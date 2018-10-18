@@ -1,0 +1,8 @@
+NAME: Library Shelves
+TYPE: container
+ACTIONS: search, look, check
+DESCRIPTION1: Along each of the walls are shelves filled with dusty books.
+DESCRIPTION2: The books look like they haven't been touched in decades.
+DESCRIPTION3: You find a book called "Ghosts and Other Undead"
+TRIGGERS: Book1
+DEPENDS_ON: null

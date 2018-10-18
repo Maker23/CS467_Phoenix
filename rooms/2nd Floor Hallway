@@ -1,13 +1,13 @@
 ROOM NAME: 2nd Floor Hallway
-CONNECTION 1: west|RoomA
-CONNECTION 2: east|Balcony
-CONNECTION 3: up|3rd Floor Hallway
-CONNECTION 4: down|Foyer
-CONNECTION 5: south1|RoomC
-CONNECTION 6: south2|RoomD
-CONNECTION 7: south3|RoomE
-LONG DESC: 2nd Floor Hallway Long Desc
+CONNECTION:Door 1, west wall|Bedroom1|bedroom1, door 1, 1
+CONNECTION:Door 2, south west wall|Nursery|nursery, door 2, 2
+CONNECTION:Door 3, south center wall|Library|library, door 3, 3
+CONNECTION:Door 4, south east wall|Study|study, door 4, 4
+CONNECTION:Door 5, east wall|Balcony|balcony, door 5, 5, east, east door
+CONNECTION:Stairs down|Foyer|foyer, stairs down, down
+CONNECTION:Stairs up|3rd Floor Hallway|3rd floor, stairs up, up
+LONG DESC: 2nd Floor Hallway Long Desc. Lots of doors... need description of them.
 SHORT DESC: 2nd Floor Hallway Short Desc
 ADITIONAL DESC: 2nd Floor Hallway Additional Desc
-LONG EXIT DESC: 2nd Floor Hallway Long Desc
-SHORT EXIT DESC: 2nd Floor Hallway short desc
+FEATURE: Floor2Lamps
+FEATURE: 2ndFloorDoors

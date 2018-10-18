@@ -1,8 +1,8 @@
 ROOM NAME: Kitchen
-CONNECTION 1: west|Ballroom
-CONNECTION 2: east|Pantry
-LONG DESC: Kitchen long desc
+CONNECTION:West door|Ballroom|ballroom, west, west door
+CONNECTION:East door|Pantry|pantry, east, east door
+LONG DESC: Kitchen long desc. There are two door in the kitchen. One is on the west wall and the other the east wall.
 SHORT DESC: Kitchen short desc
 ADITIONAL DESC: Kitchen Additional Desc
-LONG EXIT DESC: Kitcen Long Exit
-SHORT EXIT DESC: Doors east and west
+FEATURE: DirtyDishes
+FEATURE: Record1

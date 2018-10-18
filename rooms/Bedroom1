@@ -1,0 +1,8 @@
+ROOM NAME: Bedroom1
+CONNECTION:East Door|2nd Floor Hallway|hallway, 2nd floor hallway, east, east door
+CONNECTION:South Door|Closet|closet, south, south door
+LONG DESC: RoomA Long Desc.  There are two doors in this room. On on the east wall and another on the south wall.
+SHORT DESC: RoomA Short Desc
+ADITIONAL DESC: RoomA Additional Desc
+FEATURE: WoodBox1
+FEATURE: Spectacles

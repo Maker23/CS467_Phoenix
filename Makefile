@@ -1,7 +1,10 @@
 CFLAGS= -Wall -g -std=c++11
 
-test: test.o feature.o engine.o house.o parser.o room.o
-	g++ -o test test.o feature.o engine.o house.o parser.o room.o $(CFLAGS)
+dstest: dstest.o feature.o engine.o house.o parser.o room.o
+	g++ dstest.o feature.o engine.o house.o parser.o room.o -o dstest $(CFLAGS)
+
+test:test.o feature.o engine.o house.o parser.o room.o
+	g++ test.o feature.o engine.o house.o parser.o room.o -o test $(CFLAGS)
 
 game: main.o feature.o engine.o house.o parser.o room.o
 	g++ -o game $^ $(CFLAGS)
@@ -10,4 +13,4 @@ game: main.o feature.o engine.o house.o parser.o room.o
 	g++ -c $< $(CFLAGS)
 
 clean:
-	rm -f *.o game test
+	rm -f *.o game test dstest

@@ -1,7 +1,7 @@
 ROOM NAME: Basement
-CONNECTION 1: up|Pantry
-LONG DESC: Basement Long Desc
+CONNECTION:Stairs going up|Pantry|pantry, stairs, stairs up, up
+LONG DESC: Basement Long Desc. The only exit is stairs going back up the way you came in.
 SHORT DESC: Basement Short Desc
 ADITIONAL DESC: Basement Additional Desc
-LONG EXIT DESC: Basement Long Desc
-SHORT EXIT DESC: stairs up
+FEATURE: Puzzle1
+FEATURE: Firestarter

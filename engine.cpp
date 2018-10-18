@@ -70,6 +70,7 @@ int GameState::getGameTaskStatus()
 
 int GameState::getAvailableCapacity()
 {
+	/* TODO: FIX_FEATURE_REFACTOR
 	int GameStateIsCarrying = 0;
 	std::vector<Feature*> backpackContents;
 	std::vector<Feature*>::iterator iterFeature;
@@ -80,6 +81,8 @@ int GameState::getAvailableCapacity()
 		GameStateIsCarrying += (*iterFeature)->getWeight();
 	}
 	return (this->Capacity - GameStateIsCarrying);
+	*/
+	return 200;
 }
 /* ***************************************************************
  * UpdateGameState - runs after every player turn

@@ -1,11 +1,5 @@
 ROOM NAME: aaaaa
-CONNECTION 1: aaaa
-CONNECTION 2: aaaa
-CONNECTION 3: aaaa
-CONNECTION 4: aaaa
-CONNECTION 5: aaaa
-LONG DESC: room Long Desc
+CONNECTION:ShortDisplayName|GoesToRoomNameHere|keyword1, keyword2, etc
+LONG DESC: room Long Desc. DETAILED EXIT DESCRIPTION.
 SHORT DESC: room Short Desc
 ADITIONAL DESC: Room Additional Desc
-LONG EXIT DESC: Room Long Desc
-SHORT EXIT DESC: aaaaa

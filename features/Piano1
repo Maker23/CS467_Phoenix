@@ -1,0 +1,7 @@
+NAME: Grand Piano
+TYPE: container
+ACTIONS: play eac, play e a c
+DESCRIPTION1: An old, dusty, black, Steinway & Sons grand piano sits in the corner of the room.
+DESCRIPTION2: After playing the notes, a panel opens up above some of the keys with a bronce key in it.
+TRIGGERS: Key1
+DEPENDS_ON: null

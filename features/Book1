@@ -1,0 +1,8 @@
+NAME: Book "Ghosts and Other Undead"
+TYPE: item
+ACTIONS: read, read book, read ghosts
+DESCRIPTION1: The cover has pictures of ghosts and skeletons and the title Ghosts and Other Undead.
+DESCRIPTION2: You spend a few minutes skimming the book and one thing captures your attention: "Does taking pictures of ghosts and the living capture their soul?"
+WEIGHT: 1
+TRIGGERS: null
+DEPENDS_ON: LibraryShelves

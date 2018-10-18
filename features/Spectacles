@@ -1,0 +1,8 @@
+NAME: Spectacles
+TYPE: item
+ACTIONS: take, wear
+DESCRIPTION1: Old, wired spectacles with round lenses.
+DESCRIPTION2: Looking through the spectacles everything appears dusty and scratched. You just can't seem to get them clean.
+WEIGHT: 1
+TRIGGERS: Ghosts
+DEPENDS_ON: WoodBox1

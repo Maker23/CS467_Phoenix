@@ -1,0 +1,7 @@
+NAME: Oil Lamp
+TYPE: block_room
+ACTIONS: light
+DESCRIPTION1: You barely can make out an old oil lamp attached to the wall at the top of the stairs.
+DESCRIPTION2: An old, dusty lamp burning. There is enough oil still left to last the night.
+TRIGGERS: VisionHallway2
+DEPENDS_ON: Firestarter

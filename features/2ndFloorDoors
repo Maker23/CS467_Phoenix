@@ -1,0 +1,7 @@
+NAME: 2nd Floor Doors
+TYPE: door_lock
+ACTIONS: unlock
+DESCRIPTION1: The doors all have painted a small shamrock on them.
+DESCRIPTION2: After hearing the clicking sound of being unlocked, you think you can go in.
+TRIGGERS: null
+DEPENDS_ON: Key1

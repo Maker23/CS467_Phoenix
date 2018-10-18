@@ -1,0 +1,8 @@
+NAME: Flint and Steel
+TYPE: item
+ACTIONS: light, use, strike
+DESCRIPTION1: A piece of flint and another piece of steel.
+DESCRIPTION2: You look closer and it still looks like flint and steel.
+WEIGHT: 1
+TRIGGERS: null
+DEPENDS_ON: Puzzle1

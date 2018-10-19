@@ -2,7 +2,7 @@
 Shared repository for CS467 Team Phoenix Week 04 branch
 
 To play: 
-	make game
+	make game;
 	./game
 
 This will print provisional instructions. You can also "make test" but

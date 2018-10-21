@@ -209,3 +209,49 @@ std::string Feature::getName()
 	return name;
 }
 
+std::vector<Feature*> Feature::Examine(GameState * GS)
+{
+
+	std::vector<Feature *> Contents;
+	// TODO: return an empty vector for a non-container hting
+	// For a feature with is_container=true, return a vector to its Contents
+	// Should we have a recursive flag? Yes... yes we should
+	std::vector<Feature*>::iterator iter;
+	std::cout << getName() << ". " << getDescription() << std::endl;
+	if (DEBUG_EXAMINE) 
+	{ 
+	/*
+		std::cout  << "DEBUG Feature::Examine " << std::endl;
+		std::cout << "		Name = " << Name << std::endl
+			<< "		Story = " << Story << std::endl
+			<< "		isContainer = " << isContainer << std::endl
+			<< "		Open = " << Open << std::endl;
+		std::cout << "		Verbs = ";
+			for (std::list<int>::iterator iter = Verbs.begin(); iter != Verbs.end(); iter++)
+			{
+				std::cout << *iter << ",";
+			}
+			std::cout << std::endl;
+	*/
+			/*
+ 			 * 	<< "		Weight = " << Weight << std::endl
+ 			 * 	<< "		UseFunc = " << UseFunc << std::endl
+ 			 * 	<< "		OpenFunc = " << OpenFunc << std::endl
+ 			 */
+	}
+	/*
+	if ( isContainer && Open && reCursive ) {
+  	if (DEBUG_EXAMINE) std::cout  << "DEBUG Feature::Examine -- reCursing now " << std::endl;
+		for ( iter = Contents.begin(); iter != Contents.end(); iter ++ )
+		{
+			(*iter)->Examine(reCursive, verbose, silent);
+		}
+	}
+	*/
+	return Contents; // may be empty if the Feature is not a container. Do we need this though? No we do not. TODO: this returns a void I think
+}
+
+std::string Feature::getDescription()
+{
+	return ""; // TODO implement dis
+}

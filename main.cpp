@@ -33,7 +33,7 @@ int main()
 	currentRoom = house->buildHouse("Foyer");
 
 	PlayerState.housePtr = house;
-	house->printRooms();
+	house->printRooms(&PlayerState);
 	std::cout << "=============================================" << std::endl;
 	std::cout << "\n Obviously not yet finished !  You can \"go Ballroom\" but not \"go east\"" << std::endl;
 	std::cout << " Implemented commands are :" << std::endl;
@@ -43,10 +43,9 @@ int main()
 	std::cout << "\n Any other command will result in a useless help message being printed." << std::endl;
 	std::cout << "=============================================" << std::endl;
 
-	currentRoom->Examine();
+	currentRoom->Examine(&PlayerState);
 	while ( currentRoom != NULL )
 	{
-		//currentRoom = currentRoom->playerTurn(&PlayerState);
 		currentRoom = PlayerState.playerTurn(currentRoom);
 		PlayerState.UpdateGameState(GameClock,currentRoom);
 	}

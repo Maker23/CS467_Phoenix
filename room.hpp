@@ -6,6 +6,7 @@
 #include <stack>
 #include <vector>
 #include "utilities.hpp"
+#include "engine.hpp"
 
 
 #define MAX_RM_CONNECTIONS 7
@@ -60,7 +61,7 @@ class Room
 		std::string getShortDesc();						// returns the short description of this room.
 		std::string getAdditionalDesc();					// returns the additional description of this room.
 		void setRoomSeen();
-		void Examine();
+		void Examine(GameState *);
 		Feature * getFeature(std::string);
 		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack - used in House::buildHouse -- should not be needed anywhere else
 		std::string getExitRoomByKey(std::string);			// searches exits by keyword (such as south) and if found, returns the room name. If not found, returns null.

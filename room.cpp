@@ -210,11 +210,12 @@ bool Room::lockExitDoorByKey(std::string searchKey)
 /*
  * TODO: Function info goes here
  */
-void Room::Examine()
+void Room::Examine(GameState * GS)
 {
-	/* TODO: FIX_FEATURE_REFACTOR
 	Doorway * door;
-	std::vector<Feature*>::iterator iter;
+	Feature * feature;
+	std::vector<std::string>::iterator iter;
+
 
 	std::cout << "\nYou are in the " << getRoomName() << std::endl;
 	std::cout << getShortDesc() << std::endl;
@@ -225,9 +226,11 @@ void Room::Examine()
 			std::cout << "\t Doorway " << door->Examine() << std::endl;
 		}
 	}
-	for (iter = Features.begin(); iter != Features.end(); iter ++)
+	/*
+	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
 	{
-		(*iter)->Examine(true,1,0);
+		feature = GS->housePtr->getFeaturePtr(*iter);
+		feature->Examine(GS);
 	}
 	*/
 }
@@ -266,7 +269,9 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 		door = Connections[r];
 		if (door != NULL) {
 			if (DEBUG_FUNCTION) std::cout << "\t looking at Doorway " << door->Examine() << std::endl;
-			if ( roomName.compare(door->getDisplayName()) == 0 ) {
+			if (( roomName.compare(door->getDisplayName()) == 0 ) ||
+					( roomName.compare(door->getExitRoomName()) == 0 ) )
+			{
 				nextRoom = PlayerState->housePtr->getRoomPtr(roomName);
 				if ( nextRoom != NULL ) {
 					if (DEBUG_FUNCTION) cout << "\tSUCCESS moving to room " << door->getDisplayName() << std::endl;
@@ -274,7 +279,7 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 				}
 				else 
 				{
-					cout << "\tERROR mvoing to room " << door->getDisplayName() << std::endl;
+					cout << "\tERROR moving to room " << door->getDisplayName() << std::endl;
 					nextRoom=this;
 				}
 			}
@@ -346,7 +351,7 @@ void Doorway::setDoorway(std::string connectionString)
 }
 
 std::string Doorway::Examine() {
-	std::string ReturnThis =  "" + displayName;
+	std::string ReturnThis =  "" + goesTo;
 	return ReturnThis;
 }
 

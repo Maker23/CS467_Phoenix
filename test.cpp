@@ -23,7 +23,7 @@ int main()
 
 	house = new House();
 	roomPtr = house->buildHouse("Foyer");
-	house->printRooms();
+	//house->printRooms();// this requires a GameState
 	std::cout << "Starting Room: " << roomPtr->getRoomName() << "\n\n";
 
 	choice = parse->ParseLine();

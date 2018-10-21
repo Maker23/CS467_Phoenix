@@ -1,3 +1,17 @@
+/*
+ * File name:  engine.cpp
+ *
+ * Overview:
+ *   Functions and variables that control the game state
+ *
+ * GameState::playerTurn    The central command loop of the game.
+ *                          Run it indefinitely until quit
+ *
+ * Choice::printVerb        Print a human-readable string for a given
+ *                          verb enum.
+ *
+ *
+ */
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -19,6 +33,79 @@ std::string Choice::printVerb()
 	std::string verbPrint[] = {"look", "go", "use", "pick up or take", "drop", "open", "close", "throw", "hit", "eat", "examine"};
 
 	return verbPrint[(int)Verb];
+}
+
+
+/* ***********************************************************
+ *
+ *  playerTurn      
+ *
+ *  The central command loop of the game. Takes one Room* as an
+ *  argument, which is the room the player is currently in at the
+ *  beginning of the turn. Returns a pointer to the room (same or new) 
+ *  that the player is in at the end of the turn.
+ *
+ * ********************************************************* */
+Room * GameState::playerTurn(Room * currentRoom)
+{
+	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::playerTurn" << std::endl;
+	// TODO: all the magic
+	// GameState: What the player is holding and any state of the game
+	// currentRoom:  The room we're in
+	// Doorways : the array of doorways in currentRoom
+	// Features : the features in currentRoom, a vector of Features
+	//          : Features, with a map of verb->Action
+	// And now we do stuff.
+	Room * nextRoom = currentRoom;
+	Choice * userChoice;
+	Parser parse;
+
+	userChoice = parse.ParseLine();
+
+	// If verb = go, choice should be a door
+	// otherwise look for noun in PlayerState and then in Room
+	// If no noun - limited choices
+	if (userChoice->Verb == (validVerbs)quit)
+	{
+		return (Room *) NULL;
+	}
+	if (userChoice->Verb == (validVerbs)help)
+	{
+		std::cout << "THERE IS NO HELP FOR YOU" << std::endl;
+		return currentRoom;
+	}
+	if( (userChoice->Verb == (validVerbs)save) ||
+			(userChoice->Verb == (validVerbs)load) )
+	{
+		std::cout << "Game does not yet support Save or Load" << std::endl;
+		return currentRoom;
+	}
+
+	if ( userChoice->Noun == "" ) {
+		if (userChoice->Verb == (validVerbs)look) 
+		{
+			currentRoom->Examine(this); // Examine this room
+		}
+		else if (userChoice->Verb == (validVerbs)go) 
+		{
+			std::cout << "Where do you want to " << userChoice->printVerb()<< "?" << std::endl;
+		}
+		else if (userChoice->Verb < (validVerbs)LastAction)
+		{
+			std::cout << "What do you want to " << userChoice->printVerb()<< "?" << std::endl;
+		}
+	}
+	else if (userChoice->Verb == (validVerbs)go) {
+		nextRoom = currentRoom->goRoom(userChoice->Noun, this);
+		if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
+		{
+			nextRoom->Examine(this);
+		}
+	}
+
+	if (DEBUG_FUNCTION) std::cout << "===== end   GameState::playerTurn" << std::endl;
+
+	return nextRoom;
 }
 
 /* ********************************************************* */
@@ -70,7 +157,6 @@ int GameState::getGameTaskStatus()
 
 int GameState::getAvailableCapacity()
 {
-	/* TODO: FIX_FEATURE_REFACTOR
 	int GameStateIsCarrying = 0;
 	std::vector<Feature*> backpackContents;
 	std::vector<Feature*>::iterator iterFeature;
@@ -78,15 +164,16 @@ int GameState::getAvailableCapacity()
 	backpackContents = this->Holding;
 	for (iterFeature=backpackContents.begin(); iterFeature != backpackContents.end(); iterFeature++)
 	{
-		GameStateIsCarrying += (*iterFeature)->getWeight();
+		//GameStateIsCarrying += (*iterFeature)->getWeight();
 	}
 	return (this->Capacity - GameStateIsCarrying);
-	*/
-	return 200;
 }
-/* ***************************************************************
- * UpdateGameState - runs after every player turn
- *************************************************************** */
+/* ************************************************************
+ *
+ * UpdateGameState - runs after every player turn. 
+ * TODO: move this into the playerTurn now that we have shared state
+ *
+ ************************************************************ */
 void GameState::UpdateGameState(int &GameClock, Room* currentRoom)
 {
   int points = getGameTaskStatus();
@@ -96,69 +183,3 @@ void GameState::UpdateGameState(int &GameClock, Room* currentRoom)
 	GameClock++;
 	// Can check on or update various GameTasks here
 }
-
-/*
- * TODO: Function info goes here
- */
-Room * GameState::playerTurn(Room * currentRoom)
-{
-	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::playerTurn" << std::endl;
-	// TODO: all the magic
-	// PlayerState: What the player is holding and any state of the game
-	// this:  The room we're in
-	// Doorways : the array of doorways
-	// Features : the features, a vector of Features
-	//          : Features, with a map of verb->Action
-	// And now we do stuff.
-	Room * nextRoom = currentRoom;
-	Choice * userChoice;
-	Parser parse;
-
-	userChoice = parse.ParseLine();
-
-	// If verb = go, choice should be a door
-	// otherwise look for noun in PlayerState and then in Room
-	// If no noun - limited choices
-	if (userChoice->Verb == (validVerbs)quit)
-	{
-		return (Room *) NULL;
-	}
-	if (userChoice->Verb == (validVerbs)help)
-	{
-		std::cout << "THERE IS NO HELP FOR YOU" << std::endl;
-		return currentRoom;
-	}
-	if( (userChoice->Verb == (validVerbs)save) ||
-			(userChoice->Verb == (validVerbs)load) )
-	{
-		std::cout << "Game does not yet support Save or Load" << std::endl;
-		return currentRoom;
-	}
-
-	if ( userChoice->Noun == "" ) {
-		if (userChoice->Verb == (validVerbs)look) 
-		{
-			currentRoom->Examine(); // Examine this room
-		}
-		else if (userChoice->Verb == (validVerbs)go) 
-		{
-			std::cout << "Where do you want to " << userChoice->printVerb()<< "?" << std::endl;
-		}
-		else if (userChoice->Verb < (validVerbs)LastAction)
-		{
-			std::cout << "What do you want to " << userChoice->printVerb()<< "?" << std::endl;
-		}
-	}
-	else if (userChoice->Verb == (validVerbs)go) {
-		nextRoom = currentRoom->goRoom(userChoice->Noun, this);
-		if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
-		{
-			nextRoom->Examine();
-		}
-	}
-
-	if (DEBUG_FUNCTION) std::cout << "===== end   GameState::playerTurn" << std::endl;
-
-	return nextRoom;
-}
-

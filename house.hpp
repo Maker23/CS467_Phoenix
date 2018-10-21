@@ -7,6 +7,7 @@
 #include <map>
 #include "room.hpp"
 #include "feature.hpp"
+#include "engine.hpp"
 
 class House
 {
@@ -22,7 +23,7 @@ class House
 		bool hasFeature(std::string);   			// Returns true if feature is in the house 
 		Room *getRoomPtr(std::string);      // Retruns the ptr of the Room object for the requested room.
 		Feature *getFeaturePtr(std::string); // returns the ptr of the Feature object for the requsted feature.
-		bool printRooms();						// For debugging really
+		bool printRooms(GameState *);						// For debugging really
 };
 
 #endif

@@ -5,6 +5,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include "engine.hpp"
 
 
 enum FeatureType { container, item, door_lock, block_room, used_with_another_item, decoration, puzzle, dropped_item };
@@ -32,6 +33,8 @@ class Feature
 		~Feature();
 
 		std::string getName();
+		std::string getDescription();
+		std::vector<Feature*> Examine(GameState *GS);
 };
 
 

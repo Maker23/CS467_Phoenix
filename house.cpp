@@ -25,6 +25,7 @@
 #include <dirent.h>
 #include "house.hpp"
 #include "room.hpp"
+#include "engine.hpp"
 
 using namespace std;
 
@@ -156,14 +157,14 @@ Room * House::getRoomPtr(string roomName)
  * Prints all the rooms found in the map.
  * Used for debugging. 
  */
-bool House::printRooms()
+bool House::printRooms(GameState * GS)
 {
 	// Print all the keys in the houseMap
 	if ( ! DEBUG_EXAMINE ) return true;
 	std::cout << "--- House rooms: ---" << std::endl;
 	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
 		std::cout << "\t" << it->first << std::endl;
-		it->second->Examine();
+		it->second->Examine(GS);
 	}
 	return true;
 }

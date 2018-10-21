@@ -23,6 +23,7 @@
 #include <typeindex>
 #include <sys/types.h>
 #include <dirent.h>
+#include "utilities.hpp"
 #include "house.hpp"
 #include "room.hpp"
 #include "engine.hpp"
@@ -186,12 +187,15 @@ bool House::hasFeature(string key)
 
 Feature * House::getFeaturePtr(string featureName)
 {
+	if ( DEBUG_FEATURES ) std::cout << "----- begin House::getFeaturePtr(), looking for '"<< featureName<<"'" << std::endl;
 	if(hasFeature(featureName))
 	{
+		if ( DEBUG_FEATURES ) std::cout << "      returning " << featureName << std::endl;
 		return houseFeatures[featureName];
 	}
 	else
 	{
+		if ( DEBUG_FEATURES ) std::cout << "      returning NULL"<<  std::endl;
 		return NULL;
 	}
 }

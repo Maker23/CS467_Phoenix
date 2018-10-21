@@ -90,12 +90,13 @@ Room::Room(string filename)
 				continue;
    		}
 
-   		if(lineStr.find("FEATURE:") != std::string::npos)
+   		if(lineStr.find("FEATURE: ") != std::string::npos)
    		{
 				//TODO: get features here
-				str = lineStr.substr(8, lineStr.length()-1);
+				str = lineStr.substr(9, lineStr.length()-1);
 				if ( str.length() > 0 ) 
 				{
+					if (DEBUG_FEATURES) std::cout << "Adding feature '" << str << "' to room" << std::endl;
 					// Add this to the vector of features in the room
 					roomFeatures.push_back(str);
 				}
@@ -226,13 +227,12 @@ void Room::Examine(GameState * GS)
 			std::cout << "\t Doorway " << door->Examine() << std::endl;
 		}
 	}
-	/*
 	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
 	{
+		std::cout << "You see a " << *iter << std::endl;
 		feature = GS->housePtr->getFeaturePtr(*iter);
-		feature->Examine(GS);
+		if ( feature ) feature->Examine(GS);
 	}
-	*/
 }
 
 /*

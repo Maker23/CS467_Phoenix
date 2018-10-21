@@ -212,6 +212,7 @@ std::string Feature::getName()
 std::vector<Feature*> Feature::Examine(GameState * GS)
 {
 
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::Examine()" << std::endl;}
 	std::vector<Feature *> Contents;
 	// TODO: return an empty vector for a non-container hting
 	// For a feature with is_container=true, return a vector to its Contents

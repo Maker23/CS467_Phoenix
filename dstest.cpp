@@ -17,6 +17,7 @@ int main()
 	Feature  *feature;
 	Feature  *feature2;
 	Parser *parse;
+	GameState GS("player");
 	parse = new Parser();
 	int notUsed;
 	std::vector<Feature*>::iterator iter;
@@ -24,7 +25,8 @@ int main()
 
 	house = new House();
 	roomPtr = house->buildHouse("Foyer");
-	house->printRooms();
+	GS.housePtr = house;
+	house->printRooms(&GS);
 
    // lock ballroom door to kitchen
    lockRoom = house->getRoomPtr("Ballroom");

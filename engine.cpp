@@ -62,9 +62,7 @@ Room * GameState::playerTurn(Room * currentRoom)
 
 	userChoice = parse.ParseLine();
 
-	// If verb = go, choice should be a door
-	// otherwise look for noun in PlayerState and then in Room
-	// If no noun - limited choices
+	// Look for Reserved words - Help, Quit, Load, Save
 	if (userChoice->Verb == (validVerbs)quit)
 	{
 		return (Room *) NULL;
@@ -80,7 +78,19 @@ Room * GameState::playerTurn(Room * currentRoom)
 		std::cout << "Game does not yet support Save or Load" << std::endl;
 		return currentRoom;
 	}
+	nextRoom = actInRoom(currentRoom, userChoice);
 
+	if (DEBUG_FUNCTION) std::cout << "===== end   GameState::playerTurn" << std::endl;
+
+	return nextRoom;
+}
+
+Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
+{
+	Room * nextRoom = currentRoom;
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::actInRoom" << std::endl;
+	// If no noun - limited choices
 	if ( userChoice->Noun == "" ) {
 		if (userChoice->Verb == (validVerbs)look) 
 		{
@@ -94,7 +104,15 @@ Room * GameState::playerTurn(Room * currentRoom)
 		{
 			std::cout << "What do you want to " << userChoice->printVerb()<< "?" << std::endl;
 		}
+		else 
+		{
+			// Unknown  ;)
+			std::cout << "I didn't catch that - try again." << std::endl;
+		}
 	}
+	//
+	// If noun - go or act
+	//
 	else if (userChoice->Verb == (validVerbs)go) {
 		nextRoom = currentRoom->goRoom(userChoice->Noun, this);
 		if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
@@ -102,13 +120,107 @@ Room * GameState::playerTurn(Room * currentRoom)
 			nextRoom->Examine(this);
 		}
 	}
+	else if (userChoice->Verb < (validVerbs)LastAction)
+	{
+		// Pass the verb and noun(s) to ActInRoom
+		nextRoom = actOnFeature(currentRoom, userChoice);
+	}
+	else 
+	{
+		// Unknown  ;)
+		std::cout << "I have no idea what you just said." << std::endl;
+	}
 
-	if (DEBUG_FUNCTION) std::cout << "===== end   GameState::playerTurn" << std::endl;
+	if (DEBUG_FUNCTION) std::cout << "===== end   GameState::actInRoom" << std::endl;
+	return nextRoom;
 
+}
+
+/* ***********************************************************
+ *
+ * Wow, well, this is what I got right now.
+ *
+ * ********************************************************* */
+Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
+{
+	Room * nextRoom = currentRoom;
+	Feature * theNoun = NULL;
+	Feature * theSubject = NULL;
+	std::vector<Feature *>::iterator iter;
+	std::vector<std::string>::iterator iterStr;
+	bool inHand = false;
+	bool inRoom = false;
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::actOnFeature,"
+		<< "verb = " << userChoice->printVerb()<< "(" << userChoice->Verb  << ")"
+		<<", Noun = " << userChoice->Noun 
+		<< ", Subject = " << userChoice->Subject << std::endl;
+
+	theNoun = housePtr->getFeaturePtr(userChoice->Noun);
+	theSubject = housePtr->getFeaturePtr(userChoice->Subject);
+  if ( ! theNoun ) 
+	{
+		std::cout << "There doesn't seem to be a " << userChoice->Noun << " anywhere nearby" << std::endl;
+		return nextRoom;
+	}
+  if ( (userChoice->Subject.compare("") != 0 )&& ! theSubject ) 
+	{
+		// TODO:  Look for Room names as well as feature names
+		std::cout << "Didn't find subject '" << userChoice->Subject << "' in the house" << std::endl;
+		return nextRoom;
+	}
+	if ( ! theNoun && ! theSubject )  return nextRoom;
+
+
+  // Are we carrying the Noun ?
+	
+	for ( iter = Holding.begin(); iter != Holding.end(); iter++) {
+		if ( theNoun == *iter ) {
+			inHand = true;
+			break;
+		}
+	}
+	// Is the Noun in the room ?
+	if (! inHand ) {
+		for ( iterStr = currentRoom->roomFeatures.begin(); iterStr != currentRoom->roomFeatures.end(); iterStr++) 
+		{
+			if ( userChoice->Noun.compare(*iterStr) == 0 ) 
+			{
+				inRoom = true;
+				break;
+			}
+			// TODO: Pick the thing up? Maybe not - depends on the verb
+		}
+	}
+	if ( ! inHand && ! inRoom )  
+	{
+		// Otherwise - error
+		std::cout << "There doesn't seem to be a " << userChoice->Noun << " at hand." << std::endl;
+		return nextRoom;
+	}
+	
+
+  switch (userChoice->Verb)
+	{
+		case look:
+			if (DEBUG_FUNCTION) std::cout << "      matched look" << std::endl;
+			theNoun->Examine(this);
+			break;
+		case hurl:
+			if (DEBUG_FUNCTION) std::cout << "      matched throw " << std::endl;
+			theNoun->hurlFeature(this, theSubject);
+			break;
+		default:
+			if (DEBUG_FUNCTION) std::cout << "      ERROR: fell through to default " << std::endl;
+	}
+
+	if (DEBUG_FUNCTION) std::cout << "===== end   GameState::actOnFeature" << std::endl;
 	return nextRoom;
 }
 
-/* ********************************************************* */
+/* ***********************************************************
+ * Constructor and destructor
+ * ********************************************************* */
 GameState::GameState(std::string Na)
 {
 
@@ -128,13 +240,6 @@ GameState::~GameState()
 
 /* ***********************************************************
  * GameState functions
- *
- *
- * GameState::Examine is different in that:
- *
- * 	 It returns the GameState in the vector (container examine does not return itself)
- * 	 It doesn't need to handle open tests or OpenFunc functions
- *
  * ********************************************************* */
 void GameState::Print () 
 {

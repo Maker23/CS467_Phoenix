@@ -31,6 +31,7 @@ TODO: quite a bit, including:
 #include <typeindex>
 #include <sstream>
 #include <algorithm>
+#include "engine.hpp"
 #include "house.hpp"
 #include "room.hpp"
 #include "feature.hpp"
@@ -211,14 +212,15 @@ std::string Feature::getName()
 
 std::vector<Feature*> Feature::Examine(GameState * GS)
 {
+	std::vector<Feature *> Contents;
+	std::vector<Feature*>::iterator iter;
+
 
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::Examine()" << std::endl;}
-	std::vector<Feature *> Contents;
 	// TODO: return an empty vector for a non-container hting
 	// For a feature with is_container=true, return a vector to its Contents
 	// Should we have a recursive flag? Yes... yes we should
-	std::vector<Feature*>::iterator iter;
-	std::cout << getName() << ". " << getDescription() << std::endl;
+	// std::cout << getName() << ". " << getDescription() << std::endl;
 	if (DEBUG_EXAMINE) 
 	{ 
 	/*
@@ -250,6 +252,27 @@ std::vector<Feature*> Feature::Examine(GameState * GS)
 	}
 	*/
 	return Contents; // may be empty if the Feature is not a container. Do we need this though? No we do not. TODO: this returns a void I think
+}
+
+void Feature::hurlFeature(GameState *GS, Feature * Subject)
+{
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::hurlFeature()" << std::endl;}
+	std::string hurlWhere;
+	if ( weight >= 10 ) 
+	{
+		std::cout << "The " << getName() << " is too heavy to pick up." << std::endl;
+	}
+	else 
+	{
+		std::cout << "You throw the " << getName();
+		if ( Subject ) {
+			// Is there a subject?
+			std::cout << " at the " << Subject->getName() << std::endl; 
+		}
+		else {
+			std::cout << " across the room. It lands on the floor." << std::endl;
+		}
+	}
 }
 
 std::string Feature::getDescription()

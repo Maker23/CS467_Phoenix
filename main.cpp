@@ -37,10 +37,10 @@ int main()
 	std::cout << "=============================================" << std::endl;
 	std::cout << "\n Obviously not yet finished !  You can \"go Ballroom\" but not \"go east\"" << std::endl;
 	std::cout << " Implemented commands are :" << std::endl;
-	std::cout << "   look, go, quit " <<std::endl;
-	std::cout << " Parseable but not implemented:" <<std::endl;
-	std::cout << "   throw, save, load. " << std::endl;
-	std::cout << "\n Any other command will result in a useless help message being printed." << std::endl;
+	std::cout << "   look, go, throw, quit " <<std::endl;
+	std::cout << " Recognized but not implemented:" <<std::endl;
+	std::cout << "   help, save, load. " << std::endl;
+	std::cout << "\n Any other command will result in an error message." << std::endl;
 	std::cout << "=============================================" << std::endl;
 
 	currentRoom->Examine(&PlayerState);

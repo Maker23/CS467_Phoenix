@@ -44,11 +44,11 @@ class Room
 		std::string additionalDesc;
 		int numExits;
 		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
-		std::vector<std::string> roomFeatures;
 
 
 	public:
 	 	// IRL these would be private with iterator and get/set functions. TODO
+		std::vector<std::string> roomFeatures;
 
 		std::vector<Feature *> Features;
 		

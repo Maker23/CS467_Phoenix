@@ -20,9 +20,6 @@
  *
  * 	 Room::addExitsToStack Adds this room's exits (room names) to the given stack
  *
- *		 Room::playerTurn  -- TODO
- *
- *		 Room::Examine  -- TODO
  */
 
 #include <string>
@@ -219,7 +216,13 @@ void Room::Examine(GameState * GS)
 
 
 	std::cout << "\nYou are in the " << getRoomName() << std::endl;
-	std::cout << getShortDesc() << std::endl;
+	if ( roomSeen ) {
+		std::cout << getShortDesc() << std::endl;
+	}
+	else {
+		std::cout << getLongDesc() << std::endl;
+		roomSeen=true;
+	}
 	
 	for (int r = 0; r < MAX_RM_CONNECTIONS; r++) {
 		door = Connections[r];

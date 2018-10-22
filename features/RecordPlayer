@@ -3,6 +3,6 @@ TYPE: used_with_another_item
 ACTIONS: play, play record
 DESCRIPTION1: An old record player sits in the corner of the room.
 DESCRIPTION2: It's really old phonograph style you have never seen before.
-WEIGHT: 100
+WEIGHT: 10
 TRIGGERS: null
 DEPENDS_ON: Record1

@@ -70,14 +70,18 @@ Choice * Parser::ParseLine(){
 	  if ( j >= 1 ){
 			action = getVerb ( array[1] );
 			userChoice->Verb = action; 
-			if (DEBUG_FUNCTION) std::cout << "Setting verb to " << (validVerbs) action << std::endl;
+			if (DEBUG_FUNCTION) std::cout << "Setting verb to " << (validVerbs) action;
 		}
 		if ( j >= 2 ) {
-			if (DEBUG_FUNCTION) std::cout << "and noun to" << array[2] << std::endl;
+			if (DEBUG_FUNCTION) std::cout << " and noun to " << array[2] ;
 			userChoice->Noun = array[2]; 
 		}
+		if ( j >= 3 ) {
+			if (DEBUG_FUNCTION) std::cout << " and subject to " << array[3] ;
+			userChoice->Subject = array[3]; 
+		}
 
-		if (DEBUG_FUNCTION) std::cout << "===== end   Parser::ParseLine" << std::endl;
+		if (DEBUG_FUNCTION) std::cout << std::endl << "===== end   Parser::ParseLine" << std::endl;
 		return userChoice;
 }
 
@@ -89,11 +93,11 @@ Parser::getVerb(std::string verbString) {
 	// I hardcoded a bunch of stuff here so we could test other parts of the game
 	
 	if (DEBUG_FUNCTION) std::cout << "===== begin Parser::getVerb, verb is '" << verbString << "'" << std::endl;
-	if ((verbString.compare("tst") == 0 )||
-			(verbString.compare("test") == 0 ) ||
+	if ((verbString.compare("h") == 0 )||
+			(verbString.compare("help") == 0 ) ||
 			(verbString.compare("?") == 0))
 	{
-		return (validVerbs)tst;
+		return (validVerbs)help;
 	}
 	else if ((verbString.compare("go") == 0 )||
 			(verbString.compare("move") == 0 ) ||
@@ -129,6 +133,6 @@ Parser::getVerb(std::string verbString) {
 	}
 	else 
 	{
-		return (validVerbs)help;
+		return (validVerbs)unknown;
 	}
 }

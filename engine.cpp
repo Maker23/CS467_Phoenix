@@ -288,3 +288,4 @@ void GameState::UpdateGameState(int &GameClock, Room* currentRoom)
 	GameClock++;
 	// Can check on or update various GameTasks here
 }
+//

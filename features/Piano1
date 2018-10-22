@@ -6,3 +6,4 @@ DESCRIPTION2: After playing the notes, a panel opens up above some of the keys w
 TRIGGERS: Key1
 WEIGHT: 100
 DEPENDS_ON: null
+TEST: null

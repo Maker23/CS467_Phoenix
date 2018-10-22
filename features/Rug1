@@ -7,3 +7,4 @@ DESCRIPTION3: The rug looks a little rumpled in one corner.
 WEIGHT: 10
 TRIGGERS: Note1
 DEPENDS_ON: null
+TEST: null

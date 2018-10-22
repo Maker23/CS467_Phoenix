@@ -410,3 +410,4 @@ bool Doorway::isDoorLocked()
 {
 	return doorLocked;
 }
+//

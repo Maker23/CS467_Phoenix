@@ -62,25 +62,56 @@ Choice * Parser::ParseLine(){
 			if (DEBUG_FUNCTION) cout << "array[" << i << "] " << array[i] << endl;
     }
 
-		if (DEBUG_FUNCTION) cout << "num args: " << j << endl;
+		if (DEBUG_FUNCTION) std::cout << "num args: " << j << std::endl;
 		//
 	  // TODO: Convert the user-entered text into valid commands
-	
-		// For now we'll just use the literal text
-	  if ( j >= 1 ){
-			action = getVerb ( array[1] );
-			userChoice->Verb = action; 
-			if (DEBUG_FUNCTION) std::cout << "Setting verb to " << (validVerbs) action;
-		}
-		if ( j >= 2 ) {
-			if (DEBUG_FUNCTION) std::cout << " and noun to " << array[2] ;
-			userChoice->Noun = array[2]; 
-		}
-		if ( j >= 3 ) {
-			if (DEBUG_FUNCTION) std::cout << " and subject to " << array[3] ;
-			userChoice->Subject = array[3]; 
-		}
+for(int i = 0; i <= j; i++)
+{
+  // I deletd the DEBUG_FUNCTION outputs that were here because they no longer were helpful with my new code
+			action = getVerb ( array[i] );
+      if(action != unknown && userChoice->Verb == unknown){   //if its a verb we included and verb hasn't been set yet
 
+        userChoice->Verb = action;
+        if(DEBUG_FUNCTION) std::cout << "verb is now : " << userChoice->Verb << std::endl;
+      }
+
+  if(userChoice->Verb != unknown)  //this is a precondition that the VERB must come first before the subject and noun
+                                  //I'm willing to change this, but I can't think of a valid command
+                                  //where the user would say the noun and subject before the verb, can you?
+  {
+      if(array[i] == "Ballroom" || array[i] == "ballroom")
+      {
+        userChoice->Noun = "Ballroom";
+      }
+      else if(array[i] == "Foyer" || array[i] == "foyer")
+      {
+        userChoice->Noun = "Foyer";
+      }
+      else if( array[i] == "Kitchen" || array[i] == "kitchen")
+      {
+        userChoice->Noun = "Kitchen";
+      }
+      else if( array[i] == "Conservatory" || array[i] == "conservatory")
+      {
+        userChoice->Noun = "Conservatory";
+      }
+      else if( array[i] == "Conservatory" || array[i] == "conservatory")
+      {
+        userChoice->Noun = "Conservatory";
+      }
+      else if( array[i] == "Pantry" || array[i] == "pantry")
+      {
+        userChoice->Noun = "Pantry";
+      }
+
+      if(array[i] == "Ballroom")
+      {
+        userChoice->Subject = array[i];
+        if(DEBUG_FUNCTION) std::cout << "subject is now: " << userChoice->Subject << std::endl;
+      }
+
+   }
+}
 		if (DEBUG_FUNCTION) std::cout << std::endl << "===== end   Parser::ParseLine" << std::endl;
 		return userChoice;
 }
@@ -88,22 +119,29 @@ Choice * Parser::ParseLine(){
 
 validVerbs
 Parser::getVerb(std::string verbString) {
-	
+
 	// THIS IS DEFINITELY NOT COMPLETE!
 	// I hardcoded a bunch of stuff here so we could test other parts of the game
-	
+
+  string mystr;
+  Choice * userChoice = new Choice();
+
 	if (DEBUG_FUNCTION) std::cout << "===== begin Parser::getVerb, verb is '" << verbString << "'" << std::endl;
 	if ((verbString.compare("h") == 0 )||
 			(verbString.compare("help") == 0 ) ||
 			(verbString.compare("?") == 0))
 	{
-		return (validVerbs)help;
+    userChoice->Verb = (validVerbs)help;    //sets the validVerb to 12
+		return userChoice->Verb;
 	}
 	else if ((verbString.compare("go") == 0 )||
 			(verbString.compare("move") == 0 ) ||
-			(verbString.compare("travel") == 0))
+			(verbString.compare("travel") == 0) ||
+      (verbString.compare("walk") == 0) ||
+      (verbString.compare("run") == 0))
 	{
-		return (validVerbs)go;
+		userChoice->Verb = (validVerbs)go;
+    return userChoice->Verb;
 	}
 	else if ((verbString.compare("look") == 0 )||
 			(verbString.compare("investigate") == 0 ) ||
@@ -131,8 +169,9 @@ Parser::getVerb(std::string verbString) {
 	{
 		return (validVerbs)quit;
 	}
-	else 
+	else
 	{
 		return (validVerbs)unknown;
 	}
 }
+//

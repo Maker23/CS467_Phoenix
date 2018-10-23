@@ -78,6 +78,8 @@ Room * GameState::playerTurn(Room * currentRoom)
 		std::cout << "Game does not yet support Save or Load" << std::endl;
 		return currentRoom;
 	}
+
+	// If not a reserved word, take action
 	nextRoom = actInRoom(currentRoom, userChoice);
 
 	if (DEBUG_FUNCTION) std::cout << "===== end   GameState::playerTurn" << std::endl;

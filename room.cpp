@@ -227,7 +227,7 @@ void Room::Examine(GameState * GS)
 	for (int r = 0; r < MAX_RM_CONNECTIONS; r++) {
 		door = Connections[r];
 		if (door != NULL) {
-			std::cout << "\t Doorway " << door->Examine() << std::endl;
+			std::cout << "\t" << door->Examine() << std::endl;
 		}
 	}
 	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
@@ -386,7 +386,7 @@ void Doorway::setDoorway(std::string connectionString)
 }
 
 std::string Doorway::Examine() {
-	std::string ReturnThis =  "" + goesTo;
+	std::string ReturnThis =  getDisplayName() +  ":" + getExitRoomName() ;
 	return ReturnThis;
 }
 

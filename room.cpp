@@ -264,6 +264,37 @@ std::string Room::getExitsForDisplay()
 }
 
 Room * Room::goRoom(std::string roomName, GameState * PlayerState){
+	std::string exitStringReturned;
+	Room *roomPtr = this;
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin Room::goRoom" << std::endl;
+
+	// getExitRoomByKey returns locked if the door can't open, empty string if not found, or the string key of the doorway
+	exitStringReturned = roomPtr->getExitRoomByKey(roomName);
+
+	if(exitStringReturned.compare("locked") == 0)
+	{
+		if (DEBUG_FUNCTION) std::cout << "===== exitStringReturned.compare(\"locked\") returned locked." << std::endl;
+		std::cout << "Door won't open." << std::endl;
+		return this;
+	}
+	else if(exitStringReturned.length() > 0)
+	{
+		if (DEBUG_FUNCTION) std::cout << "===== Get the room pointer of the room we want." << std::endl;
+  		roomPtr = PlayerState->housePtr->getRoomPtr(exitStringReturned);
+  		if(roomPtr != NULL)
+  		{
+  			if (DEBUG_FUNCTION) std::cout << "===== Return room pointer." << std::endl;
+  			return roomPtr;
+  		}
+	}
+
+	if (DEBUG_FUNCTION) std::cout << "===== Did not return already, so something was not found." << std::endl;
+	std::cout << roomName << "? Hm, I don't see a doorway that leads that way." << std::endl;
+	return this;
+
+
+/*
 	Room * nextRoom = this;
 	Doorway * door;
 
@@ -290,6 +321,7 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 	}
 	std::cout << "Hm, I don't see a doorway that leads to the " << roomName << "...." << std::endl;
 	return this;
+*/	
 }
 
 // prints the room.

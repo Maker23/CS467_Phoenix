@@ -224,6 +224,12 @@ void Room::Examine(GameState * GS)
 		roomSeen=true;
 	}
 	
+	GS->housePtr->printRoomFeatures(this);
+
+	// TODO:? Move this to a command word exits and not all the time?
+	// TODO:? Show room name once player has seen that room?
+	std::cout << "Room exits: " << this->getExitsForDisplay() << std::endl;
+
 	/* older code
 	for (int r = 0; r < MAX_RM_CONNECTIONS; r++) {
 		door = Connections[r];
@@ -232,14 +238,6 @@ void Room::Examine(GameState * GS)
 		}
 	}
 	*/
-
-	GS->housePtr->printRoomFeatures(this);
-	
-	// TODO:? Move this to a command word exits and not all the time?
-	// TODO:? Show room name once player has seen that room?
-	std::cout << "Room exits: " << this->getExitsForDisplay() << std::endl;
-
-
 
 /*
 	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)

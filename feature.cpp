@@ -54,6 +54,7 @@ Feature::Feature(string fileToOpen)
 	weight = 0;
 	triggers = "";
 	dependsOn = "";
+	seen = 0;
 
 
 
@@ -98,9 +99,67 @@ Feature::Feature(string fileToOpen)
 				}
 			}
 
+			if(lineStr.find("TEXT_NEVERSEEN: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(16, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_NEVERSEEN " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					neverSeenText = tempStr;
+			}
+
+			if(lineStr.find("TEXT_SEEN: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(11, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_SEEN " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					seenText = tempStr;
+			}
+
+			if(lineStr.find("TEXT_EXAMINE: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(14, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_EXAMINE " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					examineText = tempStr;
+			}
+
+			if(lineStr.find("TEXT_SOLVED: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(13, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_SOLVED " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					solvedText = tempStr;
+			}
+
+
+			if(lineStr.find("TEXT_TAKEN: ") != std::string::npos) 
+			{
+				std::cout << "TEXT_TAKEN" << std::endl;
+				tempStr = lineStr.substr(12, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TAKEN " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					takenText = tempStr;
+			}
+
+			if(lineStr.find("TEXT_DROPPED: ") != std::string::npos) 
+			{
+				std::cout << "TEXT_DROPPED" << std::endl;
+				tempStr = lineStr.substr(14, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TAKEN " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					droppedText = tempStr;
+			}
+
+
 			if(lineStr.find("DESCRIPTION1: ") != std::string::npos) 
 			{
-				tempStr = lineStr.substr(15, lineStr.length()-1);
+				tempStr = lineStr.substr(14, lineStr.length()-1);
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION1 " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
@@ -109,7 +168,7 @@ Feature::Feature(string fileToOpen)
 
 			if(lineStr.find("DESCRIPTION2: ") != std::string::npos) 
 			{
-				tempStr = lineStr.substr(17, lineStr.length()-1);
+				tempStr = lineStr.substr(14, lineStr.length()-1);
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION2 " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
@@ -118,7 +177,7 @@ Feature::Feature(string fileToOpen)
 
 			if(lineStr.find("DESCRIPTION3: ") != std::string::npos) 
 			{
-				tempStr = lineStr.substr(16, lineStr.length()-1);
+				tempStr = lineStr.substr(14, lineStr.length()-1);
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION3 " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
@@ -127,7 +186,7 @@ Feature::Feature(string fileToOpen)
 
 			if(lineStr.find("DESCRIPTION4: ") != std::string::npos) 
 			{
-				tempStr = lineStr.substr(16, lineStr.length()-1);
+				tempStr = lineStr.substr(14, lineStr.length()-1);
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION4 " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
@@ -278,4 +337,56 @@ void Feature::hurlFeature(GameState *GS, Feature * Subject)
 std::string Feature::getDescription()
 {
 	return ""; // TODO implement dis
+}
+
+
+void Feature::printWalkingInRoomDescription()
+{
+	if(!seen)
+	{
+		std::cout << neverSeenText << std::endl;
+		seen = true;
+	}
+	else
+	{
+		if(solved) 
+		{
+			std::cout << solvedText << std::endl;	
+		}
+		else
+		{
+			std::cout << seenText << std::endl;
+		}
+		
+	}
+}
+
+void Feature::printExamineFeature()
+{
+	std::cout << description3 << std::endl;
+}
+
+std::string Feature::getDependsOn()
+{
+	return dependsOn;
+}
+
+std::string Feature::getTriggers()
+{
+	return triggers;
+}
+
+bool Feature::isSolved()
+{
+	return solved;
+}
+
+bool Feature::isSeen()
+{
+	return seen;
+}
+
+void Feature::setSolved(bool value)
+{
+	solved = value;
 }

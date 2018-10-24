@@ -210,7 +210,7 @@ bool Room::lockExitDoorByKey(std::string searchKey)
  */
 void Room::Examine(GameState * GS)
 {
-	Doorway * door;
+	//Doorway * door;
 	Feature * feature;
 	std::vector<std::string>::iterator iter;
 
@@ -224,18 +224,31 @@ void Room::Examine(GameState * GS)
 		roomSeen=true;
 	}
 	
+	/* older code
 	for (int r = 0; r < MAX_RM_CONNECTIONS; r++) {
 		door = Connections[r];
 		if (door != NULL) {
 			std::cout << "\t Doorway " << door->Examine() << std::endl;
 		}
 	}
+	*/
+
+	GS->housePtr->printRoomFeatures(this);
+	
+	// TODO:? Move this to a command word exits and not all the time?
+	// TODO:? Show room name once player has seen that room?
+	std::cout << "Room exits: " << this->getExitsForDisplay() << std::endl;
+
+
+
+/*
 	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
 	{
 		std::cout << "You see a " << *iter << std::endl;
 		feature = GS->housePtr->getFeaturePtr(*iter);
 		if ( feature ) feature->Examine(GS);
 	}
+	*/
 }
 
 /*
@@ -337,8 +350,13 @@ void Room::displayRoom()
 	std::cout << additionalDesc << std::endl;
 
 	// this we may want to only show if user asks for the exits.
-	if (DEBUG_ROOM) std::cout << "# of Features in Room: " << Features.size() << std::endl;
+	//if (DEBUG_BRENT) std::cout << "# of Features in Room: " << Features.size() << std::endl;
 	std::cout << "Exits: " << getExitsForDisplay() << std::endl;
+}
+
+std::vector<std::string> Room::getFeaturesVector()
+{
+	return roomFeatures;
 }
 
 // Constructor for Doorway class. 

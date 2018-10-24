@@ -17,15 +17,21 @@ class Feature
 		std::string name;
 
 		FeatureType type;
+		std::string neverSeenText;
+		std::string seenText;
+		std::string solvedText;
+		std::string examineText;
+		std::string takenText;
+		std::string droppedText;
 		bool solved;
+		bool seen;
+		int weight;
+		std::string triggers;
+		std::string dependsOn;
 		std::string description1;
 		std::string description2;
 		std::string description3;
 		std::string description4;
-		int weight;
-		std::string triggers;
-		std::string dependsOn;
-
 
 	public:
 		std::vector<std::string> actions;
@@ -34,8 +40,17 @@ class Feature
 
 		std::string getName();
 		std::string getDescription();
+		void printWalkingInRoomDescription(); 				// Prints the feature as you walk in the room.
+		void printExamineFeature();
+		std::string getDependsOn();
+		std::string getTriggers();
 		std::vector<Feature*> Examine(GameState *GS);
 		void hurlFeature(GameState *GS, Feature *Subject);
+		bool isSolved();
+		bool isSeen();
+		void setSolved(bool);
+
+
 };
 
 

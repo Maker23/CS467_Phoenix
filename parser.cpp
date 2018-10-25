@@ -103,11 +103,39 @@ for(int i = 0; i <= j; i++)
       {
         userChoice->Noun = "Pantry";
       }
-
-      if(array[i] == "Ballroom")
+      else if( array[i] == "Rug" || array[i] == "rug")
       {
-        userChoice->Subject = array[i];
-        if(DEBUG_FUNCTION) std::cout << "subject is now: " << userChoice->Subject << std::endl;
+        userChoice->Noun = "Rug";
+      }
+
+      else if( array[i] == "Record" || array[i] == "record")
+      {
+        if(array[i+1] == "Player" || array[i+1] == "player")
+        userChoice->Noun = "RecordPlayer";
+      }
+      else if( array[i] == "Tapestry" || array[i] == "tapestry")
+      {
+        userChoice->Noun = "Tapestry";
+      }
+      else if( array[i] == "Dishes" || array[i] == "dishes")
+      {
+        userChoice->Noun = "Dishes";
+      }
+      else if( array[i] == "Record" || array[i] == "record")
+      {
+        userChoice->Noun = "Record";
+      }
+      else if( array[i] == "Padlock" || array[i] == "padlock")
+      {
+        userChoice->Noun = "Padlock";
+      }
+      else if( array[i] == "Piano" || array[i] == "piano")
+      {
+        userChoice->Noun = "Piano";
+      }
+      else if( array[i] == "Key" || array[i] == "key")
+      {
+        userChoice->Noun = "Key";
       }
 
    }

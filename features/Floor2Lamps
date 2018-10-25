@@ -1,7 +1,9 @@
 NAME: Oil Lamp
 TYPE: block_room
 ACTIONS: light
-DESCRIPTION1: You barely can make out an old oil lamp attached to the wall at the top of the stairs.
-DESCRIPTION2: An old, dusty lamp burning. There is enough oil still left to last the night.
+TEXT_NEVERSEEN: You can just make out the silhouette of an oil lamp on the wall at the top of the stair case. 
+TEXT_SEEN: Unlit oil lamp is attached to the wall.
+TEXT_EXAMINE: The wick of the lamp is still there and there is oil in it. It is ready to light.
+TEXT_SOLVED: Lighting the lamp reveals the room.
 TRIGGERS: VisionHallway2
 DEPENDS_ON: Firestarter

@@ -23,6 +23,7 @@ class Feature
 		std::string examineText;
 		std::string takenText;
 		std::string droppedText;
+		std::string usedText;
 		bool solved;
 		bool seen;
 		int weight;

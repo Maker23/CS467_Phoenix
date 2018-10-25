@@ -138,7 +138,6 @@ Feature::Feature(string fileToOpen)
 
 			if(lineStr.find("TEXT_TAKEN: ") != std::string::npos) 
 			{
-				std::cout << "TEXT_TAKEN" << std::endl;
 				tempStr = lineStr.substr(12, lineStr.length()-1);
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TAKEN " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
@@ -148,7 +147,6 @@ Feature::Feature(string fileToOpen)
 
 			if(lineStr.find("TEXT_DROPPED: ") != std::string::npos) 
 			{
-				std::cout << "TEXT_DROPPED" << std::endl;
 				tempStr = lineStr.substr(14, lineStr.length()-1);
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TAKEN " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
@@ -156,7 +154,16 @@ Feature::Feature(string fileToOpen)
 					droppedText = tempStr;
 			}
 
+			if(lineStr.find("TEXT_USED: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(11, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_USED " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					usedText = tempStr;
+			}
 
+/*
 			if(lineStr.find("DESCRIPTION1: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(14, lineStr.length()-1);
@@ -192,7 +199,7 @@ Feature::Feature(string fileToOpen)
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
 					description4 = tempStr;
 			}
-
+*/
 			if(lineStr.find("WEIGHT: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(8, lineStr.length()-1);

@@ -1,9 +1,10 @@
 NAME: Record
 TYPE: item
 ACTIONS: get, pickup, take, pick up
-DESCRIPTION1: You see an old dusty record with no center label.
-DESCRIPTION2: You pickup the record and place it in your inventory.
-DESCRIPTION3: Listening to the record, among the scratch noise, you can hear notes "E A C".
+TEXT_NEVERSEEN: You see an old dusty record with no center label.
+TEXT_SEEN: A record sits where you left it.
+TEXT_TAKEN: You pickup the record and place it in your inventory.
+TEXT_DROPPED: You drop the record on the floor.
 WEIGHT: 1
 TRIGGERS: null
 DEPENDS_ON: RecordPlayer

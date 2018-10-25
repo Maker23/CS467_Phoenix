@@ -1,8 +1,11 @@
 NAME: Camera
 TYPE: item
 ACTIONS: takePicture, take picture, snap, snap picture, snap pic, take pic
-DESCRIPTION1: 1930s camera with accordian style focus and cracked leather.
-DESCRIPTION2: There is plenty of film you can use to take pictures with.
+TEXT_NEVERSEEN: An old dusty camera sits on the top shelf.
+TEXT_SEEN: Dusty camera on top shelf.
+TEXT_EXAMINE: 1930s camera with accordian style focus and cracked leather with plenty of film.
+TEXT_TAKEN: You take the camera and place it in your bag.
+TEXT_DROPPED: You drop the camera to the floor.
 WEIGHT: 1
 TRIGGERS: null
 DEPENDS_ON: ClosetShelf

@@ -1,6 +1,9 @@
 NAME: Carved Wooden Box
 TYPE: container
 ACTIONS: open
-DESCRIPTION1: Mahogany box carved with images of ghosts flying around.
+TEXT_NEVERSEEN: TODO(FIX THIS LINE): A wooden box sits ... somewhere.
+TEXT_SEEN: TODO(FIX THIS LINE): A wooden box sits somewhere.
+TEXT_EXAMINE: The box looks to be made from mahogany. Carved on it is a detailed picture of ghosts flying around a room.
+TEXT_SOLVED: The wooden box is open.
 TRIGGERS: Spectacles
 DEPENDS_ON: null

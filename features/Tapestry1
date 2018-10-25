@@ -1,8 +1,10 @@
 NAME: Tapestry
 TYPE: decoration
 ACTIONS: look, search, push, view
-DESCRIPTION1: You see a large tapestry hanging on the wall.
-DESCRIPTION2: As you look closer, you see a design of the outside of the house.
-TRIGGERS: null
+TEXT_NEVERSEEN: You see a large tapestry hanging on the wall.
+TEXT_SEEN: A tapestry of a house hangs from the wall.
+TEXT_EXAMINE: As you look closer, you see a design of the outside of a house, this house. A skeletal person riding a horse is looking pointing to the house. Appearing from the finger of the figure is several ghosts floating towards the house.
+TEXT_TAKEN: You try to pull the tapestry from the wall, but it won't budge.
 WEIGHT: 100
+TRIGGERS: null
 DEPENDS_ON: null

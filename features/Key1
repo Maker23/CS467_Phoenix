@@ -1,9 +1,11 @@
 NAME: Bronze Key
 TYPE: item
 ACTIONS: get, take, steal, borrow
-DESCRIPTION1: You see an old bronze key. The key is very intricate, with a shamrock shape at the top.
-DESCRIPTION2: It's dusty, but you can make out the picture of a fiery bird - a Phoenix.
-DESCRIPTION3: You place the key in your inventory.
+TEXT_NEVERSEEN: As you finishing pressing the proper piano keys, a door just above the last key you pressed pops open, revealing a key.
+TEXT_SEEN: A key sits in the secret compartment.
+TEXT_EXAMINE: The key is dusty, and you can see the top part of the key is the shape of a clover.
+TEXT_TAKEN: You place the key in your inventory.
+TEXT_DROPPED: You drop the key to the floor.
 WEIGHT: 1
 TRIGGERS: 2nd Floor Doors
 DEPENDS_ON: Piano1

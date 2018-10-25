@@ -148,8 +148,8 @@ for(int i = 0; i <= j; i++)
    }
 }
 
-cout << "THIS IS THE VERB: " << userChoice->Verb << endl;
-cout << "THIS IS THE NOUN: " << userChoice->Noun << endl;
+//cout << "THIS IS THE VERB: " << userChoice->Verb << endl;
+//cout << "THIS IS THE NOUN: " << userChoice->Noun << endl;
 
 		if (DEBUG_FUNCTION) std::cout << std::endl << "===== end   Parser::ParseLine" << std::endl;
 		return userChoice;

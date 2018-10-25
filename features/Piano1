@@ -1,8 +1,10 @@
 NAME: Grand Piano
 TYPE: container
 ACTIONS: play eac, play e a c
-DESCRIPTION1: An old, dusty, black, Steinway & Sons grand piano sits in the corner of the room.
-DESCRIPTION2: After playing the notes, a panel opens up above some of the keys with a bronce key in it.
+TEXT_NEVERSEEN: A piano sits in one corner of the room.
+TEXT_SEEN: A piano is in the room.
+TEXT_EXAMINE: You look at a very old, dusty, black, Steinway & Sons grand piano.
+TEXT_SOLVED: Piano with the cubby hole open is in the corner.
 TRIGGERS: Key1
 WEIGHT: 100
 DEPENDS_ON: null

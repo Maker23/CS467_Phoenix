@@ -1,7 +1,9 @@
 NAME: 2nd Floor Doors
 TYPE: door_lock
 ACTIONS: unlock
-DESCRIPTION1: The doors all have painted a small shamrock on them.
-DESCRIPTION2: After hearing the clicking sound of being unlocked, you think you can go in.
+TEXT_NEVERSEEN: The door will not open.
+TEXT_SEEN: The door will not open.
+TEXT_EXAMINE: You see the door has a lock on it. Just above the lock is a picture of a clover.
+TEXT_SOLVED: ""
 TRIGGERS: null
 DEPENDS_ON: Key1

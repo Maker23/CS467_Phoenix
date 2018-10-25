@@ -210,8 +210,8 @@ bool Room::lockExitDoorByKey(std::string searchKey)
  */
 void Room::Examine(GameState * GS)
 {
-	Doorway * door;
-	Feature * feature;
+	//Doorway * door;
+	//Feature * feature;
 	std::vector<std::string>::iterator iter;
 
 
@@ -221,21 +221,34 @@ void Room::Examine(GameState * GS)
 	}
 	else {
 		std::cout << getLongDesc() << std::endl;
-		roomSeen=true;
 	}
 	
+	GS->housePtr->printRoomFeatures(this);
+
+	// TODO:? Move this to a command word exits and not all the time?
+	// TODO:? Show room name once player has seen that room?
+	if(roomSeen)
+		std::cout << "Room exits: " << this->getExitsForDisplay() << std::endl;
+	else
+		roomSeen = true;
+
+	/* older code
 	for (int r = 0; r < MAX_RM_CONNECTIONS; r++) {
 		door = Connections[r];
 		if (door != NULL) {
 			std::cout << "\t Doorway " << door->Examine() << std::endl;
 		}
 	}
+	*/
+
+/*
 	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
 	{
 		std::cout << "You see a " << *iter << std::endl;
 		feature = GS->housePtr->getFeaturePtr(*iter);
 		if ( feature ) feature->Examine(GS);
 	}
+	*/
 }
 
 /*
@@ -264,6 +277,37 @@ std::string Room::getExitsForDisplay()
 }
 
 Room * Room::goRoom(std::string roomName, GameState * PlayerState){
+	std::string exitStringReturned;
+	Room *roomPtr = this;
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin Room::goRoom" << std::endl;
+
+	// getExitRoomByKey returns locked if the door can't open, empty string if not found, or the string key of the doorway
+	exitStringReturned = roomPtr->getExitRoomByKey(roomName);
+
+	if(exitStringReturned.compare("locked") == 0)
+	{
+		if (DEBUG_FUNCTION) std::cout << "===== exitStringReturned.compare(\"locked\") returned locked." << std::endl;
+		std::cout << "Door won't open." << std::endl;
+		return this;
+	}
+	else if(exitStringReturned.length() > 0)
+	{
+		if (DEBUG_FUNCTION) std::cout << "===== Get the room pointer of the room we want." << std::endl;
+  		roomPtr = PlayerState->housePtr->getRoomPtr(exitStringReturned);
+  		if(roomPtr != NULL)
+  		{
+  			if (DEBUG_FUNCTION) std::cout << "===== Return room pointer." << std::endl;
+  			return roomPtr;
+  		}
+	}
+
+	if (DEBUG_FUNCTION) std::cout << "===== Did not return already, so something was not found." << std::endl;
+	std::cout << roomName << "? Hm, I don't see a doorway that leads that way." << std::endl;
+	return this;
+
+
+/*
 	Room * nextRoom = this;
 	Doorway * door;
 
@@ -290,6 +334,7 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 	}
 	std::cout << "Hm, I don't see a doorway that leads to the " << roomName << "...." << std::endl;
 	return this;
+*/	
 }
 
 // prints the room.
@@ -305,8 +350,13 @@ void Room::displayRoom()
 	std::cout << additionalDesc << std::endl;
 
 	// this we may want to only show if user asks for the exits.
-	if (DEBUG_ROOM) std::cout << "# of Features in Room: " << Features.size() << std::endl;
+	//if (DEBUG_BRENT) std::cout << "# of Features in Room: " << Features.size() << std::endl;
 	std::cout << "Exits: " << getExitsForDisplay() << std::endl;
+}
+
+std::vector<std::string> Room::getFeaturesVector()
+{
+	return roomFeatures;
 }
 
 // Constructor for Doorway class. 

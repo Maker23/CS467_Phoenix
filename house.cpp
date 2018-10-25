@@ -25,6 +25,7 @@
 #include <dirent.h>
 #include "utilities.hpp"
 #include "house.hpp"
+#include "feature.hpp"
 #include "room.hpp"
 #include "engine.hpp"
 
@@ -198,4 +199,33 @@ Feature * House::getFeaturePtr(string featureName)
 		if ( DEBUG_FEATURES ) std::cout << "      returning NULL"<<  std::endl;
 		return NULL;
 	}
+}
+
+
+void House::printRoomFeatures(Room *room)
+{
+	std::vector<std::string> roomFeatures = room->getFeaturesVector();
+	Feature *f1, *f2;
+
+	if (DEBUG_BRENT) std::cout << "Start House::printFeatures()" << std::endl;
+	for (std::vector<std::string>::iterator it = roomFeatures.begin() ; it != roomFeatures.end(); ++it)
+	{
+   	//if (DEBUG_BRENT) std::cout << (*it) << std::endl;
+   	f1 = getFeaturePtr((*it));
+
+   	if(f1->getDependsOn().size() == 0)
+   	{
+   		std::cout << f1->getWalkingInRoomText() << std::endl;
+   	}
+   	else
+   	{
+   		f2 = getFeaturePtr(f1->getDependsOn());
+   		if (DEBUG_BRENT) std::cout << "DEBUG: " << f1->getName() << " depends on: " << f2->getName() << " solved: " << f2->isSolved() << std::endl;
+   		if(f2->isSolved())
+   		{
+   			std::cout << f1->getWalkingInRoomText() << std::endl;
+   		}
+   	}
+	}
+	if (DEBUG_BRENT) std::cout << "Exit House::printFeatures()" << std::endl;
 }

@@ -1,9 +1,10 @@
 NAME: Rug
 TYPE: container
 ACTIONS: move, push, shove
-DESCRIPTION1: A dark blue rug sits in the middle of the room.
-DESCRIPTION2: It's dusty, but you can make out the picture of a fiery bird - a Phoenix.
-DESCRIPTION3: The rug looks a little rumpled in one corner.
+TEXT_NEVERSEEN: A dark blue rug sits in the middle of the room.
+TEXT_SEEN: Rug is in the middle of the room.
+TEXT_EXAMINE: It's dusty, but you can make out the picture of a fiery bird - a Phoenix.
+TEXT_SOLVED: The rug looks a little rumpled in one corner.
 WEIGHT: 10
 TRIGGERS: Note1
 DEPENDS_ON: null

@@ -1,8 +1,11 @@
 NAME: Flint and Steel
 TYPE: item
 ACTIONS: light, use, strike
-DESCRIPTION1: A piece of flint and another piece of steel.
-DESCRIPTION2: You look closer and it still looks like flint and steel.
+TEXT_NEVERSEEN: Solving the puzzle reveals pieces of flint and and steel.
+TEXT_SEEN: Flint and steel in the puzzle.
+TEXT_EXAMINE: Tied together by a braided leather cord is a sharp piece of flint, and a C shaped piece of steel.
+TEXT_TAKEN: You take the attached flint and steel.
+TEXT_DROPPED: You drop the flint and steel to the floor.
 WEIGHT: 1
 TRIGGERS: null
 DEPENDS_ON: Puzzle1

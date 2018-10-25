@@ -1,9 +1,11 @@
 NAME: Note
 TYPE: item
 ACTIONS: take
-DESCRIPTION1: An old piece of paper
-DESCRIPTION2: The number '1894' is written on it in faded calligraphy
-DESCRIPTION3: You take the note and see '1894' is written on it in faded calligraphy
+TEXT_NEVERSEEN: An old note of paper sits under where the rug was.
+TEXT_SEEN: A note sits in the middle of the floor.
+TEXT_EXAMINE: The number '1894' is written on it in faded calligraphy
+TEXT_TAKEN: You take the note and see '1894' is written on it in faded calligraphy
+TEXT_DROPPED: You drop the note to the floor.
 WEIGHT: 1
 OPEN: 1
 TRIGGERS: null

@@ -50,7 +50,7 @@ class Room
 	 	// IRL these would be private with iterator and get/set functions. TODO
 		std::vector<std::string> roomFeatures;
 
-		std::vector<Feature *> Features;
+		std::vector<Feature *> features;
 		
 		Room(std::string); 									// constructor
 		~Room();													// destructor
@@ -69,6 +69,7 @@ class Room
 		bool lockExitDoorByKey(std::string);			// will lock the door to one of the rooms based on a doorway keyword.
 		void displayRoom();
 		Room * goRoom(std::string, GameState *);
+		std::vector<std::string> getFeaturesVector();
 
 };
 

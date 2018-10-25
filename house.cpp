@@ -215,7 +215,7 @@ void House::printRoomFeatures(Room *room)
 
    	if(f1->getDependsOn().size() == 0)
    	{
-   		f1->printWalkingInRoomDescription();
+   		std::cout << f1->getWalkingInRoomText() << std::endl;
    	}
    	else
    	{
@@ -223,7 +223,7 @@ void House::printRoomFeatures(Room *room)
    		if (DEBUG_BRENT) std::cout << "DEBUG: " << f1->getName() << " depends on: " << f2->getName() << " solved: " << f2->isSolved() << std::endl;
    		if(f2->isSolved())
    		{
-   			f1->printWalkingInRoomDescription();
+   			std::cout << f1->getWalkingInRoomText() << std::endl;
    		}
    	}
 	}

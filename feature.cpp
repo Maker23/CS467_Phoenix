@@ -47,16 +47,17 @@ Feature::Feature(string fileToOpen)
 	// set defaults
 	name = "";
 	solved = false;
-	description1 = "";
-	description2 = "";
-	description3 = "";
-	description4 = "";
 	weight = 0;
 	triggers = "";
 	dependsOn = "";
 	seen = 0;
-
-
+	neverSeenText = "";
+	seenText = "";
+	solvedText = "";
+	examineText = "";
+	takenText = "";
+	droppedText = "";
+	usedText = "";
 
 	featurefile.open(fileToOpen);
 
@@ -341,36 +342,29 @@ void Feature::hurlFeature(GameState *GS, Feature * Subject)
 	}
 }
 
-std::string Feature::getDescription()
-{
-	return ""; // TODO implement dis
-}
-
-
-void Feature::printWalkingInRoomDescription()
+std::string Feature::getWalkingInRoomText()
 {
 	if(!seen)
 	{
-		std::cout << neverSeenText << std::endl;
 		seen = true;
+		return neverSeenText;;
 	}
 	else
 	{
 		if(solved) 
 		{
-			std::cout << solvedText << std::endl;	
+			return solvedText;	
 		}
 		else
 		{
-			std::cout << seenText << std::endl;
+			return seenText;
 		}
-		
 	}
 }
 
-void Feature::printExamineFeature()
+std::string Feature::getExamineText()
 {
-	std::cout << description3 << std::endl;
+	return examineText;
 }
 
 std::string Feature::getDependsOn()
@@ -381,6 +375,16 @@ std::string Feature::getDependsOn()
 std::string Feature::getTriggers()
 {
 	return triggers;
+}
+
+std::string Feature::getTakenText()
+{
+	return takenText;
+}
+
+std::string Feature::getDroppedText()
+{
+	return droppedText;
 }
 
 bool Feature::isSolved()

@@ -9,7 +9,7 @@ Most recent changelogs:
 
 To play: 
 ```
-	make game;
+	make game
 	./game
 ```
 
@@ -24,7 +24,7 @@ the boolean flags in **utilities.hpp**
 
 	engine
 		GameState and Choice classes
-		playTurn is the central loop of the game
+		[playerTurn](https://drive.google.com/open?id=1-b-puEBBSEZWqLU_hha8m3HcJH0uOfDg) is the central loop of the game
 
 	house
 		Builds the house from files on disk

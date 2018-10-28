@@ -1,6 +1,10 @@
 # CS467_Phoenix
 Shared repository for CS467 Team Phoenix Week 04 branch
 
+For the latest changelog see
+https://docs.google.com/document/d/1qrRssbhig6v8y5otEunce0lCNV8vEc7iDRUUC3Kh1qI
+
+
 To play: 
 	make game;
 	./game

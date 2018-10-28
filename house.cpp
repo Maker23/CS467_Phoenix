@@ -159,16 +159,27 @@ Room * House::getRoomPtr(string roomName)
  * Prints all the rooms found in the map.
  * Used for debugging. 
  */
-bool House::printRooms(GameState * GS)
+void House::printRooms(GameState * GS)
 {
 	// Print all the keys in the houseMap
-	if ( ! DEBUG_EXAMINE ) return true;
+	if ( ! DEBUG_EXAMINE ) return;
 	std::cout << "--- House rooms: ---" << std::endl;
 	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
 		std::cout << "\t" << it->first << std::endl;
 		it->second->Examine(GS);
 	}
-	return true;
+	return;
+}
+void House::printFeatures(GameState * GS)
+{
+	// Print all the keys in the houseMap
+	if ( ! DEBUG_EXAMINE ) return;
+	std::cout << "--- House features: ---" << std::endl;
+	for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
+		std::cout << "\t" << it->first << std::endl;
+		//it->second->Examine(GS);
+	}
+	return;
 }
 
 bool House::hasFeature(string key)
@@ -197,6 +208,8 @@ Feature * House::getFeaturePtr(string featureName)
 	else
 	{
 		if ( DEBUG_FEATURES ) std::cout << "      returning NULL"<<  std::endl;
+		// We need this error only when we're loading the house / Rooms. 
+	  //std::cout << "WARNING: Failed to find FeaturePtr for " << featureName << "; game may not work properly" << std::endl;	
 		return NULL;
 	}
 }
@@ -210,8 +223,10 @@ void House::printRoomFeatures(Room *room)
 	if (DEBUG_BRENT) std::cout << "Start House::printFeatures()" << std::endl;
 	for (std::vector<std::string>::iterator it = roomFeatures.begin() ; it != roomFeatures.end(); ++it)
 	{
-   	//if (DEBUG_BRENT) std::cout << (*it) << std::endl;
+   	if (DEBUG_BRENT) std::cout << (*it) << std::endl;
    	f1 = getFeaturePtr((*it));
+
+		if (f1==NULL) std::cout << "Error getting pointer for " << (*it) << std::endl;
 
    	if(f1->getDependsOn().size() == 0)
    	{

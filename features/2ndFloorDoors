@@ -1,6 +1,6 @@
 NAME: 2nd Floor Doors
 TYPE: door_lock
-ACTIONS: unlock
+ACTIONS: open|unlock
 TEXT_NEVERSEEN: The door will not open.
 TEXT_SEEN: The door will not open.
 TEXT_EXAMINE: You see the door has a lock on it. Just above the lock is a picture of a clover.

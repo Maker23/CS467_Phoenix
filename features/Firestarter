@@ -1,6 +1,6 @@
 NAME: Flint and Steel
 TYPE: item
-ACTIONS: light, use, strike
+ACTIONS: use|light,strike
 TEXT_NEVERSEEN: Solving the puzzle reveals pieces of flint and and steel.
 TEXT_SEEN: Flint and steel in the puzzle.
 TEXT_EXAMINE: Tied together by a braided leather cord is a sharp piece of flint, and a C shaped piece of steel.

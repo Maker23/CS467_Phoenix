@@ -18,6 +18,7 @@
 #define TEST false
 #endif
 
+#define NOTFOUND "not found"
 
 class Container; // Forward declaration
 class Room; // Forward declaration

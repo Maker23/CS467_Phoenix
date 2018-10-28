@@ -1,6 +1,6 @@
 NAME: Book "Ghosts and Other Undead"
 TYPE: item
-ACTIONS: read, read book, read ghosts
+ACTIONS: look|read,read book,read ghosts,use,open
 TEXT_NEVERSEEN: Among the other books, one stands out. The cover has pictures of ghosts and skeletons and the title Ghosts and Other Undead.
 TEXT_SEEN: Book about ghosts sits on the shelf.
 TEXT_EXAMINE: You spend a few minutes skimming the book and one thing captures your attention: "Does taking pictures of ghosts and the living capture their soul?"

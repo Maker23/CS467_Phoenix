@@ -11,6 +11,7 @@ class Parser
     ~Parser();	// destructor
     Choice * ParseLine();
     validVerbs getVerb(std::string);
+    std::string getNoun(std::string);
 };
 
 #endif

@@ -22,6 +22,8 @@ TODO: quite a bit, including:
 
 
 #include <string>
+#include <stdio.h>
+#include <string.h>
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
@@ -35,6 +37,7 @@ TODO: quite a bit, including:
 #include "house.hpp"
 #include "room.hpp"
 #include "feature.hpp"
+#include "parser.hpp"
 
 using namespace std;
 
@@ -50,6 +53,7 @@ Feature::Feature(string fileToOpen)
 	weight = 0;
 	triggers = "";
 	dependsOn = "";
+	uses = "";
 	seen = 0;
 	neverSeenText = "";
 	seenText = "";
@@ -64,6 +68,11 @@ Feature::Feature(string fileToOpen)
 	if (featurefile.is_open()) {
 		while (std::getline(featurefile, lineStr))  {
 
+			if (lineStr.substr(0,1).find("#") != std::string::npos )
+			{
+				// Skip lines that begin with # for comments
+				continue;
+			}
 			if(lineStr.find("NAME: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(6, lineStr.length()-1);
@@ -228,6 +237,15 @@ Feature::Feature(string fileToOpen)
 					dependsOn = tempStr;
 			}
 
+			if(lineStr.find("USES: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(6, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found USES " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					uses = tempStr;
+			}
+
 			if(lineStr.find("ACTIONS: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(9, lineStr.length()-1);
@@ -235,8 +253,39 @@ Feature::Feature(string fileToOpen)
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
 				{
+					// 
+					//
+					//
 					std::string keywordStr = tempStr;
-				   std::stringstream mystream (keywordStr);
+				  std::stringstream mystream (keywordStr);
+				  const char * keywordCstr = keywordStr.c_str();
+					std::string st;
+					char * cptr;
+					Parser parse;
+					validVerbs kVerb;
+					if (DEBUG_FEATURES) { std::cout << "char * Actions = " << keywordCstr << std::endl;}
+
+					char words[keywordStr.length() +1];
+					strcpy(words,keywordCstr);
+
+					//1. look for the first part of the string using getVerb, if no result return unknonw
+					//2. map the remaining strings to the enum
+					cptr = strtok(words, "| ");
+					if (cptr) {
+						if (DEBUG_FEATURES) { std::cout << "      token = '" << cptr << "'" << std::endl;}
+						kVerb = parse.getVerb(cptr);
+						if ( kVerb != unknown ) {
+							cptr = strtok(NULL, ", ");
+							while (cptr != NULL) {
+								// convert to string...
+								st = cptr;
+								actions[st] = kVerb;
+								if (DEBUG_FEATURES) { std::cout << "      token = '" << st << "'" << std::endl;}
+								cptr = strtok(NULL, ", ");
+							}
+						}
+					}
+					/*
 
 				   while(getline(mystream,tempStr,','))
 				   {  // https://stackoverflow.com/questions/40611689/c-error-in-tokenizer-variable-stdstringstream-mystream-has-initializer-b/43017562
@@ -249,12 +298,11 @@ Feature::Feature(string fileToOpen)
 				    		{
 				    			tempStr = tempStr.substr(0, tempStr.length() - 2);
 				    		}
-				       actions.push_back(tempStr);
+				       //actions.push_back(tempStr);
 				   }
-					//dependsOn = lineStr.substr(6, lineStr.length()-1);
+					 */
 				}
 				if (DEBUG_FEATURES) { std::cout << "Total Actions " << actions.size() << std::endl;}
-
 			}
 			
 		}
@@ -263,7 +311,6 @@ Feature::Feature(string fileToOpen)
 	{
 		cout << "Error opening feature file '" <<  fileToOpen << "\n";
 	}
-
 
 }
 
@@ -277,53 +324,140 @@ std::string Feature::getName()
 	return name;
 }
 
-std::vector<Feature*> Feature::Examine(GameState * GS)
+void Feature::Examine(GameState * GS)
 {
 	std::vector<Feature *> Contents;
 	std::vector<Feature*>::iterator iter;
 
 
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::Examine()" << std::endl;}
-	// TODO: return an empty vector for a non-container hting
-	// For a feature with is_container=true, return a vector to its Contents
-	// Should we have a recursive flag? Yes... yes we should
-	// std::cout << getName() << ". " << getDescription() << std::endl;
 	if (DEBUG_EXAMINE) 
 	{ 
-	/*
-		std::cout  << "DEBUG Feature::Examine " << std::endl;
-		std::cout << "		Name = " << Name << std::endl
-			<< "		Story = " << Story << std::endl
-			<< "		isContainer = " << isContainer << std::endl
-			<< "		Open = " << Open << std::endl;
-		std::cout << "		Verbs = ";
-			for (std::list<int>::iterator iter = Verbs.begin(); iter != Verbs.end(); iter++)
-			{
-				std::cout << *iter << ",";
-			}
-			std::cout << std::endl;
-	*/
-			/*
- 			 * 	<< "		Weight = " << Weight << std::endl
- 			 * 	<< "		UseFunc = " << UseFunc << std::endl
- 			 * 	<< "		OpenFunc = " << OpenFunc << std::endl
- 			 */
+		// sheesh dudes
 	}
-	/*
-	if ( isContainer && Open && reCursive ) {
-  	if (DEBUG_EXAMINE) std::cout  << "DEBUG Feature::Examine -- reCursing now " << std::endl;
-		for ( iter = Contents.begin(); iter != Contents.end(); iter ++ )
+	return;
+}
+
+/* *********************************************************
+ *
+ *
+ * ********************************************************* */
+bool Feature::canUseFeature(GameState *GS)
+{
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::canUseFeature()" << std::endl;}
+
+	Feature * checkFeature=NULL;
+
+	// 2. If depends_on, check the state of that object - must be solved, or we can't "use" the thing
+	// 3. If no depends on - use the thing
+	// Triggers = not currently used
+	//
+  if ( dependsOn.compare("") != 0 ) 
+	{
+		// If depends_on, check the state of that object - 
+		// must be solved, or we can't "use" the thing
+	
+		if (DEBUG_FEATURES) { std::cout << "      Checking dependency "<< dependsOn << std::endl;}
+		checkFeature = GS->housePtr->getFeaturePtr(dependsOn);
+		if (checkFeature != NULL){
+			if (! checkFeature->isSolved()) {
+				return false;
+			}
+		}
+		//Missing a test case here - if checkFeature is NULL that's an error...
+	}
+	// Depends on nothing, or dependency is solved
+	return true;
+}
+
+void Feature::useFeature(GameState *GS, Feature * Subject)
+{
+	std::string nounUses;
+	Feature * checkFeature=NULL;
+
+	if ( ! canUseFeature(GS) ) {return;}
+
+	if (DEBUG_FEATURES) { std::cout << "      Setting isSolved to true " << std::endl;}
+	setSolved(true);
+	
+	if ( solvedText.compare("") != 0 )
+	{
+		std::cout << solvedText << std::endl;
+	}
+	if ( usedText.compare("") != 0 )
+	{
+		std::cout << usedText << std::endl;
+	}
+	else
+	{
+		nounUses = getUses();
+		checkFeature = GS->housePtr->getFeaturePtr(nounUses);
+		if ( nounUses.compare("") != 0  &&  checkFeature != NULL )
 		{
-			(*iter)->Examine(reCursive, verbose, silent);
+			if ( checkFeature->usedText.compare("") != 0 ) {
+				std::cout << checkFeature->usedText << std::endl;
+			}
+		}
+		// get the used text from the dependency
+	}
+
+	return;
+
+	//if ( getTriggers().compare("") == 0 ) {
+	//}
+	//else {
+		// What does this do :)
+		// Trigger the triggered object ;)
+	//}
+}
+
+void Feature::takeFeature(GameState *GS, Room * Rm,Feature * Subject)
+{
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::takeFeature()" << std::endl;}
+	if ( ! canUseFeature(GS) ) {return;}
+	if ( weight >= 10 ) 
+	{
+		std::cout << "The " << getName() << " is too heavy to pick up." << std::endl;
+	}
+	else 
+	{
+		std::cout << "You pick up the " << getName() << std::endl;
+		GS->Holding.push_back(this);
+		Rm->deleteFeature(getName());
+	}
+}
+
+void Feature::dropFeature(GameState *GS, Room * Rm,Feature * Subject)
+{
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::dropFeature()" << std::endl;}
+	if ( ! canUseFeature(GS) ) {return;}
+	std::string FName = getName();
+	std::string CName = "";
+
+	if (DEBUG_FEATURES) { GS->housePtr->printFeatures(GS); }
+	std::cout << "You drop the " << FName << std::endl;
+	if (DEBUG_FEATURES) { std::cout << "      here 1" << CName << std::endl;}
+	for (std::vector<Feature*>::iterator iter = GS->Holding.begin(); iter != GS->Holding.end(); iter ++ ) {
+		if (DEBUG_FEATURES) { std::cout << "      here 2" << CName << std::endl;}
+		CName = (*iter)->getName();
+		if (DEBUG_FEATURES) { std::cout << "      looking for item" << CName << std::endl;}
+		if ( CName.compare(FName) == 0 ) {
+			// can this possibly work :/
+			if (DEBUG_FEATURES) { std::cout << "      erasing item" << CName << std::endl;}
+			GS->Holding.erase(iter);
+			// This messes with iter++ and causes a SegFault.  TODO: investigate how this should really be done
+			break;
 		}
 	}
-	*/
-	return Contents; // may be empty if the Feature is not a container. Do we need this though? No we do not. TODO: this returns a void I think
+	if (DEBUG_FEATURES) { GS->housePtr->printFeatures(GS); }
+	Rm->addFeature(getName());
+	if (DEBUG_FEATURES) { std::cout << "------------------------- end Feature::dropFeature()" << std::endl;}
 }
 
 void Feature::hurlFeature(GameState *GS, Feature * Subject)
 {
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::hurlFeature()" << std::endl;}
+	if ( ! canUseFeature(GS) ) {return;}
 	std::string hurlWhere;
 	if ( weight >= 10 ) 
 	{
@@ -342,6 +476,10 @@ void Feature::hurlFeature(GameState *GS, Feature * Subject)
 	}
 }
 
+/* *********************************************************
+ *
+ *
+ * ********************************************************* */
 std::string Feature::getWalkingInRoomText()
 {
 	if(!seen)
@@ -369,7 +507,14 @@ std::string Feature::getExamineText()
 
 std::string Feature::getDependsOn()
 {
+	if (DEBUG_EXAMINE) std::cout << "In getDependsOn for " << getName() << " returning " << dependsOn << std::endl;
 	return dependsOn;
+}
+
+std::string Feature::getUses()
+{
+	if (DEBUG_EXAMINE) std::cout << "In getUses for " << getName() << " returning " << uses << std::endl;
+	return uses;
 }
 
 std::string Feature::getTriggers()

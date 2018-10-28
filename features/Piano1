@@ -1,6 +1,6 @@
 NAME: Grand Piano
 TYPE: container
-ACTIONS: play eac, play e a c
+ACTIONS: use|play,play eac, play e a c
 TEXT_NEVERSEEN: A piano sits in one corner of the room.
 TEXT_SEEN: A piano is in the room.
 TEXT_EXAMINE: You look at a very old, dusty, black, Steinway & Sons grand piano.

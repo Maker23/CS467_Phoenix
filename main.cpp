@@ -6,11 +6,11 @@
 #include <string>
 #include <stdlib.h>
 #include <map>
+#include "utilities.hpp"
+#include "engine.hpp"
 #include "room.hpp"
 #include "house.hpp"
-#include "utilities.hpp"
 #include "feature.hpp"
-#include "engine.hpp"
 
 void printGameEnding();
 /* TODO 
@@ -34,13 +34,10 @@ int main()
 
 	PlayerState.housePtr = house;
 	house->printRooms(&PlayerState);
+	house->printFeatures(&PlayerState);
 	std::cout << "=============================================" << std::endl;
-	std::cout << "\n Obviously not yet finished !  You can \"go Ballroom\" but not \"go east\"" << std::endl;
-	std::cout << " Implemented commands are :" << std::endl;
-	std::cout << "   look, go, throw, quit " <<std::endl;
-	std::cout << " Recognized but not implemented:" <<std::endl;
-	std::cout << "   help, save, load. " << std::endl;
-	std::cout << "\n Any other command will result in an error message." << std::endl;
+	std::cout << "\nTo move around use verbs like 'go', 'move', 'walk', etc" << std::endl;
+	std::cout << "\nTo interact with objects in the room try words like 'use','take','move', etc" << std::endl;
 	std::cout << "=============================================" << std::endl;
 
 	currentRoom->Examine(&PlayerState);

@@ -1,10 +1,10 @@
 NAME: Puzzle of some kind
 TYPE: puzzle
-ACTIONS: solve
+ACTIONS: use|try,solve
 TEXT_NEVERSEEN: TODO: FIX THIS TEXT -- you see generic puzzle1
 TEXT_SEEN: Still see you see generic puzzle1
 TEXT_EXAMINE: Umm.... a puzzle to solve? Fix this text.
 TEXT_SOLVED: Something happens that reveails a prize.....fix this text
 WEIGHT: 1
 TRIGGERS: Firestarter
-DEPENDS_ON: SolvingPuzzle1
+# DEPENDS_ON: SolvingPuzzle1

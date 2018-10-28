@@ -241,14 +241,6 @@ void Room::Examine(GameState * GS)
 	}
 	*/
 
-/*
-	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
-	{
-		std::cout << "You see a " << *iter << std::endl;
-		feature = GS->housePtr->getFeaturePtr(*iter);
-		if ( feature ) feature->Examine(GS);
-	}
-	*/
 }
 
 /*
@@ -357,6 +349,56 @@ void Room::displayRoom()
 std::vector<std::string> Room::getFeaturesVector()
 {
 	return roomFeatures;
+}
+
+void Room::addFeature(std::string FName) 
+{
+	// TODO: Check that FName is in the houseMap
+	//
+	Parser parse;
+	std::string realName = parse.getNoun(FName);
+
+	if (DEBUG_FEATURES) std::cout << "===== begin Room::addFeature, realName= " << realName << std::endl;
+	roomFeatures.push_back(realName);
+	return;
+}
+
+void Room::deleteFeature(std::string FName) 
+{
+	Parser parse;
+	std::string realName = parse.getNoun(FName);
+
+	for ( std::vector<std::string>::iterator iter = roomFeatures.begin(); iter != roomFeatures.end(); iter++)
+	{
+		if ((*iter).compare(realName) == 0) 
+		{
+			roomFeatures.erase(iter);
+			return;
+		}
+	}
+
+	std::cout << "WARNING: could not find feature "<<FName<< "(" << realName << ") to delete from room " << std::endl;
+	return;
+}
+
+/* **********************************************************
+ * Returns the feature pointer if the feature is in  the room,
+ * otherwise returns NULL
+ *
+ * ******************************************************** */
+Feature * Room::getFeaturePtr(std::string FeatureName, GameState * GS)
+{
+	Feature * feature;
+	std::vector<std::string>::iterator iter;
+
+	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
+	{
+		if (DEBUG_FUNCTION) std::cout << " ++++ getFeature found: " << *iter << std::endl;
+		feature = GS->housePtr->getFeaturePtr(*iter);
+		if ( feature ) return feature;
+	}
+
+	return NULL;
 }
 
 // Constructor for Doorway class. 

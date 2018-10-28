@@ -1,6 +1,6 @@
 NAME: Camera
 TYPE: item
-ACTIONS: takePicture, take picture, snap, snap picture, snap pic, take pic
+ACTIONS: use|takePicture, take picture, snap, snap picture, snap pic, take pic
 TEXT_NEVERSEEN: An old dusty camera sits on the top shelf.
 TEXT_SEEN: Dusty camera on top shelf.
 TEXT_EXAMINE: 1930s camera with accordian style focus and cracked leather with plenty of film.

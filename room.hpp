@@ -62,7 +62,6 @@ class Room
 		std::string getAdditionalDesc();					// returns the additional description of this room.
 		void setRoomSeen();
 		void Examine(GameState *);
-		Feature * getFeature(std::string);
 		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack - used in House::buildHouse -- should not be needed anywhere else
 		std::string getExitRoomByKey(std::string);			// searches exits by keyword (such as south) and if found, returns the room name. If not found, returns null.
 		std::string getExitsForDisplay();
@@ -70,6 +69,9 @@ class Room
 		void displayRoom();
 		Room * goRoom(std::string, GameState *);
 		std::vector<std::string> getFeaturesVector();
+		Feature * getFeaturePtr(std::string, GameState *); // returns the pointer if feature is in the room
+		void deleteFeature(std::string);
+		void addFeature(std::string); // byName ?
 
 };
 

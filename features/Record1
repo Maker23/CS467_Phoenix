@@ -1,10 +1,10 @@
 NAME: Record
 TYPE: item
-ACTIONS: get, pickup, take, pick up
 TEXT_NEVERSEEN: You see an old dusty record with no center label.
 TEXT_SEEN: A record sits where you left it.
 TEXT_TAKEN: You pickup the record and place it in your inventory.
 TEXT_DROPPED: You drop the record on the floor.
 WEIGHT: 1
 TRIGGERS: null
-DEPENDS_ON: RecordPlayer
+USES: RecordPlayer
+DEPENDS_ON: DirtyDishes

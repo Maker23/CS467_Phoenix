@@ -23,7 +23,8 @@ class House
 		bool hasFeature(std::string);   			// Returns true if feature is in the house 
 		Room *getRoomPtr(std::string);      // Retruns the ptr of the Room object for the requested room.
 		Feature *getFeaturePtr(std::string); // returns the ptr of the Feature object for the requsted feature.
-		bool printRooms(GameState *);						// For debugging really
+		void printRooms(GameState *);						// For debugging really
+		void printFeatures(GameState *);						// For debugging really
 		void printRoomFeatures(Room *);		// display the features in the room.
 };
 

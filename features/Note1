@@ -1,6 +1,6 @@
 NAME: Note
 TYPE: item
-ACTIONS: take
+ACTIONS: look|read,use,open
 TEXT_NEVERSEEN: An old note of paper sits under where the rug was.
 TEXT_SEEN: A note sits in the middle of the floor.
 TEXT_EXAMINE: The number '1894' is written on it in faded calligraphy

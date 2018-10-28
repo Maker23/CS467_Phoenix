@@ -1,6 +1,6 @@
 NAME: Record Player
 TYPE: used_with_another_item
-ACTIONS: play, play record
+ACTIONS: use|play, play record
 TEXT_NEVERSEEN: An old record player sits in the corner of the room.
 TEXT_SEEN: Record player is in the room.
 TEXT_EXAMINE: It's a really old phonograph style you have never seen before other than in pictures.

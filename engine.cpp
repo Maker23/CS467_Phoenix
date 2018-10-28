@@ -78,11 +78,30 @@ Room * GameState::playerTurn(Room * currentRoom)
 		std::cout << "Game does not yet support Save or Load" << std::endl;
 		return currentRoom;
 	}
+
+	getOverrideVerb(userChoice); 
 	nextRoom = actInRoom(currentRoom, userChoice);
 
 	if (DEBUG_FUNCTION) std::cout << "===== end   GameState::playerTurn" << std::endl;
 
 	return nextRoom;
+}
+
+void GameState::getOverrideVerb(Choice * userChoice)
+{
+	Feature * thisFeature;
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::getOverrideVerb with noun " << userChoice->Noun << std::endl;
+	if ( housePtr->hasFeature(userChoice->Noun) )
+	{
+		thisFeature = housePtr->getFeaturePtr(userChoice->Noun);
+		if (DEBUG_FUNCTION) std::cout << "      found feature "<< userChoice->Noun << ", looking for " << userChoice->inputVerb << std::endl;
+		if ( thisFeature->actions.find(userChoice->inputVerb) != thisFeature->actions.end() )
+		{
+			if (DEBUG_FUNCTION) std::cout << "      found alternate verb " << userChoice->inputVerb << std::endl;
+			userChoice->Verb = thisFeature->actions.find(userChoice->inputVerb)->second;
+		}
+	}
 }
 
 Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
@@ -91,7 +110,7 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::actInRoom" << std::endl;
 	// If no noun - limited choices
-	if ( userChoice->Noun == "" ) {
+	if ( userChoice->Noun == "" || userChoice->Noun.compare(NOTFOUND) == 0 ) {
 		if (userChoice->Verb == (validVerbs)look) 
 		{
 			currentRoom->Examine(this); // Examine this room
@@ -146,8 +165,7 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 	Room * nextRoom = currentRoom;
 	Feature * theNoun = NULL;
 	Feature * theSubject = NULL;
-	std::vector<Feature *>::iterator iter;
-	std::vector<std::string>::iterator iterStr;
+	std::string nounUses = "";
 	bool inHand = false;
 	bool inRoom = false;
 
@@ -157,54 +175,49 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 		<< ", Subject = " << userChoice->Subject << std::endl;
 
 	theNoun = housePtr->getFeaturePtr(userChoice->Noun);
-	theSubject = housePtr->getFeaturePtr(userChoice->Subject);
-  if ( ! theNoun ) 
+	if ( theNoun == NULL )
 	{
-		std::cout << "There doesn't seem to be a " << userChoice->Noun << " anywhere nearby" << std::endl;
+		// Feature doesn't exist in the game
+		std::cout << "There doesn't seem to be a " << userChoice->inputNoun << " anywhere nearby" << std::endl;
 		return nextRoom;
 	}
-  if ( (userChoice->Subject.compare("") != 0 )&& ! theSubject ) 
-	{
-		// TODO:  Look for Room names as well as feature names
-		std::cout << "Didn't find subject '" << userChoice->Subject << "' in the house" << std::endl;
-		return nextRoom;
-	}
-	if ( ! theNoun && ! theSubject )  return nextRoom;
+	inHand = featureInHand (theNoun);
+	inRoom = featureInRoom (currentRoom, userChoice->Noun);
 
-
-  // Are we carrying the Noun ?
-	
-	for ( iter = Holding.begin(); iter != Holding.end(); iter++) {
-		if ( theNoun == *iter ) {
-			inHand = true;
-			break;
-		}
-	}
-	// Is the Noun in the room ?
-	if (! inHand ) {
-		for ( iterStr = currentRoom->roomFeatures.begin(); iterStr != currentRoom->roomFeatures.end(); iterStr++) 
-		{
-			if ( userChoice->Noun.compare(*iterStr) == 0 ) 
-			{
-				inRoom = true;
-				break;
-			}
-			// TODO: Pick the thing up? Maybe not - depends on the verb
-		}
-	}
-	if ( ! inHand && ! inRoom )  
+  if ( ! inHand && ! inRoom ) 
 	{
-		// Otherwise - error
-		std::cout << "There doesn't seem to be a " << userChoice->Noun << " at hand." << std::endl;
+		std::cout << "There doesn't seem to be a " << userChoice->inputNoun << " anywhere nearby" << std::endl;
 		return nextRoom;
 	}
-	
+
 
   switch (userChoice->Verb)
 	{
 		case look:
 			if (DEBUG_FUNCTION) std::cout << "      matched look" << std::endl;
-			theNoun->Examine(this);
+			std::cout << theNoun->getExamineText() << std::endl;
+			break;
+		case use:
+			if (DEBUG_FUNCTION) std::cout << "      matched use " << std::endl;
+			nounUses = theNoun->getUses();
+			if (  nounUses.compare("") == 0 
+				 ||(featureWithinReach(currentRoom,nounUses)))
+			{
+				theNoun->useFeature(this, theSubject);
+			}
+			else {
+				std::cout << "Can't find a way to use the " << userChoice->inputNoun << " here." << std::endl;
+			}
+			break;
+		case take:
+			if (DEBUG_FUNCTION) std::cout << "      matched take " << std::endl;
+			if ( ! inHand ) { theNoun->takeFeature(this, currentRoom, theSubject); } 
+			else { std::cout << "You're already holding the " << userChoice->inputNoun << std::endl; }
+			break;
+		case drop:
+			if (DEBUG_FUNCTION) std::cout << "      matched drop " << std::endl;
+			if ( inHand ) { theNoun->dropFeature(this, currentRoom, theSubject); }
+			else { std::cout << "You aren't holding " << userChoice->inputNoun << std::endl; }
 			break;
 		case hurl:
 			if (DEBUG_FUNCTION) std::cout << "      matched throw " << std::endl;
@@ -216,6 +229,61 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 
 	if (DEBUG_FUNCTION) std::cout << "===== end   GameState::actOnFeature" << std::endl;
 	return nextRoom;
+}
+
+bool GameState::featureWithinReach(Room * currentRoom, std::string nounUses ) 
+{
+	Feature * theNoun;
+	bool inHand = false;
+	bool inRoom = false;
+
+	theNoun = housePtr->getFeaturePtr(nounUses);
+	if ( theNoun == NULL ) {
+		return false;
+	}
+
+	inHand = featureInHand(theNoun);
+	inRoom = featureInRoom(currentRoom, nounUses);
+
+	return inHand || inRoom;
+}
+
+bool GameState::featureInHand(Feature * theNoun)
+{
+	bool inHand = false;
+  // Are we carrying the Feature ?
+	for ( std::vector<Feature *>::iterator iter = Holding.begin(); iter != Holding.end(); iter++) {
+		if ( theNoun == *iter ) {
+			inHand = true;
+			break;
+		}
+	}
+	return inHand;
+}
+
+bool GameState::featureInRoom(Room * currentRoom, std::string FName)
+{
+	Feature * theNoun = NULL;
+	bool inRoom = false;
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::featureWithinReach, FName = " << FName << std::endl;
+  // Does the Feature exist?
+	theNoun = housePtr->getFeaturePtr(FName);
+  if ( ! theNoun ) 
+	{
+		return false;
+	}
+
+	for ( std::vector<std::string>::iterator iterStr = currentRoom->roomFeatures.begin(); 
+				iterStr != currentRoom->roomFeatures.end(); iterStr++) 
+	{
+		if ( FName.compare(*iterStr) == 0 ) 
+		{
+			inRoom = true;
+			break;
+		}
+	}
+	return inRoom;
 }
 
 /* ***********************************************************
@@ -263,8 +331,8 @@ int GameState::getGameTaskStatus()
 int GameState::getAvailableCapacity()
 {
 	int GameStateIsCarrying = 0;
-	std::vector<Feature*> backpackContents;
-	std::vector<Feature*>::iterator iterFeature;
+	std::vector<Feature *> backpackContents;
+	std::vector<Feature *>::iterator iterFeature;
 
 	backpackContents = this->Holding;
 	for (iterFeature=backpackContents.begin(); iterFeature != backpackContents.end(); iterFeature++)

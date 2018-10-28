@@ -1,6 +1,5 @@
 NAME: Bronze Key
 TYPE: item
-ACTIONS: get, take, steal, borrow
 TEXT_NEVERSEEN: As you finishing pressing the proper piano keys, a door just above the last key you pressed pops open, revealing a key.
 TEXT_SEEN: A key sits in the secret compartment.
 TEXT_EXAMINE: The key is dusty, and you can see the top part of the key is the shape of a clover.

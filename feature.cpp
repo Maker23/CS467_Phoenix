@@ -56,12 +56,14 @@ Feature::Feature(string fileToOpen)
 	uses = "";
 	seen = 0;
 	neverSeenText = "";
+	observeText = "";
 	seenText = "";
 	solvedText = "";
 	examineText = "";
-	takenText = "";
-	droppedText = "";
-	usedText = "";
+	solvingText = "";
+	takingText = "";
+	droppingText = "";
+	usingText = "";
 
 	featurefile.open(fileToOpen);
 
@@ -136,41 +138,50 @@ Feature::Feature(string fileToOpen)
 					examineText = tempStr;
 			}
 
-			if(lineStr.find("TEXT_SOLVED: ") != std::string::npos) 
+			if(lineStr.find("TEXT_EXAMINE_SOLVED: ") != std::string::npos) 
 			{
-				tempStr = lineStr.substr(13, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_SOLVED " << tempStr << std::endl;}
+				tempStr = lineStr.substr(21, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_EXAMINE_SOLVED " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
 					solvedText = tempStr;
 			}
 
-
-			if(lineStr.find("TEXT_TAKEN: ") != std::string::npos) 
-			{
-				tempStr = lineStr.substr(12, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TAKEN " << tempStr << std::endl;}
-				// check if not empty and isn't set to "null"
-				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					takenText = tempStr;
-			}
-
-			if(lineStr.find("TEXT_DROPPED: ") != std::string::npos) 
+			if(lineStr.find("TEXT_SOLVING: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(14, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TAKEN " << tempStr << std::endl;}
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_SOLVING " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					droppedText = tempStr;
+					solvingText = tempStr;
 			}
 
-			if(lineStr.find("TEXT_USED: ") != std::string::npos) 
+
+			if(lineStr.find("TEXT_TAKING: ") != std::string::npos) 
 			{
-				tempStr = lineStr.substr(11, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_USED " << tempStr << std::endl;}
+				tempStr = lineStr.substr(13, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TAKING " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					usedText = tempStr;
+					takingText = tempStr;
+			}
+
+			if(lineStr.find("TEXT_DROPPING: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(15, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_DROPPING " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					droppingText = tempStr;
+			}
+
+			if(lineStr.find("TEXT_USING: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(12, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_USING " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					usingText = tempStr;
 			}
 
 /*
@@ -324,69 +335,39 @@ std::string Feature::getName()
 	return name;
 }
 
-void Feature::Examine(GameState * GS)
-{
-	std::vector<Feature *> Contents;
-	std::vector<Feature*>::iterator iter;
-
-
-	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::Examine()" << std::endl;}
-	if (DEBUG_EXAMINE) 
-	{ 
-		// sheesh dudes
-	}
-	return;
-}
-
 /* *********************************************************
  *
  *
  * ********************************************************* */
-bool Feature::canUseFeature(GameState *GS)
+void Feature::Examine()
 {
-	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::canUseFeature()" << std::endl;}
-
-	Feature * checkFeature=NULL;
-
-	// 2. If depends_on, check the state of that object - must be solved, or we can't "use" the thing
-	// 3. If no depends on - use the thing
-	// Triggers = not currently used
-	//
-  if ( dependsOn.compare("") != 0 ) 
-	{
-		// If depends_on, check the state of that object - 
-		// must be solved, or we can't "use" the thing
-	
-		if (DEBUG_FEATURES) { std::cout << "      Checking dependency "<< dependsOn << std::endl;}
-		checkFeature = GS->housePtr->getFeaturePtr(dependsOn);
-		if (checkFeature != NULL){
-			if (! checkFeature->isSolved()) {
-				return false;
-			}
-		}
-		//Missing a test case here - if checkFeature is NULL that's an error...
-	}
-	// Depends on nothing, or dependency is solved
-	return true;
+  this->examineFeature();
+	return;
 }
+
+void Feature::examineFeature()
+{
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::examineFeature()" << std::endl;}
+	std::cout << examineText << std::endl;
+	return;
+}
+
 
 void Feature::useFeature(GameState *GS, Feature * Subject)
 {
 	std::string nounUses;
 	Feature * checkFeature=NULL;
 
-	if ( ! canUseFeature(GS) ) {return;}
-
 	if (DEBUG_FEATURES) { std::cout << "      Setting isSolved to true " << std::endl;}
 	setSolved(true);
 	
-	if ( solvedText.compare("") != 0 )
+	if ( solvingText.compare("") != 0 )
 	{
-		std::cout << solvedText << std::endl;
+		std::cout << solvingText << std::endl;
 	}
-	if ( usedText.compare("") != 0 )
+	if ( usingText.compare("") != 0 )
 	{
-		std::cout << usedText << std::endl;
+		std::cout << usingText << std::endl;
 	}
 	else
 	{
@@ -394,8 +375,8 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 		checkFeature = GS->housePtr->getFeaturePtr(nounUses);
 		if ( nounUses.compare("") != 0  &&  checkFeature != NULL )
 		{
-			if ( checkFeature->usedText.compare("") != 0 ) {
-				std::cout << checkFeature->usedText << std::endl;
+			if ( checkFeature->usingText.compare("") != 0 ) {
+				std::cout << checkFeature->usingText << std::endl;
 			}
 		}
 		// get the used text from the dependency
@@ -414,7 +395,6 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 void Feature::takeFeature(GameState *GS, Room * Rm,Feature * Subject)
 {
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::takeFeature()" << std::endl;}
-	if ( ! canUseFeature(GS) ) {return;}
 	if ( weight >= 10 ) 
 	{
 		std::cout << "The " << getName() << " is too heavy to pick up." << std::endl;
@@ -429,51 +409,65 @@ void Feature::takeFeature(GameState *GS, Room * Rm,Feature * Subject)
 
 void Feature::dropFeature(GameState *GS, Room * Rm,Feature * Subject)
 {
+	dropFeature(GS, Rm, Subject, false);
+	return;
+}
+
+void Feature::dropFeature(GameState *GS, Room * Rm,Feature * Subject, bool Silent)
+{
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::dropFeature()" << std::endl;}
-	if ( ! canUseFeature(GS) ) {return;}
 	std::string FName = getName();
 	std::string CName = "";
 
-	if (DEBUG_FEATURES) { GS->housePtr->printFeatures(GS); }
-	std::cout << "You drop the " << FName << std::endl;
-	if (DEBUG_FEATURES) { std::cout << "      here 1" << CName << std::endl;}
+	if (! Silent) std::cout << "You drop the " << FName << std::endl;
 	for (std::vector<Feature*>::iterator iter = GS->Holding.begin(); iter != GS->Holding.end(); iter ++ ) {
-		if (DEBUG_FEATURES) { std::cout << "      here 2" << CName << std::endl;}
 		CName = (*iter)->getName();
-		if (DEBUG_FEATURES) { std::cout << "      looking for item" << CName << std::endl;}
 		if ( CName.compare(FName) == 0 ) {
-			// can this possibly work :/
-			if (DEBUG_FEATURES) { std::cout << "      erasing item" << CName << std::endl;}
 			GS->Holding.erase(iter);
-			// This messes with iter++ and causes a SegFault.  TODO: investigate how this should really be done
+			// This messes with iter++ and causes a SegFault if we don't break. 
+			// TODO: investigate how this should really be done
 			break;
 		}
 	}
-	if (DEBUG_FEATURES) { GS->housePtr->printFeatures(GS); }
 	Rm->addFeature(getName());
-	if (DEBUG_FEATURES) { std::cout << "------------------------- end Feature::dropFeature()" << std::endl;}
+
+	return;
 }
 
-void Feature::hurlFeature(GameState *GS, Feature * Subject)
+void Feature::hurlFeature( GameState * GS, Room * Rm, Feature * Subject)
 {
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::hurlFeature()" << std::endl;}
-	if ( ! canUseFeature(GS) ) {return;}
 	std::string hurlWhere;
-	if ( weight >= 10 ) 
-	{
-		std::cout << "The " << getName() << " is too heavy to pick up." << std::endl;
+	bool Silent = true;
+
+	std::cout << "You throw the " << getName();
+	if ( Subject ) {
+		// Is there a subject?
+		std::cout << " at the " << Subject->getName();
 	}
-	else 
-	{
-		std::cout << "You throw the " << getName();
-		if ( Subject ) {
-			// Is there a subject?
-			std::cout << " at the " << Subject->getName() << std::endl; 
-		}
-		else {
-			std::cout << " across the room. It lands on the floor." << std::endl;
-		}
+	else if ( weight > 5 ){
+		std::cout << ". It lands a couple of feet away with a thud." << std::endl;
 	}
+	else {
+		std::cout << " across the room. It lands on the floor." << std::endl;
+	}
+	dropFeature (GS, Rm, Subject, Silent);
+}
+
+void Feature::hitFeature(Feature * Subject)
+{
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::hitFeature()" << std::endl;}
+
+	std::string FName = getName(); // TODO: should use the noun that the user typed. Just pass the Choice in 
+
+	// TODO: support TEXT_HITTING in the future.. if we care
+	std::cout << "You hit the " << FName << ". ";
+	if ( weight >= 10 ) {
+		std::cout << "Your hand hurts. ";
+	}
+	
+	std::cout << "Nothing happens. What were you expecting?" << std::endl;
+	return;
 }
 
 /* *********************************************************
@@ -489,20 +483,29 @@ std::string Feature::getWalkingInRoomText()
 	}
 	else
 	{
-		if(solved) 
-		{
-			return solvedText;	
-		}
-		else
-		{
-			return seenText;
-		}
+		return seenText;
 	}
+
+		// taking this out, shouldn't have text here that changes when solved
+		//if(solved) 
+		//{
+			//return solvedText;	
+		//}
+		//else
+		//{
+			//return seenText;
+		//}
 }
 
 std::string Feature::getExamineText()
 {
-	return examineText;
+		if(solved) 
+		{
+			return solvedText;	
+		}
+		else {
+			return examineText;
+		}
 }
 
 std::string Feature::getDependsOn()
@@ -522,14 +525,24 @@ std::string Feature::getTriggers()
 	return triggers;
 }
 
-std::string Feature::getTakenText()
+std::string Feature::getSolvingText()
 {
-	return takenText;
+	return solvingText;
 }
 
-std::string Feature::getDroppedText()
+std::string Feature::getTakingText()
 {
-	return droppedText;
+	return takingText;
+}
+
+std::string Feature::getDroppingText()
+{
+	return droppingText;
+}
+
+std::string Feature::getUsingText()
+{
+	return usingText;
 }
 
 bool Feature::isSolved()

@@ -2,8 +2,7 @@ NAME: Record
 TYPE: item
 TEXT_NEVERSEEN: You see an old dusty record with no center label.
 TEXT_SEEN: A record sits where you left it.
-TEXT_TAKEN: You pickup the record and place it in your inventory.
-TEXT_DROPPED: You drop the record on the floor.
+TEXT_TAKING: You pickup the record and place it in your inventory.
 WEIGHT: 1
 TRIGGERS: null
 USES: RecordPlayer

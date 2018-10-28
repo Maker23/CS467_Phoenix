@@ -4,6 +4,6 @@ ACTIONS: use|clean, move, wash, scrub
 TEXT_NEVERSEEN: The counter and sink are piled with dirty, dusty, dishes.
 TEXT_SEEN: The dishes aren't going to clean themselves.
 TEXT_EXAMINE: It appears somebody didn't want to clean them.
-TEXT_SOLVED: After the dishes are out of the way, you see a record sitting on the counter.
+TEXT_SOLVING: After the dishes are out of the way, you see a record sitting on the counter.
 TRIGGERS: Record1
 DEPENDS_ON: null

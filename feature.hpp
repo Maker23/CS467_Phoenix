@@ -17,12 +17,14 @@ class Feature
 
 		FeatureType type;
 		std::string neverSeenText;
+		std::string observeText;
 		std::string seenText;
 		std::string solvedText;
 		std::string examineText;
-		std::string takenText;
-		std::string droppedText;
-		std::string usedText;
+		std::string solvingText;
+		std::string takingText;
+		std::string droppingText;
+		std::string usingText;
 		bool solved;
 		bool seen;
 		int weight;
@@ -37,22 +39,26 @@ class Feature
 		~Feature();
 
 		std::string getName();
-		std::string getWalkingInRoomText(); 				// Prints the feature as you walk in the room.
+		std::string getWalkingInRoomText();	// Prints the feature as you walk in the room.
 		std::string getExamineText();
-		std::string getTakenText();
-		std::string getDroppedText();
+		std::string getSolvingText();
+		std::string getTakingText();
+		std::string getDroppingText();
+		std::string getUsingText();
 		std::string getDependsOn();
 		std::string getTriggers();
 		std::string getUses();
 		void setSolved(bool);
-		bool canUseFeature(GameState *GS);
 		void useFeature(GameState *GS, Feature *Subject);
 		void takeFeature(GameState *GS, Room * Rm, Feature *Subject);
+		void dropFeature(GameState *GS, Room * Rm, Feature *Subject, bool Silent);
 		void dropFeature(GameState *GS, Room * Rm, Feature *Subject);
-		void hurlFeature(GameState *GS, Feature *Subject);
+		void hurlFeature(GameState *GS, Room * Rm, Feature *Subject);
+		void hitFeature(Feature *Subject);
+		void examineFeature();
+		void Examine();
 		bool isSolved();
 		bool isSeen();
-		void Examine(GameState *GS);
 
 };
 

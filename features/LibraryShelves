@@ -3,6 +3,6 @@ TYPE: container
 TEXT_NEVERSEEN: Along each of the walls are shelves filled with dusty books.
 TEXT_SEEN: Dusty book filled shelves.
 TEXT_EXAMINE: Rows of shelves line the walls, completely filled with books. These books have seen better days. One book peaks your interest. You find a book called "Ghosts and Other Undead"
-TEXT_SOLVED: Dusty book filled shelves.
+TEXT_EXAMINE_SOLVED: Dusty book filled shelves.
 TRIGGERS: Book1
 DEPENDS_ON: null

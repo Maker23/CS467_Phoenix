@@ -7,7 +7,7 @@
 #include <vector>
 #include <map>
 
-enum validVerbs { look, go, use, take, drop, open, close, hurl, hit, unlock, inventory, LastAction, help, save, load, quit, unknown, LastVerb};
+enum validVerbs { look, go, use, take, drop, open, shut, hurl, hit, unlock, inventory, LastAction, help, save, load, quit, unknown, LastVerb};
 
 #include "utilities.hpp"
 #include "house.hpp"
@@ -40,6 +40,8 @@ public:
 	std::vector<Feature *> Holding;  // Features by name
 	bool GameTask[numGameTasks]; // GameTasks are defined in utilities.h
 	House * housePtr;
+	unsigned short winCols;
+	unsigned short winRows;
 
 	GameState(std::string Na);
 	~GameState();
@@ -50,11 +52,13 @@ public:
 	bool featureInHand (Feature *);
 	bool featureInRoom (Room *, std::string);
 	bool featureWithinReach (Room *, std::string);
+	bool featureDependenciesSolved(Feature *);
 	int getGameTaskStatus();
 	int getAvailableCapacity(); // Capacity - FeaturesCarried = Available
 	int getCapacity() { return Capacity;}
 	void UpdateGameState(int &GameClock, Room* currentRoom);
 	void getOverrideVerb(Choice *);
+	void Examine();
 	std::string printTheInstructions(); // Not implemented
 };
 

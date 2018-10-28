@@ -4,8 +4,7 @@ ACTIONS: look|read,use,open
 TEXT_NEVERSEEN: An old note of paper sits under where the rug was.
 TEXT_SEEN: A note sits in the middle of the floor.
 TEXT_EXAMINE: The number '1894' is written on it in faded calligraphy
-TEXT_TAKEN: You take the note and see '1894' is written on it in faded calligraphy
-TEXT_DROPPED: You drop the note to the floor.
+TEXT_TAKING: You take the note and see '1894' is written on it in faded calligraphy
 WEIGHT: 1
 OPEN: 1
 TRIGGERS: null

@@ -4,8 +4,7 @@ ACTIONS: look|read,read book,read ghosts,use,open
 TEXT_NEVERSEEN: Among the other books, one stands out. The cover has pictures of ghosts and skeletons and the title Ghosts and Other Undead.
 TEXT_SEEN: Book about ghosts sits on the shelf.
 TEXT_EXAMINE: You spend a few minutes skimming the book and one thing captures your attention: "Does taking pictures of ghosts and the living capture their soul?"
-TEXT_TAKEN: You take the book hoping to have time to read it after you get of this house.
-TEXT_DROPPED: You drop the book to the floor.
+TEXT_TAKING: You take the book hoping to have time to read it after you get of this house.
 WEIGHT: 1
 TRIGGERS: null
 DEPENDS_ON: LibraryShelves

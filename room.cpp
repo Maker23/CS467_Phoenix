@@ -89,7 +89,6 @@ Room::Room(string filename)
 
    		if(lineStr.find("FEATURE: ") != std::string::npos)
    		{
-				//TODO: get features here
 				str = lineStr.substr(9, lineStr.length()-1);
 				if ( str.length() > 0 ) 
 				{
@@ -377,6 +376,7 @@ void Room::deleteFeature(std::string FName)
 		}
 	}
 
+  // TODO: Could also try FName if 'realName' doesn't work
 	std::cout << "WARNING: could not find feature "<<FName<< "(" << realName << ") to delete from room " << std::endl;
 	return;
 }

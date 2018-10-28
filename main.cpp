@@ -27,24 +27,27 @@ int main()
 	int GameClock=0;
 	House *house = NULL;
 	Room 	*currentRoom = NULL;
-	GameState PlayerState("player"); 
+	GameState GS("your backpack"); 
 
 	house = new House();
 	currentRoom = house->buildHouse("Foyer");
+	GS.housePtr = house;
 
-	PlayerState.housePtr = house;
-	house->printRooms(&PlayerState);
-	house->printFeatures(&PlayerState);
+
+	house->printRooms(&GS);
+	house->printFeatures(&GS);
+
+
 	std::cout << "=============================================" << std::endl;
 	std::cout << "\nTo move around use verbs like 'go', 'move', 'walk', etc" << std::endl;
 	std::cout << "\nTo interact with objects in the room try words like 'use','take','move', etc" << std::endl;
 	std::cout << "=============================================" << std::endl;
 
-	currentRoom->Examine(&PlayerState);
+	currentRoom->Examine(&GS);
 	while ( currentRoom != NULL )
 	{
-		currentRoom = PlayerState.playerTurn(currentRoom);
-		PlayerState.UpdateGameState(GameClock,currentRoom);
+		GS.UpdateGameState(GameClock,currentRoom);
+		currentRoom = GS.playerTurn(currentRoom);
 	}
 
 	//house->printRooms(); // DEBUG

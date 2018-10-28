@@ -1,10 +1,10 @@
-NAME: Record Player
+NAME: RecordPlayer
 TYPE: used_with_another_item
 ACTIONS: use|play, play record
 TEXT_NEVERSEEN: An old record player sits in the corner of the room.
 TEXT_SEEN: Record player is in the room.
 TEXT_EXAMINE: It's a really old phonograph style you have never seen before other than in pictures.
-TEXT_USED: Listening to the record, among the scratch noise, you can hear notes "E A C".
+TEXT_USING: Listening to the record, among the scratch noise, you can hear notes "E A C".
 WEIGHT: 10
 TRIGGERS: null
-DEPENDS_ON: Record1
+USES: Record1

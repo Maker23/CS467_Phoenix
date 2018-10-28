@@ -3,6 +3,6 @@ TYPE: container
 TEXT_NEVERSEEN: Several shelves are in the closet. What you can see at a glance they are dusty, but empty. You can't see the top shelf.
 TEXT_SEEN: Dusty shelves, empty except maybe the top shelf.
 TEXT_EXAMINE: On the top shelf, you find a camera.
-TEXT_SOLVED: Empty shelves
+TEXT_EXAMINE_SOLVED: Empty shelves
 TRIGGERS: Camera
 DEPENDS_ON: null

@@ -4,6 +4,6 @@ ACTIONS: open|unlock
 TEXT_NEVERSEEN: The door will not open.
 TEXT_SEEN: The door will not open.
 TEXT_EXAMINE: You see the door has a lock on it. Just above the lock is a picture of a clover.
-TEXT_SOLVED: ""
+TEXT_EXAMINE_SOLVED: ""
 TRIGGERS: null
 DEPENDS_ON: Key1

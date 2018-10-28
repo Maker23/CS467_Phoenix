@@ -77,10 +77,7 @@ Choice * Parser::ParseLine(){
     {
 			if (DEBUG_FUNCTION) cout << "array[" << i << "] " << array[i] << endl;
     }
-
 		if (DEBUG_FUNCTION) std::cout << "num args: " << j << std::endl;
-		//
-	  // TODO: Convert the user-entered text into valid commands
 
 		int i=0;
 		if((array[i] == "pick" && array[i+1] == "up") ||
@@ -116,7 +113,6 @@ Choice * Parser::ParseLine(){
     	//I'm willing to change this, but I can't think of a valid command
     	//where the user would say the noun and subject before the verb, can you?
 		//	{
-				//TODO: should send the entire array and the current "i" to getNoun
 	//			userChoice->Noun = getNoun(array[i]);
 	//		}
   	//}
@@ -304,7 +300,7 @@ Parser::getVerb(std::string verbString) {
   else if ((verbString.compare("close") == 0 ) ||
           (verbString.compare("Close") == 0 ))//sets validVerb to 6
 	{
-		return (validVerbs)close;
+		return (validVerbs)shut;
 	}
   else if ((verbString.compare("hit") == 0 ) ||
           (verbString.compare("Hit") == 0 )  )    //sets validVerb to 8
@@ -317,18 +313,23 @@ Parser::getVerb(std::string verbString) {
     return (validVerbs)unlock;
   }
   else if ((verbString.compare("inventory") == 0 ) ||
-            (verbString.compare("Inventory") == 0 ))  //sets validVerb to 10
+            (verbString.compare("Inventory") == 0 ) ||
+            (verbString.compare("Carrying") == 0 ) ||
+            (verbString.compare("carrying") == 0 ) ||
+            (verbString.compare("Holding") == 0 ) ||
+            (verbString.compare("holding") == 0 ) )  
   {
-    return (validVerbs)look;
+    return (validVerbs)inventory; //sets validVerb to 10
   }
-  else if (verbString.compare("LastAction") == 0 ) //sets validVerb to 11
-  {                                               
+  // else if (verbString.compare("LastAction") == 0 ) //sets validVerb to 11
+  // {                                               
 		//not sure what an example of this would be?
 		// NOTE: This isn't used for matching text  :) It's used when looping
 		// across the enums.  You can 'grep' or otherwise examine the other
-		// code files to see where this is being used. -shoshana
-    return (validVerbs)LastAction;
-  }
+		// code files to see where this is being used. I've commented this out,
+		// you can delete it after you read this.  -shoshana
+    // return (validVerbs)LastAction;
+  //}
 	else if ((verbString.compare("quit") == 0 )||
 			(verbString.compare("q") == 0 ) ||
 			(verbString.compare("Quit") == 0))

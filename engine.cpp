@@ -16,6 +16,9 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
+#include <sys/ioctl.h>
+#include <stdio.h>
+#include <unistd.h>
 
 #include "room.hpp"
 #include "feature.hpp"
@@ -49,13 +52,7 @@ std::string Choice::printVerb()
 Room * GameState::playerTurn(Room * currentRoom)
 {
 	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::playerTurn" << std::endl;
-	// TODO: all the magic
-	// GameState: What the player is holding and any state of the game
-	// currentRoom:  The room we're in
-	// Doorways : the array of doorways in currentRoom
-	// Features : the features in currentRoom, a vector of Features
-	//          : Features, with a map of verb->Action
-	// And now we do stuff.
+
 	Room * nextRoom = currentRoom;
 	Choice * userChoice;
 	Parser parse;
@@ -115,6 +112,10 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 		{
 			currentRoom->Examine(this); // Examine this room
 		}
+		if (userChoice->Verb == (validVerbs)inventory) 
+		{
+			Examine(); // Examine the GameState (player inventory)
+		}
 		else if (userChoice->Verb == (validVerbs)go) 
 		{
 			std::cout << "Where do you want to " << userChoice->printVerb()<< "?" << std::endl;
@@ -168,6 +169,7 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 	std::string nounUses = "";
 	bool inHand = false;
 	bool inRoom = false;
+	bool dependenciesSolved = false;
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::actOnFeature,"
 		<< "verb = " << userChoice->printVerb()<< "(" << userChoice->Verb  << ")"
@@ -183,10 +185,15 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 	}
 	inHand = featureInHand (theNoun);
 	inRoom = featureInRoom (currentRoom, userChoice->Noun);
+	dependenciesSolved = featureDependenciesSolved(theNoun);
 
   if ( ! inHand && ! inRoom ) 
 	{
 		std::cout << "There doesn't seem to be a " << userChoice->inputNoun << " anywhere nearby" << std::endl;
+		return nextRoom;
+	}
+	if ( ! dependenciesSolved ) {
+		std::cout << "That isn't possible right now. Keep playing the game." <<  std::endl;
 		return nextRoom;
 	}
 
@@ -201,27 +208,43 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 			if (DEBUG_FUNCTION) std::cout << "      matched use " << std::endl;
 			nounUses = theNoun->getUses();
 			if (  nounUses.compare("") == 0 
-				 ||(featureWithinReach(currentRoom,nounUses)))
-			{
-				theNoun->useFeature(this, theSubject);
-			}
+				 ||(featureWithinReach(currentRoom,nounUses))) {
+				theNoun->useFeature(this, theSubject); }
 			else {
-				std::cout << "Can't find a way to use the " << userChoice->inputNoun << " here." << std::endl;
-			}
+				std::cout << "Can't find a way to use the " << userChoice->inputNoun << " right now." << std::endl; }
 			break;
 		case take:
 			if (DEBUG_FUNCTION) std::cout << "      matched take " << std::endl;
-			if ( ! inHand ) { theNoun->takeFeature(this, currentRoom, theSubject); } 
-			else { std::cout << "You're already holding the " << userChoice->inputNoun << std::endl; }
+			if ( ! inHand ) { 
+				theNoun->takeFeature(this, currentRoom, theSubject); } 
+			else { 
+				std::cout << "You're already holding the " << userChoice->inputNoun << std::endl; }
 			break;
 		case drop:
 			if (DEBUG_FUNCTION) std::cout << "      matched drop " << std::endl;
-			if ( inHand ) { theNoun->dropFeature(this, currentRoom, theSubject); }
-			else { std::cout << "You aren't holding " << userChoice->inputNoun << std::endl; }
+			if ( inHand ) { 
+				theNoun->dropFeature(this, currentRoom, theSubject); }
+			else { 
+				std::cout << "You aren't holding the " << userChoice->inputNoun << std::endl; }
+			break;
+		case hit:
+			if (DEBUG_FUNCTION) std::cout << "      matched hit " << std::endl;
+			theNoun->hitFeature(theSubject);
 			break;
 		case hurl:
 			if (DEBUG_FUNCTION) std::cout << "      matched throw " << std::endl;
-			theNoun->hurlFeature(this, theSubject);
+			if ( inHand ) { 
+				theNoun->hurlFeature(this, currentRoom, theSubject); }
+			else { 
+				std::cout << "You aren't holding the " << userChoice->inputNoun << std::endl; }
+			break;
+		case inventory:
+			if (DEBUG_FUNCTION) std::cout << "      matched inventory " << std::endl;
+			if ( inHand ) { 
+				theNoun->examineFeature(); }
+			else {
+				Examine();
+			}
 			break;
 		default:
 			if (DEBUG_FUNCTION) std::cout << "      ERROR: fell through to default " << std::endl;
@@ -286,12 +309,41 @@ bool GameState::featureInRoom(Room * currentRoom, std::string FName)
 	return inRoom;
 }
 
+
+/* *************************************************************** */
+bool GameState::featureDependenciesSolved(Feature * theNoun)
+{
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::canAccessFeature()" << std::endl;}
+
+	Feature * checkDependency=NULL;
+
+	// If depends_on, check the state of that object - must be solved, or we can't "use" the thing
+	// Triggers = not currently used
+  if ( (theNoun->getDependsOn()).compare("") != 0 ) 
+	{
+		// If depends_on, check the state of that object - 
+		// must be solved, or we can't "use" the thing
+	
+		if (DEBUG_FEATURES) { std::cout << "      Checking dependency "<< theNoun->getDependsOn() << std::endl;}
+		checkDependency = housePtr->getFeaturePtr(theNoun->getDependsOn());
+		if (checkDependency != NULL){
+			if (! checkDependency->isSolved()) {
+				return false;
+			}
+		}
+		//Missing a test case here - if checkFeature is NULL that's an error...
+	}
+	// Depends on nothing, or dependency is solved
+	return true;
+}
+
+
 /* ***********************************************************
  * Constructor and destructor
  * ********************************************************* */
 GameState::GameState(std::string Na)
 {
-
+	Name = Na;
 	housePtr = NULL;
 
 	GameTask[0] = false;
@@ -328,6 +380,21 @@ int GameState::getGameTaskStatus()
 	return points;
 }
 
+void GameState::Examine()
+{
+	if ( Holding.size() == 0 ) {
+		std::cout << "You aren't carrying anything." << std::endl;
+		return;
+	}
+	std::cout << "You're carrying the following items in " << this->Name << ":" << std::endl;
+
+	for ( std::vector<Feature *>::iterator iter=Holding.begin(); iter != Holding.end(); iter++) 
+	{
+		std::cout << "\t" << (*iter)->getName() << std::endl;
+	}
+	return;
+}
+
 int GameState::getAvailableCapacity()
 {
 	int GameStateIsCarrying = 0;
@@ -350,6 +417,14 @@ int GameState::getAvailableCapacity()
 void GameState::UpdateGameState(int &GameClock, Room* currentRoom)
 {
   int points = getGameTaskStatus();
+	struct winsize WS;
+
+	ioctl(0, TIOCGWINSZ, &WS);
+	if (DEBUG_TERM) {
+		std::cout << "lines: " << WS.ws_row << ", columns: " << WS.ws_col << std::endl;
+	}
+	winRows=WS.ws_row;
+	winCols=WS.ws_col;
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin Utilities::UpdateGameState" << std::endl;
 	if(points) {} // TODO... silence compile-time warnings...

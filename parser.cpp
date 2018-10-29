@@ -26,6 +26,7 @@ Parser::~Parser()
 Choice * Parser::ParseLine(){
     string mystr;
 		string myNoun = NOTFOUND;
+    string myVerb = NOTFOUND;
 		list <string> words;
 		string oneword;
 		Choice * userChoice = new Choice();
@@ -88,11 +89,19 @@ Choice * Parser::ParseLine(){
 			// TODO: should shuffle-delete array[i+1]
 		}
 
-		userChoice->inputVerb = words.front();
-		action = getVerb ( words.front());
-		userChoice->Verb = action;
-		words.pop_front();
-		while ( ! words.empty() && myNoun.compare(NOTFOUND) == 0 )
+    //while ( ! words.empty() && myVerb.compare(NOTFOUND) == 0 ) //nick changed this
+    while ( ! words.empty() && userChoice->Verb == 16 )
+    {
+  		userChoice->inputVerb = words.front();
+  		action = getVerb ( words.front());
+      if (action != 16)
+      {
+        userChoice->Verb = action;
+      }
+  		words.pop_front();
+    }
+  		while ( ! words.empty() && myNoun.compare(NOTFOUND) == 0 )
+    //  while ( ! words.empty() || userChoice->Noun == "" )
 		{
 			userChoice->inputNoun = words.front();
 			myNoun = getNoun(words.front());
@@ -107,7 +116,7 @@ Choice * Parser::ParseLine(){
 		//		if(DEBUG_FUNCTION) std::cout << "verb is now : " << userChoice->Verb << std::endl;
 		//	}
 		//}
-		//else if(userChoice->Verb != unknown)  
+		//else if(userChoice->Verb != unknown)
 		//{
 			//this is a precondition that the VERB must come first before the subject and noun
     	//I'm willing to change this, but I can't think of a valid command
@@ -117,7 +126,7 @@ Choice * Parser::ParseLine(){
 	//		}
   	//}
 	//}
-	
+
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT VERB: " << userChoice->inputVerb << endl;
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT NOUN: " << userChoice->inputNoun << endl;
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE VERB: " << userChoice->Verb << endl;
@@ -134,7 +143,7 @@ Parser::getNoun(std::string nounString) {
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin Parser::getNoun, noun is '" << nounString << "'" << std::endl;
 
-      if(nounString == "West" || nounString == "west" 
+      if(nounString == "West" || nounString == "west"
 				|| nounString == "East" || nounString == "east"
 				|| nounString == "North" || nounString == "north"
 				|| nounString == "South" || nounString == "south"
@@ -171,35 +180,6 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "Basement";
       }
-      else if( nounString == "Library" || nounString == "library")
-      {
-        returnString = "Library";
-      }
-      else if( nounString == "Bedroom1" || nounString == "bedroom1")
-      {
-        returnString = "Bedroom1";
-      }
-      else if( nounString == "Bedroom2" || nounString == "bedroom2")
-      {
-        returnString = "Bedroom2";
-      }
-      else if( nounString == "Bedroom3" || nounString == "bedroom3")
-      {
-        returnString = "Bedroom3";
-      }
-      else if( nounString == "Nursery" || nounString == "nursery")
-      {
-        returnString = "Nursery";
-      }
-      else if( nounString == "MasterBedroom" || nounString == "master" || nounString == "masterbedroom")
-      {
-        returnString = "MasterBedroom";
-      }
-      else if( nounString == "Closet" || nounString == "closet")
-      {
-        returnString = "Closet";
-      }
-			/* **************************************************** */
       else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1")
       {
         returnString = "Rug1";
@@ -208,10 +188,8 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "Note1";
       }
-      else if( nounString == "RecordPlayer" || nounString == "recordplayer")
+      else if( nounString == "RecordPlayer" || nounString == "recordplayer" || nounString == "player")
       {
-        // if(array[i+1] == "Player" || array[i+1] == "player")
-				// TODO: Fix!!
         returnString = "RecordPlayer";
       }
       else if( nounString == "Tapestry" || nounString == "tapestry" || nounString == "Tapestry1")
@@ -219,9 +197,7 @@ Parser::getNoun(std::string nounString) {
         returnString = "Tapestry1";
       }
       else if( nounString == "Dishes" || nounString == "dishes" || nounString == "DirtyDishes" )
-				//|| (nounString == "dirty" && array[i+1] == "dishes"))
       {
-				// TODO: is array[i+1] guaranteed to be an empty string - make sure it's initialized
         returnString = "DirtyDishes";
       }
       else if( nounString == "Record" || nounString == "record" || nounString == "Record1")
@@ -240,16 +216,17 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "Key1";
       }
+      else if( nounString == "2ndFloorDoors")
+      {
+        returnString = "2ndFloorDoors";
+      }
+
 
 	return returnString;
 }
 
 validVerbs
 Parser::getVerb(std::string verbString) {
-
-	// THIS IS DEFINITELY NOT COMPLETE!
-	// I hardcoded a bunch of stuff here so we could test other parts of the game
-
   string mystr;
   Choice * userChoice = new Choice();
 
@@ -280,8 +257,10 @@ Parser::getVerb(std::string verbString) {
 	else if ((verbString.compare("look") == 0 )||  //sets the validVerb to 0
 			(verbString.compare("investigate") == 0 ) ||
 			(verbString.compare("examine") == 0) ||
+      (verbString.compare("read") == 0) ||
       (verbString.compare("Look") == 0 )||
     	(verbString.compare("Investigate") == 0 ) ||
+      (verbString.compare("Read") == 0) ||
     	(verbString.compare("Examine") == 0))
 	     {
 		        return (validVerbs)look;
@@ -301,7 +280,11 @@ Parser::getVerb(std::string verbString) {
 		return (validVerbs)save;
 	}
   else if ((verbString.compare("use") == 0 ) ||
-      		(verbString.compare("Use") == 0 )  || 
+      		(verbString.compare("Use") == 0 )  ||
+          (verbString.compare("clean") == 0 ) ||
+          (verbString.compare("Clean") == 0 ) ||
+          (verbString.compare("Wash") == 0 ) ||
+          (verbString.compare("wash") == 0 ) ||
 					(verbString.compare("Play") == 0 ) ||
 					(verbString.compare("play") == 0 )  )
 	     {
@@ -326,7 +309,11 @@ Parser::getVerb(std::string verbString) {
 		return (validVerbs)drop;
 	}
   else if ((verbString.compare("open") == 0 )   ||
-          (verbString.compare("Open") == 0 ))  //sets validVerb to 5
+          (verbString.compare("Open") == 0 ) ||
+          (verbString.compare("unlock") == 0 ) ||
+          (verbString.compare("Unlock") == 0 ) ||
+          (verbString.compare("lift") == 0 ) ||
+          (verbString.compare("Lift") == 0 ))  //sets validVerb to 5
 	{
 		return (validVerbs)open;
 	}
@@ -350,19 +337,11 @@ Parser::getVerb(std::string verbString) {
             (verbString.compare("Carrying") == 0 ) ||
             (verbString.compare("carrying") == 0 ) ||
             (verbString.compare("Holding") == 0 ) ||
-            (verbString.compare("holding") == 0 ) )  
+            (verbString.compare("holding") == 0 ) )
   {
     return (validVerbs)inventory; //sets validVerb to 10
   }
-  // else if (verbString.compare("LastAction") == 0 ) //sets validVerb to 11
-  // {                                               
-		//not sure what an example of this would be?
-		// NOTE: This isn't used for matching text  :) It's used when looping
-		// across the enums.  You can 'grep' or otherwise examine the other
-		// code files to see where this is being used. I've commented this out,
-		// you can delete it after you read this.  -shoshana
-    // return (validVerbs)LastAction;
-  //}
+
 	else if ((verbString.compare("quit") == 0 )||
 			(verbString.compare("q") == 0 ) ||
 			(verbString.compare("Quit") == 0))

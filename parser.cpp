@@ -107,7 +107,7 @@ Choice * Parser::ParseLine(){
 		//		if(DEBUG_FUNCTION) std::cout << "verb is now : " << userChoice->Verb << std::endl;
 		//	}
 		//}
-		//else if(userChoice->Verb != unknown)  
+		//else if(userChoice->Verb != unknown)
 		//{
 			//this is a precondition that the VERB must come first before the subject and noun
     	//I'm willing to change this, but I can't think of a valid command
@@ -117,7 +117,7 @@ Choice * Parser::ParseLine(){
 	//		}
   	//}
 	//}
-	
+
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT VERB: " << userChoice->inputVerb << endl;
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT NOUN: " << userChoice->inputNoun << endl;
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE VERB: " << userChoice->Verb << endl;
@@ -134,9 +134,9 @@ Parser::getNoun(std::string nounString) {
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin Parser::getNoun, noun is '" << nounString << "'" << std::endl;
 
-      if(nounString == "West" || nounString == "west" 
+      if(nounString == "West" || nounString == "west"
 				|| nounString == "East" || nounString == "east"
-				|| nounString == "North" || nounString == "North"
+				|| nounString == "North" || nounString == "north"
 				|| nounString == "South" || nounString == "south"
 				|| nounString == "Up" || nounString == "up"
 				|| nounString == "Down" || nounString == "down")
@@ -167,6 +167,10 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "Pantry";
       }
+      else if( nounString == "Basement" || nounString == "basement")
+      {
+        returnString = "Basement";
+      }
       else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1")
       {
         returnString = "Rug1";
@@ -175,10 +179,8 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "Note1";
       }
-      else if( nounString == "RecordPlayer" || nounString == "recordplayer")
+      else if( nounString == "RecordPlayer" || nounString == "recordplayer" || nounString == "player")
       {
-        // if(array[i+1] == "Player" || array[i+1] == "player")
-				// TODO: Fix!!
         returnString = "RecordPlayer";
       }
       else if( nounString == "Tapestry" || nounString == "tapestry" || nounString == "Tapestry1")
@@ -186,9 +188,7 @@ Parser::getNoun(std::string nounString) {
         returnString = "Tapestry1";
       }
       else if( nounString == "Dishes" || nounString == "dishes" || nounString == "DirtyDishes" )
-				//|| (nounString == "dirty" && array[i+1] == "dishes"))
       {
-				// TODO: is array[i+1] guaranteed to be an empty string - make sure it's initialized
         returnString = "DirtyDishes";
       }
       else if( nounString == "Record" || nounString == "record" || nounString == "Record1")
@@ -208,15 +208,12 @@ Parser::getNoun(std::string nounString) {
         returnString = "Key1";
       }
 
+
 	return returnString;
 }
 
 validVerbs
 Parser::getVerb(std::string verbString) {
-
-	// THIS IS DEFINITELY NOT COMPLETE!
-	// I hardcoded a bunch of stuff here so we could test other parts of the game
-
   string mystr;
   Choice * userChoice = new Choice();
 
@@ -268,7 +265,7 @@ Parser::getVerb(std::string verbString) {
 		return (validVerbs)save;
 	}
   else if ((verbString.compare("use") == 0 ) ||
-      		(verbString.compare("Use") == 0 )  || 
+      		(verbString.compare("Use") == 0 )  ||
 					(verbString.compare("Play") == 0 ) ||
 					(verbString.compare("play") == 0 )  )
 	     {
@@ -317,19 +314,11 @@ Parser::getVerb(std::string verbString) {
             (verbString.compare("Carrying") == 0 ) ||
             (verbString.compare("carrying") == 0 ) ||
             (verbString.compare("Holding") == 0 ) ||
-            (verbString.compare("holding") == 0 ) )  
+            (verbString.compare("holding") == 0 ) )
   {
     return (validVerbs)inventory; //sets validVerb to 10
   }
-  // else if (verbString.compare("LastAction") == 0 ) //sets validVerb to 11
-  // {                                               
-		//not sure what an example of this would be?
-		// NOTE: This isn't used for matching text  :) It's used when looping
-		// across the enums.  You can 'grep' or otherwise examine the other
-		// code files to see where this is being used. I've commented this out,
-		// you can delete it after you read this.  -shoshana
-    // return (validVerbs)LastAction;
-  //}
+
 	else if ((verbString.compare("quit") == 0 )||
 			(verbString.compare("q") == 0 ) ||
 			(verbString.compare("Quit") == 0))

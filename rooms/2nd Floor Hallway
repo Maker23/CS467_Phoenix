@@ -1,9 +1,9 @@
 ROOM NAME: 2nd Floor Hallway
-CONNECTION:Door 1, west wall|Bedroom1|bedroom1, door 1, 1
-CONNECTION:Door 2, south west wall|Nursery|nursery, door 2, 2
-CONNECTION:Door 3, south center wall|Library|library, door 3, 3
-CONNECTION:Door 4, south east wall|Study|study, door 4, 4
-CONNECTION:Door 5, east wall|Balcony|balcony, door 5, 5, east, east door
+CONNECTION:Door1|Bedroom1|bedroom1, door 1, 1, west
+CONNECTION:Door2|Nursery|nursery, door 2, 2,southwest
+CONNECTION:Door3|Library|library, door 3, 3, southcenter
+CONNECTION:Door4|Study|study, door 4, 4, southeast
+CONNECTION:Door5|Balcony|balcony, door 5, 5, east, east door
 CONNECTION:Stairs down|Foyer|foyer, stairs down, down
 CONNECTION:Stairs up|3rd Floor Hallway|3rd floor, stairs up, up
 LONG DESC: 2nd Floor Hallway Long Desc. Lots of doors... need description of them.

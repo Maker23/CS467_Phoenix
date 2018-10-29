@@ -136,7 +136,7 @@ Parser::getNoun(std::string nounString) {
 
       if(nounString == "West" || nounString == "west" 
 				|| nounString == "East" || nounString == "east"
-				|| nounString == "North" || nounString == "North"
+				|| nounString == "North" || nounString == "north"
 				|| nounString == "South" || nounString == "south"
 				|| nounString == "Up" || nounString == "up"
 				|| nounString == "Down" || nounString == "down")
@@ -167,6 +167,39 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "Pantry";
       }
+      else if( nounString == "Basement" || nounString == "basement")
+      {
+        returnString = "Basement";
+      }
+      else if( nounString == "Library" || nounString == "library")
+      {
+        returnString = "Library";
+      }
+      else if( nounString == "Bedroom1" || nounString == "bedroom1")
+      {
+        returnString = "Bedroom1";
+      }
+      else if( nounString == "Bedroom2" || nounString == "bedroom2")
+      {
+        returnString = "Bedroom2";
+      }
+      else if( nounString == "Bedroom3" || nounString == "bedroom3")
+      {
+        returnString = "Bedroom3";
+      }
+      else if( nounString == "Nursery" || nounString == "nursery")
+      {
+        returnString = "Nursery";
+      }
+      else if( nounString == "MasterBedroom" || nounString == "master" || nounString == "masterbedroom")
+      {
+        returnString = "MasterBedroom";
+      }
+      else if( nounString == "Closet" || nounString == "closet")
+      {
+        returnString = "Closet";
+      }
+			/* **************************************************** */
       else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1")
       {
         returnString = "Rug1";

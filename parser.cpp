@@ -140,25 +140,30 @@ Choice * Parser::ParseLine(){
 std::string
 Parser::getNoun(std::string nounString) {
 	std::string returnString = NOTFOUND;
+  std::string lcNounString = strToLowercase(nounString);
 
-	if (DEBUG_FUNCTION) std::cout << "===== begin Parser::getNoun, noun is '" << nounString << "'" << std::endl;
+	if (DEBUG_FUNCTION) std::cout << "===== begin Parser::getNoun, noun is '" << strToLowercase(nounString) << "'" << std::endl;
 
-      if(nounString == "West" || nounString == "west"
-				|| nounString == "East" || nounString == "east"
-				|| nounString == "North" || nounString == "north"
-				|| nounString == "South" || nounString == "south"
-				|| nounString == "Up" || nounString == "up"
-				|| nounString == "Down" || nounString == "down"
-        || nounString == "southwest" || nounString == "southcenter"
-        || nounString == "southeast" || nounString == "right"
-        || nounString == "left" || nounString == "ne" || nounString == "se"
-        || nounString == "n" || nounString == "s"
-        || nounString == "1" || nounString == "2" || nounString == "3"
-        || nounString == "4" || nounString == "5" || nounString == "stairs")
+
+      if(lcNounString == "west"
+				|| lcNounString == "east"
+				|| lcNounString == "north"
+				|| lcNounString == "south"
+				|| lcNounString == "up"
+				|| lcNounString == "down"
+        || lcNounString == "southwest" || lcNounString == "southcenter"
+        || lcNounString == "southeast" || lcNounString == "right"
+        || lcNounString == "left" || lcNounString == "ne" || lcNounString == "se"
+        || lcNounString == "n" || lcNounString == "s"
+        || lcNounString == "1" || lcNounString == "2" || lcNounString == "3"
+        || lcNounString == "4" || lcNounString == "5" || lcNounString == "stairs")
       {
-        returnString = nounString;
-      }
-      else if(nounString == "Ballroom" || nounString == "ballroom")
+        return lcNounString;
+      } 
+
+      std::cout << "HERE" << std::endl;
+
+      if(nounString == "Ballroom" || nounString == "ballroom")
       {
         returnString = "ballroom";
       }

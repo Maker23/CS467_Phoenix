@@ -11,8 +11,3 @@ SHORT DESC: 2nd Floor Hallway Short Desc
 ADITIONAL DESC: 2nd Floor Hallway Additional Desc
 FEATURE: Floor2Lamps
 FEATURE: 2ndFloorDoors
-LOCKED_DOOR: Bedroom1
-LOCKED_DOOR: Nursery
-LOCKED_DOOR: Library
-LOCKED_DOOR: Study
-LOCKED_DOOR: Balcony

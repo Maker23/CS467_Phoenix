@@ -330,13 +330,6 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 	}
 
 	return;
-
-	//if ( getTriggers().compare("") == 0 ) {
-	//}
-	//else {
-		// What does this do :)
-		// Trigger the triggered object ;)
-	//}
 }
 
 void Feature::takeFeature(GameState *GS, Room * Rm,Feature * Subject)

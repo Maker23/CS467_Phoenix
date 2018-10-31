@@ -166,51 +166,47 @@ std::string Parser::getNoun(std::string nounString) {
       }
       else if(nounString == "Foyer" || nounString == "foyer")
       {
-        returnString = "Foyer";
+        returnString = "foyer";
       }
       else if( nounString == "Kitchen" || nounString == "kitchen")
       {
-        returnString = "Kitchen";
+        returnString = "kitchen";
       }
       else if( nounString == "Conservatory" || nounString == "conservatory")
       {
-        returnString = "Conservatory";
-      }
-      else if( nounString == "Conservatory" || nounString == "conservatory")
-      {
-        returnString = "Conservatory";
+        returnString = "conservatory";
       }
       else if( nounString == "Pantry" || nounString == "pantry")
       {
-        returnString = "Pantry";
+        returnString = "pantry";
       }
       else if( nounString == "Basement" || nounString == "basement")
       {
-        returnString = "Basement";
+        returnString = "basement";
       }
       else if( nounString == "Door1" || nounString == "door1" || nounString == "Bedroom1" || nounString == "bedroom1")
       {
-        returnString = "Bedroom1";
+        returnString = "bedroom1";
       }
       else if(  nounString == "Door2" || nounString == "door2" || nounString == "Nursery" || nounString == "nursery" )
       {
-        returnString = "Nursery";
+        returnString = "nursery";
       }
       else if(  nounString == "Door3" || nounString == "door3" || nounString == "Library" || nounString == "library" )
       {
-        returnString = "Library";
+        returnString = "library";
       }
       else if(  nounString == "Door4" || nounString == "door4" || nounString == "Study" || nounString == "study" )
       {
-        returnString = "Study";
+        returnString = "study";
       }
       else if(  nounString == "Door5" || nounString == "door5" || nounString == "Balcony" || nounString == "balcony" )
       {
-        returnString = "Balcony";
+        returnString = "balcony";
       }
       else if( nounString == "Balcony" || nounString == "balcony" )
       {
-        returnString = "Balcony";
+        returnString = "balcony";
       }
       else if( nounString == "2nd" || nounString == "second" || nounString == "hallway" || nounString == "Hallway")
       {
@@ -218,11 +214,11 @@ std::string Parser::getNoun(std::string nounString) {
       }
       else if( nounString == "Closet" || nounString == "closet")
       {
-        returnString = "Closet";
+        returnString = "closet";
       }
       else if( nounString == "Library" || nounString == "library")
       {
-        returnString = "Library";
+        returnString = "library";
       }
 
       else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1" || nounString == "rug1")
@@ -267,11 +263,11 @@ std::string Parser::getNoun(std::string nounString) {
       }
       else if( nounString == "ClosetShelf" || nounString == "closetshelf" ||  nounString == "ClosetShelves" || nounString == "closetshelves")
       {
-        returnString = "ClosetShelf";
+        returnString = "closetshelf";
       }
       else if( nounString == "LibraryShelf" || nounString == "libraryshelf" ||  nounString == "LibraryShelves" || nounString == "libraryshelves")
       {
-        returnString = "LibraryShelves";
+        returnString = "libraryshelves";
       }
       else if( nounString == "Camera" || nounString == "camera")
       {
@@ -307,7 +303,7 @@ std::string Parser::getNoun(std::string nounString) {
       }
       else if( nounString == "Floor2Lamps" || nounString == "floor2lamps")
       {
-        returnString = "Floor2Lamps";
+        returnString = "floor2lamps";
       }
 
 

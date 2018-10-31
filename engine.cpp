@@ -207,7 +207,9 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 		case use:
 			if (DEBUG_FUNCTION) std::cout << "      matched use " << std::endl;
 			nounUses = theNoun->getUses();
-			if (  nounUses.compare("") == 0 
+			if (DEBUG_FUNCTION) std::cout << "      nounUses: " << nounUses << std::endl;
+			if (DEBUG_FUNCTION) std::cout << "      theSubject: " << theSubject << std::endl;
+			if (  nounUses.compare("") != 0 
 				 ||(featureWithinReach(currentRoom,nounUses))) {
 				theNoun->useFeature(this, theSubject); }
 			else {

@@ -1,7 +1,7 @@
 ROOM NAME: Foyer
 CONNECTION:West Door|Ballroom|west,ballroom, west door
 CONNECTION:East Door|Conservatory|conservatory,east,east door
-CONNECTION:Stairs Up|2nd Floor Hallway|up,stairs, upstairs
+CONNECTION:Stairs Up|2nd Floor Hallway|up,stairs,upstairs
 CONNECTION:South Door|Porch|south,outside
 FEATURE: Rug1
 FEATURE: Note1

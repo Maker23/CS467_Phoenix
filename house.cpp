@@ -85,7 +85,7 @@ Room *House::buildHouse(string startingRoom){
 				startingRoomPtr = roomPtr;  // sets the starting room pointer for the return
 			}
 			roomPtr->addExitsToStack(roomsToLoad);
-			houseMap[roomPtr->getRoomName()] = roomPtr;
+			houseMap[strToLowercase(roomPtr->getRoomName())] = roomPtr;
 		}
 	}
 
@@ -98,7 +98,7 @@ Room *House::buildHouse(string startingRoom){
     	{
     		std::string fileName(dp->d_name);
     		FeatureFileToOpen = "features/" + fileName;
-    		houseFeatures[fileName] = new Feature(FeatureFileToOpen);
+    		houseFeatures[strToLowercase(fileName)] = new Feature(FeatureFileToOpen);
     	}
 
     }
@@ -129,7 +129,7 @@ bool House::hasRoom(string key)
 {
 	// map syntax learned from: 
 	//    https://stackoverflow.com/questions/1939953/how-to-find-if-a-given-key-exists-in-a-c-stdmap
-	if ( houseMap.find(key) == houseMap.end() )
+	if ( houseMap.find(strToLowercase(key)) == houseMap.end() )
 	{
       return false;
    }
@@ -145,7 +145,7 @@ bool House::hasRoom(string key)
  */
 Room * House::getRoomPtr(string roomName)
 {
-	if(hasRoom(roomName))
+	if(hasRoom(strToLowercase(roomName)))
 	{
 		return houseMap[roomName];
 	}
@@ -200,10 +200,10 @@ bool House::hasFeature(string key)
 Feature * House::getFeaturePtr(string featureName)
 {
 	if ( DEBUG_FEATURES ) std::cout << "----- begin House::getFeaturePtr(), looking for '"<< featureName<<"'" << std::endl;
-	if(hasFeature(featureName))
+	if(hasFeature(strToLowercase(featureName)))
 	{
 		if ( DEBUG_FEATURES ) std::cout << "      returning " << featureName << std::endl;
-		return houseFeatures[featureName];
+		return houseFeatures[strToLowercase(featureName)];
 	}
 	else
 	{

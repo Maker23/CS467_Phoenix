@@ -30,6 +30,11 @@ int main()
 
    // lock ballroom door to kitchen
    lockRoom = house->getRoomPtr("Ballroom");
+   if(lockRoom == NULL)
+   {
+      std::cout << "lockRoom is null!!" << std::endl;
+      exit(1);
+   }
    lockRoom->lockExitDoorByKey("kitchen");
 
 

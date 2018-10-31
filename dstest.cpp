@@ -44,7 +44,7 @@ int main()
    std::cout << roomPtr->getRoomName() << std::endl;
    std::cout << roomPtr->getExitsForDisplay() << std::endl;
 
-
+   roomPtr = house->getRoomPtr("Kitchen");
    roomPtr->displayRoom();
    roomPtr->setRoomSeen();
 	std::cout << "Command (" << roomPtr->getRoomName() << "): ";

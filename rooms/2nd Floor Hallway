@@ -4,10 +4,15 @@ CONNECTION:Door2|Nursery|nursery, door 2, 2,southwest
 CONNECTION:Door3|Library|library, door 3, 3, southcenter
 CONNECTION:Door4|Study|study, door 4, 4, southeast
 CONNECTION:Door5|Balcony|balcony, door 5, 5, east, east door
-CONNECTION:Stairs down|Foyer|foyer, stairs down, down
-CONNECTION:Stairs up|3rd Floor Hallway|3rd floor, stairs up, up
+CONNECTION:Stairs down|Foyer|foyer, stairs down, down, downstairs
+CONNECTION:Stairs up|3rd Floor Hallway|3rd floor, stairs up, up, upstairs
 LONG DESC: 2nd Floor Hallway Long Desc. Lots of doors... need description of them.
 SHORT DESC: 2nd Floor Hallway Short Desc
 ADITIONAL DESC: 2nd Floor Hallway Additional Desc
 FEATURE: Floor2Lamps
 FEATURE: 2ndFloorDoors
+LOCKED_DOOR: Bedroom1
+LOCKED_DOOR: Nursery
+LOCKED_DOOR: Library
+LOCKED_DOOR: Study
+LOCKED_DOOR: Balcony

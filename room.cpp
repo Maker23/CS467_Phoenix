@@ -108,6 +108,16 @@ Room::Room(string filename)
 				roomCount++;
 			}
 
+   		if(lineStr.find("LOCKED_DOOR: ") != std::string::npos)
+   		{
+				str = lineStr.substr(13, lineStr.length()-1);
+				if ( str.length() > 0 ) 
+				{
+					if (DEBUG_FEATURES) std::cout << "Locking door to '" << str << "'" << std::endl;
+					lockExitDoorByKey(strToLowercase(str));
+				}
+			}
+
 			numExits = roomCount;
    	}
 	}

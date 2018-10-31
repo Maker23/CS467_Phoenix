@@ -148,7 +148,12 @@ Parser::getNoun(std::string nounString) {
 				|| nounString == "North" || nounString == "north"
 				|| nounString == "South" || nounString == "south"
 				|| nounString == "Up" || nounString == "up"
-				|| nounString == "Down" || nounString == "down")
+				|| nounString == "Down" || nounString == "down"
+        || nounString == "southwest" || nounString == "southcenter"
+        || nounString == "southeast" || nounString == "right"
+        || nounString == "left" || nounString == "ne" || nounString == "se"
+        || nounString == "1" || nounString == "2" || nounString == "3"
+        || nounString == "4" || nounString == "5" || nounString == "stairs")
       {
         returnString = nounString;
       }
@@ -180,6 +185,43 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "Basement";
       }
+      else if( nounString == "Door1" || nounString == "door1" || nounString == "Bedroom1" || nounString == "bedroom1")
+      {
+        returnString = "Bedroom1";
+      }
+      else if(  nounString == "Door2" || nounString == "door2" || nounString == "Nursery" || nounString == "nursery" )
+      {
+        returnString = "Nursery";
+      }
+      else if(  nounString == "Door3" || nounString == "door3" || nounString == "Library" || nounString == "library" )
+      {
+        returnString = "Library";
+      }
+      else if(  nounString == "Door4" || nounString == "door4" || nounString == "Study" || nounString == "study" )
+      {
+        returnString = "Study";
+      }
+      else if(  nounString == "Door5" || nounString == "door5" || nounString == "Balcony" || nounString == "balcony" )
+      {
+        returnString = "Balcony";
+      }
+      else if( nounString == "Balcony" || nounString == "balcony" )
+      {
+        returnString = "Balcony";
+      }
+      else if( nounString == "2nd" || nounString == "second" || nounString == "hallway" || nounString == "Hallway")
+      {
+        returnString = "hallway";
+      }
+      else if( nounString == "Closet" || nounString == "closet")
+      {
+        returnString = "Closet";
+      }
+      else if( nounString == "Library" || nounString == "library")
+      {
+        returnString = "Library";
+      }
+
       else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1")
       {
         returnString = "rug1";
@@ -219,6 +261,54 @@ Parser::getNoun(std::string nounString) {
       else if( nounString == "2ndFloorDoors")
       {
         returnString = "2ndfloordoors";
+      }
+      else if( nounString == "ClosetShelf" || nounString == "closetshelf" ||  nounString == "ClosetShelves" || nounString == "closetshelves")
+      {
+        returnString = "ClosetShelf";
+      }
+      else if( nounString == "LibraryShelf" || nounString == "libraryshelf" ||  nounString == "LibraryShelves" || nounString == "libraryshelves")
+      {
+        returnString = "LibraryShelves";
+      }
+      else if( nounString == "Camera" || nounString == "camera")
+      {
+        returnString = "camera";
+      }
+      else if( nounString == "Puzzle1" || nounString == "puzzle1")
+      {
+        returnString = "puzzle1";
+      }
+      else if( nounString == "VisionHallway2" || nounString == "visionhallway2")
+      {
+        returnString = "visionhallway2";
+      }
+      else if( nounString == "Firestarter" || nounString == "firestarter")
+      {
+        returnString = "firestarter";
+      }
+      else if( nounString == "Firestarter" || nounString == "firestarter")
+      {
+        returnString = "firestarter";
+      }
+      else if( nounString == "SolvingPuzzle1" || nounString == "solvingpuzzle1")
+      {
+        returnString = "solvingpuzzle1";
+      }
+      else if( nounString == "Ghosts" || nounString == "ghosts")
+      {
+        returnString = "ghosts";
+      }
+      else if( nounString == "WoodBox1" || nounString == "woodbox1")
+      {
+        returnString = "woodbox1";
+      }
+      else if( nounString == "Spectacles" || nounString == "spectacles")
+      {
+        returnString = "spectacles";
+      }
+      else if( nounString == "Floor2Lamps" || nounString == "floor2lamps")
+      {
+        returnString = "Floor2Lamps";
       }
 
 

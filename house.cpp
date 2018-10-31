@@ -147,7 +147,7 @@ Room * House::getRoomPtr(string roomName)
 {
 	if(hasRoom(strToLowercase(roomName)))
 	{
-		return houseMap[roomName];
+		return houseMap[strToLowercase(roomName)];
 	}
 	else
 	{

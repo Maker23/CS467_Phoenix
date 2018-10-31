@@ -13,7 +13,7 @@
 #define DEBUG_USE false
 #define DEBUG_FEATURES true
 #define DEBUG_BRENT false
-#define DEBUG_HOUSE false
+#define DEBUG_HOUSE true
 
 #ifndef TEST
 #define TEST false

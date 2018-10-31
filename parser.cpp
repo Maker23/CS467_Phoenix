@@ -107,7 +107,7 @@ Choice * Parser::ParseLine(){
 			myNoun = getNoun(words.front());
 			words.pop_front();
 		}
-		userChoice->Noun = myNoun;
+		userChoice->Noun = strToLowercase(myNoun);
 
 		//if( userChoice->Verb == unknown) {
 		//	action = getVerb ( array[i] );

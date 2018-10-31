@@ -137,8 +137,7 @@ Choice * Parser::ParseLine(){
 }
 
 
-std::string
-Parser::getNoun(std::string nounString) {
+std::string Parser::getNoun(std::string nounString) {
 	std::string returnString = NOTFOUND;
   std::string lcNounString = strToLowercase(nounString);
 
@@ -160,8 +159,6 @@ Parser::getNoun(std::string nounString) {
       {
         return lcNounString;
       } 
-
-      std::cout << "HERE" << std::endl;
 
       if(nounString == "Ballroom" || nounString == "ballroom")
       {

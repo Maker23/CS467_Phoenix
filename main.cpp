@@ -36,6 +36,7 @@ int main()
 
 	house->printRooms(&GS);
 	house->printFeatures(&GS);
+	house->debugHouse();
 
 
 	std::cout << "=============================================" << std::endl;

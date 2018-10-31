@@ -154,7 +154,7 @@ Parser::getNoun(std::string nounString) {
       }
       else if(nounString == "Ballroom" || nounString == "ballroom")
       {
-        returnString = "Ballroom";
+        returnString = "ballroom";
       }
       else if(nounString == "Foyer" || nounString == "foyer")
       {
@@ -182,43 +182,43 @@ Parser::getNoun(std::string nounString) {
       }
       else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1")
       {
-        returnString = "Rug1";
+        returnString = "rug1";
       }
       else if( nounString == "Note" || nounString == "note" || nounString == "Paper" || nounString == "paper" || nounString == "Note1" )
       {
-        returnString = "Note1";
+        returnString = "note1";
       }
       else if( nounString == "RecordPlayer" || nounString == "recordplayer" || nounString == "player")
       {
-        returnString = "RecordPlayer";
+        returnString = "recordplayer";
       }
       else if( nounString == "Tapestry" || nounString == "tapestry" || nounString == "Tapestry1")
       {
-        returnString = "Tapestry1";
+        returnString = "tapestry1";
       }
       else if( nounString == "Dishes" || nounString == "dishes" || nounString == "DirtyDishes" )
       {
-        returnString = "DirtyDishes";
+        returnString = "dirtydishes";
       }
       else if( nounString == "Record" || nounString == "record" || nounString == "Record1")
       {
-        returnString = "Record1";
+        returnString = "record1";
       }
       else if( nounString == "Padlock" || nounString == "padlock")
       {
-        returnString = "Padlock";
+        returnString = "padlock";
       }
       else if( nounString == "Piano" || nounString == "piano" || nounString == "Piano1")
       {
-        returnString = "Piano1";
+        returnString = "piano1";
       }
       else if( nounString == "Key" || nounString == "key" || nounString == "Key1")
       {
-        returnString = "Key1";
+        returnString = "key1";
       }
       else if( nounString == "2ndFloorDoors")
       {
-        returnString = "2ndFloorDoors";
+        returnString = "2ndfloordoors";
       }
 
 
@@ -352,4 +352,15 @@ Parser::getVerb(std::string verbString) {
 	{
 		return (validVerbs)unknown;
 	}
+}
+
+// returns lowercase string
+// http://www.cplusplus.com/reference/locale/tolower/
+std::string Parser::strToLowercase(std::string mixedStr)
+{
+  std::locale loc;
+
+  for (std::string::size_type i=0; i<mixedStr.length(); ++i)
+    mixedStr[i] = std::tolower(mixedStr[i],loc);
+  return mixedStr;
 }

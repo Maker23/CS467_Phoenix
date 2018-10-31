@@ -6,6 +6,9 @@
 
 class Parser
 {
+	 private:
+	 std::string strToLowercase(std::string);
+
     public:
     Parser(); // constructor
     ~Parser();	// destructor

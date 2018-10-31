@@ -94,7 +94,7 @@ Room::Room(string filename)
 				{
 					if (DEBUG_FEATURES) std::cout << "Adding feature '" << str << "' to room" << std::endl;
 					// Add this to the vector of features in the room
-					roomFeatures.push_back(str);
+					roomFeatures.push_back(strToLowercase(str));
 				}
 			}
 

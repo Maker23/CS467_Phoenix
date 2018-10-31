@@ -89,7 +89,7 @@ void GameState::getOverrideVerb(Choice * userChoice)
 	Feature * thisFeature;
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::getOverrideVerb with noun " << userChoice->Noun << std::endl;
-	if ( housePtr->hasFeature(userChoice->Noun) )
+	if ( housePtr->hasFeature(strToLowercase(userChoice->Noun)) )
 	{
 		thisFeature = housePtr->getFeaturePtr(userChoice->Noun);
 		if (DEBUG_FUNCTION) std::cout << "      found feature "<< userChoice->Noun << ", looking for " << userChoice->inputVerb << std::endl;

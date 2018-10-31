@@ -517,3 +517,13 @@ std::string Feature::strToLowercase(std::string mixedStr)
     mixedStr[i] = std::tolower(mixedStr[i],loc);
 	return mixedStr;
 }
+
+
+void Feature::printFeaturesActions()
+{
+	if (!DEBUG_HOUSE ) return;
+	std::cout << "--- feature's Actions: ---" << std::endl;
+	for (auto it=actions.cbegin(); it != actions.cend(); it++) {
+		std::cout << "\t\t" << it->first << "\t" << it->second << std::endl;
+	}
+}

@@ -104,17 +104,19 @@ Room *House::buildHouse(string startingRoom){
     }
     closedir(dirp);
 
-    for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
-	    if ( DEBUG_FEATURES ) 
-	    {
-	    	std::cout << it->second->getName() << std::endl;;
-	    }
+	if ( DEBUG_FEATURES ) 
+      for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
+	   {
+	   	std::cout << it->second->getName() << std::endl;;
+	   }
 	}
     
     if ( DEBUG_FEATURES ) 
     {
     	cout << "Number of Features in House: " << houseFeatures.size() << endl;
     }
+
+
 
 	return  startingRoomPtr;
 }
@@ -254,4 +256,21 @@ std::string House::strToLowercase(std::string mixedStr)
   for (std::string::size_type i=0; i<mixedStr.length(); ++i)
     mixedStr[i] = std::tolower(mixedStr[i],loc);
 	return mixedStr;
+}
+
+void House::debugHouse()
+{
+	if ( ! DEBUG_HOUSE ) return;
+
+	std::cout << "--- House Debug: ---" << std::endl;
+	std::cout << "--- rooms: ---" << std::endl;
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
+		std::cout << "\t" << it->first << "\t" << it->second->getRoomName() << std::endl;
+	}
+
+	std::cout << "--- features: ---" << std::endl;
+	for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
+		std::cout << "\t" << it->first << "\t" << it->second->getName() << std::endl;
+		it->second->printFeaturesActions();
+	}
 }

@@ -60,6 +60,7 @@ class Feature
 		void Examine();
 		bool isSolved();
 		bool isSeen();
+		void printFeaturesActions();
 
 };
 

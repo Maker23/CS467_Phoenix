@@ -27,6 +27,7 @@ class House
 		void printRooms(GameState *);						// For debugging really
 		void printFeatures(GameState *);						// For debugging really
 		void printRoomFeatures(Room *);		// display the features in the room.
+		void debugHouse();
 };
 
 #endif

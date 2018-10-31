@@ -152,6 +152,7 @@ Parser::getNoun(std::string nounString) {
         || nounString == "southwest" || nounString == "southcenter"
         || nounString == "southeast" || nounString == "right"
         || nounString == "left" || nounString == "ne" || nounString == "se"
+        || nounString == "n" || nounString == "s"
         || nounString == "1" || nounString == "2" || nounString == "3"
         || nounString == "4" || nounString == "5" || nounString == "stairs")
       {
@@ -222,11 +223,11 @@ Parser::getNoun(std::string nounString) {
         returnString = "Library";
       }
 
-      else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1")
+      else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1" || nounString == "rug1")
       {
         returnString = "rug1";
       }
-      else if( nounString == "Note" || nounString == "note" || nounString == "Paper" || nounString == "paper" || nounString == "Note1" )
+      else if( nounString == "Note" || nounString == "note" || nounString == "Paper" || nounString == "paper" || nounString == "Note1" || nounString == "note1")
       {
         returnString = "note1";
       }
@@ -234,7 +235,7 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "recordplayer";
       }
-      else if( nounString == "Tapestry" || nounString == "tapestry" || nounString == "Tapestry1")
+      else if( nounString == "Tapestry" || nounString == "tapestry" || nounString == "Tapestry1" || nounString == "tapestry1")
       {
         returnString = "tapestry1";
       }
@@ -274,7 +275,7 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "camera";
       }
-      else if( nounString == "Puzzle1" || nounString == "puzzle1")
+      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle" || nounString == "puzzle")
       {
         returnString = "puzzle1";
       }
@@ -282,15 +283,11 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "visionhallway2";
       }
-      else if( nounString == "Firestarter" || nounString == "firestarter")
+      else if( nounString == "Firestarter" || nounString == "firestarter" || nounString == "fire" || nounString == "Fire" || nounString == "starter" || nounString == "Starter")
       {
         returnString = "firestarter";
       }
-      else if( nounString == "Firestarter" || nounString == "firestarter")
-      {
-        returnString = "firestarter";
-      }
-      else if( nounString == "SolvingPuzzle1" || nounString == "solvingpuzzle1")
+      else if( nounString == "SolvingPuzzle1" || nounString == "solvingpuzzle1" || nounString == "solving" || nounString == "Solving")
       {
         returnString = "solvingpuzzle1";
       }
@@ -298,11 +295,11 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "ghosts";
       }
-      else if( nounString == "WoodBox1" || nounString == "woodbox1")
+      else if( nounString == "WoodBox1" || nounString == "woodbox1" || nounString == "box"|| nounString == "Box")
       {
         returnString = "woodbox1";
       }
-      else if( nounString == "Spectacles" || nounString == "spectacles")
+      else if( nounString == "Spectacles" || nounString == "spectacles" || nounString == "glasses" || nounString == "Glasses")
       {
         returnString = "spectacles";
       }
@@ -400,15 +397,17 @@ Parser::getVerb(std::string verbString) {
 	}
   else if ((verbString.compare("open") == 0 )   ||
           (verbString.compare("Open") == 0 ) ||
-          (verbString.compare("unlock") == 0 ) ||
-          (verbString.compare("Unlock") == 0 ) ||
           (verbString.compare("lift") == 0 ) ||
           (verbString.compare("Lift") == 0 ))  //sets validVerb to 5
 	{
 		return (validVerbs)open;
 	}
   else if ((verbString.compare("close") == 0 ) ||
-          (verbString.compare("Close") == 0 ))//sets validVerb to 6
+          (verbString.compare("Close") == 0 ) ||
+          (verbString.compare("shut") == 0 ) ||
+          (verbString.compare("Shut") == 0 ) ||
+          (verbString.compare("seal") == 0 ) ||
+          (verbString.compare("Seal") == 0 ))//sets validVerb to 6
 	{
 		return (validVerbs)shut;
 	}
@@ -424,6 +423,10 @@ Parser::getVerb(std::string verbString) {
   }
   else if ((verbString.compare("inventory") == 0 ) ||
             (verbString.compare("Inventory") == 0 ) ||
+            (verbString.compare("Stuff") == 0 ) ||
+            (verbString.compare("stuff") == 0 ) ||
+            (verbString.compare("Items") == 0 ) ||
+            (verbString.compare("items") == 0 ) ||
             (verbString.compare("Carrying") == 0 ) ||
             (verbString.compare("carrying") == 0 ) ||
             (verbString.compare("Holding") == 0 ) ||

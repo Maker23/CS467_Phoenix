@@ -559,3 +559,14 @@ void Feature::setSolved(bool value)
 {
 	solved = value;
 }
+
+// returns lowercase string
+// http://www.cplusplus.com/reference/locale/tolower/
+std::string Feature::strToLowercase(std::string mixedStr)
+{
+	std::locale loc;
+
+  for (std::string::size_type i=0; i<mixedStr.length(); ++i)
+    mixedStr[i] = std::tolower(mixedStr[i],loc);
+	return mixedStr;
+}

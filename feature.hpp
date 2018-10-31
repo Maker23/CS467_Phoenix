@@ -31,6 +31,7 @@ class Feature
 		std::string triggers;
 		std::string dependsOn;
 		std::string uses; // in the real world this would be a list. meh.
+		std::string strToLowercase(std::string);
 
 	public:
 		//std::vector<std::string> actions;

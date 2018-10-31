@@ -244,3 +244,14 @@ void House::printRoomFeatures(Room *room)
 	}
 	if (DEBUG_BRENT) std::cout << "Exit House::printFeatures()" << std::endl;
 }
+
+// returns lowercase string
+// http://www.cplusplus.com/reference/locale/tolower/
+std::string House::strToLowercase(std::string mixedStr)
+{
+	std::locale loc;
+
+  for (std::string::size_type i=0; i<mixedStr.length(); ++i)
+    mixedStr[i] = std::tolower(mixedStr[i],loc);
+	return mixedStr;
+}

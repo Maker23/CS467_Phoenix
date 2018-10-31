@@ -44,6 +44,7 @@ class Room
 		std::string additionalDesc;
 		int numExits;
 		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
+		std::string strToLowercase(std::string);
 
 
 	public:

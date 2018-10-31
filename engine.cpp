@@ -93,10 +93,10 @@ void GameState::getOverrideVerb(Choice * userChoice)
 	{
 		thisFeature = housePtr->getFeaturePtr(userChoice->Noun);
 		if (DEBUG_FUNCTION) std::cout << "      found feature "<< userChoice->Noun << ", looking for " << userChoice->inputVerb << std::endl;
-		if ( thisFeature->actions.find(userChoice->inputVerb) != thisFeature->actions.end() )
+		if ( thisFeature->actions.find(strToLowercase(userChoice->inputVerb)) != thisFeature->actions.end() )
 		{
 			if (DEBUG_FUNCTION) std::cout << "      found alternate verb " << userChoice->inputVerb << std::endl;
-			userChoice->Verb = thisFeature->actions.find(userChoice->inputVerb)->second;
+			userChoice->Verb = thisFeature->actions.find(strToLowercase(userChoice->inputVerb))->second;
 		}
 	}
 }
@@ -430,4 +430,15 @@ void GameState::UpdateGameState(int &GameClock, Room* currentRoom)
 	if(points) {} // TODO... silence compile-time warnings...
 	GameClock++;
 	// Can check on or update various GameTasks here
+}
+
+// returns lowercase string
+// http://www.cplusplus.com/reference/locale/tolower/
+std::string GameState::strToLowercase(std::string mixedStr)
+{
+	std::locale loc;
+
+  for (std::string::size_type i=0; i<mixedStr.length(); ++i)
+    mixedStr[i] = std::tolower(mixedStr[i],loc);
+	return mixedStr;
 }

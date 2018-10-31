@@ -35,6 +35,7 @@ class GameState
 private:
 	std::string Name;
 	int Capacity; // How much the player can carry
+	std::string strToLowercase(std::string);
 
 public:
 	std::vector<Feature *> Holding;  // Features by name

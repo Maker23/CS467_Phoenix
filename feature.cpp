@@ -184,43 +184,6 @@ Feature::Feature(string fileToOpen)
 					usingText = tempStr;
 			}
 
-/*
-			if(lineStr.find("DESCRIPTION1: ") != std::string::npos) 
-			{
-				tempStr = lineStr.substr(14, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION1 " << tempStr << std::endl;}
-				// check if not empty and isn't set to "null"
-				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					description1 = tempStr;
-			}
-
-			if(lineStr.find("DESCRIPTION2: ") != std::string::npos) 
-			{
-				tempStr = lineStr.substr(14, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION2 " << tempStr << std::endl;}
-				// check if not empty and isn't set to "null"
-				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					description2 = tempStr;
-			}
-
-			if(lineStr.find("DESCRIPTION3: ") != std::string::npos) 
-			{
-				tempStr = lineStr.substr(14, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION3 " << tempStr << std::endl;}
-				// check if not empty and isn't set to "null"
-				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					description3 = tempStr;
-			}
-
-			if(lineStr.find("DESCRIPTION4: ") != std::string::npos) 
-			{
-				tempStr = lineStr.substr(14, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DESCRIPTION4 " << tempStr << std::endl;}
-				// check if not empty and isn't set to "null"
-				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					description4 = tempStr;
-			}
-*/
 			if(lineStr.find("WEIGHT: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(8, lineStr.length()-1);
@@ -268,8 +231,8 @@ Feature::Feature(string fileToOpen)
 					//
 					//
 					std::string keywordStr = tempStr;
-				  std::stringstream mystream (keywordStr);
-				  const char * keywordCstr = keywordStr.c_str();
+				   std::stringstream mystream (keywordStr);
+				   const char * keywordCstr = keywordStr.c_str();
 					std::string st;
 					char * cptr;
 					Parser parse;
@@ -290,28 +253,12 @@ Feature::Feature(string fileToOpen)
 							while (cptr != NULL) {
 								// convert to string...
 								st = cptr;
-								actions[st] = kVerb;
+								actions[strToLowercase(st)] = kVerb;
 								if (DEBUG_FEATURES) { std::cout << "      token = '" << st << "'" << std::endl;}
 								cptr = strtok(NULL, ", ");
 							}
 						}
 					}
-					/*
-
-				   while(getline(mystream,tempStr,','))
-				   {  // https://stackoverflow.com/questions/40611689/c-error-in-tokenizer-variable-stdstringstream-mystream-has-initializer-b/43017562
-				   		// remove leading and trailing spaces
-				    		while(tempStr[0] == ' ')
-				    		{
-				    			tempStr = tempStr.substr(1, tempStr.length() - 1);
-				    		}
-				    		while(tempStr[tempStr.length() - 1] == ' ')
-				    		{
-				    			tempStr = tempStr.substr(0, tempStr.length() - 2);
-				    		}
-				       //actions.push_back(tempStr);
-				   }
-					 */
 				}
 				if (DEBUG_FEATURES) { std::cout << "Total Actions " << actions.size() << std::endl;}
 			}

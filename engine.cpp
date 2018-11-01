@@ -209,7 +209,7 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 			nounUses = theNoun->getUses();
 			if (DEBUG_FUNCTION) std::cout << "      nounUses: " << nounUses << std::endl;
 			if (DEBUG_FUNCTION) std::cout << "      theSubject: " << theSubject << std::endl;
-			if (  nounUses.compare("") != 0 
+			if (  nounUses.compare("") == 0 
 				 ||(featureWithinReach(currentRoom,nounUses))) {
 				theNoun->useFeature(this, theSubject); }
 			else {
@@ -262,14 +262,17 @@ bool GameState::featureWithinReach(Room * currentRoom, std::string nounUses )
 	bool inHand = false;
 	bool inRoom = false;
 
+	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::featureWithinReach" << std::endl;
 	theNoun = housePtr->getFeaturePtr(nounUses);
 	if ( theNoun == NULL ) {
+		if (DEBUG_FUNCTION) std::cout << "      theNoun is NULL"  << std::endl;
 		return false;
 	}
 
 	inHand = featureInHand(theNoun);
 	inRoom = featureInRoom(currentRoom, nounUses);
 
+	if (DEBUG_FUNCTION) std::cout << "inHand = "<< inHand << ", inRoom = "<< inRoom<< ", or equals" << (inHand || inRoom)  << std::endl;
 	return inHand || inRoom;
 }
 
@@ -291,23 +294,26 @@ bool GameState::featureInRoom(Room * currentRoom, std::string FName)
 	Feature * theNoun = NULL;
 	bool inRoom = false;
 
-	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::featureWithinReach, FName = " << FName << std::endl;
+	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::featureInRoom, FName = " << FName << std::endl;
   // Does the Feature exist?
 	theNoun = housePtr->getFeaturePtr(FName);
   if ( ! theNoun ) 
 	{
+		if (DEBUG_FUNCTION) std::cout << "***** Did not find " << FName << " in house->getFeaturePtr" << std::endl;
 		return false;
 	}
 
 	for ( std::vector<std::string>::iterator iterStr = currentRoom->roomFeatures.begin(); 
 				iterStr != currentRoom->roomFeatures.end(); iterStr++) 
 	{
+		if (DEBUG_FUNCTION) std::cout << "***** Comparing " << FName << " to " << (*iterStr) << std::endl;
 		if ( FName.compare(*iterStr) == 0 ) 
 		{
 			inRoom = true;
 			break;
 		}
 	}
+	if (DEBUG_FUNCTION) std::cout << "***** Fell through to false :( "<< std::endl;
 	return inRoom;
 }
 

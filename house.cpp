@@ -99,6 +99,7 @@ Room *House::buildHouse(string startingRoom){
     		std::string fileName(dp->d_name);
     		FeatureFileToOpen = "features/" + fileName;
     		houseFeatures[strToLowercase(fileName)] = new Feature(FeatureFileToOpen);
+    		houseFeatures[strToLowercase(fileName)]->setKeyName(fileName);
     	}
 
     }

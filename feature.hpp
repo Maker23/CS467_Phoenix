@@ -13,6 +13,7 @@ enum FeatureType { container, item, door_lock, block_room, used_with_another_ite
 class Feature
 {
 	private:
+		std::string key;
 		std::string name;
 
 		FeatureType type;
@@ -50,6 +51,8 @@ class Feature
 		std::string getTriggers();
 		std::string getUses();
 		void setSolved(bool);
+		void setKeyName(std::string);
+		std::string getKeyName();
 		void useFeature(GameState *GS, Feature *Subject);
 		void takeFeature(GameState *GS, Room * Rm, Feature *Subject);
 		void dropFeature(GameState *GS, Room * Rm, Feature *Subject, bool Silent);

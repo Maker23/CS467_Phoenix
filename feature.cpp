@@ -48,6 +48,7 @@ Feature::Feature(string fileToOpen)
 
 
 	// set defaults
+	key = "";
 	name = "";
 	solved = false;
 	weight = 0;
@@ -354,7 +355,7 @@ void Feature::takeFeature(GameState *GS, Room * Rm,Feature * Subject)
 	{
 		std::cout << "You pick up the " << getName() << std::endl;
 		GS->Holding.push_back(this);
-		if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Feature::takeFeature() getName: " << getName() << std::endl;
+		if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Feature::takeFeature() getKeyName: " << this->getKeyName() << std::endl;
 		Rm->deleteFeature(getName());
 	}
 }
@@ -510,6 +511,17 @@ bool Feature::isSeen()
 void Feature::setSolved(bool value)
 {
 	solved = value;
+}
+
+void Feature::setKeyName(std::string keyName)
+{
+	key=strToLowercase(keyName);
+}
+
+
+std::string Feature::getKeyName()
+{
+	return key;
 }
 
 // returns lowercase string

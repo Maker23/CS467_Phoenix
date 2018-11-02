@@ -178,7 +178,7 @@ void Room::setRoomSeen()
  * Searches the Connections (exits) in this room by keyword and if found, will return the room object.
  * returns null if not found.
  */
-std::string Room::getExitRoomByKey(std::string searchKey)
+std::string Room::getExitRoomByKey(std::string searchKey, bool returnLocked=true)
 {
 	//isExitKeywordFound
 	// loop through the connections and check isExitKeywordFound(searchKey)
@@ -189,7 +189,7 @@ std::string Room::getExitRoomByKey(std::string searchKey)
 	{
 		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found, return the name of the room.
-			if(Connections[r]->isDoorLocked())
+			if(returnLocked == true && Connections[r]->isDoorLocked())
 				return "locked";
 			else
 				return Connections[r]->getExitRoomName();
@@ -275,6 +275,28 @@ std::string Room::getExitsForDisplay()
 	}
 
 	return exitString;
+}
+
+Room * Room::getRoomOtherSideOfDoor(std::string roomName, GameState * PlayerState)
+{
+	std::string exitStringReturned;
+	Room *roomPtr = this;
+	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::getRoomOtherSideOfDoor roomName: " << roomName << std::endl;
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin Room::getRoomOtherSideOfDoor" << std::endl;
+	exitStringReturned = roomPtr->getExitRoomByKey(roomName, false);
+	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT]        exitStringReturned: " << exitStringReturned << std::endl;
+	
+	roomPtr = PlayerState->housePtr->getRoomPtr(exitStringReturned);
+	if(roomPtr != NULL)
+	{
+		if (DEBUG_FUNCTION) std::cout << "   ===== Return room pointer." << std::endl;
+		return roomPtr;
+	}
+	else
+		return NULL;
+
+
 }
 
 Room * Room::goRoom(std::string roomName, GameState * PlayerState){

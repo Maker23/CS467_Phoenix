@@ -148,7 +148,17 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 	{
 		// Pass the verb and noun(s) to ActInRoom
 		//nextRoom = actOnFeature(currentRoom, userChoice);
-		if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Begin Engine::actInRoom() unlock" << std::endl;
+		nextRoom = currentRoom->getRoomOtherSideOfDoor(userChoice->Noun, this);
+		if (nextRoom != NULL)
+		{
+			if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Begin Engine::actInRoom() unlock " << userChoice->Noun << " which leads to " << nextRoom->getRoomName() << std::endl;
+		}
+		else
+		{
+			std::cout << "ERROR: received NULL when looking at door" << std::endl;
+			exit(1);
+		}
+
 	}
 	else if (userChoice->Verb < (validVerbs)LastAction)
 	{

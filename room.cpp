@@ -376,6 +376,7 @@ void Room::deleteFeature(std::string FName)
 {
 	Parser parse;
 	std::string realName = parse.getNoun(FName);
+	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] deleteFeature() FName: " << FName << std::endl;
 
 	for ( std::vector<std::string>::iterator iter = roomFeatures.begin(); iter != roomFeatures.end(); iter++)
 	{

@@ -144,6 +144,12 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 			nextRoom->Examine(this);
 		}
 	}
+	else if (userChoice->Verb == (validVerbs)unlock)
+	{
+		// Pass the verb and noun(s) to ActInRoom
+		//nextRoom = actOnFeature(currentRoom, userChoice);
+		if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Begin Engine::actInRoom() unlock" << std::endl;
+	}
 	else if (userChoice->Verb < (validVerbs)LastAction)
 	{
 		// Pass the verb and noun(s) to ActInRoom

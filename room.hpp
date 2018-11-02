@@ -43,6 +43,7 @@ class Room
 		std::string longDesc;
 		std::string shortDesc;
 		std::string additionalDesc;
+		std::string unlockText;
 		int numExits;
 		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
 		std::string strToLowercase(std::string);
@@ -63,6 +64,7 @@ class Room
 		std::string getShortDesc();						// returns the short description of this room.
 		std::string getAdditionalDesc();					// returns the additional description of this room.
 		std::string getKeyName();
+		std::string getUnlockText();
 		void setKeyName(std::string);
 		void setRoomSeen();
 		void Examine(GameState *);
@@ -70,6 +72,7 @@ class Room
 		std::string getExitRoomByKey(std::string, bool);			// searches exits by keyword (such as south) and if found, returns the room name. If not found, returns null.
 		std::string getExitsForDisplay();
 		bool lockExitDoorByKey(std::string);			// will lock the door to one of the rooms based on a doorway keyword.
+		bool unlockExitDoorByKey(std::string);
 		void displayRoom();
 		Room * goRoom(std::string, GameState *);
 		Room * getRoomOtherSideOfDoor(std::string, GameState *);

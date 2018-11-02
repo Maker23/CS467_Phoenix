@@ -52,6 +52,7 @@ Room::Room(string filename)
 	{
 	  	Connections[i] = NULL;
 	}
+	unlockText = "";
 
 	// Iterate through the room file line by line and set Room values
 	roomfile.open(filename.c_str());  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
@@ -84,6 +85,11 @@ Room::Room(string filename)
    		if(lineStr.find("ADITIONAL DESC: ") != std::string::npos)
    		{
    			additionalDesc = lineStr.substr(16, lineStr.length()-1);
+				continue;
+   		}
+   		if(lineStr.find("UNLOCKED_TEXT: ") != std::string::npos)
+   		{
+   			unlockText = lineStr.substr(15, lineStr.length()-1);
 				continue;
    		}
 
@@ -183,6 +189,11 @@ void Room::setRoomSeen()
 	roomSeen = true;
 }
 
+std::string Room::getUnlockText()
+{
+	return unlockText;
+}
+
 
 /*
  * Searches the Connections (exits) in this room by keyword and if found, will return the room object.
@@ -218,6 +229,20 @@ bool Room::lockExitDoorByKey(std::string searchKey)
 		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found
 			Connections[r]->lockDoor();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Room::unlockExitDoorByKey(std::string searchKey)
+{
+	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::unlockExitDoorByKey searchKey: " << searchKey << std::endl;
+	for (int r = 0; r < numExits; r++)
+	{
+		if(Connections[r]->isExitKeywordFound(searchKey))
+		{ // it is found
+			Connections[r]->unlockDoor();
 			return true;
 		}
 	}

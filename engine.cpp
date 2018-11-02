@@ -34,7 +34,9 @@ using namespace std;
 /* ********************************************************* */
 std::string Choice::printVerb()
 {
-	std::string verbPrint[] = {"look", "go", "use", "pick up or take", "drop", "open", "close", "throw", "hit", "eat", "examine"};
+
+	std::string printVerb(); // converts validVerbs enum into a string
+	std::string verbPrint[] = {"look", "go", "use", "pick up or take", "drop", "open", "close", "throw", "hit", "unlock", "examine"};
 
 	return verbPrint[(int)Verb];
 }

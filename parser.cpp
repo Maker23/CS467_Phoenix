@@ -90,17 +90,21 @@ Choice * Parser::ParseLine(){
 		}
 
     //while ( ! words.empty() && myVerb.compare(NOTFOUND) == 0 ) //nick changed this
-    while ( ! words.empty() && userChoice->Verb == 16 )
+    // while (( ! words.empty() && userChoice->Verb == 16 )
+  	userChoice->inputVerb = words.front();
+		for (list<string>::iterator iter=words.begin(); iter!=words.end(); iter++)
     {
-  		userChoice->inputVerb = words.front();
-  		action = getVerb ( words.front());
+  		action = getVerb ( *iter );
       if (action != 16)
       {
         userChoice->Verb = action;
+  			userChoice->inputVerb = *iter;
+  			//words.pop_front();
+  			*iter = "";  // this is lame
+				break;
       }
-  		words.pop_front();
     }
-  		while ( ! words.empty() && myNoun.compare(NOTFOUND) == 0 )
+  	while ( ! words.empty() && myNoun.compare(NOTFOUND) == 0 )
     //  while ( ! words.empty() || userChoice->Noun == "" )
 		{
 			userChoice->inputNoun = words.front();

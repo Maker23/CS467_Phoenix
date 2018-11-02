@@ -356,7 +356,7 @@ void Feature::takeFeature(GameState *GS, Room * Rm,Feature * Subject)
 		std::cout << "You pick up the " << getName() << std::endl;
 		GS->Holding.push_back(this);
 		if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Feature::takeFeature() getKeyName: " << this->getKeyName() << std::endl;
-		Rm->deleteFeature(getName());
+		Rm->deleteFeature(getKeyName());
 	}
 }
 

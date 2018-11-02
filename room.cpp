@@ -372,15 +372,17 @@ void Room::addFeature(std::string FName)
 	return;
 }
 
-void Room::deleteFeature(std::string FName) 
+void Room::deleteFeature(std::string featureToDelete) 
 {
-	Parser parse;
-	std::string realName = parse.getNoun(FName);
-	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] deleteFeature() FName: " << FName << std::endl;
+	// refactored this to use keyname.
+	//Parser parse;
+	//std::string realName = parse.getNoun(FName);
+	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] deleteFeature() FName: " << featureToDelete << std::endl;
 
 	for ( std::vector<std::string>::iterator iter = roomFeatures.begin(); iter != roomFeatures.end(); iter++)
 	{
-		if ((*iter).compare(realName) == 0) 
+		if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT]    deleteFeature() (*iter): " << (*iter) << std::endl;
+		if ((*iter).compare(featureToDelete) == 0) 
 		{
 			roomFeatures.erase(iter);
 			return;
@@ -388,7 +390,7 @@ void Room::deleteFeature(std::string FName)
 	}
 
   // TODO: Could also try FName if 'realName' doesn't work
-	std::cout << "WARNING: could not find feature "<<FName<< "(" << realName << ") to delete from room " << std::endl;
+	std::cout << "WARNING: could not find feature "<<featureToDelete << " to delete from room " << std::endl;
 	return;
 }
 

@@ -148,6 +148,16 @@ Room::~Room()
   }
 }
 
+std::string Room::getKeyName()
+{
+	return key;
+}
+
+void Room::setKeyName(std::string keyName)
+{
+	key = strToLowercase(keyName);
+}
+
 std::string Room::getRoomName()
 {
 	return this->roomName;
@@ -202,10 +212,11 @@ std::string Room::getExitRoomByKey(std::string searchKey, bool returnLocked=true
 
 bool Room::lockExitDoorByKey(std::string searchKey)
 {
+	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::lockExitDoorByKey searchKey: " << searchKey << std::endl;
 	for (int r = 0; r < numExits; r++)
 	{
 		if(Connections[r]->isExitKeywordFound(searchKey))
-		{ // it is found, return the name of the room.
+		{ // it is found
 			Connections[r]->lockDoor();
 			return true;
 		}

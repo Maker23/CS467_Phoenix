@@ -38,6 +38,7 @@ class Room
 {
 	private:
 		bool roomSeen;
+		std::string key;
 		std::string roomName;
 		std::string longDesc;
 		std::string shortDesc;
@@ -61,6 +62,8 @@ class Room
 		std::string getLongDesc();							// returns the long description of this room.
 		std::string getShortDesc();						// returns the short description of this room.
 		std::string getAdditionalDesc();					// returns the additional description of this room.
+		std::string getKeyName();
+		void setKeyName(std::string);
 		void setRoomSeen();
 		void Examine(GameState *);
 		void addExitsToStack(std::stack<std::string> &);	// Adds Room's exits to the given stack - used in House::buildHouse -- should not be needed anywhere else

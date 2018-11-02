@@ -85,6 +85,7 @@ Room *House::buildHouse(string startingRoom){
 				startingRoomPtr = roomPtr;  // sets the starting room pointer for the return
 			}
 			roomPtr->addExitsToStack(roomsToLoad);
+			roomPtr->setKeyName(strToLowercase(roomPtr->getRoomName()));
 			houseMap[strToLowercase(roomPtr->getRoomName())] = roomPtr;
 		}
 	}

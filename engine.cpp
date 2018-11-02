@@ -151,11 +151,14 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 		nextRoom = currentRoom->getRoomOtherSideOfDoor(userChoice->Noun, this);
 		if (nextRoom != NULL)
 		{
+			// TODO: need to check and make sure we did what we needed to do in order to unlock the door"
 			if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Begin Engine::actInRoom() unlock " << userChoice->Noun << " which leads to " << nextRoom->getRoomName() << std::endl;
+			// unlock door to requested room
+			// unlock door from requested room to this room.
 		}
 		else
 		{
-			std::cout << "ERROR: received NULL when looking at door" << std::endl;
+			std::cout << "ERROR: received NULL when retreiving door pointer." << std::endl;
 			exit(1);
 		}
 

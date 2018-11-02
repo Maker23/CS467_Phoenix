@@ -199,7 +199,7 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TRIGGERS " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					triggers = tempStr;
+					triggers = strToLowercase(tempStr);
 			}
 
 			if(lineStr.find("DEPENDS_ON: ") != std::string::npos) 
@@ -208,7 +208,7 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DEPENDS_ON " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					dependsOn = tempStr;
+					dependsOn = strToLowercase(tempStr);
 			}
 
 			if(lineStr.find("USES: ") != std::string::npos) 
@@ -217,7 +217,7 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found USES " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					uses = tempStr;
+					uses = strToLowercase(tempStr);
 			}
 
 			if(lineStr.find("ACTIONS: ") != std::string::npos) 

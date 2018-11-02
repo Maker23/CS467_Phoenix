@@ -1,12 +1,12 @@
 CFLAGS= -Wall -g -std=c++11
 
-dstest: dstest.o feature.o engine.o house.o parser.o room.o
+dstest: dstest.o feature.o engine.o house.o parser.o room.o puzzle.o
 	g++ dstest.o feature.o engine.o house.o parser.o room.o -o dstest $(CFLAGS)
 
-test:test.o feature.o engine.o house.o parser.o room.o
+test:test.o feature.o engine.o house.o parser.o room.o puzzle.o
 	g++ test.o feature.o engine.o house.o parser.o room.o -o test $(CFLAGS)
 
-game: main.o feature.o engine.o house.o parser.o room.o
+game: main.o feature.o engine.o house.o parser.o room.o puzzle.o
 	g++ -o game $^ $(CFLAGS)
 
 %.o: %.cpp %.hpp

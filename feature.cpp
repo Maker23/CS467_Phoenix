@@ -305,6 +305,17 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 	std::string nounUses;
 	Feature * checkFeature=NULL;
 
+	//if ( getName().compare(getNoun("puzzle") == 0 ) {
+	if ( getName().compare("Puzzle") == 0 ) {
+		if (DEBUG_PUZZLE) { std::cout << "      Going off to solve a puzzle " << std::endl;}
+		bool solved = GS->puzzle->solvePuzzle();
+		if ( ! solved ) {
+			return;
+		}
+	}
+	else {
+		if (DEBUG_PUZZLE) { std::cout << "      getName '" << getName() << "' does not match 'puzzle1'" << std::endl;}
+	}
 	if (DEBUG_FEATURES) { std::cout << "      Setting isSolved to true " << std::endl;}
 	setSolved(true);
 	

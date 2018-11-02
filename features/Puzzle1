@@ -1,10 +1,9 @@
-NAME: Puzzle of some kind
+NAME: Puzzle
 TYPE: puzzle
 ACTIONS: use|try,solve
-TEXT_NEVERSEEN: TODO: FIX THIS TEXT -- you see generic puzzle1
-TEXT_SEEN: Still see you see generic puzzle1
-TEXT_EXAMINE: Umm.... a puzzle to solve? Fix this text.
-TEXT_EXAMINE_SOLVED: Something happens that reveails a prize.....fix this text
-WEIGHT: 1
+TEXT_NEVERSEEN: There's a series of words painted on the wall. It looks like a sentence, but it don't make any sense.
+TEXT_SEEN: A sentence is painted on the wall.
+TEXT_EXAMINE: The words are garbled - could it be some kind of puzzle?
+TEXT_EXAMINE_SOLVED: The secret message is painted on the wall.
+WEIGHT: 100
 TRIGGERS: Firestarter
-# DEPENDS_ON: SolvingPuzzle1

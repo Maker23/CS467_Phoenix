@@ -275,7 +275,9 @@ Parser::getNoun(std::string nounString) {
       {
         returnString = "camera";
       }
-      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle" || nounString == "puzzle")
+      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle" 
+						|| nounString == "puzzle"  || nounString == "sentence" || nounString == "Sentence"
+						|| nounString == "words"  || nounString == "Words" )
       {
         returnString = "puzzle1";
       }
@@ -286,10 +288,6 @@ Parser::getNoun(std::string nounString) {
       else if( nounString == "Firestarter" || nounString == "firestarter" || nounString == "fire" || nounString == "Fire" || nounString == "starter" || nounString == "Starter")
       {
         returnString = "firestarter";
-      }
-      else if( nounString == "SolvingPuzzle1" || nounString == "solvingpuzzle1" || nounString == "solving" || nounString == "Solving")
-      {
-        returnString = "solvingpuzzle1";
       }
       else if( nounString == "Ghosts" || nounString == "ghosts")
       {

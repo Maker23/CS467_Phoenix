@@ -11,6 +11,7 @@
 #include "room.hpp"
 #include "house.hpp"
 #include "feature.hpp"
+#include "puzzle.hpp"
 
 void printGameEnding();
 /* TODO 
@@ -32,7 +33,7 @@ int main()
 	house = new House();
 	currentRoom = house->buildHouse("Foyer");
 	GS.housePtr = house;
-
+	GS.puzzle = new Puzzle(CRYPTED_STRING, CLEAR_STRING);
 
 	house->printRooms(&GS);
 	house->printFeatures(&GS);

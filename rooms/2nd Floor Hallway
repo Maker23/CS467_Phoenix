@@ -9,5 +9,8 @@ CONNECTION:Stairs up|3rd Floor Hallway|3rd floor, stairs up, up, upstairs
 LONG DESC: 2nd Floor Hallway Long Desc. Lots of doors... need description of them.
 SHORT DESC: 2nd Floor Hallway Short Desc
 ADITIONAL DESC: 2nd Floor Hallway Additional Desc
+UNLOCKED_TEXT: Using the Bronze Key you are able to unlock the door.
 FEATURE: Floor2Lamps
 FEATURE: 2ndFloorDoors
+LOCKED_DOOR: Bedroom1
+LOCKED_DOOR: Bedroom2

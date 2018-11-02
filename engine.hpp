@@ -7,11 +7,15 @@
 #include <vector>
 #include <map>
 
+#define CRYPTED_STRING "Muaf o whxxwd psoub fog krupx xid mwofd lihzi whyixp xid wofs xa udqdow xid yofd."
+#define CLEAR_STRING   "From a little spark may burst the flame which lights the lamp to reveal the game."
+
 enum validVerbs { look, go, use, take, drop, open, shut, hurl, hit, unlock, inventory, LastAction, help, save, load, quit, unknown, LastVerb};
 
 #include "utilities.hpp"
 #include "house.hpp"
 #include "feature.hpp"
+#include "puzzle.hpp"
 
 
 class Feature; // Forward declaration
@@ -43,6 +47,7 @@ public:
 	House * housePtr;
 	unsigned short winCols;
 	unsigned short winRows;
+	Puzzle * puzzle;
 
 	GameState(std::string Na);
 	~GameState();
@@ -84,7 +89,5 @@ struct Choice {
 		Subject = "";
 	};
 };
-
-
 
 #endif // _GameEngine_H

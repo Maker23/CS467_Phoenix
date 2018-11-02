@@ -1,10 +1,9 @@
 NAME: Flint and Steel
 TYPE: item
 ACTIONS: use|light,strike
-TEXT_NEVERSEEN: Solving the puzzle reveals pieces of flint and and steel.
-TEXT_SEEN: Flint and steel in the puzzle.
+TEXT_NEVERSEEN: Flint and steel.
+TEXT_SEEN: Flint and steel.
 TEXT_EXAMINE: Tied together by a braided leather cord is a sharp piece of flint, and a C shaped piece of steel.
 TEXT_TAKING: You take the attached flint and steel.
 WEIGHT: 1
-TRIGGERS: null
 DEPENDS_ON: Puzzle1

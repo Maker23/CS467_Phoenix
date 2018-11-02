@@ -26,6 +26,7 @@
 #include "utilities.hpp"
 #include "house.hpp"
 #include "parser.hpp"
+#include "puzzle.hpp"
 
 using namespace std;
 
@@ -33,7 +34,9 @@ using namespace std;
 /* ********************************************************* */
 std::string Choice::printVerb()
 {
-	std::string verbPrint[] = {"look", "go", "use", "pick up or take", "drop", "open", "close", "throw", "hit", "eat", "examine"};
+
+	std::string printVerb(); // converts validVerbs enum into a string
+	std::string verbPrint[] = {"look", "go", "use", "pick up or take", "drop", "open", "close", "throw", "hit", "unlock", "examine"};
 
 	return verbPrint[(int)Verb];
 }
@@ -106,13 +109,14 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 	Room * nextRoom = currentRoom;
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::actInRoom" << std::endl;
+	if (DEBUG_FEATURES) std::cout << "      Noun: '"<< userChoice->Noun << "'  Verb: '" << userChoice->Verb << "'" << std::endl;
 	// If no noun - limited choices
 	if ( userChoice->Noun == "" || userChoice->Noun.compare(NOTFOUND) == 0 ) {
 		if (userChoice->Verb == (validVerbs)look) 
 		{
 			currentRoom->Examine(this); // Examine this room
 		}
-		if (userChoice->Verb == (validVerbs)inventory) 
+		else if (userChoice->Verb == (validVerbs)inventory) 
 		{
 			Examine(); // Examine the GameState (player inventory)
 		}
@@ -353,6 +357,7 @@ GameState::GameState(std::string Na)
 {
 	Name = Na;
 	housePtr = NULL;
+	puzzle = NULL;
 
 	GameTask[0] = false;
 	GameTask[1] = false;

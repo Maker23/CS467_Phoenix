@@ -6,14 +6,15 @@
 
 //  Global debugging flags
 #define DEBUG_EXAMINE false
-#define DEBUG_FUNCTION true
+#define DEBUG_FUNCTION false
 #define DEBUG_TERM false
 #define DEBUG_FIND false
+#define DEBUG_FEATURES false
+#define DEBUG_HOUSE false
+#define DEBUG_PUZZLE false
 #define DEBUG_ROOM false
 #define DEBUG_USE false
-#define DEBUG_FEATURES true
 #define DEBUG_BRENT false
-#define DEBUG_HOUSE true
 
 #ifndef TEST
 #define TEST false

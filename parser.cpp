@@ -90,17 +90,21 @@ Choice * Parser::ParseLine(){
 		}
 
     //while ( ! words.empty() && myVerb.compare(NOTFOUND) == 0 ) //nick changed this
-    while ( ! words.empty() && userChoice->Verb == 16 )
+    // while (( ! words.empty() && userChoice->Verb == 16 )
+  	userChoice->inputVerb = words.front();
+		for (list<string>::iterator iter=words.begin(); iter!=words.end(); iter++)
     {
-  		userChoice->inputVerb = words.front();
-  		action = getVerb ( words.front());
+  		action = getVerb ( *iter );
       if (action != 16)
       {
         userChoice->Verb = action;
+  			userChoice->inputVerb = *iter;
+  			//words.pop_front();
+  			*iter = "";  // this is lame
+				break;
       }
-  		words.pop_front();
     }
-  		while ( ! words.empty() && myNoun.compare(NOTFOUND) == 0 )
+  	while ( ! words.empty() && myNoun.compare(NOTFOUND) == 0 )
     //  while ( ! words.empty() || userChoice->Noun == "" )
 		{
 			userChoice->inputNoun = words.front();
@@ -273,7 +277,9 @@ std::string Parser::getNoun(std::string nounString) {
       {
         returnString = "camera";
       }
-      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle" || nounString == "puzzle")
+      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle" 
+						|| nounString == "puzzle"  || nounString == "sentence" || nounString == "Sentence"
+						|| nounString == "words"  || nounString == "Words" )
       {
         returnString = "puzzle1";
       }
@@ -284,10 +290,6 @@ std::string Parser::getNoun(std::string nounString) {
       else if( nounString == "Firestarter" || nounString == "firestarter" || nounString == "fire" || nounString == "Fire" || nounString == "starter" || nounString == "Starter")
       {
         returnString = "firestarter";
-      }
-      else if( nounString == "SolvingPuzzle1" || nounString == "solvingpuzzle1" || nounString == "solving" || nounString == "Solving")
-      {
-        returnString = "solvingpuzzle1";
       }
       else if( nounString == "Ghosts" || nounString == "ghosts")
       {

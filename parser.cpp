@@ -26,7 +26,11 @@ Parser::~Parser()
 Choice * Parser::ParseLine(){
     string mystr;
 		string myNoun = NOTFOUND;
+    string myTest = NOTFOUND;
+
     string myVerb = NOTFOUND;
+    string mySubject = NOTFOUND;
+
 		list <string> words;
 		string oneword;
 		Choice * userChoice = new Choice();
@@ -108,7 +112,15 @@ Choice * Parser::ParseLine(){
     //  while ( ! words.empty() || userChoice->Noun == "" )
 		{
 			userChoice->inputNoun = words.front();
-			myNoun = getNoun(words.front());
+			myTest = getNoun(words.front());
+      if(myTest == "eac")
+      {
+        userChoice->Subject = myTest;
+      }
+      else
+      {
+        myNoun = myTest;
+      }
 			words.pop_front();
 		}
 		userChoice->Noun = strToLowercase(myNoun);
@@ -130,6 +142,10 @@ Choice * Parser::ParseLine(){
 	//		}
   	//}
 	//}
+  cout << "THIS IS THE VERB: " << userChoice->Verb << endl;
+  cout << "THIS IS THE NOUN: " << userChoice->Noun << endl;
+  cout << "THIS IS THE SUBJECT: " << userChoice->Subject << endl;
+
 
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT VERB: " << userChoice->inputVerb << endl;
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT NOUN: " << userChoice->inputNoun << endl;
@@ -162,7 +178,7 @@ std::string Parser::getNoun(std::string nounString) {
         || lcNounString == "4" || lcNounString == "5" || lcNounString == "stairs")
       {
         return lcNounString;
-      } 
+      }
 
       if(nounString == "Ballroom" || nounString == "ballroom")
       {
@@ -277,7 +293,7 @@ std::string Parser::getNoun(std::string nounString) {
       {
         returnString = "camera";
       }
-      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle" 
+      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle"
 						|| nounString == "puzzle"  || nounString == "sentence" || nounString == "Sentence"
 						|| nounString == "words"  || nounString == "Words" )
       {
@@ -306,6 +322,10 @@ std::string Parser::getNoun(std::string nounString) {
       else if( nounString == "Floor2Lamps" || nounString == "floor2lamps")
       {
         returnString = "floor2lamps";
+      }
+      else if( nounString == "eac" || nounString == "EAC")
+      {
+        returnString = "eac";
       }
 
 

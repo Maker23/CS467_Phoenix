@@ -24,27 +24,18 @@ Parser::~Parser()
 }
 
 Choice * Parser::ParseLine(){
-	return ParseLine("");
-}
-
-Choice * Parser::ParseLine(std::string inString){
     string mystr;
 		string myNoun = NOTFOUND;
     string myVerb = NOTFOUND;
+    string mySubject = NOTFOUND;
+
 		list <string> words;
 		string oneword;
 		Choice * userChoice = new Choice();
 		validVerbs action;
 
-		if ( inString.compare("") == 0 ) {
-			// Get input from the user / keyboard
-    	cout << "What would you like to do? ";
-    	getline (cin, mystr);
-		}
-		else {
-			mystr = inString;
-		}
-		
+    cout << "What would you like to do? ";
+    getline (cin, mystr);
 
 		char * sptr;
 		char myCstr[mystr.length()+1];
@@ -71,7 +62,7 @@ Choice * Parser::ParseLine(std::string inString){
     string testing2;
     int test = 1;
     cout << endl;
-		if (DEBUG_PARSER) cout << "string size = " << mystr.size() << endl;
+		if (DEBUG_FUNCTION) cout << "string size = " << mystr.size() << endl;
     for (int i=0; i < (int) mystr.size(); i++)
         {
             if(mystr[i] == ' ' && mystr[i+1] != ' ')
@@ -87,9 +78,9 @@ Choice * Parser::ParseLine(std::string inString){
 
     for (int i = 1; i < j+1; i++)
     {
-			if (DEBUG_PARSER) cout << "array[" << i << "] " << array[i] << endl;
+			if (DEBUG_FUNCTION) cout << "array[" << i << "] " << array[i] << endl;
     }
-		if (DEBUG_PARSER) std::cout << "num args: " << j << std::endl;
+		if (DEBUG_FUNCTION) std::cout << "num args: " << j << std::endl;
 
 		int i=0;
 		if((array[i] == "pick" && array[i+1] == "up") ||
@@ -115,75 +106,40 @@ Choice * Parser::ParseLine(std::string inString){
 				break;
       }
     }
-  	while ( ! words.empty() && myNoun.compare(NOTFOUND) == 0 )
-    //  while ( ! words.empty() || userChoice->Noun == "" )
+  	while ( ! words.empty())
 		{
 			userChoice->inputNoun = words.front();
-			myNoun = getNoun(words.front());
+      if (myNoun.compare(NOTFOUND) == 0)
+      {
+        myNoun = getNoun(words.front());
+
+      }
+      if (mySubject.compare(NOTFOUND) == 0)
+      {
+        mySubject = getSubject(words.front());
+      }
+
 			words.pop_front();
 		}
+
 		userChoice->Noun = strToLowercase(myNoun);
+    userChoice->Subject = strToLowercase(mySubject);
 
-		//if( userChoice->Verb == unknown) {
-		//	action = getVerb ( array[i] );
-		//	if(action != unknown) {
-		//		userChoice->Verb = action;
-		//		if(DEBUG_PARSER) std::cout << "verb is now : " << userChoice->Verb << std::endl;
-		//	}
-		//}
-		//else if(userChoice->Verb != unknown)
-		//{
-			//this is a precondition that the VERB must come first before the subject and noun
-    	//I'm willing to change this, but I can't think of a valid command
-    	//where the user would say the noun and subject before the verb, can you?
-		//	{
-	//			userChoice->Noun = getNoun(array[i]);
-	//		}
-  	//}
-	//}
+	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT VERB: " << userChoice->inputVerb << endl;
+	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT NOUN: " << userChoice->inputNoun << endl;
+	if (DEBUG_FUNCTION)  cout << "THIS IS THE VERB: " << userChoice->Verb << endl;
+	if (DEBUG_FUNCTION)  cout << "THIS IS THE NOUN: " << userChoice->Noun << endl;
 
-	if (DEBUG_PARSER)  cout << "THIS IS THE INPUT VERB: " << userChoice->inputVerb << endl;
-	if (DEBUG_PARSER)  cout << "THIS IS THE INPUT NOUN: " << userChoice->inputNoun << endl;
-	if (DEBUG_PARSER)  cout << "THIS IS THE VERB: " << userChoice->Verb << endl;
-	if (DEBUG_PARSER)  cout << "THIS IS THE NOUN: " << userChoice->Noun << endl;
-
-	if (DEBUG_PARSER) std::cout << std::endl << "===== end   Parser::ParseLine" << std::endl;
+	if (DEBUG_FUNCTION) std::cout << std::endl << "===== end   Parser::ParseLine" << std::endl;
 	return userChoice;
 }
 
-//Choice * Parser::TestLine(std::ifstream *inputFile)
-Choice * Parser::TestLine(GameState *GS)
-{
-	if (DEBUG_PARSER) std::cout << "===== begin Parser::TestLine" << std::endl;
-	// Read one line from ifstream, parse it as usual
-	std::string inputString;
-	std::ifstream *inputFile = & ( GS->GameTestFile);
-
-	if ( ! inputFile ) {
-		std::cout << "ERROR: inputFile is NULL"<< std::endl;
-		exit(1);
-	}
-	else if ( inputFile == NULL ) {
-		std::cout << "ERROR: inputFile is NULL here"<< std::endl;
-		exit(1);
-	}
-	if ( ! inputFile->good() ) {
-		std::cout << "ERROR: inputFile is empty, switching to user input"<< std::endl;
-		GS->GameTest=false;
-		return ParseLine("");
-	}
-	else {
-		std::getline(*inputFile, inputString);
-		std::cout << "TEST command = " << inputString<< std::endl;
-		return ParseLine(inputString);
-	}
-}
 
 std::string Parser::getNoun(std::string nounString) {
 	std::string returnString = NOTFOUND;
   std::string lcNounString = strToLowercase(nounString);
 
-	if (DEBUG_PARSER) std::cout << "===== begin Parser::getNoun, noun is '" << strToLowercase(nounString) << "'" << std::endl;
+	if (DEBUG_FUNCTION) std::cout << "===== begin Parser::getNoun, noun is '" << strToLowercase(nounString) << "'" << std::endl;
 
 
       if(lcNounString == "west"
@@ -200,7 +156,7 @@ std::string Parser::getNoun(std::string nounString) {
         || lcNounString == "4" || lcNounString == "5" || lcNounString == "stairs")
       {
         return lcNounString;
-      } 
+      }
 
       if(nounString == "Ballroom" || nounString == "ballroom")
       {
@@ -315,7 +271,7 @@ std::string Parser::getNoun(std::string nounString) {
       {
         returnString = "camera";
       }
-      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle" 
+      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle"
 						|| nounString == "puzzle"  || nounString == "sentence" || nounString == "Sentence"
 						|| nounString == "words"  || nounString == "Words" )
       {
@@ -350,6 +306,19 @@ std::string Parser::getNoun(std::string nounString) {
 	return returnString;
 }
 
+std::string Parser::getSubject(std::string subjectstring) {
+	std::string returnString = NOTFOUND;
+  std::string lcNounString = strToLowercase(subjectstring);
+  if(subjectstring == "eac" || subjectstring == "EAC")
+  {
+    returnString = "eac";
+  }
+
+  return returnString;
+}
+
+
+
 validVerbs
 Parser::getVerb(std::string verbString) {
   string mystr;
@@ -357,7 +326,7 @@ Parser::getVerb(std::string verbString) {
 
 	userChoice->inputVerb = verbString; // Save this for overrides
 
-	if (DEBUG_PARSER) std::cout << "===== begin Parser::getVerb, verb is '" << verbString << "'" << std::endl;
+	if (DEBUG_FUNCTION) std::cout << "===== begin Parser::getVerb, verb is '" << verbString << "'" << std::endl;
 	if ((verbString.compare("h") == 0 )||
 			(verbString.compare("help") == 0 ) ||
 			(verbString.compare("?") == 0))

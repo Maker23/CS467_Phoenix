@@ -60,7 +60,12 @@ Room * GameState::playerTurn(Room * currentRoom)
 	Choice * userChoice;
 	Parser parse;
 
-	userChoice = parse.ParseLine();
+	if ( GameTest) {
+		userChoice = parse.TestLine(&GameTestFile);
+	}
+	else {
+		userChoice = parse.ParseLine();
+	}
 
 	// Look for Reserved words - Help, Quit, Load, Save
 	if (userChoice->Verb == (validVerbs)quit)
@@ -384,6 +389,7 @@ GameState::GameState(std::string Na)
 	Name = Na;
 	housePtr = NULL;
 	puzzle = NULL;
+	GameTest = false;
 
 	GameTask[0] = false;
 	GameTask[1] = false;
@@ -400,16 +406,20 @@ GameState::~GameState()
 /* ***********************************************************
  * GameState functions
  * ********************************************************* */
+/*  Print(): This can be used for debugging, if needed */
 void GameState::Print () 
 {
 	std::cout << Name << ". ";
 }
 
+/*  getGameTaskStatus(): If the game has more than one goal to achieve
+ *  they can be tracked in the GameTask array */
 int GameState::getGameTaskStatus()
 {
 	int points = 0;
 	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::getGameTaskStatus" << std::endl;
 	/*
+	// Probably won't use this for CS467-Phoenix
 	if (GameTask[0])
 	{
 		std::cout << "Game goal zero is met." << std::endl;
@@ -419,14 +429,15 @@ int GameState::getGameTaskStatus()
 	return points;
 }
 
+/*  Examine(): prints out the player's inventory */
 void GameState::Examine()
 {
 	if ( Holding.size() == 0 ) {
 		std::cout << "You aren't carrying anything." << std::endl;
 		return;
 	}
-	std::cout << "You're carrying the following items in " << this->Name << ":" << std::endl;
 
+	std::cout << "You're carrying the following items in " << this->Name << ":" << std::endl;
 	for ( std::vector<Feature *>::iterator iter=Holding.begin(); iter != Holding.end(); iter++) 
 	{
 		std::cout << "\t" << (*iter)->getName() << std::endl;

@@ -5,7 +5,6 @@
 #include "puzzle.hpp"
 
 
-#define DEBUG true
 
 
 std::string Puzzle::getUserInput (char *swapOut, char * swapIn)
@@ -21,26 +20,26 @@ std::string Puzzle::getUserInput (char *swapOut, char * swapIn)
 	size_t foundEq = inputString.find("=");
 	if ( foundEq != std::string::npos )
 	{
-		if (DEBUG) std::cout << "found = " << std::endl;
+		if (DEBUG_PUZZLE) std::cout << "found = " << std::endl;
 		strcpy(inputCStr, inputString.c_str());
 		token = strtok(inputCStr, " =");
-		if (DEBUG) std::cout << "1 token = " << token << std::endl;
+		if (DEBUG_PUZZLE) std::cout << "1 token = " << token << std::endl;
 		swapOut[0] = token[0];
 		token = strtok(NULL, " =");
 		if ( token == NULL ) {
 			std::cout << "ERROR: need two chars for an = statement";
 		}
-		if (DEBUG) std::cout << "2 token = " << token << std::endl;
+		if (DEBUG_PUZZLE) std::cout << "2 token = " << token << std::endl;
 		swapIn[0] = token[0];
 		return "";
 	}
 	else if ( inputLen == cryptedString.length() )
 	{
-		if (DEBUG) std::cout << "found a guess" << std::endl;
+		if (DEBUG_PUZZLE) std::cout << "found a guess" << std::endl;
 		// Assume the user is trying to guess the full string
 	}
 	else {
-		if (DEBUG) std::cout << "found string of length " << inputLen << std::endl;
+		if (DEBUG_PUZZLE) std::cout << "found string of length " << inputLen << std::endl;
 	}
 
 	return inputString;
@@ -67,14 +66,14 @@ bool Puzzle::solvePuzzle()
 	char swapIn = '\0';
 	char swapOut = '\0';
 
-	if (DEBUG) std::cout << CLEAR_STRING << "\n" << std::endl;
+	if (DEBUG_PUZZLE) std::cout << "DEBUGGGING: "  << CLEAR_STRING << "\n" << std::endl;
 	std::cout << "This is a substitution cypher.  You can solve it by replacing" << std::endl;
-	std::cout << "one character at a time, by entering  " << std::endl;
-	std::cout << "     x = c " <<std::endl;
+	std::cout << "one character at a time, or by guessing the entire phrase" << std::endl;
+	std::cout << "Type\n     x = c " <<std::endl;
 	std::cout << "to replace the encrypted character 'x' with the real character 'c'." << std::endl;
 	std::cout << "If you think you know the full phrase you can guess it by typing it in." << std::endl;
 	std::cout << "Type 'q' or 'quit' to stop solving the puzzle." << std::endl;
-	std::cout << "Good luck!" << std::endl;
+	std::cout << "Good luck!\n" << std::endl;
 
 
 	while (cryptedString.compare(clearString) != 0) 
@@ -90,13 +89,16 @@ bool Puzzle::solvePuzzle()
 		}
 		else if (inputString.compare("q") == 0 || inputString.compare("quit") == 0 )
 		{
-			if (DEBUG) std::cout << "found QUIT" << std::endl;
+			if (DEBUG_PUZZLE) std::cout << "found QUIT" << std::endl;
 			return false;
 		}
 		else if (inputString.length() == cryptedString.length() ) 
 		{
 			if (inputString.compare(clearString) == 0 ) {
 				break;
+			}
+			else {
+				std::cout << "Not exactly. Keep trying." << std::endl;
 			}
 			// Test exact match, if yes cryptedString=inputString, if no cryptedString is unchanged
 		}

@@ -2,6 +2,7 @@
 #define _GAMEENGINE_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <list>
 #include <vector>
@@ -44,6 +45,9 @@ private:
 public:
 	std::vector<Feature *> Holding;  // Features by name
 	bool GameTask[numGameTasks]; // GameTasks are defined in utilities.h
+	bool GameTest;
+	std::string   GameTestFilename;
+	std::ifstream GameTestFile;
 	House * housePtr;
 	unsigned short winCols;
 	unsigned short winRows;
@@ -52,6 +56,7 @@ public:
 	GameState(std::string Na);
 	~GameState();
 	void Print();
+	void Examine();
 	Room * playerTurn (Room *);
 	Room * actInRoom (Room *, Choice *);
 	Room * actOnFeature (Room *, Choice *);
@@ -64,7 +69,6 @@ public:
 	int getCapacity() { return Capacity;}
 	void UpdateGameState(int &GameClock, Room* currentRoom);
 	void getOverrideVerb(Choice *);
-	void Examine();
 	std::string printTheInstructions(); // Not implemented
 };
 

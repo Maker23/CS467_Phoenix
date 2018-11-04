@@ -26,8 +26,6 @@ Parser::~Parser()
 Choice * Parser::ParseLine(){
     string mystr;
 		string myNoun = NOTFOUND;
-    string myTest = NOTFOUND;
-
     string myVerb = NOTFOUND;
     string mySubject = NOTFOUND;
 
@@ -108,44 +106,24 @@ Choice * Parser::ParseLine(){
 				break;
       }
     }
-  	while ( ! words.empty() && myNoun.compare(NOTFOUND) == 0 )
-    //  while ( ! words.empty() || userChoice->Noun == "" )
+  	while ( ! words.empty())
 		{
 			userChoice->inputNoun = words.front();
-			myTest = getNoun(words.front());
-      if(myTest == "eac")
+      if (myNoun.compare(NOTFOUND) == 0)
       {
-        userChoice->Subject = myTest;
+        myNoun = getNoun(words.front());
+
       }
-      else
+      if (mySubject.compare(NOTFOUND) == 0)
       {
-        myNoun = myTest;
+        mySubject = getSubject(words.front());
       }
+
 			words.pop_front();
 		}
+
 		userChoice->Noun = strToLowercase(myNoun);
-
-		//if( userChoice->Verb == unknown) {
-		//	action = getVerb ( array[i] );
-		//	if(action != unknown) {
-		//		userChoice->Verb = action;
-		//		if(DEBUG_FUNCTION) std::cout << "verb is now : " << userChoice->Verb << std::endl;
-		//	}
-		//}
-		//else if(userChoice->Verb != unknown)
-		//{
-			//this is a precondition that the VERB must come first before the subject and noun
-    	//I'm willing to change this, but I can't think of a valid command
-    	//where the user would say the noun and subject before the verb, can you?
-		//	{
-	//			userChoice->Noun = getNoun(array[i]);
-	//		}
-  	//}
-	//}
-  cout << "THIS IS THE VERB: " << userChoice->Verb << endl;
-  cout << "THIS IS THE NOUN: " << userChoice->Noun << endl;
-  cout << "THIS IS THE SUBJECT: " << userChoice->Subject << endl;
-
+    userChoice->Subject = strToLowercase(mySubject);
 
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT VERB: " << userChoice->inputVerb << endl;
 	if (DEBUG_FUNCTION)  cout << "THIS IS THE INPUT NOUN: " << userChoice->inputNoun << endl;
@@ -323,14 +301,23 @@ std::string Parser::getNoun(std::string nounString) {
       {
         returnString = "floor2lamps";
       }
-      else if( nounString == "eac" || nounString == "EAC")
-      {
-        returnString = "eac";
-      }
 
 
 	return returnString;
 }
+
+std::string Parser::getSubject(std::string subjectstring) {
+	std::string returnString = NOTFOUND;
+  std::string lcNounString = strToLowercase(subjectstring);
+  if(subjectstring == "eac" || subjectstring == "EAC")
+  {
+    returnString = "eac";
+  }
+
+  return returnString;
+}
+
+
 
 validVerbs
 Parser::getVerb(std::string verbString) {

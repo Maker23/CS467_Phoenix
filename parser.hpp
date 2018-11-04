@@ -15,6 +15,8 @@ class Parser
     Choice * ParseLine();
     validVerbs getVerb(std::string);
     std::string getNoun(std::string);
+		std::string getSubject(std::string);
+
 };
 
 #endif

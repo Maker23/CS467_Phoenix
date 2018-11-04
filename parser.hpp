@@ -12,7 +12,8 @@ class Parser
     public:
     Parser(); // constructor
     ~Parser();	// destructor
-    Choice * TestLine(std::ifstream *);
+    //Choice * TestLine(std::ifstream *);
+    Choice * TestLine(GameState *);
     Choice * ParseLine(std::string);
     Choice * ParseLine();
     validVerbs getVerb(std::string);

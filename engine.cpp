@@ -61,7 +61,7 @@ Room * GameState::playerTurn(Room * currentRoom)
 	Parser parse;
 
 	if ( GameTest) {
-		userChoice = parse.TestLine(&GameTestFile);
+		userChoice = parse.TestLine(this);
 	}
 	else {
 		userChoice = parse.ParseLine();

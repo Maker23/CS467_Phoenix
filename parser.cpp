@@ -151,11 +151,13 @@ Choice * Parser::ParseLine(std::string inString){
 	return userChoice;
 }
 
-Choice * Parser::TestLine(std::ifstream *inputFile)
+//Choice * Parser::TestLine(std::ifstream *inputFile)
+Choice * Parser::TestLine(GameState *GS)
 {
 	if (DEBUG_PARSER) std::cout << "===== begin Parser::TestLine" << std::endl;
 	// Read one line from ifstream, parse it as usual
 	std::string inputString;
+	std::ifstream *inputFile = & ( GS->GameTestFile);
 
 	if ( ! inputFile ) {
 		std::cout << "ERROR: inputFile is NULL"<< std::endl;
@@ -166,15 +168,15 @@ Choice * Parser::TestLine(std::ifstream *inputFile)
 		exit(1);
 	}
 	if ( ! inputFile->good() ) {
-		std::cout << "ERROR: inputFile is BAD"<< std::endl;
-		return ParseLine("q");
+		std::cout << "ERROR: inputFile is empty, switching to user input"<< std::endl;
+		GS->GameTest=false;
+		return ParseLine("");
 	}
 	else {
 		std::getline(*inputFile, inputString);
 		std::cout << "TEST command = " << inputString<< std::endl;
 		return ParseLine(inputString);
 	}
-
 }
 
 std::string Parser::getNoun(std::string nounString) {

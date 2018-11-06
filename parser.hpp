@@ -12,11 +12,12 @@ class Parser
     public:
     Parser(); // constructor
     ~Parser();	// destructor
+    Choice * TestLine(GameState *);
+    Choice * ParseLine(std::string);
     Choice * ParseLine();
     validVerbs getVerb(std::string);
     std::string getNoun(std::string);
-		std::string getSubject(std::string);
-
+    std::string getSubject(std::string);
 };
 
 #endif

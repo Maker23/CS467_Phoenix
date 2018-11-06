@@ -341,11 +341,11 @@ bool GameState::featureInRoom(Room * currentRoom, std::string FName)
 	for ( std::vector<std::string>::iterator iterStr = currentRoom->roomFeatures.begin(); 
 				iterStr != currentRoom->roomFeatures.end(); iterStr++) 
 	{
-		if (DEBUG_FUNCTION) std::cout << "***** Comparing " << FName << " to " << (*iterStr) << std::endl;
+		if (DEBUG_FUNCTION) std::cout << "***** Comparing '" << FName << "' to '" << (*iterStr) << "'" << std::endl;
 		if ( FName.compare(*iterStr) == 0 ) 
 		{
 			inRoom = true;
-			break;
+			return inRoom;
 		}
 	}
 	if (DEBUG_FUNCTION) std::cout << "***** Fell through to false :( "<< std::endl;

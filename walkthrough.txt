@@ -1,0 +1,8 @@
+look rug
+move rug
+get note
+look at note
+move west
+move kitchen
+clean dishes
+play record

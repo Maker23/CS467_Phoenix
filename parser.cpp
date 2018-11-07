@@ -320,9 +320,9 @@ std::string Parser::getNoun(std::string nounString) {
       {
         returnString = "visionhallway2";
       }
-      else if( nounString == "Firestarter" || nounString == "firestarter" || nounString == "fire" || nounString == "Fire" || nounString == "starter" || nounString == "Starter")
+      else if( nounString == "Firestarter" || nounString == "firestarter" || nounString == "fire" || nounString == "Fire" || nounString == "Lighter" || nounString == "lighter")
       {
-        returnString = "firestarter";
+        returnString = "lighter";
       }
       else if( nounString == "Ghosts" || nounString == "ghosts")
       {

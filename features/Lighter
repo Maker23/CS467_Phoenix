@@ -1,0 +1,9 @@
+NAME: Lighter
+TYPE: item
+ACTIONS: use|light,strike
+TEXT_NEVERSEEN: Old lighter
+TEXT_SEEN: Old lighter
+TEXT_EXAMINE: Lighter with some fluid still in it.
+TEXT_TAKING: You take the lighter.
+WEIGHT: 1
+DEPENDS_ON: Puzzle1

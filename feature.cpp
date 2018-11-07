@@ -228,7 +228,9 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TO_SOLVE " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					textToSolve = strToLowercase(textToSolve);
+					//textToSolve = strToLowercase(tempStr);
+					featureStrings["textToSolve"] = strToLowercase(tempStr);
+				if(DEBUG_BRENT) std::cout << "    [DEBUG_BRENT] Testing new featureStrings[\"textToSolve\"]: " << getStringByKey("textToSolve") << std::endl;
 			}
 
 			if(lineStr.find("ACTIONS: ") != std::string::npos) 
@@ -291,6 +293,19 @@ Feature::~Feature()
 std::string Feature::getName()
 {
 	return name;
+}
+
+std::string Feature::getStringByKey(std::string keyString)
+{
+	if ( featureStrings.find(keyString) == featureStrings.end() )
+	{
+		if(DEBUG_BRENT) std::cout << "    [DEBUG_BRENT] Key not found." << std::endl;
+		return "";
+	} else
+	{
+		if(DEBUG_BRENT) std::cout << "    [DEBUG_BRENT] Key found returning: " << featureStrings[keyString] << std::endl;
+		return featureStrings[keyString];
+	}
 }
 
 /* *********************************************************

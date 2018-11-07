@@ -15,7 +15,7 @@
 #define DEBUG_PUZZLE false
 #define DEBUG_ROOM false
 #define DEBUG_USE false
-#define DEBUG_BRENT false
+#define DEBUG_BRENT true
 
 #ifndef TEST
 #define TEST false

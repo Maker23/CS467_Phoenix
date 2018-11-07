@@ -152,26 +152,32 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 	else if (userChoice->Verb == (validVerbs)unlock)
 	{
 		// Pass the verb and noun(s) to ActInRoom
-		//nextRoom = actOnFeature(currentRoom, userChoice);
-		nextRoom = currentRoom->getRoomOtherSideOfDoor(userChoice->Noun, this);
-		if (nextRoom != NULL)
-		{
-			// TODO: need to check and make sure we did what we needed to do in order to unlock the door"
-			// unlock door to requested room
-			currentRoom->unlockExitDoorByKey(nextRoom->getKeyName());
-			// unlock door from requested room to this room.
-			nextRoom->unlockExitDoorByKey(currentRoom->getKeyName());
-			nextRoom = currentRoom;   // so we dont't actually move to the next room.
-			if(currentRoom->getUnlockText().length() > 0)
+		if(DEBUG_BRENT) nextRoom = currentRoom->getRoomOtherSideOfDoor(userChoice->Noun, this);
+		if(DEBUG_BRENT) std::cout << "[DEBUG_BRENT] this room: " << currentRoom->getRoomName() << "  door to: " << nextRoom->getRoomName() << std::endl;
+		nextRoom = actOnFeature(currentRoom, userChoice);
+		
+		// this needs to be in a if everything is done then unlock if statement.
+			nextRoom = currentRoom->getRoomOtherSideOfDoor(userChoice->Noun, this);
+			if (nextRoom != NULL)
 			{
-				std::cout << currentRoom->getUnlockText() << std::endl;
+				if(DEBUG_BRENT) std::cout << "    [DEBUG_BRENT] Unlocking doors" << std::endl;
+				// TODO: need to check and make sure we did what we needed to do in order to unlock the door"
+				// unlock door to requested room
+				currentRoom->unlockExitDoorByKey(nextRoom->getKeyName());
+				// unlock door from requested room to this room.
+				nextRoom->unlockExitDoorByKey(currentRoom->getKeyName());
+				nextRoom = currentRoom;   // so we dont't actually move to the next room.
+				if(currentRoom->getUnlockText().length() > 0)
+				{
+					std::cout << currentRoom->getUnlockText() << std::endl;
+				}
 			}
-		}
-		else
-		{
-			std::cout << "ERROR: received NULL when retreiving door pointer." << std::endl;
-			exit(1);
-		}
+			else
+			{
+				std::cout << "ERROR: received NULL when retreiving door pointer." << std::endl;
+				exit(1);
+			}
+		// end if everyting is okay to unlock if statement goes here
 
 	}
 	else if (userChoice->Verb < (validVerbs)LastAction)

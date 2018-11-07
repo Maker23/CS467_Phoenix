@@ -27,6 +27,7 @@ class Feature
 		std::string droppingText;
 		std::string usingText;
 		std::string textToSolve;
+		std::map<std::string, std::string> featureStrings;
 		bool solved;
 		bool seen;
 		int weight;
@@ -51,6 +52,7 @@ class Feature
 		std::string getDependsOn();
 		std::string getTriggers();
 		std::string getUses();
+		std::string getStringByKey(std::string);
 		void setSolved(bool);
 		void setKeyName(std::string);
 		std::string getKeyName();

@@ -457,6 +457,26 @@ Feature * Room::getFeaturePtr(std::string FeatureName, GameState * GS)
 	return NULL;
 }
 
+bool Room::isFeatureInThisRoom(std::string searchFor)
+{
+	if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:isFeatureInThisRoom] Begins" << std::endl;
+	std::vector<std::string>::iterator iter;
+	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
+	{
+		if(*iter == searchFor)
+		{
+			if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:isFeatureInThisRoom] Ends - Return True" << std::endl;
+			return true;
+		}
+	}
+
+	if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:isFeatureInThisRoom] Ends - Return False" << std::endl;
+	return false;
+
+}
+
+
+
 // returns lowercase string
 // http://www.cplusplus.com/reference/locale/tolower/
 std::string Room::strToLowercase(std::string mixedStr)

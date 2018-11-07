@@ -352,6 +352,10 @@ std::string Parser::getSubject(std::string subjectstring) {
   {
     returnString = "eac";
   }
+  if(subjectstring == "1894")
+  {
+    returnString = "1894";
+  }
 
   return returnString;
 }

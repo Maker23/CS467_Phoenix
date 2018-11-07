@@ -82,6 +82,7 @@ class Room
 		Feature * getFeaturePtr(std::string, GameState *); // returns the pointer if feature is in the room
 		void deleteFeature(std::string);
 		void addFeature(std::string); // byName ?
+		bool isFeatureInThisRoom(std::string);
 
 };
 

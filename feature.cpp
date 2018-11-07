@@ -49,7 +49,7 @@ Feature::Feature(string fileToOpen)
 
 	// set defaults
 	key = "";
-	name = "";
+	//name = "";
 	solved = false;
 	weight = 0;
 	//triggers = "";

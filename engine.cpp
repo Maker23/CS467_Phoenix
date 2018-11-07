@@ -152,9 +152,39 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 	else if (userChoice->Verb == (validVerbs)unlock)
 	{
 		// Pass the verb and noun(s) to ActInRoom
-		if(DEBUG_BRENT) nextRoom = currentRoom->getRoomOtherSideOfDoor(userChoice->Noun, this);
 		if(DEBUG_BRENT) std::cout << "[DEBUG_BRENT] this room: " << currentRoom->getRoomName() << "  door to: " << nextRoom->getRoomName() << std::endl;
 		nextRoom = actOnFeature(currentRoom, userChoice);
+
+		std::string unlockFromThisRoom = "";
+		// check if userChoice->Noun is a room
+		if(housePtr->getRoomPtr(userChoice->Noun))
+		{
+			if(DEBUG_FUNCTION) std::cout << "    [DEBUG_FUNCTION] Noun (" << userChoice->Noun << ") is a room." << std::endl;
+			unlockFromThisRoom = userChoice->Noun;
+		}
+		else
+		{
+			if(DEBUG_FUNCTION) std::cout << "    [DEBUG_FUNCTION] Noun (" << userChoice->Noun << ") is a feature." << std::endl;
+			if(currentRoom->isFeatureInThisRoom(userChoice->Noun))
+			{
+				// feature is in the room. See if it's solved or can solve it.
+				Feature *feature = housePtr->getFeaturePtr(userChoice->Noun);
+				if(DEBUG_FUNCTION) std::cout << "    [DEBUG_FUNCTION]  Working with feature " << feature->getStringByKey("name") << std::endl;
+				if(feature->isSolved())
+				{
+					// feature is already solved, don't need to do anything.
+					unlockFromThisRoom = currentRoom->getKeyName();
+				}
+				else
+				{
+					if(feature->getStringByKey("textToSolve").compare("null") != 0  && feature->getStringByKey("textToSolve").compare(strToLowercase(userChoice->Subject)) == 0)
+					{
+						if(DEBUG_FUNCTION) std::cout << "       [DEBUG_FUNCTION]  Entered solving text matches. Setting this as solved." << std::endl;
+						feature->setSolved(true);
+					}
+				}
+			}
+		}
 		
 		// this needs to be in a if everything is done then unlock if statement.
 			nextRoom = currentRoom->getRoomOtherSideOfDoor(userChoice->Noun, this);

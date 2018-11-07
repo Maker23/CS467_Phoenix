@@ -52,20 +52,20 @@ Feature::Feature(string fileToOpen)
 	name = "";
 	solved = false;
 	weight = 0;
-	triggers = "";
-	dependsOn = "";
-	uses = "";
+	//triggers = "";
+	//dependsOn = "";
+	//uses = "";
 	seen = 0;
-	neverSeenText = "";
-	observeText = "";
-	seenText = "";
-	solvedText = "";
-	examineText = "";
-	solvingText = "";
-	takingText = "";
-	droppingText = "";
-	usingText = "";
-	textToSolve = "";
+	//neverSeenText = "";
+	//observeText = "";
+	//seenText = "";
+	//solvedText = "";
+	//examineText = "";
+	//solvingText = "";
+	//takingText = "";
+	//droppingText = "";
+	//usingText = "";
+	//textToSolve = "";
 
 	featurefile.open(fileToOpen);
 
@@ -83,7 +83,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found NAME " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					name = tempStr;
+					//name = tempStr;
+					featureStrings["name"] = tempStr;
 			}
 
 			if(lineStr.find("TYPE: ") != std::string::npos) 
@@ -119,7 +120,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_NEVERSEEN " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					neverSeenText = tempStr;
+					//neverSeenText = tempStr;
+					featureStrings["neverSeenText"] = tempStr;
 			}
 
 			if(lineStr.find("TEXT_SEEN: ") != std::string::npos) 
@@ -128,7 +130,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_SEEN " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					seenText = tempStr;
+					//seenText = tempStr;
+					featureStrings["seenText"] = tempStr;
 			}
 
 			if(lineStr.find("TEXT_EXAMINE: ") != std::string::npos) 
@@ -137,7 +140,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_EXAMINE " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					examineText = tempStr;
+					//examineText = tempStr;
+					featureStrings["examineText"] = tempStr;
 			}
 
 			if(lineStr.find("TEXT_EXAMINE_SOLVED: ") != std::string::npos) 
@@ -146,7 +150,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_EXAMINE_SOLVED " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					solvedText = tempStr;
+					//solvedText = tempStr;
+					featureStrings["solvedText"] = tempStr;
 			}
 
 			if(lineStr.find("TEXT_SOLVING: ") != std::string::npos) 
@@ -155,7 +160,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_SOLVING " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					solvingText = tempStr;
+					//solvingText = tempStr;
+					featureStrings["solvingText"] = tempStr;
 			}
 
 
@@ -165,7 +171,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TAKING " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					takingText = tempStr;
+					//takingText = tempStr;
+					featureStrings["takingText"] = tempStr;
 			}
 
 			if(lineStr.find("TEXT_DROPPING: ") != std::string::npos) 
@@ -174,7 +181,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_DROPPING " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					droppingText = tempStr;
+					//droppingText = tempStr;
+					featureStrings["droppingText"] = tempStr;
 			}
 
 			if(lineStr.find("TEXT_USING: ") != std::string::npos) 
@@ -183,7 +191,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_USING " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					usingText = tempStr;
+					//usingText = tempStr;
+					featureStrings["usingText"] = tempStr;
 			}
 
 			if(lineStr.find("WEIGHT: ") != std::string::npos) 
@@ -201,7 +210,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TRIGGERS " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					triggers = strToLowercase(tempStr);
+					//triggers = strToLowercase(tempStr);
+					featureStrings["triggers"] = strToLowercase(tempStr);
 			}
 
 			if(lineStr.find("DEPENDS_ON: ") != std::string::npos) 
@@ -210,7 +220,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DEPENDS_ON " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					dependsOn = strToLowercase(tempStr);
+					//dependsOn = strToLowercase(tempStr);
+					featureStrings["dependsOn"] = strToLowercase(tempStr);
 			}
 
 			if(lineStr.find("USES: ") != std::string::npos) 
@@ -219,7 +230,8 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found USES " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					uses = strToLowercase(tempStr);
+					//uses = strToLowercase(tempStr);
+					featureStrings["uses"] = strToLowercase(tempStr);
 			}
 
 			if(lineStr.find("TEXT_TO_SOLVE: ") != std::string::npos) 
@@ -292,7 +304,7 @@ Feature::~Feature()
 
 std::string Feature::getName()
 {
-	return name;
+	return getStringByKey("name");
 }
 
 std::string Feature::getStringByKey(std::string keyString)
@@ -321,7 +333,7 @@ void Feature::Examine()
 void Feature::examineFeature()
 {
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::examineFeature()" << std::endl;}
-	std::cout << examineText << std::endl;
+	std::cout << getStringByKey("examineText") << std::endl;
 	return;
 }
 
@@ -345,13 +357,13 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 	if (DEBUG_FEATURES) { std::cout << "      Setting isSolved to true " << std::endl;}
 	setSolved(true);
 	
-	if ( solvingText.compare("") != 0 )
+	if ( getStringByKey("solvingText").compare("") != 0 )
 	{
-		std::cout << solvingText << std::endl;
+		std::cout << getStringByKey("solvingText") << std::endl;
 	}
-	if ( usingText.compare("") != 0 )
+	if ( getStringByKey("usingText").compare("") != 0 )
 	{
-		std::cout << usingText << std::endl;
+		std::cout << getStringByKey("usingText") << std::endl;
 	}
 	else
 	{
@@ -359,8 +371,8 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 		checkFeature = GS->housePtr->getFeaturePtr(nounUses);
 		if ( nounUses.compare("") != 0  &&  checkFeature != NULL )
 		{
-			if ( checkFeature->usingText.compare("") != 0 ) {
-				std::cout << checkFeature->usingText << std::endl;
+			if ( checkFeature->getStringByKey("usingText").compare("") != 0 ) {
+				std::cout << checkFeature->getStringByKey("usingText") << std::endl;
 			}
 		}
 		// get the used text from the dependency
@@ -457,11 +469,13 @@ std::string Feature::getWalkingInRoomText()
 	if(!seen)
 	{
 		seen = true;
-		return neverSeenText;;
+		return getStringByKey("neverSeenText");
+		//return neverSeenText;
 	}
 	else
 	{
-		return seenText;
+		return getStringByKey("seenText");
+		//return seenText;
 	}
 
 		// taking this out, shouldn't have text here that changes when solved
@@ -479,48 +493,57 @@ std::string Feature::getExamineText()
 {
 		if(solved) 
 		{
-			return solvedText;	
+			return getStringByKey("solvedText");
+			//return solvedText;	
 		}
 		else {
-			return examineText;
+			return getStringByKey("examineText");
+			//return examineText;
 		}
 }
 
 std::string Feature::getDependsOn()
 {
 	if (DEBUG_EXAMINE) std::cout << "In getDependsOn for " << getName() << " returning " << dependsOn << std::endl;
-	return dependsOn;
+	return getStringByKey("dependsOn");
+	//return dependsOn;
 }
 
 std::string Feature::getUses()
 {
 	if (DEBUG_EXAMINE) std::cout << "In getUses for " << getName() << " returning " << uses << std::endl;
-	return uses;
+	return getStringByKey("uses");
+	//return uses;
 }
 
 std::string Feature::getTriggers()
 {
-	return triggers;
+	return getStringByKey("triggers");
+	//return triggers;
 }
 
 std::string Feature::getSolvingText()
 {
-	return solvingText;
+	return getStringByKey("solvingText");
+	//return solvingText;
 }
 
 std::string Feature::getTakingText()
 {
-	return takingText;
+	return getStringByKey("takingText");
+	//return takingText;
 }
 
 std::string Feature::getDroppingText()
 {
-	return droppingText;
+	return getStringByKey("droppingText");
+	//return droppingText;
 }
 
 std::string Feature::getUsingText()
 {
-	return usingText;
+	return getStringByKey("usingText");
+	//return usingText;
 }
 
 bool Feature::isSolved()

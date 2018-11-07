@@ -17,17 +17,18 @@ class Feature
 		std::string name;
 
 		FeatureType type;
-		std::string neverSeenText;
-		std::string observeText;
-		std::string seenText;
-		std::string solvedText;
-		std::string examineText;
-		std::string solvingText;
-		std::string takingText;
-		std::string droppingText;
-		std::string usingText;
-		std::string textToSolve;
 		std::map<std::string, std::string> featureStrings;
+		// expected keys from the feature files:
+		//		neverSeenText;
+		//		observeText;
+		//		seenText;
+		//		solvedText;
+		//		examineText;
+		//		solvingText;
+		//		takingText;
+		//		droppingText;
+		//		usingText;
+		//		textToSolve;
 		bool solved;
 		bool seen;
 		int weight;
@@ -37,7 +38,6 @@ class Feature
 		std::string strToLowercase(std::string);
 
 	public:
-		//std::vector<std::string> actions;
 		std::map<std::string, validVerbs> actions;
 		Feature(std::string);
 		~Feature();
@@ -46,16 +46,16 @@ class Feature
 		std::string getWalkingInRoomText();	// Prints the feature as you walk in the room.
 		std::string getExamineText();
 		std::string getSolvingText();
-		std::string getTakingText();
-		std::string getDroppingText();
-		std::string getUsingText();
-		std::string getDependsOn();
-		std::string getTriggers();
-		std::string getUses();
-		std::string getStringByKey(std::string);
+		std::string getStringByKey(std::string);  // use this to get the string read in from the feature files.
+		std::string getTakingText();					// calls getStringByKey
+		std::string getDroppingText();				// calls getStringByKey
+		std::string getUsingText();					// calls getStringByKey
+		std::string getDependsOn();					// calls getStringByKey
+		std::string getTriggers();						// calls getStringByKey
+		std::string getUses();							// calls getStringByKey
 		void setSolved(bool);
 		void setKeyName(std::string);
-		std::string getKeyName();
+		std::string getKeyName();						// calls getStringByKey
 		void useFeature(GameState *GS, Feature *Subject);
 		void takeFeature(GameState *GS, Room * Rm, Feature *Subject);
 		void dropFeature(GameState *GS, Room * Rm, Feature *Subject, bool Silent);

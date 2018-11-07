@@ -26,6 +26,7 @@ class Feature
 		std::string takingText;
 		std::string droppingText;
 		std::string usingText;
+		std::string textToSolve;
 		bool solved;
 		bool seen;
 		int weight;

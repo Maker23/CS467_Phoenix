@@ -65,6 +65,7 @@ Feature::Feature(string fileToOpen)
 	takingText = "";
 	droppingText = "";
 	usingText = "";
+	textToSolve = "";
 
 	featurefile.open(fileToOpen);
 
@@ -219,6 +220,15 @@ Feature::Feature(string fileToOpen)
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
 					uses = strToLowercase(tempStr);
+			}
+
+			if(lineStr.find("TEXT_TO_SOLVE: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(15, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_TO_SOLVE " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					textToSolve = strToLowercase(textToSolve);
 			}
 
 			if(lineStr.find("ACTIONS: ") != std::string::npos) 

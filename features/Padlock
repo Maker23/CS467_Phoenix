@@ -7,3 +7,4 @@ TEXT_TAKING: You pick up the padlock and put it in your pocket.
 WEIGHT: 1
 TRIGGERS: null
 DEPENDS_ON: Note1
+TEXT_TO_SOLVE: 1894

@@ -8,3 +8,4 @@ clean dishes
 get record
 move west
 play record
+q

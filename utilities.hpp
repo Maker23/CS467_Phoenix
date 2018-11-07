@@ -10,12 +10,12 @@
 #define DEBUG_PARSER false
 #define DEBUG_TERM false
 #define DEBUG_FIND false
-#define DEBUG_FEATURES true
+#define DEBUG_FEATURES false
 #define DEBUG_HOUSE false
 #define DEBUG_PUZZLE false
 #define DEBUG_ROOM false
 #define DEBUG_USE false
-#define DEBUG_BRENT true
+#define DEBUG_BRENT false
 
 #ifndef TEST
 #define TEST false

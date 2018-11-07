@@ -13,4 +13,4 @@ UNLOCKED_TEXT: Using the Bronze Key you are able to unlock the door.
 FEATURE: Floor2Lamps
 FEATURE: 2ndFloorDoors
 LOCKED_DOOR: Bedroom1
-LOCKED_DOOR: Bedroom2
+LOCKED_DOOR: Nursery

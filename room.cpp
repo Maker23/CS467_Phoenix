@@ -98,7 +98,7 @@ Room::Room(string filename)
 				str = lineStr.substr(9, lineStr.length()-1);
 				if ( str.length() > 0 ) 
 				{
-					if (DEBUG_FEATURES) std::cout << "Adding feature '" << str << "' to room" << std::endl;
+					if (DEBUG_FEATURES) std::cout << "Adding feature '" << strToLowercase(str) << "' to room" << std::endl;
 					// Add this to the vector of features in the room
 					roomFeatures.push_back(strToLowercase(str));
 				}
@@ -119,7 +119,7 @@ Room::Room(string filename)
 				str = lineStr.substr(13, lineStr.length()-1);
 				if ( str.length() > 0 ) 
 				{
-					if (DEBUG_FEATURES) std::cout << "Locking door to '" << str << "'" << std::endl;
+					if (DEBUG_FEATURES || DEBUG_BRENT) std::cout << "Locking door to '" << str << "'" << std::endl;
 					lockExitDoorByKey(strToLowercase(str));
 				}
 			}
@@ -226,9 +226,15 @@ bool Room::lockExitDoorByKey(std::string searchKey)
 	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::lockExitDoorByKey searchKey: " << searchKey << std::endl;
 	for (int r = 0; r < numExits; r++)
 	{
+		if (DEBUG_BRENT) std::cout << "     searchKey: " << searchKey << " is exit found: " << Connections[r]->isExitKeywordFound(searchKey) << std::endl;
 		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found
+			if (DEBUG_BRENT) std::cout << "     keyword found at: " << r << std::endl;
 			Connections[r]->lockDoor();
+			if (DEBUG_BRENT)
+			{
+				std::cout << "isDoorLocked: " << Connections[r]->isDoorLocked() << std::endl;
+			}
 			return true;
 		}
 	}

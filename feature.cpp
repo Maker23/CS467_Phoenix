@@ -242,7 +242,6 @@ Feature::Feature(string fileToOpen)
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
 					//textToSolve = strToLowercase(tempStr);
 					featureStrings["textToSolve"] = strToLowercase(tempStr);
-				if(DEBUG_BRENT) std::cout << "    [DEBUG_BRENT] Testing new featureStrings[\"textToSolve\"]: " << getStringByKey("textToSolve") << std::endl;
 			}
 
 			if(lineStr.find("ACTIONS: ") != std::string::npos) 
@@ -311,11 +310,9 @@ std::string Feature::getStringByKey(std::string keyString)
 {
 	if ( featureStrings.find(keyString) == featureStrings.end() )
 	{
-		if(DEBUG_BRENT) std::cout << "    [DEBUG_BRENT] Key not found." << std::endl;
 		return "";
 	} else
 	{
-		if(DEBUG_BRENT) std::cout << "    [DEBUG_BRENT] Key found returning: " << featureStrings[keyString] << std::endl;
 		return featureStrings[keyString];
 	}
 }

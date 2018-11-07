@@ -109,7 +109,7 @@ Room *House::buildHouse(string startingRoom){
 	if ( DEBUG_FEATURES ) 
       for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
 	   {
-	   	std::cout << it->second->getName() << std::endl;;
+	   	std::cout << it->first << " -- " << it->second->getName() << std::endl;;
 	   }
 	}
     
@@ -117,9 +117,6 @@ Room *House::buildHouse(string startingRoom){
     {
     	cout << "Number of Features in House: " << houseFeatures.size() << endl;
     }
-
-
-
 	return  startingRoomPtr;
 }
 

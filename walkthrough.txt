@@ -5,4 +5,6 @@ look at note
 move west
 move kitchen
 clean dishes
+get record
+move west
 play record

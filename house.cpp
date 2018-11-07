@@ -93,35 +93,16 @@ Room *House::buildHouse(string startingRoom){
 		}
 	}
 
-	if(DEBUG_BRENT) printRooms();
+	//if(DEBUG_BRENT) printRooms();
 	// lock all the doors.
-	if(DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Lockup the " << doorsToLock.size()  << " doors House" << std::endl;
+	//if(DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Lockup the " << doorsToLock.size()  << " doors House" << std::endl;
 	while (!doorsToLock.empty())
 	{
 		lockThisDoor = doorsToLock.top();
 		doorsToLock.pop();
 		roomPtr = getRoomPtr(lockThisDoor.doorFrom);
-		if(DEBUG_BRENT) std::cout << "          Lockup from  " << lockThisDoor.doorFrom  << " to " << lockThisDoor.doorTo << std::endl;
+		//if(DEBUG_BRENT) std::cout << "          Lockup from  " << lockThisDoor.doorFrom  << " to " << lockThisDoor.doorTo << std::endl;
 		roomPtr->lockExitDoorByKey(lockThisDoor.doorTo);
-	}
-
-	if(DEBUG_BRENT)
-	{
-		std::cout << "    checking if Porch is locked" << std::endl;
-		roomPtr = getRoomPtr("porch");
-		if(roomPtr == NULL)
-		{
-			std::cout << "     porch room pointer couldn't be found" << std::endl;
-		}
-		roomPtr = getRoomPtr("foyer");
-		if(roomPtr == NULL)
-		{
-			std::cout << "     foyer room pointer couldn't be found" << std::endl;
-		}
-		else
-		{
-			std::cout << "     isDoorLocked: " << roomPtr->isExitDoorLockedByKey("porch") << std::endl;
-		}
 	}
 
 	 string featuresFolder = "features";
@@ -263,10 +244,10 @@ void House::printRoomFeatures(Room *room)
 	std::vector<std::string> roomFeatures = room->getFeaturesVector();
 	Feature *f1, *f2;
 
-	if (DEBUG_BRENT) std::cout << "Start House::printFeatures()" << std::endl;
+	//if (DEBUG_BRENT) std::cout << "Start House::printFeatures()" << std::endl;
 	for (std::vector<std::string>::iterator it = roomFeatures.begin() ; it != roomFeatures.end(); ++it)
 	{
-   	if (DEBUG_BRENT) std::cout << (*it) << std::endl;
+   	//if (DEBUG_BRENT) std::cout << (*it) << std::endl;
    	f1 = getFeaturePtr((*it));
 
 		if (f1==NULL) std::cout << "Error getting pointer for " << (*it) << std::endl;
@@ -278,14 +259,14 @@ void House::printRoomFeatures(Room *room)
    	else
    	{
    		f2 = getFeaturePtr(f1->getDependsOn());
-   		if (DEBUG_BRENT) std::cout << "DEBUG: " << f1->getName() << " depends on: " << f2->getName() << " solved: " << f2->isSolved() << std::endl;
+   		//if (DEBUG_BRENT) std::cout << "DEBUG: " << f1->getName() << " depends on: " << f2->getName() << " solved: " << f2->isSolved() << std::endl;
    		if(f2->isSolved())
    		{
    			std::cout << f1->getWalkingInRoomText() << std::endl;
    		}
    	}
 	}
-	if (DEBUG_BRENT) std::cout << "Exit House::printFeatures()" << std::endl;
+	//if (DEBUG_BRENT) std::cout << "Exit House::printFeatures()" << std::endl;
 }
 
 // returns lowercase string

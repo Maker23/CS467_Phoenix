@@ -1,0 +1,9 @@
+NAME: Padlock
+TYPE: item
+TEXT_NEVERSEEN: A padlock locks a doorway down to the basement.
+TEXT_SEEN: The padlock is still locked.
+TEXT_EXAMINE: There are 4 dials to set a number for it to unlock.
+TEXT_TAKING: You pick up the padlock and put it in your pocket.
+WEIGHT: 1
+TRIGGERS: null
+DEPENDS_ON: Note1

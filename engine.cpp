@@ -157,7 +157,6 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 		if (nextRoom != NULL)
 		{
 			// TODO: need to check and make sure we did what we needed to do in order to unlock the door"
-			if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Begin Engine::actInRoom() unlock " << userChoice->Noun << " which leads to " << nextRoom->getKeyName() << std::endl;
 			// unlock door to requested room
 			currentRoom->unlockExitDoorByKey(nextRoom->getKeyName());
 			// unlock door from requested room to this room.

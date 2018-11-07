@@ -28,6 +28,10 @@ class Room; // Forward declaration
 class Feature; // Forward declaration
 class GameState; // Forward declaration
 
-
+struct lockDoorStruct
+{
+	std::string doorFrom;
+	std::string doorTo;
+};
 
 #endif // _UTE_H

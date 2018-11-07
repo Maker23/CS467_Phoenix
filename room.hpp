@@ -55,7 +55,8 @@ class Room
 
 		std::vector<Feature *> features;
 		
-		Room(std::string); 									// constructor
+		Room(std::string, std::string, std::stack<lockDoorStruct> &);
+		//Room(std::string, std::string, std::stack<lockDoorStruct> &); 									// constructor
 		~Room();													// destructor
 
 
@@ -73,6 +74,7 @@ class Room
 		std::string getExitsForDisplay();
 		bool lockExitDoorByKey(std::string);			// will lock the door to one of the rooms based on a doorway keyword.
 		bool unlockExitDoorByKey(std::string);
+		bool isExitDoorLockedByKey(std::string);
 		void displayRoom();
 		Room * goRoom(std::string, GameState *);
 		Room * getRoomOtherSideOfDoor(std::string, GameState *);

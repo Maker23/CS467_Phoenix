@@ -2,7 +2,7 @@ ROOM NAME: Foyer
 CONNECTION:West Door|Ballroom|west,ballroom, west door
 CONNECTION:East Door|Conservatory|conservatory,east,east door
 CONNECTION:Stairs Up|2nd Floor Hallway|up,stairs,upstairs
-CONNECTION:South Door|Porch|south,outside
+CONNECTION:South Door|Porch|porch,south,outside
 FEATURE: Puzzle1
 FEATURE: Firestarter
 FEATURE: Rug1

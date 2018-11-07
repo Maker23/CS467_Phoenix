@@ -25,6 +25,7 @@ class House
 		Room *getRoomPtr(std::string);      // Retruns the ptr of the Room object for the requested room.
 		Feature *getFeaturePtr(std::string); // returns the ptr of the Feature object for the requsted feature.
 		void printRooms(GameState *);						// For debugging really
+		void printRooms();						// debugging
 		void printFeatures(GameState *);						// For debugging really
 		void printRoomFeatures(Room *);		// display the features in the room.
 		void debugHouse();

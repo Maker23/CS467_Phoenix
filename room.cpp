@@ -40,12 +40,15 @@ using namespace std;
  * It opens the room file and parses the lines.
  * Info on files from http://www.cplusplus.com/doc/tutorial/files/ 
  */
-Room::Room(string filename)
+//Room::Room(string filename, std::string roomName, std::stack<lockDoorStruct> &doorwayToLock)
+Room::Room(string filename, string roomKey, std::stack<lockDoorStruct> &doorwayStack)
 {
+
 	ifstream roomfile;
 	string lineStr, str;
 	int roomCount=0;
 	numExits = 0;
+	lockDoorStruct lockThisDoor;
 	//Feature * newFeature;
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
@@ -119,8 +122,11 @@ Room::Room(string filename)
 				str = lineStr.substr(13, lineStr.length()-1);
 				if ( str.length() > 0 ) 
 				{
-					if (DEBUG_FEATURES || DEBUG_BRENT) std::cout << "Locking door to '" << str << "'" << std::endl;
-					lockExitDoorByKey(strToLowercase(str));
+					if (DEBUG_FEATURES || DEBUG_BRENT) std::cout << "Locking door from " << strToLowercase(roomKey) << " to '" << strToLowercase(str) << "'" << std::endl;
+					//lockExitDoorByKey(strToLowercase(str));
+					lockThisDoor.doorFrom = strToLowercase(roomKey);
+					lockThisDoor.doorTo = strToLowercase(str);
+					doorwayStack.push(lockThisDoor);
 				}
 			}
 
@@ -220,6 +226,18 @@ std::string Room::getExitRoomByKey(std::string searchKey, bool returnLocked=true
 	return "";
 }
 
+bool Room::isExitDoorLockedByKey(std::string searchKey)
+{
+	for (int r = 0; r < numExits; r++)
+	{
+		if(Connections[r]->isExitKeywordFound(searchKey))
+		{
+			return Connections[r]->isDoorLocked();
+		}
+	}
+
+	return false;
+}
 
 bool Room::lockExitDoorByKey(std::string searchKey)
 {

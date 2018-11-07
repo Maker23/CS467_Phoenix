@@ -64,6 +64,8 @@ Room *House::buildHouse(string startingRoom){
 	string roomName;
 	Room *startingRoomPtr=NULL;
 	Room *roomPtr=NULL;
+	stack<lockDoorStruct> doorsToLock;
+	lockDoorStruct lockThisDoor;
 
 	// Push the startingRoom to the stack
 	roomsToLoad.push(startingRoom);
@@ -79,7 +81,8 @@ Room *House::buildHouse(string startingRoom){
 			string str;
 			str.append(ROOM_DIRECTORY);
 			str.append(roomName);
-			roomPtr = new Room(str);
+			//roomPtr = new Room(str, roomName, doorsToLock);
+			roomPtr = new Room(str, roomName, doorsToLock);
 			if (startingRoomPtr == NULL)
 			{
 				startingRoomPtr = roomPtr;  // sets the starting room pointer for the return
@@ -87,6 +90,37 @@ Room *House::buildHouse(string startingRoom){
 			roomPtr->addExitsToStack(roomsToLoad);
 			roomPtr->setKeyName(strToLowercase(roomPtr->getRoomName()));
 			houseMap[strToLowercase(roomPtr->getRoomName())] = roomPtr;
+		}
+	}
+
+	if(DEBUG_BRENT) printRooms();
+	// lock all the doors.
+	if(DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Lockup the " << doorsToLock.size()  << " doors House" << std::endl;
+	while (!doorsToLock.empty())
+	{
+		lockThisDoor = doorsToLock.top();
+		doorsToLock.pop();
+		roomPtr = getRoomPtr(lockThisDoor.doorFrom);
+		if(DEBUG_BRENT) std::cout << "          Lockup from  " << lockThisDoor.doorFrom  << " to " << lockThisDoor.doorTo << std::endl;
+		roomPtr->lockExitDoorByKey(lockThisDoor.doorTo);
+	}
+
+	if(DEBUG_BRENT)
+	{
+		std::cout << "    checking if Porch is locked" << std::endl;
+		roomPtr = getRoomPtr("porch");
+		if(roomPtr == NULL)
+		{
+			std::cout << "     porch room pointer couldn't be found" << std::endl;
+		}
+		roomPtr = getRoomPtr("foyer");
+		if(roomPtr == NULL)
+		{
+			std::cout << "     foyer room pointer couldn't be found" << std::endl;
+		}
+		else
+		{
+			std::cout << "     isDoorLocked: " << roomPtr->isExitDoorLockedByKey("porch") << std::endl;
 		}
 	}
 
@@ -116,6 +150,7 @@ Room *House::buildHouse(string startingRoom){
     if ( DEBUG_FEATURES ) 
     {
     	cout << "Number of Features in House: " << houseFeatures.size() << endl;
+
     }
 	return  startingRoomPtr;
 }
@@ -153,6 +188,13 @@ Room * House::getRoomPtr(string roomName)
 	else
 	{
 		return NULL;
+	}
+}
+
+void House::printRooms()
+{
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
+		std::cout << "\t" << it->first << std::endl;
 	}
 }
 

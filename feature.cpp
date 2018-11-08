@@ -224,6 +224,16 @@ Feature::Feature(string fileToOpen)
 					featureStrings["dependsOn"] = strToLowercase(tempStr);
 			}
 
+			if(lineStr.find("UNLOCKS: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(9, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found UNLOCKS " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					//dependsOn = strToLowercase(tempStr);
+					featureStrings["unlocks"] = strToLowercase(tempStr);
+			}
+
 			if(lineStr.find("USES: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(6, lineStr.length()-1);
@@ -378,6 +388,55 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 	return;
 }
 
+bool Feature::solveFeature(GameState *GS, std::string solveString="")
+{
+	if(DEBUG_FEATURES) std::cout << "[DEBUG_FEATURES Features::solveFeature] Start Function" << std::endl;
+	bool completedSolveString = false;
+	bool dependencyCompleted = false;
+
+	if(solved)
+		return true;  // it's already done.
+	
+	if(solveString.length() == 0) 
+	{
+		if(DEBUG_FEATURES) std::cout << "     solveString.length() == 0, set completedSolveString true" << std::endl;
+	}
+	else
+	{
+		if(strToLowercase(solveString).compare(strToLowercase(getStringByKey("textToSolve"))) == 0)
+		{
+			if(DEBUG_FEATURES) std::cout << "     strings match, set completedSolveString true" << std::endl;
+			completedSolveString = true;
+		}
+	}
+
+	if(getStringByKey("dependsOn").length() > 0) 
+	{
+		// need to check if the dependsOn is completed
+		Feature *feature = GS->housePtr->getFeaturePtr(getStringByKey("dependsOn"));
+		dependencyCompleted = feature->isSolved();
+		if(DEBUG_FEATURES) std::cout << "     feature->isSolved() returned " << dependencyCompleted << std::endl;
+	}
+	else  // no dependency, so it's completed
+	{
+		if(DEBUG_FEATURES) std::cout << "     no dependency, set dependencyCompleted true" << std::endl;
+		dependencyCompleted = true;
+	}
+
+	if((solveString.length() == 0 && dependencyCompleted) || completedSolveString)
+	{
+		if(DEBUG_FEATURES) std::cout << "[DEBUG_FEATURES Features::solveFeature] End Function - set as solved, Return true" << std::endl;
+		solved = true;
+		std::cout << getStringByKey("solvingText") << std::endl;
+		return true;
+	}
+	else
+	{
+		if(DEBUG_FEATURES) std::cout << "[DEBUG_FEATURES Features::solveFeature] End Function - Return false" << std::endl;
+		return false;
+	}
+}
+
 void Feature::takeFeature(GameState *GS, Room * Rm,Feature * Subject)
 {
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::takeFeature()" << std::endl;}
@@ -501,14 +560,14 @@ std::string Feature::getExamineText()
 
 std::string Feature::getDependsOn()
 {
-	if (DEBUG_EXAMINE) std::cout << "In getDependsOn for " << getName() << " returning " << dependsOn << std::endl;
+	if (DEBUG_EXAMINE) std::cout << "In getDependsOn for " << getStringByKey("name") << " returning " << getStringByKey("dependsOn") << std::endl;
 	return getStringByKey("dependsOn");
 	//return dependsOn;
 }
 
 std::string Feature::getUses()
 {
-	if (DEBUG_EXAMINE) std::cout << "In getUses for " << getName() << " returning " << uses << std::endl;
+	if (DEBUG_EXAMINE) std::cout << "In getUses for " << getStringByKey("name") << " returning " << getStringByKey("uses") << std::endl;
 	return getStringByKey("uses");
 	//return uses;
 }

@@ -29,12 +29,13 @@ class Feature
 		//		droppingText;
 		//		usingText;
 		//		textToSolve;
+		//		triggers;
+		//		dependsOn;
+		//    unlocks;
+		//		uses; // in the real world this would be a list. meh.
 		bool solved;
 		bool seen;
 		int weight;
-		std::string triggers;
-		std::string dependsOn;
-		std::string uses; // in the real world this would be a list. meh.
 		std::string strToLowercase(std::string);
 
 	public:
@@ -67,6 +68,7 @@ class Feature
 		bool isSolved();
 		bool isSeen();
 		void printFeaturesActions();
+		bool solveFeature(GameState *GS, std::string solveString);
 
 };
 

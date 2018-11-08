@@ -83,6 +83,7 @@ class Room
 		void deleteFeature(std::string);
 		void addFeature(std::string); // byName ?
 		bool isFeatureInThisRoom(std::string);
+		Feature * findFeatureByUnlocksString(std::string, GameState *);
 
 };
 

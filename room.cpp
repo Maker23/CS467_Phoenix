@@ -212,17 +212,25 @@ std::string Room::getExitRoomByKey(std::string searchKey, bool returnLocked=true
 	// if found, return that object.
 
 	//std::cout << "Enter Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
+	if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] START Room::getExitRoomByKey" << std::endl;
 	for (int r = 0; r < numExits; r++)
 	{
 		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found, return the name of the room.
 			if(returnLocked == true && Connections[r]->isDoorLocked())
+			{
+				if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] END Room::getExitRoomByKey  return locked" << std::endl;
 				return "locked";
+			}
 			else
+			{
+				if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] END Room::getExitRoomByKey  return: " << Connections[r]->getExitRoomName() << std::endl;
 				return Connections[r]->getExitRoomName();
+			}
 		}
 	}
 	//std::cout << "Exit Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
+	if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] END Room::getExitRoomByKey  return empty string" << std::endl;
 	return "";
 }
 
@@ -486,6 +494,27 @@ std::string Room::strToLowercase(std::string mixedStr)
   for (std::string::size_type i=0; i<mixedStr.length(); ++i)
     mixedStr[i] = std::tolower(mixedStr[i],loc);
 	return mixedStr;
+}
+
+
+Feature * Room::findFeatureByUnlocksString(std::string searchString, GameState *GS)
+{
+	Feature *feature = NULL;
+	if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:findFeatureByUnlocksString] Begins" << std::endl;
+	std::vector<std::string>::iterator iter;
+	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
+	{
+		feature = GS->housePtr->getFeaturePtr((*iter));
+		std::cout << feature->getKeyName() << std::endl;
+		if(feature->getStringByKey("unlocks").compare(strToLowercase(searchString)) == 0)
+		{
+			if (DEBUG_FUNCTION) std::cout << "     [DEBUG_FUNCTION] found " << searchString << " in " << feature->getStringByKey("name") << std::endl;
+			return feature;
+		}
+	}
+
+	if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:findFeatureByUnlocksString] Ends - Return False" << std::endl;
+	return NULL;
 }
 
 // Constructor for Doorway class. 

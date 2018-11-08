@@ -22,8 +22,9 @@ class House
 		Room *buildHouse(std::string);		// Takes starting Room, Builds House, then returns the ptr of the starting room
 		bool hasRoom(std::string);   			// Returns true if room ("Foyer" for instance) is found in the houseMap
 		bool hasFeature(std::string);   			// Returns true if feature is in the house 
-		Room *getRoomPtr(std::string);      // Retruns the ptr of the Room object for the requested room.
+		Room *getRoomPtr(std::string);      // Returns the ptr of the Room object for the requested room.
 		Feature *getFeaturePtr(std::string); // returns the ptr of the Feature object for the requsted feature.
+		Room *getRoomPtrByConnectionAlias(std::string); 
 		void printRooms(GameState *);						// For debugging really
 		void printRooms();						// debugging
 		void printFeatures(GameState *);						// For debugging really

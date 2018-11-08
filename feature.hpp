@@ -43,11 +43,11 @@ class Feature
 		Feature(std::string);
 		~Feature();
 
+		std::string getStringByKey(std::string);  // use this to get the string read in from the feature files.
 		std::string getName();
 		std::string getWalkingInRoomText();	// Prints the feature as you walk in the room.
 		std::string getExamineText();
 		std::string getSolvingText();
-		std::string getStringByKey(std::string);  // use this to get the string read in from the feature files.
 		std::string getTakingText();					// calls getStringByKey
 		std::string getDroppingText();				// calls getStringByKey
 		std::string getUsingText();					// calls getStringByKey

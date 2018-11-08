@@ -1,8 +1,8 @@
 ROOM NAME: Bedroom1
 CONNECTION:East Door|2nd Floor Hallway|hallway, 2nd floor hallway, east, east door
 CONNECTION:South Door|Closet|closet, south, south door
-LONG DESC: RoomA Long Desc.  There are two doors in this room. On on the east wall and another on the south wall.
-SHORT DESC: RoomA Short Desc
-ADITIONAL DESC: RoomA Additional Desc
+LONG DESC: The Bedroom was continuously used to host guests, and it can be seen in the wear and tear of this room. The history in here feels rich since travelers near and far have left their mark in some way on this room, mostly by peeling wallpaper or writing in the guest book. The furniture layout is minimal in this room, but on the nightstand and the dresser you see a pair of spectacles and a woodbox. From here, the exits are on the south and east walls.
+SHORT DESC: The room feels very bare with its minimal layout to host guests. The spectacles and woodbox on top of the furniture may be helpful in your journey. From here, the exits are on the south and east walls.
+ADITIONAL DESC: The furniture in this room appears empty, but it's strange the spectacles and woodbox are the only items left after all these years. From here, the exits are on the south and east walls.
 FEATURE: WoodBox1
 FEATURE: Spectacles

@@ -186,6 +186,7 @@ std::string Parser::getNoun(std::string nounString) {
 				|| lcNounString == "north"
 				|| lcNounString == "south"
 				|| lcNounString == "up"
+				|| lcNounString == "upstairs"
 				|| lcNounString == "down"
         || lcNounString == "southwest" || lcNounString == "southcenter"
         || lcNounString == "southeast" || lcNounString == "right"
@@ -245,9 +246,13 @@ std::string Parser::getNoun(std::string nounString) {
       {
         returnString = "balcony";
       }
-      else if( nounString == "2nd" || nounString == "second" || nounString == "hallway" || nounString == "Hallway")
+      else if( nounString == "2nd" || nounString == "second" || nounString == "Second")
       {
-        returnString = "hallway";
+        returnString = "2ndFloorHallway";
+      }
+			else if( nounString == "3rd" || nounString == "third" || nounString == "Third")
+      {
+        returnString = "3rdFloorHallway";
       }
       else if( nounString == "Closet" || nounString == "closet")
       {

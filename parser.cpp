@@ -45,7 +45,7 @@ Choice * Parser::ParseLine(std::string inString){
 		else {
 			mystr = inString;
 		}
-		
+
 
 		char * sptr;
 		char myCstr[mystr.length()+1];
@@ -127,7 +127,7 @@ Choice * Parser::ParseLine(std::string inString){
 					continue;
 				}
 			}
-			if (mySubject.compare(NOTFOUND) == 0 ) 
+			if (mySubject.compare(NOTFOUND) == 0 )
 			{
 				mySubject = getSubject(words.front());
 			}
@@ -195,7 +195,7 @@ std::string Parser::getNoun(std::string nounString) {
         || lcNounString == "4" || lcNounString == "5" || lcNounString == "stairs")
       {
         return lcNounString;
-      } 
+      }
 
       if(nounString == "Ballroom" || nounString == "ballroom")
       {
@@ -310,7 +310,7 @@ std::string Parser::getNoun(std::string nounString) {
       {
         returnString = "camera";
       }
-      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle" 
+      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle"
 						|| nounString == "puzzle"  || nounString == "sentence" || nounString == "Sentence"
 						|| nounString == "words"  || nounString == "Words" )
       {
@@ -339,6 +339,10 @@ std::string Parser::getNoun(std::string nounString) {
       else if( nounString == "Floor2Lamps" || nounString == "floor2lamps")
       {
         returnString = "floor2lamps";
+      }
+			else if( nounString == "canned" || nounString == "food" || nounString == "Canned" || nounString == "Food")
+      {
+        returnString = "cannedfood";
       }
 
 

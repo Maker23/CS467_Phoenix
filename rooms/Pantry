@@ -7,3 +7,4 @@ ADITIONAL DESC: Another room may contain the 4 digit combination to be used on t
 UNLOCKED_TEXT: The padlock clicks open after you enter the correct combination.
 LOCKED_DOOR: Basement
 FEATURE: Padlock
+FEATURE: CannedFood

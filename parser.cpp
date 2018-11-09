@@ -262,7 +262,10 @@ std::string Parser::getNoun(std::string nounString) {
       {
         returnString = "library";
       }
-
+			else if( nounString == "book" || nounString == "Book")
+			{
+				returnString = "book1";
+			}
       else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1" || nounString == "rug1")
       {
         returnString = "rug1";

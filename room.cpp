@@ -31,6 +31,7 @@
 #include <sstream>
 #include <algorithm>
 #include "room.hpp"
+#include "engine.hpp"
 #include "parser.hpp"
 
 using namespace std;
@@ -101,7 +102,7 @@ Room::Room(string filename, string roomKey, std::stack<lockDoorStruct> &doorwayS
 				str = lineStr.substr(9, lineStr.length()-1);
 				if ( str.length() > 0 ) 
 				{
-					if (DEBUG_FEATURES) std::cout << "Adding feature '" << strToLowercase(str) << "' to room" << std::endl;
+					if (DEBUG_FEATURES) std::cout << "Adding feature '" << strToLowercase(str) << "' to room "<< roomName << std::endl;
 					// Add this to the vector of features in the room
 					roomFeatures.push_back(strToLowercase(str));
 				}
@@ -177,17 +178,20 @@ std::string Room::getRoomName()
 
 std::string Room::getLongDesc()
 {
-	return this->longDesc;
+	LongString LString(this->longDesc);
+	return LString.getWrappedText();
 }
 
 std::string Room::getShortDesc()
 {
-	return this->shortDesc;
+	LongString LString(this->shortDesc);
+	return LString.getWrappedText();
 }
 
 std::string Room::getAdditionalDesc()
 {
-	return this->additionalDesc;
+	LongString LString(this->additionalDesc);
+	return LString.getWrappedText();
 }
 
 void Room::setRoomSeen()

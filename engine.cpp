@@ -542,14 +542,6 @@ int GameState::getAvailableCapacity()
 void GameState::UpdateGameState(int &GameClock, Room* currentRoom)
 {
   int points = getGameTaskStatus();
-	struct winsize WS;
-
-	ioctl(0, TIOCGWINSZ, &WS);
-	if (DEBUG_TERM) {
-		std::cout << "lines: " << WS.ws_row << ", columns: " << WS.ws_col << std::endl;
-	}
-	winRows=WS.ws_row;
-	winCols=WS.ws_col;
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin Utilities::UpdateGameState" << std::endl;
 	if(points) {} // TODO... silence compile-time warnings...
@@ -566,4 +558,46 @@ std::string GameState::strToLowercase(std::string mixedStr)
   for (std::string::size_type i=0; i<mixedStr.length(); ++i)
     mixedStr[i] = std::tolower(mixedStr[i],loc);
 	return mixedStr;
+}
+
+void LongString::Wrap() {
+	struct winsize WS;
+	size_t searchPos;
+	size_t Pos;
+
+  // First get the current window size
+	ioctl(0, TIOCGWINSZ, &WS);
+	WrapLength=WS.ws_col;
+	searchPos = WrapLength - 12; // Hardcoded.  Sad.  TODO.
+	WrapText = Text;
+
+	if (DEBUG_TERM) {
+		std::cout << "++++ LongString::Wrap: WrapLength = " << WrapLength << ", TextLength = " << Text.length() << std::endl;
+	}
+	// If short, don't wrap
+	if ( Text.length() < WrapLength )
+	{
+		return;
+	}
+
+	// Wrap text if necessary
+	Pos = WrapText.find(" ", searchPos);
+	if (DEBUG_TERM) { std::cout << "searchPos = "<< searchPos <<", Pos = "<< Pos << std::endl;}
+	while ( Pos != string::npos ){
+		if (DEBUG_TERM) { std::cout << "looooooping, pos="<< Pos << std::endl;}
+		WrapText.replace(Pos, (size_t) 1, "\n");
+		searchPos = Pos + WrapLength - 12;
+		Pos = WrapText.find(" ", searchPos);
+		if (DEBUG_TERM) { std::cout << "searchPos = "<< searchPos <<", Pos = "<< Pos << std::endl;}
+	}
+	if (DEBUG_TERM) {
+		std::cout << "Text: " << Text << std::endl;
+		std::cout << "Wrap: " << WrapText << std::endl;
+		std::cout << "-------------------- END DEBUG ------------------" << std::endl;
+	}
+	
+
+	//std::string Text;
+	//std::string WrapText;
+	//int WrapLength;
 }

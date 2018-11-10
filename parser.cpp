@@ -175,11 +175,24 @@ Choice * Parser::TestLine(GameState *GS)
 }
 
 std::string Parser::getNoun(std::string nounString) {
-	std::string returnString = NOTFOUND;
-  std::string lcNounString = strToLowercase(nounString);
-
 	if (DEBUG_PARSER) std::cout << "===== begin Parser::getNoun, noun is '" << strToLowercase(nounString) << "'" << std::endl;
 
+	std::string returnString;
+  std::string lcNounString = strToLowercase(nounString);
+	std::string tmpString;
+
+	returnString = getRoom(lcNounString);
+	if ( returnString.compare(NOTFOUND) == 0 ) {
+		returnString = getFeature(lcNounString);
+	}	
+
+	return returnString;
+}
+
+std::string Parser::getRoom(std::string lcNounString) {
+
+	if (DEBUG_PARSER) std::cout << "===== begin Parser::getRoom, noun is '" << lcNounString << "'" << std::endl;
+	std::string returnString = NOTFOUND;
 
       if(lcNounString == "west"
 				|| lcNounString == "east"
@@ -198,162 +211,181 @@ std::string Parser::getNoun(std::string nounString) {
         return lcNounString;
       }
 
-      if(nounString == "Ballroom" || nounString == "ballroom")
+      if(lcNounString == "Ballroom" || lcNounString == "ballroom")
       {
         returnString = "ballroom";
       }
-      else if(nounString == "Foyer" || nounString == "foyer")
+      else if(lcNounString == "Foyer" || lcNounString == "foyer")
       {
         returnString = "foyer";
       }
-      else if( nounString == "Kitchen" || nounString == "kitchen")
+      else if( lcNounString == "Kitchen" || lcNounString == "kitchen")
       {
         returnString = "kitchen";
       }
-      else if( nounString == "Conservatory" || nounString == "conservatory")
+      else if( lcNounString == "Conservatory" || lcNounString == "conservatory")
       {
         returnString = "conservatory";
       }
-      else if( nounString == "Pantry" || nounString == "pantry")
+      else if( lcNounString == "Pantry" || lcNounString == "pantry")
       {
         returnString = "pantry";
       }
-      else if( nounString == "Basement" || nounString == "basement")
+      else if( lcNounString == "Basement" || lcNounString == "basement")
       {
         returnString = "basement";
       }
-      else if( nounString == "Door1" || nounString == "door1" || nounString == "Bedroom1" || nounString == "bedroom1")
+      else if( lcNounString == "Door1" || lcNounString == "door1" || lcNounString == "Bedroom1" || lcNounString == "bedroom1")
       {
         returnString = "bedroom1";
       }
-      else if(  nounString == "Door2" || nounString == "door2" || nounString == "Nursery" || nounString == "nursery" )
+      else if(  lcNounString == "Door2" || lcNounString == "door2" || lcNounString == "Nursery" || lcNounString == "nursery" )
       {
         returnString = "nursery";
       }
-      else if(  nounString == "Door3" || nounString == "door3" || nounString == "Library" || nounString == "library" )
+      else if(  lcNounString == "Door3" || lcNounString == "door3" || lcNounString == "Library" || lcNounString == "library" )
       {
         returnString = "library";
       }
-      else if(  nounString == "Door4" || nounString == "door4" || nounString == "Study" || nounString == "study" )
+      else if(  lcNounString == "Door4" || lcNounString == "door4" || lcNounString == "Study" || lcNounString == "study" )
       {
         returnString = "study";
       }
-      else if(  nounString == "Door5" || nounString == "door5" || nounString == "Balcony" || nounString == "balcony" )
+      else if(  lcNounString == "Door5" || lcNounString == "door5" || lcNounString == "Balcony" || lcNounString == "balcony" )
       {
         returnString = "balcony";
       }
-      else if( nounString == "Balcony" || nounString == "balcony" )
+      else if( lcNounString == "Balcony" || lcNounString == "balcony" )
       {
         returnString = "balcony";
       }
-      else if( nounString == "2nd" || nounString == "second" || nounString == "Second")
+      else if( lcNounString == "2nd" || lcNounString == "second" || lcNounString == "Second")
       {
         returnString = "2ndFloorHallway";
       }
-			else if( nounString == "3rd" || nounString == "third" || nounString == "Third")
+			else if( lcNounString == "3rd" || lcNounString == "third" || lcNounString == "Third")
       {
         returnString = "3rdFloorHallway";
       }
-      else if( nounString == "Closet" || nounString == "closet")
+      else if( lcNounString == "Bedroom2" || lcNounString == "bedroom2")
+      {
+        returnString = "bedroom2";
+      }
+      else if( lcNounString == "Bedroom3" || lcNounString == "bedroom3")
+      {
+        returnString = "bedroom3";
+      }
+      else if( lcNounString == "MasterBedroom" || lcNounString == "masterbedroom")
+      {
+        returnString = "masterbedroom";
+      }
+      else if( lcNounString == "Closet" || lcNounString == "closet")
       {
         returnString = "closet";
       }
-      else if( nounString == "Library" || nounString == "library")
+      else if( lcNounString == "Library" || lcNounString == "library")
       {
         returnString = "library";
       }
-			else if( nounString == "book" || nounString == "Book")
+
+	return returnString;
+}
+
+std::string Parser::getFeature(std::string lcNounString) {
+	if (DEBUG_PARSER) std::cout << "===== begin Parser::getFeature, noun is '" << lcNounString << "'" << std::endl;
+
+	std::string returnString = NOTFOUND;
+
+			if( lcNounString == "book" || lcNounString == "Book")
 			{
 				returnString = "book1";
 			}
-      else if( nounString == "Rug" || nounString == "rug" || nounString == "Rug1" || nounString == "rug1")
+      else if( lcNounString == "Rug" || lcNounString == "rug" || lcNounString == "Rug1" || lcNounString == "rug1")
       {
         returnString = "rug1";
       }
-      else if( nounString == "Note" || nounString == "note" || nounString == "Paper" || nounString == "paper" || nounString == "Note1" || nounString == "note1")
+      else if( lcNounString == "Note" || lcNounString == "note" || lcNounString == "Paper" || lcNounString == "paper" || lcNounString == "Note1" || lcNounString == "note1")
       {
         returnString = "note1";
       }
-      else if( nounString == "RecordPlayer" || nounString == "recordplayer" || nounString == "player")
+      else if( lcNounString == "RecordPlayer" || lcNounString == "recordplayer" || lcNounString == "player")
       {
         returnString = "recordplayer";
       }
-      else if( nounString == "Tapestry" || nounString == "tapestry" || nounString == "Tapestry1" || nounString == "tapestry1")
+      else if( lcNounString == "Tapestry" || lcNounString == "tapestry" || lcNounString == "Tapestry1" || lcNounString == "tapestry1")
       {
         returnString = "tapestry1";
       }
-      else if( nounString == "Dishes" || nounString == "dishes" || nounString == "DirtyDishes" )
+      else if( lcNounString == "Dishes" || lcNounString == "dishes" || lcNounString == "DirtyDishes" )
       {
         returnString = "dirtydishes";
       }
-      else if( nounString == "Record" || nounString == "record" || nounString == "Record1")
+      else if( lcNounString == "Record" || lcNounString == "record" || lcNounString == "Record1")
       {
         returnString = "record1";
       }
-      else if( nounString == "Padlock" || nounString == "padlock")
+      else if( lcNounString == "Padlock" || lcNounString == "padlock")
       {
         returnString = "padlock";
       }
-      else if( nounString == "Piano" || nounString == "piano" || nounString == "Piano1")
+      else if( lcNounString == "Piano" || lcNounString == "piano" || lcNounString == "Piano1")
       {
         returnString = "piano1";
       }
-      else if( nounString == "Key" || nounString == "key" || nounString == "Key1")
+      else if( lcNounString == "Key" || lcNounString == "key" || lcNounString == "Key1")
       {
         returnString = "key1";
       }
-      else if( nounString == "2ndFloorDoors")
+      else if( lcNounString == "2ndFloorDoors")
       {
         returnString = "2ndfloordoors";
       }
-      else if( nounString == "ClosetShelf" || nounString == "closetshelf" ||  nounString == "ClosetShelves" || nounString == "closetshelves")
+      else if( lcNounString == "ClosetShelf" || lcNounString == "closetshelf" ||  lcNounString == "ClosetShelves" || lcNounString == "closetshelves")
       {
         returnString = "closetshelf";
       }
-      else if( nounString == "LibraryShelf" || nounString == "libraryshelf" ||  nounString == "LibraryShelves" || nounString == "libraryshelves")
+      else if( lcNounString == "LibraryShelf" || lcNounString == "libraryshelf" ||  lcNounString == "LibraryShelves" || lcNounString == "libraryshelves")
       {
         returnString = "libraryshelves";
       }
-      else if( nounString == "Camera" || nounString == "camera")
+      else if( lcNounString == "Camera" || lcNounString == "camera")
       {
         returnString = "camera";
       }
-      else if( nounString == "Puzzle1" || nounString == "puzzle1" || nounString == "Puzzle"
-						|| nounString == "puzzle"  || nounString == "sentence" || nounString == "Sentence"
-						|| nounString == "words"  || nounString == "Words" )
+      else if( lcNounString == "Puzzle1" || lcNounString == "puzzle1" || lcNounString == "Puzzle"
+						|| lcNounString == "puzzle"  || lcNounString == "sentence" || lcNounString == "Sentence"
+						|| lcNounString == "words"  || lcNounString == "Words" )
       {
         returnString = "puzzle1";
       }
-      else if( nounString == "VisionHallway2" || nounString == "visionhallway2")
+      else if( lcNounString == "VisionHallway2" || lcNounString == "visionhallway2")
       {
         returnString = "visionhallway2";
       }
-      else if( nounString == "Firestarter" || nounString == "firestarter" || nounString == "fire" || nounString == "Fire" || nounString == "Lighter" || nounString == "lighter")
+      else if( lcNounString == "Firestarter" || lcNounString == "firestarter" || lcNounString == "fire" || lcNounString == "Fire" || lcNounString == "Lighter" || lcNounString == "lighter")
       {
         returnString = "lighter";
       }
-      else if( nounString == "Ghosts" || nounString == "ghosts")
+      else if( lcNounString == "Ghosts" || lcNounString == "ghosts")
       {
         returnString = "ghosts";
       }
-      else if( nounString == "WoodBox1" || nounString == "woodbox1" || nounString == "box"|| nounString == "Box")
+      else if( lcNounString == "WoodBox1" || lcNounString == "woodbox1" || lcNounString == "box"|| lcNounString == "Box")
       {
         returnString = "woodbox1";
       }
-      else if( nounString == "Spectacles" || nounString == "spectacles" || nounString == "glasses" || nounString == "Glasses")
+      else if( lcNounString == "Spectacles" || lcNounString == "spectacles" || lcNounString == "glasses" || lcNounString == "Glasses")
       {
         returnString = "spectacles";
       }
-      else if( nounString == "Floor2Lamps" || nounString == "floor2lamps")
+      else if( lcNounString == "Floor2Lamps" || lcNounString == "floor2lamps")
       {
         returnString = "floor2lamps";
       }
-			else if( nounString == "canned" || nounString == "food" || nounString == "Canned" || nounString == "Food")
+			else if( lcNounString == "canned" || lcNounString == "food" || lcNounString == "Canned" || lcNounString == "Food")
       {
         returnString = "cannedfood";
       }
-
-
 	return returnString;
 }
 

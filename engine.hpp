@@ -72,6 +72,33 @@ public:
 	std::string printTheInstructions(); // Not implemented
 };
 
+class LongString
+{
+private:
+	std::string Text;
+	std::string WrapText;
+	unsigned short WrapLength;
+	void Wrap ();
+
+public:
+	LongString(std::string inPut) {
+		Text = inPut;
+		WrapText = "";
+		WrapLength=80; // default
+	};
+
+	std::string getWrappedText() {
+		Wrap();
+		return WrapText;
+	};
+	
+	friend std::ostream& operator<< (std::ostream &out, LongString &lstring)
+	{
+		lstring.Wrap();
+		out << lstring.WrapText;
+		return out;
+	};
+};
 
 
 struct Choice {

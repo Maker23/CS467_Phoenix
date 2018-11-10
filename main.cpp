@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 	house->printFeatures(&GS);
 	house->debugHouse();
 
+
 	std::cout << "=============================================" << std::endl;
 	std::cout << "\nTo move around use verbs like 'go', 'move', 'walk', etc" << std::endl;
 	std::cout << "\nTo interact with objects in the room try words like 'use','take','move', etc" << std::endl;

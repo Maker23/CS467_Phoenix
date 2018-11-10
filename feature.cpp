@@ -547,15 +547,16 @@ std::string Feature::getWalkingInRoomText()
 
 std::string Feature::getExamineText()
 {
-		if(solved) 
-		{
-			return getStringByKey("solvedText");
-			//return solvedText;	
-		}
-		else {
-			return getStringByKey("examineText");
-			//return examineText;
-		}
+	std::string tmpS;
+	if(solved) 
+	{
+		tmpS = getStringByKey("solvedText");
+	}
+	else {
+		tmpS = getStringByKey("examineText");
+	}
+	LongString LString(tmpS);
+	return LString.getWrappedText();
 }
 
 std::string Feature::getDependsOn()

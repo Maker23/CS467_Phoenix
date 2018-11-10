@@ -8,4 +8,12 @@ clean dishes
 get record
 move west
 play record
+go kitchen
+go pantry
+go basement
+unlock padlock
+look padlock
+unlock padlock 1894
+go basement
+look words
 q

@@ -13,7 +13,8 @@ class House
 {
 	private:
 		std::map<std::string,Room *> houseMap;   // this is a map of the house... room is key, holds the room pointer
-		std::map<std::string,Feature *> houseFeatures;   // this is a map of the house... room is key, holds the room pointer
+		std::map<std::string,Feature *> houseFeatures; // this is a map of all features... feature name is key, holds the feature pointer
+		std::map<std::string,std::string> houseFeatureAliases; // Feature aliases. Alias is the key, canonical name is the value.
 		std::string strToLowercase(std::string);
 
 	public:
@@ -22,6 +23,7 @@ class House
 		Room *buildHouse(std::string);		// Takes starting Room, Builds House, then returns the ptr of the starting room
 		bool hasRoom(std::string);   			// Returns true if room ("Foyer" for instance) is found in the houseMap
 		bool hasFeature(std::string);   			// Returns true if feature is in the house 
+		std::string findFeatureByName(std::string);  	// Returns the 'official' name of a feature, or NOTFOUND
 		Room *getRoomPtr(std::string);      // Returns the ptr of the Room object for the requested room.
 		Feature *getFeaturePtr(std::string); // returns the ptr of the Feature object for the requsted feature.
 		Room *getRoomPtrByConnectionAlias(std::string); 

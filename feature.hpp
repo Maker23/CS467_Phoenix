@@ -40,6 +40,7 @@ class Feature
 
 	public:
 		std::map<std::string, validVerbs> actions;
+		std::map<std::string, std::string> aliases;
 		Feature(std::string);
 		~Feature();
 

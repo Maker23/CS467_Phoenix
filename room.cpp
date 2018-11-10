@@ -415,11 +415,11 @@ std::vector<std::string> Room::getFeaturesVector()
 	return roomFeatures;
 }
 
-void Room::addFeature(std::string FName) 
+void Room::addFeature(std::string FName, GameState *GS) 
 {
 	// TODO: Check that FName is in the houseMap
 	//
-	Parser parse;
+	Parser parse(GS);
 	std::string realName = parse.getNoun(FName);
 
 	if (DEBUG_FEATURES) std::cout << "===== begin Room::addFeature, realName= " << realName << std::endl;

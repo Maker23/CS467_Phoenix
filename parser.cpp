@@ -15,6 +15,13 @@ using namespace std;
 
 Parser::Parser()
 {
+	// Limited capabilities if we don't get a GS pointer -
+	// basically will only parse verbs correctly
+	GS = NULL ; 
+}
+Parser::Parser(GameState *GameStatePtr)
+{
+	GS = GameStatePtr;
 
 }
 
@@ -146,10 +153,10 @@ Choice * Parser::ParseLine(std::string inString){
 	return userChoice;
 }
 
-//Choice * Parser::TestLine(std::ifstream *inputFile)
-Choice * Parser::TestLine(GameState *GS)
+Choice * Parser::TestLine()
 {
 	if (DEBUG_PARSER) std::cout << "===== begin Parser::TestLine" << std::endl;
+	if ( GS == NULL ) std::cout << "WARNING : Attempting to test with NULL GS " << std::endl;
 	// Read one line from ifstream, parse it as usual
 	std::string inputString;
 	std::ifstream *inputFile = & ( GS->GameTestFile);
@@ -296,6 +303,12 @@ std::string Parser::getFeature(std::string lcNounString) {
 
 	std::string returnString = NOTFOUND;
 
+	if (GS !=NULL){
+		returnString = GS->housePtr->findFeatureByName(lcNounString);
+	}
+	/*
+	if (DEBUG_PARSER) std::cout << "   findFeatureByNamer returns '" << returnString << "'" << std::endl;
+
 			if( lcNounString == "book" || lcNounString == "Book")
 			{
 				returnString = "book1";
@@ -386,6 +399,8 @@ std::string Parser::getFeature(std::string lcNounString) {
       {
         returnString = "cannedfood";
       }
+	*/
+	if (DEBUG_PARSER) std::cout << "=====   end Parser::getFeature, noun is '" << returnString << "'" << std::endl;
 	return returnString;
 }
 

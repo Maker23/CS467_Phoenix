@@ -81,7 +81,7 @@ class Room
 		std::vector<std::string> getFeaturesVector();
 		Feature * getFeaturePtr(std::string, GameState *); // returns the pointer if feature is in the room
 		void deleteFeature(std::string);
-		void addFeature(std::string); // byName ?
+		void addFeature(std::string, GameState *); // byName ?
 		bool isFeatureInThisRoom(std::string);
 		Feature * findFeatureByUnlocksString(std::string, GameState *);
 

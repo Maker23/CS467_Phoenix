@@ -1,4 +1,4 @@
-NAME: CannedFood
+NAME: CannedFood|cannedfood,Cans,cans,Can,can
 TYPE: decoration
 TEXT_NEVERSEEN: You see a canned food item on the pantry shelf.
 TEXT_SEEN: A canned food item appears to be on the pantry shelf.

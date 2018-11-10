@@ -120,11 +120,25 @@ Room *House::buildHouse(string startingRoom){
 
     }
     closedir(dirp);
+		// Now add aliases for all features
+    for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++)
+	  {
+      for (auto iter=it->second->aliases.begin(); iter != it->second->aliases.end(); iter++) {
+				if ( DEBUG_FEATURES ) {
+					std::cout << "setting alias " << iter->first << " for cname " << it->first << std::endl;
+				}
+				houseFeatureAliases[iter->first] = it->first;
+			}
+		}
 
 	if ( DEBUG_FEATURES ) 
-      for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
+     for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
 	   {
-	   	std::cout << it->first << " -- " << it->second->getName() << std::endl;;
+	   	std::cout << it->first << " -- " << it->second->getName();
+      for (auto iter=it->second->aliases.begin(); iter != it->second->aliases.end(); iter++) {
+			 	std::cout << ", alias: " << iter->first << ", ";
+			}
+			std::cout << std::endl;
 	   }
 	}
     
@@ -213,13 +227,31 @@ bool House::hasFeature(string key)
 	if ( houseFeatures.find(key) == houseFeatures.end() )
 	{
       return false;
-   }
+  }
 	else
 	{
 		return true;
-   }
+  }
 }
 
+std::string House::findFeatureByName (string featureAlias) {
+	if ( DEBUG_FEATURES ) std::cout << "----- begin House::findFeatureByName(), looking for '"<< featureAlias<<"'" << std::endl;
+	if ( houseFeatures.find(featureAlias) == houseFeatures.end() )
+	{
+		if ( DEBUG_FEATURES ) std::cout << "     Not found in houseFeatures, searching through houseFeatureAliases" << std::endl;
+		if ( houseFeatureAliases.find(featureAlias) == houseFeatureAliases.end() )
+		{
+			return NOTFOUND;
+		}
+		if ( DEBUG_FEATURES ) std::cout << "     Found alias" << std::endl;
+		return houseFeatureAliases[featureAlias];
+  }
+	else
+	{
+		if ( DEBUG_FEATURES ) std::cout << "     found canonical name" << std::endl;
+		return featureAlias;
+  }
+}
 
 Feature * House::getFeaturePtr(string featureName)
 {

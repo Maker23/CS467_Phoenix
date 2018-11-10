@@ -16,6 +16,7 @@
 #define DEBUG_ROOM false
 #define DEBUG_USE false
 #define DEBUG_BRENT false
+#define DEBUG_LOCK false
 
 #ifndef TEST
 #define TEST false

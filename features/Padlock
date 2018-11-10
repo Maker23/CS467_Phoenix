@@ -1,4 +1,4 @@
-NAME: Padlock
+NAME: Padlock|lock
 TYPE: item
 TEXT_NEVERSEEN: A padlock locks a doorway down to the basement.
 TEXT_SEEN: The padlock is still locked.
@@ -8,6 +8,5 @@ TEXT_EXAMINE_SOLVED: The padlock is open.
 TEXT_SOLVING: You enter 1894 on the lock and hear it click open.
 WEIGHT: 1
 TRIGGERS: null
-DEPENDS_ON: Note1
 TEXT_TO_SOLVE: 1894
 UNLOCKS: Basement

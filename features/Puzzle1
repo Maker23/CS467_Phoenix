@@ -1,4 +1,4 @@
-NAME: Puzzle
+NAME: Puzzle|sentence,words,puzzle
 TYPE: puzzle
 ACTIONS: use|try,solve
 TEXT_NEVERSEEN: There's a series of words painted on the wall. It looks like a sentence, but it don't make any sense.

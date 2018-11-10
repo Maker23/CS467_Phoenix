@@ -1,4 +1,4 @@
-NAME: Carved Wooden Box
+NAME: Carved Wooden Box|box
 TYPE: container
 # Gah, fix this later. What does "open" do?
 ACTIONS: open|open

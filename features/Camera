@@ -1,4 +1,4 @@
-NAME: Camera
+NAME: Camera|camera
 TYPE: item
 ACTIONS: use|takePicture, take picture, snap, snap picture, snap pic, take pic
 TEXT_NEVERSEEN: An old dusty camera sits on the top shelf.

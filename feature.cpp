@@ -69,6 +69,10 @@ Feature::Feature(string fileToOpen)
 
 	featurefile.open(fileToOpen);
 
+	const char * nameCstr;
+	char nwords[256];
+	char * nptr;
+
 	if (featurefile.is_open()) {
 		while (std::getline(featurefile, lineStr))  {
 
@@ -83,8 +87,28 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found NAME " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					//name = tempStr;
-					featureStrings["name"] = tempStr;
+				{
+					if ( tempStr.find("|") == std::string::npos) {
+						featureStrings["name"] = tempStr;
+					}
+					else
+					{
+						nameCstr = tempStr.c_str();
+						strcpy(nwords, nameCstr);
+						nptr = strtok (nwords, "|");
+						if (nptr != NULL) {
+							tempStr.erase(tempStr.find("|"));
+							nptr = strtok(NULL, ", ");
+							while (nptr != NULL ) {
+								if (DEBUG_FEATURES) std::cout << "     Finding name alias for " << tempStr << ", token = '" << nptr << "'" << std::endl;
+								aliases[nptr] = tempStr;
+								nptr = strtok(NULL, ", ");
+							}
+						}
+						featureStrings["name"] = tempStr;
+					}
+				}
+				if (DEBUG_FEATURES) { std::cout << "Feature() - setting NAME to " << tempStr << std::endl;}
 			}
 
 			if(lineStr.find("TYPE: ") != std::string::npos) 
@@ -469,13 +493,15 @@ void Feature::dropFeature(GameState *GS, Room * Rm,Feature * Subject, bool Silen
 	for (std::vector<Feature*>::iterator iter = GS->Holding.begin(); iter != GS->Holding.end(); iter ++ ) {
 		CName = (*iter)->getName();
 		if ( CName.compare(FName) == 0 ) {
+			if (DEBUG_FEATURES) { std::cout << "      DEBUG dropping " << FName << std::endl;}
 			GS->Holding.erase(iter);
 			// This messes with iter++ and causes a SegFault if we don't break. 
 			// TODO: investigate how this should really be done
 			break;
 		}
 	}
-	Rm->addFeature(getName());
+	if (DEBUG_FEATURES) { std::cout << "      DEBUG Adding " << getKeyName() << std::endl;}
+	Rm->addFeature(getKeyName(), GS);
 
 	return;
 }

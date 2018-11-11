@@ -1,0 +1,11 @@
+NAME: RattleSnake|snake,rattler
+TYPE: item
+TEXT_NEVERSEEN: A rattlesnake slides out onto the floor, raises its head and rattles its tail in a dire warning.
+TEXT_SEEN: A rattlesnake glares at you.
+TEXT_TAKING: The rattlesnake bites you as you pick it up.
+WEIGHT: 1
+USES: BabyRattle
+TEXT_EXAMINE_SOLVED: A rattlesnake sleeps in the corner.
+TEXT_SOLVING: The rattlesnake glides away, revealing an Amulet.
+TEXT_EXAMINE: The rattlesnake rattles its tail loudly. Is it trying to communicate?
+#TODO: If you pick it up, you die

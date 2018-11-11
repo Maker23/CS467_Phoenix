@@ -467,10 +467,17 @@ void Feature::takeFeature(GameState *GS, Room * Rm,Feature * Subject)
 	if ( weight >= 10 ) 
 	{
 		std::cout << "The " << getName() << " is too heavy to pick up." << std::endl;
+		return;
 	}
-	else 
-	{
-		std::cout << "You pick up the " << getName() << std::endl;
+	else {
+		if ( getStringByKey("takingText").length() > 0 )
+		{
+			std::cout << getStringByKey("takingText") << std::endl;
+		}
+		else
+		{
+			std::cout << "You pick up the " << getName() << std::endl;
+		}
 		GS->Holding.push_back(this);
 		//if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Feature::takeFeature() getKeyName: " << this->getKeyName() << std::endl;
 		Rm->deleteFeature(getKeyName());

@@ -1,9 +1,10 @@
-NAME: 2nd Floor Doors
+NAME: 2nd Floor Doors|2ndFloorDoors,door,lock
 TYPE: door_lock
-ACTIONS: open|unlock
+ACTIONS: use|unlock
 TEXT_NEVERSEEN: The door will not open.
 TEXT_SEEN: The door will not open.
 TEXT_EXAMINE: You see the door has a lock on it. Just above the lock is a picture of a clover.
 TEXT_EXAMINE_SOLVED: ""
+TEXT_SOLVING: The door opens
 TRIGGERS: null
-DEPENDS_ON: Key1
+USES: Key1

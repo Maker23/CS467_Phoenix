@@ -64,7 +64,7 @@ class Room
 		std::string getLongDesc();							// returns the long description of this room.
 		std::string getShortDesc();						// returns the short description of this room.
 		std::string getAdditionalDesc();					// returns the additional description of this room.
-		std::string getKeyName();
+		std::string getKeyName();						// return the 'canonical' name of the room
 		std::string getUnlockText();
 		void setKeyName(std::string);
 		void setRoomSeen();

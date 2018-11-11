@@ -385,12 +385,10 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 	else {
 		if (DEBUG_PUZZLE) { std::cout << "      getName '" << getName() << "' does not match 'puzzle1'" << std::endl;}
 	}
-	if (DEBUG_FEATURES) { std::cout << "      Setting isSolved to true " << std::endl;}
-	setSolved(true);
 	
 	if ( getStringByKey("solvingText").compare("") != 0 )
 	{
-		std::cout << getStringByKey("solvingText") << std::endl;
+		std::cout << getSolvingText() << std::endl;
 	}
 	if ( getStringByKey("usingText").compare("") != 0 )
 	{
@@ -409,6 +407,8 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 		// get the used text from the dependency
 	}
 
+	if (DEBUG_FEATURES) { std::cout << "      Setting isSolved to true " << std::endl;}
+	setSolved(true);
 	return;
 }
 
@@ -607,8 +607,16 @@ std::string Feature::getTriggers()
 
 std::string Feature::getSolvingText()
 {
-	return getStringByKey("solvingText");
-	//return solvingText;
+	std::string tmpS;
+	// This logic (if solved) should probably be outside of this function... TODO
+	if ( ! solved ) {
+		tmpS = getStringByKey("solvingText");
+	}
+	else {
+		tmpS = getStringByKey("solvedText");
+	}
+	LongString LString(tmpS);
+	return LString.getWrappedText();
 }
 
 std::string Feature::getTakingText()

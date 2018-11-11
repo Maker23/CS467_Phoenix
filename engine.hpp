@@ -60,6 +60,7 @@ public:
 	Room * playerTurn (Room *);
 	Room * actInRoom (Room *, Choice *);
 	Room * actOnFeature (Room *, Choice *);
+	void unlockRoom (Room *, Choice *);
 	void unlockFeature (Room *, Choice *);
 	bool featureInHand (Feature *);
 	bool featureInRoom (Room *, std::string);

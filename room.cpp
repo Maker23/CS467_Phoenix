@@ -253,31 +253,37 @@ bool Room::isExitDoorLockedByKey(std::string searchKey)
 
 bool Room::lockExitDoorByKey(std::string searchKey)
 {
-	//if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::lockExitDoorByKey searchKey: " << searchKey << std::endl;
+	if (DEBUG_LOCK) {
+		std::cout << "[DEBUG_LOCK] Room::lockExitDoorByKey. Room: " << this->roomName << ",searchKey: " << searchKey << std::endl;
+	
+	}
 	for (int r = 0; r < numExits; r++)
 	{
-		//if (DEBUG_BRENT) std::cout << "     searchKey: " << searchKey << " is exit found: " << Connections[r]->isExitKeywordFound(searchKey) << std::endl;
+		if (DEBUG_LOCK) std::cout << "     searchKey: " << searchKey << " is exit found: " << Connections[r]->isExitKeywordFound(searchKey) << std::endl;
 		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found
-			//if (DEBUG_BRENT) std::cout << "     keyword found at: " << r << std::endl;
+			if (DEBUG_LOCK) std::cout << "     keyword found at Connections[" << r << "]" << std::endl;
 			Connections[r]->lockDoor();
-			/*if (DEBUG_BRENT)
+			if (DEBUG_LOCK)
 			{
-				std::cout << "isDoorLocked: " << Connections[r]->isDoorLocked() << std::endl;
-			}*/
+				std::cout << "     isDoorLocked: " << Connections[r]->isDoorLocked() << std::endl;
+				std::cout << "     return true from Room::lockExitDoorByKey" << std::endl;
+			}
 			return true;
 		}
 	}
+	if (DEBUG_LOCK)	std::cout << "     return true from Room::lockExitDoorByKey" << std::endl;
 	return false;
 }
 
 bool Room::unlockExitDoorByKey(std::string searchKey)
 {
-	//if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::unlockExitDoorByKey searchKey: " << searchKey << std::endl;
+	if (DEBUG_LOCK) std::cout << "[DEBUG_LOCK] Room::unlockExitDoorByKey searchKey: " << searchKey << std::endl;
 	for (int r = 0; r < numExits; r++)
 	{
 		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found
+			if (DEBUG_LOCK) std::cout << "  Found connection '" << Connections[r]->getDisplayName() << ", unlocking Door" << std::endl;
 			Connections[r]->unlockDoor();
 			return true;
 		}
@@ -504,20 +510,36 @@ std::string Room::strToLowercase(std::string mixedStr)
 Feature * Room::findFeatureByUnlocksString(std::string searchString, GameState *GS)
 {
 	Feature *feature = NULL;
-	if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:findFeatureByUnlocksString] Begins" << std::endl;
+	if (DEBUG_FUNCTION || DEBUG_LOCK) std::cout << "[DEBUG_FUNCTION Room:findFeatureByUnlocksString] Begins" << std::endl;
 	std::vector<std::string>::iterator iter;
 	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
 	{
+		if (DEBUG_LOCK) std::cout << "     looking at " << (*iter) << std::endl;
 		feature = GS->housePtr->getFeaturePtr((*iter));
-		std::cout << feature->getKeyName() << std::endl;
+		if (DEBUG_LOCK) std::cout << "     found " << feature->getKeyName() << std::endl;
 		if(feature->getStringByKey("unlocks").compare(strToLowercase(searchString)) == 0)
 		{
-			if (DEBUG_FUNCTION) std::cout << "     [DEBUG_FUNCTION] found " << searchString << " in " << feature->getStringByKey("name") << std::endl;
+			if (DEBUG_LOCK) std::cout << "     [DEBUG_LOCK][Room] found " << searchString << " in " << feature->getStringByKey("name") << std::endl;
 			return feature;
+		}
+		else {
+			if (DEBUG_LOCK) std::cout << "     [DEBUG_LOCK][Room] did not find search string " << searchString << " in feature " << feature->getStringByKey("name") << std::endl;
+		}
+	}
+	for (std::vector<Feature*>::iterator it = GS->Holding.begin(); it != GS->Holding.end(); it ++)
+	{
+		feature = (*it);
+		if(feature->getStringByKey("unlocks").compare(strToLowercase(searchString)) == 0)
+		{
+			if (DEBUG_LOCK) std::cout << "     [DEBUG_LOCK][Holding] found " << searchString << " in " << feature->getStringByKey("name") << std::endl;
+			return feature;
+		}
+		else {
+			if (DEBUG_LOCK) std::cout << "     [DEBUG_LOCK][Holding] did not find search string " << searchString << " in feature " << feature->getStringByKey("name") << std::endl;
 		}
 	}
 
-	if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:findFeatureByUnlocksString] Ends - Return False" << std::endl;
+	if (DEBUG_FUNCTION || DEBUG_LOCK) std::cout << "[DEBUG_FUNCTION Room:findFeatureByUnlocksString] Ends - Return False" << std::endl;
 	return NULL;
 }
 

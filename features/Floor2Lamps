@@ -6,4 +6,5 @@ TEXT_SEEN: Unlit oil lamp is attached to the wall.
 TEXT_EXAMINE: The wick of the lamp is still there and there is oil in it. It is ready to light.
 TEXT_SOLVING: Lighting the lamp reveals the room.
 TRIGGERS: VisionHallway2
-DEPENDS_ON: Lighter
+#DEPENDS_ON: Lighter
+USES: Lighter

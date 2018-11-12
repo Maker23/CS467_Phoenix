@@ -614,10 +614,12 @@ void Feature::hitFeature(Feature * Subject)
  * ********************************************************* */
 std::string Feature::getWalkingInRoomText()
 {
+	std::string tmpS;
+
 	if(!seen)
 	{
 		seen = true;
-		return getStringByKey("neverSeenText");
+		tmpS = getStringByKey("neverSeenText");
 		//return neverSeenText;
 	}
 	else
@@ -628,13 +630,15 @@ std::string Feature::getWalkingInRoomText()
 		if(solved && getStringByKey("solvedText").length() > 0) 
 		{
 			//return solvedText;	
-			return getStringByKey("solvedText");
+			tmpS = getStringByKey("solvedText");
 		}
 		else
 		{
-			return getStringByKey("seenText");
+			tmpS = getStringByKey("seenText");
 		}
 	}
+	LongString LString(tmpS);
+	return LString.getWrappedText();
 }
 
 std::string Feature::getExamineText()

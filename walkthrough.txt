@@ -10,10 +10,37 @@ move west
 play record
 go kitchen
 go pantry
+## The next two commands should FAIL
 go basement
 unlock padlock
 look padlock
 unlock padlock 1894
 go basement
-look words
-q
+#
+# To solve the puzzle:
+# From a little spark may burst the flame which lights the lamp to reveal the game.
+#
+# Enter 'q' to skip the puzzle - but you won't be able to get the lighter
+#
+solve the puzzle
+get lighter
+go up
+go kitchen
+go ballroom
+go foyer
+go conservatory
+play eac on the piano
+get the key
+go foyer
+go up
+light the lamp
+go bedroom1
+open box
+get glasses
+go closet
+examine shelf
+get camera
+go north
+go east
+unlock nursery
+go nursery

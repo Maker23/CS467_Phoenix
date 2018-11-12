@@ -20,7 +20,7 @@ To play:
 ```
 To Test:
 ```
-  ./game -test <instructionsfile>
+	./game -test <instructionsfile>
 	./game -test walkthrough.txt
 ```
 

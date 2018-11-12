@@ -1,7 +1,7 @@
 ROOM NAME: Balcony
-CONNECTION:West door|2nd Floor Hallway|2nd floor, 2nd floor hallway, hallway, west, west door
-CONNECTION:Spiral stairs up|3rd Floor Hallway|3rd floor, stairs, stairs up, up
+CONNECTION:West door|2nd Floor Hallway|2nd floor, 2nd floor hallway, 2ndFloorHallway, west, west door
+CONNECTION:Spiral stairs up|3rd Floor Hallway|3rdFloorHallway, stairs, stairs up, up
 CONNECTION:South|Study|study, south, south door
-LONG DESC: Balcony Long Desc. There is a door on the west wall, a door on the south wall, and a spiral staircase going up.
-SHORT DESC: Balcony Short Desc
-ADITIONAL DESC: Balcony Additional Desc
+LONG DESC: The Balcony would have been an ideal spot to get a view of the property, but with the storm outside, it makes it difficult to see past the front lawn. From here, there is a door on the west wall, a door on the south wall, and a spiral staircase going up.
+SHORT DESC: There doesn't appear to be any clues to examine from the Balcony. Check out one of the connecting rooms to escape the haunted house!
+ADITIONAL DESC: Go to the 2nd Floor Hallway, 3rd Floor Hallway, or the Study, there doesn't appear to be anything here.

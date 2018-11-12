@@ -43,6 +43,7 @@ class Room
 		std::string longDesc;
 		std::string shortDesc;
 		std::string additionalDesc;
+		std::string blockedText;
 		std::string unlockText;
 		int numExits;
 		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
@@ -51,11 +52,12 @@ class Room
 
 	public:
 	 	// IRL these would be private with iterator and get/set functions. TODO
+		std::string dependsOn;
 		std::vector<std::string> roomFeatures;
-
 		std::vector<Feature *> features;
 		
-		Room(std::string); 									// constructor
+		Room(std::string, std::string, std::stack<lockDoorStruct> &);
+		//Room(std::string, std::string, std::stack<lockDoorStruct> &); 									// constructor
 		~Room();													// destructor
 
 
@@ -63,8 +65,9 @@ class Room
 		std::string getLongDesc();							// returns the long description of this room.
 		std::string getShortDesc();						// returns the short description of this room.
 		std::string getAdditionalDesc();					// returns the additional description of this room.
-		std::string getKeyName();
+		std::string getKeyName();						// return the 'canonical' name of the room
 		std::string getUnlockText();
+		std::string getBlockedText();
 		void setKeyName(std::string);
 		void setRoomSeen();
 		void Examine(GameState *);
@@ -73,13 +76,16 @@ class Room
 		std::string getExitsForDisplay();
 		bool lockExitDoorByKey(std::string);			// will lock the door to one of the rooms based on a doorway keyword.
 		bool unlockExitDoorByKey(std::string);
+		bool isExitDoorLockedByKey(std::string);
 		void displayRoom();
 		Room * goRoom(std::string, GameState *);
 		Room * getRoomOtherSideOfDoor(std::string, GameState *);
 		std::vector<std::string> getFeaturesVector();
 		Feature * getFeaturePtr(std::string, GameState *); // returns the pointer if feature is in the room
 		void deleteFeature(std::string);
-		void addFeature(std::string); // byName ?
+		void addFeature(std::string, GameState *); // byName ?
+		bool isFeatureInThisRoom(std::string);
+		Feature * findFeatureByUnlocksString(std::string, GameState *);
 
 };
 

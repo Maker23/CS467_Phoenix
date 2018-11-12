@@ -64,6 +64,8 @@ Room *House::buildHouse(string startingRoom){
 	string roomName;
 	Room *startingRoomPtr=NULL;
 	Room *roomPtr=NULL;
+	stack<lockDoorStruct> doorsToLock;
+	lockDoorStruct lockThisDoor;
 
 	// Push the startingRoom to the stack
 	roomsToLoad.push(startingRoom);
@@ -79,7 +81,8 @@ Room *House::buildHouse(string startingRoom){
 			string str;
 			str.append(ROOM_DIRECTORY);
 			str.append(roomName);
-			roomPtr = new Room(str);
+			//roomPtr = new Room(str, roomName, doorsToLock);
+			roomPtr = new Room(str, roomName, doorsToLock);
 			if (startingRoomPtr == NULL)
 			{
 				startingRoomPtr = roomPtr;  // sets the starting room pointer for the return
@@ -88,6 +91,18 @@ Room *House::buildHouse(string startingRoom){
 			roomPtr->setKeyName(strToLowercase(roomPtr->getRoomName()));
 			houseMap[strToLowercase(roomPtr->getRoomName())] = roomPtr;
 		}
+	}
+
+	//if(DEBUG_BRENT) printRooms();
+	// lock all the doors.
+	//if(DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Lockup the " << doorsToLock.size()  << " doors House" << std::endl;
+	while (!doorsToLock.empty())
+	{
+		lockThisDoor = doorsToLock.top();
+		doorsToLock.pop();
+		roomPtr = getRoomPtr(lockThisDoor.doorFrom);
+		//if(DEBUG_BRENT) std::cout << "          Lockup from  " << lockThisDoor.doorFrom  << " to " << lockThisDoor.doorTo << std::endl;
+		roomPtr->lockExitDoorByKey(lockThisDoor.doorTo);
 	}
 
 	 string featuresFolder = "features";
@@ -105,21 +120,33 @@ Room *House::buildHouse(string startingRoom){
 
     }
     closedir(dirp);
+		// Now add aliases for all features
+    for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++)
+	  {
+      for (auto iter=it->second->aliases.begin(); iter != it->second->aliases.end(); iter++) {
+				if ( DEBUG_FEATURES ) {
+					std::cout << "setting alias " << iter->first << " for cname " << it->first << std::endl;
+				}
+				houseFeatureAliases[iter->first] = it->first;
+			}
+		}
 
 	if ( DEBUG_FEATURES ) 
-      for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
+     for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
 	   {
-	   	std::cout << it->second->getName() << std::endl;;
+	   	std::cout << it->first << " -- " << it->second->getName();
+      for (auto iter=it->second->aliases.begin(); iter != it->second->aliases.end(); iter++) {
+			 	std::cout << ", alias: " << iter->first << ", ";
+			}
+			std::cout << std::endl;
 	   }
 	}
     
     if ( DEBUG_FEATURES ) 
     {
     	cout << "Number of Features in House: " << houseFeatures.size() << endl;
+
     }
-
-
-
 	return  startingRoomPtr;
 }
 
@@ -159,6 +186,13 @@ Room * House::getRoomPtr(string roomName)
 	}
 }
 
+void House::printRooms()
+{
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
+		std::cout << "\t" << it->first << std::endl;
+	}
+}
+
 /*
  * Prints all the rooms found in the map.
  * Used for debugging. 
@@ -193,13 +227,31 @@ bool House::hasFeature(string key)
 	if ( houseFeatures.find(key) == houseFeatures.end() )
 	{
       return false;
-   }
+  }
 	else
 	{
 		return true;
-   }
+  }
 }
 
+std::string House::findFeatureByName (string featureAlias) {
+	if ( DEBUG_FEATURES ) std::cout << "----- begin House::findFeatureByName(), looking for '"<< featureAlias<<"'" << std::endl;
+	if ( houseFeatures.find(featureAlias) == houseFeatures.end() )
+	{
+		if ( DEBUG_FEATURES ) std::cout << "     Not found in houseFeatures, searching through houseFeatureAliases" << std::endl;
+		if ( houseFeatureAliases.find(featureAlias) == houseFeatureAliases.end() )
+		{
+			return NOTFOUND;
+		}
+		if ( DEBUG_FEATURES ) std::cout << "     Found alias" << std::endl;
+		return houseFeatureAliases[featureAlias];
+  }
+	else
+	{
+		if ( DEBUG_FEATURES ) std::cout << "     found canonical name" << std::endl;
+		return featureAlias;
+  }
+}
 
 Feature * House::getFeaturePtr(string featureName)
 {
@@ -224,10 +276,10 @@ void House::printRoomFeatures(Room *room)
 	std::vector<std::string> roomFeatures = room->getFeaturesVector();
 	Feature *f1, *f2;
 
-	if (DEBUG_BRENT) std::cout << "Start House::printFeatures()" << std::endl;
+	//if (DEBUG_BRENT) std::cout << "Start House::printFeatures()" << std::endl;
 	for (std::vector<std::string>::iterator it = roomFeatures.begin() ; it != roomFeatures.end(); ++it)
 	{
-   	if (DEBUG_BRENT) std::cout << (*it) << std::endl;
+   	//if (DEBUG_BRENT) std::cout << (*it) << std::endl;
    	f1 = getFeaturePtr((*it));
 
 		if (f1==NULL) std::cout << "Error getting pointer for " << (*it) << std::endl;
@@ -239,14 +291,14 @@ void House::printRoomFeatures(Room *room)
    	else
    	{
    		f2 = getFeaturePtr(f1->getDependsOn());
-   		if (DEBUG_BRENT) std::cout << "DEBUG: " << f1->getName() << " depends on: " << f2->getName() << " solved: " << f2->isSolved() << std::endl;
+   		//if (DEBUG_BRENT) std::cout << "DEBUG: " << f1->getName() << " depends on: " << f2->getName() << " solved: " << f2->isSolved() << std::endl;
    		if(f2->isSolved())
    		{
    			std::cout << f1->getWalkingInRoomText() << std::endl;
    		}
    	}
 	}
-	if (DEBUG_BRENT) std::cout << "Exit House::printFeatures()" << std::endl;
+	//if (DEBUG_BRENT) std::cout << "Exit House::printFeatures()" << std::endl;
 }
 
 // returns lowercase string

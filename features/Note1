@@ -1,4 +1,4 @@
-NAME: Note
+NAME: Note|paper,note
 TYPE: item
 ACTIONS: look|read,use,open
 TEXT_NEVERSEEN: An old note of paper sits under where the rug was.

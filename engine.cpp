@@ -36,7 +36,7 @@ std::string Choice::printVerb()
 {
 
 	std::string printVerb(); // converts validVerbs enum into a string
-	std::string verbPrint[] = {"look", "go", "use", "pick up or take", "drop", "open", "close", "throw", "hit", "unlock", "examine"};
+	std::string verbPrint[] = {"look", "go", "use", "pick up or take", "drop", "open", "close", "throw", "hit", "unlock", "inventory"};
 
 	return verbPrint[(int)Verb];
 }
@@ -58,10 +58,10 @@ Room * GameState::playerTurn(Room * currentRoom)
 
 	Room * nextRoom = currentRoom;
 	Choice * userChoice;
-	Parser parse;
+	Parser parse (this);
 
 	if ( GameTest) {
-		userChoice = parse.TestLine(this);
+		userChoice = parse.TestLine();
 	}
 	else {
 		userChoice = parse.ParseLine();
@@ -74,13 +74,19 @@ Room * GameState::playerTurn(Room * currentRoom)
 	}
 	if (userChoice->Verb == (validVerbs)help)
 	{
-		std::cout << "THERE IS NO HELP FOR YOU" << std::endl;
+		printHelp(true);
+		//std::cout << "THERE IS NO HELP FOR YOU" << std::endl;
 		return currentRoom;
 	}
-	if( (userChoice->Verb == (validVerbs)save) ||
-			(userChoice->Verb == (validVerbs)load) )
+	if (userChoice->Verb == (validVerbs)save)
 	{
-		std::cout << "Game does not yet support Save or Load" << std::endl;
+		saveGame();
+		return currentRoom;
+
+	}
+	if (userChoice->Verb == (validVerbs)load) 
+	{
+		loadGame();
 		return currentRoom;
 	}
 
@@ -100,7 +106,14 @@ void GameState::getOverrideVerb(Choice * userChoice)
 	if ( housePtr->hasFeature(strToLowercase(userChoice->Noun)) )
 	{
 		thisFeature = housePtr->getFeaturePtr(userChoice->Noun);
-		if (DEBUG_FUNCTION) std::cout << "      found feature "<< userChoice->Noun << ", looking for " << userChoice->inputVerb << std::endl;
+		if (DEBUG_FUNCTION) {
+			std::cout << "      found feature "<< userChoice->Noun << ", looking for " << userChoice->inputVerb << std::endl;
+
+			for ( auto iter=thisFeature->actions.begin(); iter != thisFeature->actions.end(); iter++)
+			{
+				std::cout << iter->first << ":" << iter->second << std::endl;
+			}
+		}
 		if ( thisFeature->actions.find(strToLowercase(userChoice->inputVerb)) != thisFeature->actions.end() )
 		{
 			if (DEBUG_FUNCTION) std::cout << "      found alternate verb " << userChoice->inputVerb << std::endl;
@@ -112,11 +125,13 @@ void GameState::getOverrideVerb(Choice * userChoice)
 Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 {
 	Room * nextRoom = currentRoom;
+	std::string nextroomKeyName = currentRoom->getExitRoomByKey(userChoice->Noun, false);
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::actInRoom" << std::endl;
 	if (DEBUG_FEATURES) std::cout << "      Noun: '"<< userChoice->Noun << "'  Verb: '" << userChoice->Verb << "'" << std::endl;
 	// If no noun - limited choices
-	if ( userChoice->Noun == "" || userChoice->Noun.compare(NOTFOUND) == 0 ) {
+	if ( userChoice->Noun == "" || userChoice->Noun.compare(NOTFOUND) == 0 )
+	{
 		if (userChoice->Verb == (validVerbs)look) 
 		{
 			currentRoom->Examine(this); // Examine this room
@@ -142,38 +157,18 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 	//
 	// If noun - go or act
 	//
-	else if (userChoice->Verb == (validVerbs)go) {
+	else if (userChoice->Verb == (validVerbs)go) 
+	{
 		nextRoom = currentRoom->goRoom(userChoice->Noun, this);
 		if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
 		{
 			nextRoom->Examine(this);
 		}
 	}
-	else if (userChoice->Verb == (validVerbs)unlock)
+	else if (userChoice->Verb == (validVerbs)unlock && nextroomKeyName.length() > 0)
 	{
-		// Pass the verb and noun(s) to ActInRoom
-		//nextRoom = actOnFeature(currentRoom, userChoice);
-		nextRoom = currentRoom->getRoomOtherSideOfDoor(userChoice->Noun, this);
-		if (nextRoom != NULL)
-		{
-			// TODO: need to check and make sure we did what we needed to do in order to unlock the door"
-			if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Begin Engine::actInRoom() unlock " << userChoice->Noun << " which leads to " << nextRoom->getKeyName() << std::endl;
-			// unlock door to requested room
-			currentRoom->unlockExitDoorByKey(nextRoom->getKeyName());
-			// unlock door from requested room to this room.
-			nextRoom->unlockExitDoorByKey(currentRoom->getKeyName());
-			nextRoom = currentRoom;   // so we dont't actually move to the next room.
-			if(currentRoom->getUnlockText().length() > 0)
-			{
-				std::cout << currentRoom->getUnlockText() << std::endl;
-			}
-		}
-		else
-		{
-			std::cout << "ERROR: received NULL when retreiving door pointer." << std::endl;
-			exit(1);
-		}
-
+		if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK][159] calling unlockRoom '" << userChoice->Noun << "'" << std::endl;
+		unlockRoom(currentRoom, userChoice);
 	}
 	else if (userChoice->Verb < (validVerbs)LastAction)
 	{
@@ -201,10 +196,15 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 	Room * nextRoom = currentRoom;
 	Feature * theNoun = NULL;
 	Feature * theSubject = NULL;
+	Feature * solvesFeature = NULL;
 	std::string nounUses = "";
+	std::string textToSolve = "";
+	std::string solvesHere = "";
+	std::string solvesAnywhere = "";
 	bool inHand = false;
 	bool inRoom = false;
 	bool dependenciesSolved = false;
+
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::actOnFeature,"
 		<< "verb = " << userChoice->printVerb()<< "(" << userChoice->Verb  << ")"
@@ -239,16 +239,42 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 			if (DEBUG_FUNCTION) std::cout << "      matched look" << std::endl;
 			std::cout << theNoun->getExamineText() << std::endl;
 			break;
+		case unlock:
+			if (DEBUG_FUNCTION) std::cout << "      matched unlock" << std::endl;
+			unlockFeature(currentRoom, userChoice);
+			break;
 		case use:
 			if (DEBUG_FUNCTION) std::cout << "      matched use " << std::endl;
 			nounUses = theNoun->getUses();
+			textToSolve = theNoun->getStringByKey("textToSolve");
 			if (DEBUG_FUNCTION) std::cout << "      nounUses: " << nounUses << std::endl;
 			if (DEBUG_FUNCTION) std::cout << "      theSubject: " << theSubject << std::endl;
-			if (  nounUses.compare("") == 0 
-				 ||(featureWithinReach(currentRoom,nounUses))) {
-				theNoun->useFeature(this, theSubject); }
+
+			// Is there a USES, and if so is it nearby?
+			if (  nounUses.compare("") == 0 ||(featureWithinReach(currentRoom,nounUses))) {
+				if (  textToSolve.compare("") == 0 || textToSolve.compare(userChoice->Subject) == 0 ) {
+					if (DEBUG_FUNCTION) std::cout << "      UsingFeature " << theSubject << std::endl;
+					theNoun->useFeature(this, theSubject); 
+
+					solvesHere = theNoun->getStringByKey("solvesHere");
+					if ( solvesHere.compare("") != 0 && featureWithinReach(currentRoom,solvesHere)) {
+						// Need "find one of the featuers on this list that is in reach"
+						solvesFeature = housePtr->getFeaturePtr(solvesHere);
+						if (solvesFeature) {
+							solvesFeature->setSolved(true);
+							solvesFeature->useFeature(this, theSubject);
+						}
+					}
+				}
+				else {
+					// Needed "textToSolve" but didn't get it :)
+					std::cout << "You're doing it wrong. Try again." << std::endl; 
+				}
+			}
 			else {
-				std::cout << "Can't find a way to use the " << userChoice->inputNoun << " right now." << std::endl; }
+				std::cout << "Can't find a way to " << userChoice->inputVerb 
+									<< " the " << userChoice->inputNoun << " right now." << std::endl; 
+			}
 			break;
 		case take:
 			if (DEBUG_FUNCTION) std::cout << "      matched take " << std::endl;
@@ -307,7 +333,7 @@ bool GameState::featureWithinReach(Room * currentRoom, std::string nounUses )
 	inHand = featureInHand(theNoun);
 	inRoom = featureInRoom(currentRoom, nounUses);
 
-	if (DEBUG_FUNCTION) std::cout << "inHand = "<< inHand << ", inRoom = "<< inRoom<< ", or equals" << (inHand || inRoom)  << std::endl;
+	if (DEBUG_FUNCTION) std::cout << "inHand = "<< inHand << ", inRoom = "<< inRoom<< ", OR = " << (inHand || inRoom)  << std::endl;
 	return inHand || inRoom;
 }
 
@@ -328,27 +354,30 @@ bool GameState::featureInRoom(Room * currentRoom, std::string FName)
 {
 	Feature * theNoun = NULL;
 	bool inRoom = false;
+	
+	std::string LName = strToLowercase(FName);
 
-	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::featureInRoom, FName = " << FName << std::endl;
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::featureInRoom, LName = " << LName << std::endl;
   // Does the Feature exist?
-	theNoun = housePtr->getFeaturePtr(FName);
+	theNoun = housePtr->getFeaturePtr(LName);
   if ( ! theNoun ) 
 	{
-		if (DEBUG_FUNCTION) std::cout << "***** Did not find " << FName << " in house->getFeaturePtr" << std::endl;
+		if (DEBUG_FUNCTION) std::cout << "***** Did not find " << LName << " in house->getFeaturePtr" << std::endl;
 		return false;
 	}
 
 	for ( std::vector<std::string>::iterator iterStr = currentRoom->roomFeatures.begin(); 
 				iterStr != currentRoom->roomFeatures.end(); iterStr++) 
 	{
-		if (DEBUG_FUNCTION) std::cout << "***** Comparing '" << FName << "' to '" << (*iterStr) << "'" << std::endl;
-		if ( FName.compare(*iterStr) == 0 ) 
+		if (DEBUG_FUNCTION) std::cout << "***** Comparing '" << LName << "' to '" << (*iterStr) << "'" << std::endl;
+		if ( LName.compare(*iterStr) == 0 ) 
 		{
 			inRoom = true;
 			return inRoom;
 		}
 	}
-	if (DEBUG_FUNCTION) std::cout << "***** Fell through to false :( "<< std::endl;
+	if (DEBUG_FUNCTION) std::cout << "***** featureInRoom returns false "<< std::endl;
 	return inRoom;
 }
 
@@ -467,14 +496,6 @@ int GameState::getAvailableCapacity()
 void GameState::UpdateGameState(int &GameClock, Room* currentRoom)
 {
   int points = getGameTaskStatus();
-	struct winsize WS;
-
-	ioctl(0, TIOCGWINSZ, &WS);
-	if (DEBUG_TERM) {
-		std::cout << "lines: " << WS.ws_row << ", columns: " << WS.ws_col << std::endl;
-	}
-	winRows=WS.ws_row;
-	winCols=WS.ws_col;
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin Utilities::UpdateGameState" << std::endl;
 	if(points) {} // TODO... silence compile-time warnings...
@@ -491,4 +512,246 @@ std::string GameState::strToLowercase(std::string mixedStr)
   for (std::string::size_type i=0; i<mixedStr.length(); ++i)
     mixedStr[i] = std::tolower(mixedStr[i],loc);
 	return mixedStr;
+}
+
+void LongString::Wrap() {
+	struct winsize WS;
+	size_t searchPos;
+	size_t Pos;
+
+  // First get the current window size
+	ioctl(0, TIOCGWINSZ, &WS);
+	WrapLength=WS.ws_col;
+	searchPos = WrapLength - 12; // Hardcoded.  Sad.  TODO.
+	WrapText = Text;
+
+	if (DEBUG_TERM) {
+		std::cout << "++++ LongString::Wrap: WrapLength = " << WrapLength << ", TextLength = " << Text.length() << std::endl;
+	}
+	// If short, don't wrap
+	if ( Text.length() < WrapLength )
+	{
+		return;
+	}
+
+	// Wrap text if necessary
+	Pos = WrapText.find(" ", searchPos);
+	if (DEBUG_TERM) { std::cout << "searchPos = "<< searchPos <<", Pos = "<< Pos << std::endl;}
+	while ( Pos != string::npos ){
+		if (DEBUG_TERM) { std::cout << "looooooping, pos="<< Pos << std::endl;}
+		WrapText.replace(Pos, (size_t) 1, "\n");
+		searchPos = Pos + WrapLength - 12;
+		Pos = WrapText.find(" ", searchPos);
+		if (DEBUG_TERM) { std::cout << "searchPos = "<< searchPos <<", Pos = "<< Pos << std::endl;}
+	}
+	if (DEBUG_TERM) {
+		std::cout << "Text: " << Text << std::endl;
+		std::cout << "Wrap: " << WrapText << std::endl;
+		std::cout << "-------------------- END DEBUG ------------------" << std::endl;
+	}
+	
+
+	//std::string Text;
+	//std::string WrapText;
+	//int WrapLength;
+}
+
+void GameState::unlockRoom(Room * currentRoom, Choice * userChoice) 
+{
+	Room * nextRoom = NULL; 
+	Feature *feature = NULL;
+	std::string unlockFromThisRoom = "";
+	std::string nextroomKeyName = "";
+
+	if (DEBUG_FUNCTION || DEBUG_LOCK ) std::cout << "===== begin GameState::unlockRoom" << std::endl;
+
+	// see what room we are trying to unlock.
+	nextroomKeyName = currentRoom->getExitRoomByKey(userChoice->Noun, false);
+	if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] nextroomKeyName: " << unlockFromThisRoom << std::endl;
+
+	if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] Noun (" << nextroomKeyName << ") is a room." << std::endl;
+	// iterate through the features to see if one has a UNLOCK for what we want, if so, return it.
+	feature = currentRoom->findFeatureByUnlocksString(nextroomKeyName, this);	
+	if(DEBUG_LOCK && feature) {
+		std::cout << "    [DEBUG_LOCK] Found feature that is locking this: " << feature->getStringByKey("name") << std::endl;
+	}
+	else if (DEBUG_LOCK)
+	{
+		std::cout << "    [DEBUG_LOCK] Did not find Feature " << std::endl;
+	}
+
+	if(feature) {
+
+		if ( ! feature->isSolved() )
+		{
+			std::cout << "Looks like you need to unlock the " << feature->getName() << "." << std::endl;
+		}
+		else
+		{
+			unlockFromThisRoom = currentRoom->getKeyName(); // Why do we need this? TODO
+	
+			if(unlockFromThisRoom.length() > 0 && nextroomKeyName.length() > 0)
+			{
+				if(DEBUG_LOCK) std::cout << "    unlockFromThisRoom.length() > 0 && nextroomKeyName.length() > 0" << std::endl;
+				nextRoom = currentRoom->getRoomOtherSideOfDoor(nextroomKeyName, this);
+					if (nextRoom != NULL)
+				{
+					if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] Unlocking doors" << std::endl;
+					// TODO: need to check and make sure we did what we needed to do in order to unlock the door"
+					// unlock door to requested room
+					currentRoom->unlockExitDoorByKey(nextRoom->getKeyName());
+					// unlock door from requested room to this room.
+					nextRoom->unlockExitDoorByKey(currentRoom->getKeyName());
+					nextRoom = currentRoom;   // so we dont't actually move to the next room.
+					if(currentRoom->getUnlockText().length() > 0)
+					{
+						std::cout << currentRoom->getUnlockText() << std::endl;
+					}
+				}
+				else
+				{
+					std::cout << "GameState::ActInRoom ERROR: received NULL when retreiving door pointer." << std::endl;
+					exit(1);
+				}
+			}
+		}
+	}
+	else {
+		std::cout << "You don't seem to be able to unlock the " << userChoice->Noun << " right now\n" << std::endl;
+	}
+}
+
+void GameState::unlockFeature(Room * currentRoom, Choice * userChoice) 
+{
+	Room * nextRoom = NULL; 
+	Feature *feature = NULL;
+	std::string unlockFromThisRoom = "";
+	std::string nextroomKeyName = "";
+
+	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::unlockFeature" << std::endl;
+
+	// Just confirm the object is in the house and in the room. 
+	// We can probably delete this actually, since it's handled in
+	// actOnFeature above.
+	if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] Noun (" << userChoice->Noun << ") is a feature." << std::endl;
+	if(currentRoom->isFeatureInThisRoom(userChoice->Noun))
+	{
+		feature = housePtr->getFeaturePtr(userChoice->Noun);
+		if(DEBUG_LOCK)
+		{
+			if(feature)
+			{
+				std::cout << "    [DEBUG_LOCK] feature pointer found" << std::endl;
+			}
+			else
+				std::cout << "ERR    [DEBUG_LOCK] feature pointer NULL!!!!!" << std::endl;
+		}
+	}
+
+	if( ! feature->solveFeature(this, strToLowercase(userChoice->Subject)))
+	{
+		if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] feature not solved, can't unlock" << std::endl;
+		std::cout << "That didn't seem to do the trick. Are you missing something?" << std::endl;
+		unlockFromThisRoom = "";
+		nextroomKeyName = "";
+		return;
+		// Can we just return here?
+	}
+		if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] Next room is  " << feature->getStringByKey("unlocks") << std::endl;
+		nextRoom = housePtr->getRoomPtr(feature->getStringByKey("unlocks"));
+		nextroomKeyName = nextRoom->getKeyName();
+		unlockFromThisRoom = currentRoom->getKeyName();
+		if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] feature complete go ahead and unlock " << nextRoom->getRoomName() << std::endl;
+
+		//		if(DEBUG_LOCK) std::cout << "     [DEBUG_LOCK] this room: " << currentRoom->getRoomName() << "  door to: " << nextRoom->getRoomName() << std::endl;
+
+		if(unlockFromThisRoom.length() > 0)
+		{
+			if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] unlockFromThisRoom: " << unlockFromThisRoom << std::endl;
+		}
+		else
+			if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] unlockFromThisRoom: NULL" << std::endl;
+
+
+		if(nextroomKeyName.length() > 0)
+		{
+			if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] nextroomKeyName: " << nextroomKeyName << std::endl;
+		}
+		else
+			if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] nextroomKeyName: NULL" << std::endl;
+		
+		if(unlockFromThisRoom.length() > 0 && nextroomKeyName.length() > 0)
+		{
+			if(DEBUG_LOCK) std::cout << "    unlockFromThisRoom.length() > 0 && nextroomKeyName.length() > 0" << std::endl;
+			nextRoom = currentRoom->getRoomOtherSideOfDoor(nextroomKeyName, this);
+			if (nextRoom != NULL)
+			{
+				if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] Unlocking doors" << std::endl;
+				// TODO: need to check and make sure we did what we needed to do in order to unlock the door"
+				// unlock door to requested room
+				currentRoom->unlockExitDoorByKey(nextRoom->getKeyName());
+				// unlock door from requested room to this room.
+				nextRoom->unlockExitDoorByKey(currentRoom->getKeyName());
+				nextRoom = currentRoom;   // so we dont't actually move to the next room.
+				if(currentRoom->getUnlockText().length() > 0)
+				{
+					std::cout << currentRoom->getUnlockText() << std::endl;
+				}
+			}
+			else
+			{
+				std::cout << "GameState::ActInRoom ERROR: received NULL when retreiving door pointer." << std::endl;
+				// exit(1);
+			}
+		}
+		else
+		nextRoom = currentRoom;
+}
+void GameState::printHelp(Room * currentRoom)
+{
+	bool Long = false;
+	printHelp(Long);
+	// TODO: special in-room help here
+}
+void GameState::printHelp() {
+	bool Long = false;
+	printHelp(Long);
+}
+
+void GameState::printHelp(bool Long) {
+	if ( ! Long ) {
+		std::cout << "=============================================" << std::endl;
+		std::cout << "\nTo move around use verbs like 'go', 'move', 'walk', etc" << std::endl;
+		std::cout << "\nTo interact with objects in the room try words like 'use','take','move', etc" << std::endl;
+		std::cout << "=============================================" << std::endl;
+	}
+	else
+	{
+		std::cout << "=============================================" << std::endl;
+		std::cout << "Valid commands include all of the following: " << std::endl;
+		std::cout << "   go <direction or room name>               " << std::endl;
+		std::cout << "   look  (with or without an object)         " << std::endl;
+		std::cout << "   use   <object>                            " << std::endl;
+		std::cout << "   take  <object>                            " << std::endl;
+		std::cout << "   drop  <object>                            " << std::endl;
+		std::cout << "   open  <object>                            " << std::endl;
+		std::cout << "   close <object>                            " << std::endl;
+		std::cout << "   throw <object>                            " << std::endl;
+		std::cout << "   hit   <object>                            " << std::endl;
+		std::cout << "   unlock <object>                           " << std::endl;
+		std::cout << "   inventory                                 " << std::endl;
+		std::cout << "" << std::endl;
+		std::cout << "Some commands don't work with some objects.  " << std::endl;
+		std::cout << "Many synonyms and alternate commands are also" << std::endl;
+		std::cout << "supported.                                   " << std::endl;
+		std::cout << "=============================================" << std::endl;
+	}
+}
+
+void GameState::saveGame() {
+	//
+}
+
+void GameState::loadGame() {
+	//
 }

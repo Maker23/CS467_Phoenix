@@ -1,10 +1,12 @@
-NAME: Camera
+NAME: Camera|camera
 TYPE: item
-ACTIONS: use|takePicture, take picture, snap, snap picture, snap pic, take pic
+ACTIONS: use|takePicture, take picture, snap, picture, pic,shoot,photograph
 TEXT_NEVERSEEN: An old dusty camera sits on the top shelf.
 TEXT_SEEN: Dusty camera on top shelf.
 TEXT_EXAMINE: 1930s camera with accordian style focus and cracked leather with plenty of film.
 TEXT_TAKING: You take the camera and place it in your bag.
+TEXT_USING: The flashbulb goes off with a bright flash and a loud pop.
 WEIGHT: 1
 TRIGGERS: null
 DEPENDS_ON: ClosetShelf
+SOLVES_HERE: NurseryGhost

@@ -1,4 +1,4 @@
-NAME: Book "Ghosts and Other Undead"
+NAME: Book "Ghosts and Other Undead"|Book, book
 TYPE: item
 ACTIONS: look|read,read book,read ghosts,use,open
 TEXT_NEVERSEEN: Among the other books, one stands out. The cover has pictures of ghosts and skeletons and the title Ghosts and Other Undead.

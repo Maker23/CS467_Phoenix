@@ -16,6 +16,7 @@
 #define DEBUG_ROOM false
 #define DEBUG_USE false
 #define DEBUG_BRENT false
+#define DEBUG_LOCK false
 
 #ifndef TEST
 #define TEST false
@@ -28,6 +29,10 @@ class Room; // Forward declaration
 class Feature; // Forward declaration
 class GameState; // Forward declaration
 
-
+struct lockDoorStruct
+{
+	std::string doorFrom;
+	std::string doorTo;
+};
 
 #endif // _UTE_H

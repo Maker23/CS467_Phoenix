@@ -31,6 +31,7 @@
 #include <sstream>
 #include <algorithm>
 #include "room.hpp"
+#include "engine.hpp"
 #include "parser.hpp"
 
 using namespace std;
@@ -40,12 +41,17 @@ using namespace std;
  * It opens the room file and parses the lines.
  * Info on files from http://www.cplusplus.com/doc/tutorial/files/ 
  */
-Room::Room(string filename)
+//Room::Room(string filename, std::string roomName, std::stack<lockDoorStruct> &doorwayToLock)
+Room::Room(string filename, string roomKey, std::stack<lockDoorStruct> &doorwayStack)
 {
+
 	ifstream roomfile;
 	string lineStr, str;
 	int roomCount=0;
 	numExits = 0;
+	lockDoorStruct lockThisDoor;
+	dependsOn = "";
+	blockedText = "";
 	//Feature * newFeature;
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
@@ -92,13 +98,23 @@ Room::Room(string filename)
    			unlockText = lineStr.substr(15, lineStr.length()-1);
 				continue;
    		}
+   		if(lineStr.find("BLOCKED_TEXT: ") != std::string::npos)
+   		{
+   			blockedText = lineStr.substr(14, lineStr.length()-1);
+				continue;
+   		}
+   		if(lineStr.find("DEPENDS_ON: ") != std::string::npos)
+   		{
+   			dependsOn = lineStr.substr(12, lineStr.length()-1);
+				continue;
+   		}
 
    		if(lineStr.find("FEATURE: ") != std::string::npos)
    		{
 				str = lineStr.substr(9, lineStr.length()-1);
 				if ( str.length() > 0 ) 
 				{
-					if (DEBUG_FEATURES) std::cout << "Adding feature '" << str << "' to room" << std::endl;
+					if (DEBUG_FEATURES) std::cout << "Adding feature '" << strToLowercase(str) << "' to room "<< roomName << std::endl;
 					// Add this to the vector of features in the room
 					roomFeatures.push_back(strToLowercase(str));
 				}
@@ -119,8 +135,11 @@ Room::Room(string filename)
 				str = lineStr.substr(13, lineStr.length()-1);
 				if ( str.length() > 0 ) 
 				{
-					if (DEBUG_FEATURES) std::cout << "Locking door to '" << str << "'" << std::endl;
-					lockExitDoorByKey(strToLowercase(str));
+					if (DEBUG_FEATURES) std::cout << "Locking door from " << strToLowercase(roomKey) << " to '" << strToLowercase(str) << "'" << std::endl;
+					//lockExitDoorByKey(strToLowercase(str));
+					lockThisDoor.doorFrom = strToLowercase(roomKey);
+					lockThisDoor.doorTo = strToLowercase(str);
+					doorwayStack.push(lockThisDoor);
 				}
 			}
 
@@ -133,7 +152,7 @@ Room::Room(string filename)
 		exit(1);
 	}
 
-	if (DEBUG_BRENT) { std::cout << "Number of Features in "<< roomName << ": " << roomFeatures.size() << endl; }
+	//if (DEBUG_BRENT) { std::cout << "Number of Features in "<< roomName << ": " << roomFeatures.size() << endl; }
 
 	roomSeen = false;
 }
@@ -171,17 +190,20 @@ std::string Room::getRoomName()
 
 std::string Room::getLongDesc()
 {
-	return this->longDesc;
+	LongString LString(this->longDesc);
+	return LString.getWrappedText();
 }
 
 std::string Room::getShortDesc()
 {
-	return this->shortDesc;
+	LongString LString(this->shortDesc);
+	return LString.getWrappedText();
 }
 
 std::string Room::getAdditionalDesc()
 {
-	return this->additionalDesc;
+	LongString LString(this->additionalDesc);
+	return LString.getWrappedText();
 }
 
 void Room::setRoomSeen()
@@ -192,6 +214,11 @@ void Room::setRoomSeen()
 std::string Room::getUnlockText()
 {
 	return unlockText;
+}
+
+std::string Room::getBlockedText()
+{
+	return blockedText;
 }
 
 
@@ -206,42 +233,74 @@ std::string Room::getExitRoomByKey(std::string searchKey, bool returnLocked=true
 	// if found, return that object.
 
 	//std::cout << "Enter Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
+	if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] START Room::getExitRoomByKey" << std::endl;
 	for (int r = 0; r < numExits; r++)
 	{
 		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found, return the name of the room.
 			if(returnLocked == true && Connections[r]->isDoorLocked())
+			{
+				if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] END Room::getExitRoomByKey  return locked" << std::endl;
 				return "locked";
+			}
 			else
+			{
+				if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] END Room::getExitRoomByKey  return: " << Connections[r]->getExitRoomName() << std::endl;
 				return Connections[r]->getExitRoomName();
+			}
 		}
 	}
 	//std::cout << "Exit Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
+	if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] END Room::getExitRoomByKey  return empty string" << std::endl;
 	return "";
 }
 
-
-bool Room::lockExitDoorByKey(std::string searchKey)
+bool Room::isExitDoorLockedByKey(std::string searchKey)
 {
-	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::lockExitDoorByKey searchKey: " << searchKey << std::endl;
 	for (int r = 0; r < numExits; r++)
 	{
 		if(Connections[r]->isExitKeywordFound(searchKey))
+		{
+			return Connections[r]->isDoorLocked();
+		}
+	}
+
+	return false;
+}
+
+bool Room::lockExitDoorByKey(std::string searchKey)
+{
+	if (DEBUG_LOCK) {
+		std::cout << "[DEBUG_LOCK] Room::lockExitDoorByKey. Room: " << this->roomName << ",searchKey: " << searchKey << std::endl;
+	
+	}
+	for (int r = 0; r < numExits; r++)
+	{
+		if (DEBUG_LOCK) std::cout << "     searchKey: " << searchKey << " is exit found: " << Connections[r]->isExitKeywordFound(searchKey) << std::endl;
+		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found
+			if (DEBUG_LOCK) std::cout << "     keyword found at Connections[" << r << "]" << std::endl;
 			Connections[r]->lockDoor();
+			if (DEBUG_LOCK)
+			{
+				std::cout << "     isDoorLocked: " << Connections[r]->isDoorLocked() << std::endl;
+				std::cout << "     return true from Room::lockExitDoorByKey" << std::endl;
+			}
 			return true;
 		}
 	}
+	if (DEBUG_LOCK)	std::cout << "     return true from Room::lockExitDoorByKey" << std::endl;
 	return false;
 }
 
 bool Room::unlockExitDoorByKey(std::string searchKey)
 {
-	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::unlockExitDoorByKey searchKey: " << searchKey << std::endl;
+	if (DEBUG_LOCK) std::cout << "[DEBUG_LOCK] Room::unlockExitDoorByKey searchKey: " << searchKey << std::endl;
 	for (int r = 0; r < numExits; r++)
 	{
 		if(Connections[r]->isExitKeywordFound(searchKey))
 		{ // it is found
+			if (DEBUG_LOCK) std::cout << "  Found connection '" << Connections[r]->getDisplayName() << ", unlocking Door" << std::endl;
 			Connections[r]->unlockDoor();
 			return true;
 		}
@@ -276,16 +335,6 @@ void Room::Examine(GameState * GS)
 		std::cout << "Room exits: " << this->getExitsForDisplay() << std::endl;
 	else
 		roomSeen = true;
-
-	/* older code
-	for (int r = 0; r < MAX_RM_CONNECTIONS; r++) {
-		door = Connections[r];
-		if (door != NULL) {
-			std::cout << "\t Doorway " << door->Examine() << std::endl;
-		}
-	}
-	*/
-
 }
 
 /*
@@ -317,11 +366,11 @@ Room * Room::getRoomOtherSideOfDoor(std::string roomName, GameState * PlayerStat
 {
 	std::string exitStringReturned;
 	Room *roomPtr = this;
-	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::getRoomOtherSideOfDoor roomName: " << roomName << std::endl;
+	//if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Room::getRoomOtherSideOfDoor roomName: " << roomName << std::endl;
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin Room::getRoomOtherSideOfDoor" << std::endl;
 	exitStringReturned = roomPtr->getExitRoomByKey(roomName, false);
-	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT]        exitStringReturned: " << exitStringReturned << std::endl;
+	//if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT]        exitStringReturned: " << exitStringReturned << std::endl;
 	
 	roomPtr = PlayerState->housePtr->getRoomPtr(exitStringReturned);
 	if(roomPtr != NULL)
@@ -356,6 +405,22 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
   		roomPtr = PlayerState->housePtr->getRoomPtr(exitStringReturned);
   		if(roomPtr != NULL)
   		{
+				if ( roomPtr->dependsOn.length() > 0 ) {
+					// If this room has a dependsOn...
+					std::string FName = PlayerState->housePtr->findFeatureByName(roomPtr->dependsOn);
+					if ( FName.compare(NOTFOUND) != 0 )
+					{
+						// And the dependsOn exists in the features map...
+						Feature * FPtr = PlayerState->housePtr->getFeaturePtr (FName);
+						if (FPtr) {
+							if (! FPtr->isSolved() ) {
+								std::cout << "You can't go that way right now." << std::endl;
+								std::cout << roomPtr->getBlockedText() << std::endl;
+								return this;
+							}
+						}
+					}
+				}
   			if (DEBUG_FUNCTION) std::cout << "===== Return room pointer." << std::endl;
   			return roomPtr;
   		}
@@ -365,35 +430,6 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 	std::cout << roomName << "? Hm, I don't see a doorway that leads that way." << std::endl;
 	return this;
 
-
-/*
-	Room * nextRoom = this;
-	Doorway * door;
-
-	if (DEBUG_FUNCTION) std::cout << "===== begin Room::goRoom" << std::endl;
-	for (int r = 0; r < MAX_RM_CONNECTIONS; r++) {
-		door = Connections[r];
-		if (door != NULL) {
-			if (DEBUG_FUNCTION) std::cout << "\t looking at Doorway " << door->Examine() << std::endl;
-			if (( roomName.compare(door->getDisplayName()) == 0 ) ||
-					( roomName.compare(door->getExitRoomName()) == 0 ) )
-			{
-				nextRoom = PlayerState->housePtr->getRoomPtr(roomName);
-				if ( nextRoom != NULL ) {
-					if (DEBUG_FUNCTION) cout << "\tSUCCESS moving to room " << door->getDisplayName() << std::endl;
-					return nextRoom;
-				}
-				else 
-				{
-					cout << "\tERROR moving to room " << door->getDisplayName() << std::endl;
-					nextRoom=this;
-				}
-			}
-		}
-	}
-	std::cout << "Hm, I don't see a doorway that leads to the " << roomName << "...." << std::endl;
-	return this;
-*/	
 }
 
 // prints the room.
@@ -418,11 +454,11 @@ std::vector<std::string> Room::getFeaturesVector()
 	return roomFeatures;
 }
 
-void Room::addFeature(std::string FName) 
+void Room::addFeature(std::string FName, GameState *GS) 
 {
 	// TODO: Check that FName is in the houseMap
 	//
-	Parser parse;
+	Parser parse(GS);
 	std::string realName = parse.getNoun(FName);
 
 	if (DEBUG_FEATURES) std::cout << "===== begin Room::addFeature, realName= " << realName << std::endl;
@@ -435,11 +471,11 @@ void Room::deleteFeature(std::string featureToDelete)
 	// refactored this to use keyname.
 	//Parser parse;
 	//std::string realName = parse.getNoun(FName);
-	if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] deleteFeature() FName: " << featureToDelete << std::endl;
+	//if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT] deleteFeature() FName: " << featureToDelete << std::endl;
 
 	for ( std::vector<std::string>::iterator iter = roomFeatures.begin(); iter != roomFeatures.end(); iter++)
 	{
-		if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT]    deleteFeature() (*iter): " << (*iter) << std::endl;
+		//if (DEBUG_BRENT) std::cout << "[DEBUG_BRENT]    deleteFeature() (*iter): " << (*iter) << std::endl;
 		if ((*iter).compare(featureToDelete) == 0) 
 		{
 			roomFeatures.erase(iter);
@@ -472,6 +508,26 @@ Feature * Room::getFeaturePtr(std::string FeatureName, GameState * GS)
 	return NULL;
 }
 
+bool Room::isFeatureInThisRoom(std::string searchFor)
+{
+	if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:isFeatureInThisRoom] Begins" << std::endl;
+	std::vector<std::string>::iterator iter;
+	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
+	{
+		if(*iter == searchFor)
+		{
+			if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:isFeatureInThisRoom] Ends - Return True" << std::endl;
+			return true;
+		}
+	}
+
+	if (DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION Room:isFeatureInThisRoom] Ends - Return False" << std::endl;
+	return false;
+
+}
+
+
+
 // returns lowercase string
 // http://www.cplusplus.com/reference/locale/tolower/
 std::string Room::strToLowercase(std::string mixedStr)
@@ -481,6 +537,43 @@ std::string Room::strToLowercase(std::string mixedStr)
   for (std::string::size_type i=0; i<mixedStr.length(); ++i)
     mixedStr[i] = std::tolower(mixedStr[i],loc);
 	return mixedStr;
+}
+
+
+Feature * Room::findFeatureByUnlocksString(std::string searchString, GameState *GS)
+{
+	Feature *feature = NULL;
+	if (DEBUG_FUNCTION || DEBUG_LOCK) std::cout << "[DEBUG_FUNCTION Room:findFeatureByUnlocksString] Begins" << std::endl;
+	std::vector<std::string>::iterator iter;
+	for (iter = roomFeatures.begin(); iter != roomFeatures.end(); iter ++)
+	{
+		if (DEBUG_LOCK) std::cout << "     looking at " << (*iter) << std::endl;
+		feature = GS->housePtr->getFeaturePtr((*iter));
+		if (DEBUG_LOCK) std::cout << "     found " << feature->getKeyName() << std::endl;
+		if(feature->getStringByKey("unlocks").compare(strToLowercase(searchString)) == 0)
+		{
+			if (DEBUG_LOCK) std::cout << "     [DEBUG_LOCK][Room] found " << searchString << " in " << feature->getStringByKey("name") << std::endl;
+			return feature;
+		}
+		else {
+			if (DEBUG_LOCK) std::cout << "     [DEBUG_LOCK][Room] did not find search string " << searchString << " in feature " << feature->getStringByKey("name") << std::endl;
+		}
+	}
+	for (std::vector<Feature*>::iterator it = GS->Holding.begin(); it != GS->Holding.end(); it ++)
+	{
+		feature = (*it);
+		if(feature->getStringByKey("unlocks").compare(strToLowercase(searchString)) == 0)
+		{
+			if (DEBUG_LOCK) std::cout << "     [DEBUG_LOCK][Holding] found " << searchString << " in " << feature->getStringByKey("name") << std::endl;
+			return feature;
+		}
+		else {
+			if (DEBUG_LOCK) std::cout << "     [DEBUG_LOCK][Holding] did not find search string " << searchString << " in feature " << feature->getStringByKey("name") << std::endl;
+		}
+	}
+
+	if (DEBUG_FUNCTION || DEBUG_LOCK) std::cout << "[DEBUG_FUNCTION Room:findFeatureByUnlocksString] Ends - Return False" << std::endl;
+	return NULL;
 }
 
 // Constructor for Doorway class. 

@@ -8,15 +8,19 @@ class Parser
 {
 	 private:
 	 std::string strToLowercase(std::string);
+	 GameState * GS;
 
     public:
     Parser(); // constructor
+    Parser(GameState *GameStatePtr); // constructor
     ~Parser();	// destructor
-    Choice * TestLine(GameState *);
+    Choice * TestLine();
     Choice * ParseLine(std::string);
     Choice * ParseLine();
     validVerbs getVerb(std::string);
     std::string getNoun(std::string);
+    std::string getRoom(std::string);
+    std::string getFeature(std::string);
     std::string getSubject(std::string);
 };
 

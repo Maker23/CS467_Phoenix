@@ -1,4 +1,4 @@
-NAME: Grand Piano
+NAME: Grand Piano|piano,steinway,grand,instrument
 TYPE: container
 ACTIONS: use|play,play eac, play e a c
 TEXT_NEVERSEEN: A piano sits in one corner of the room.
@@ -6,5 +6,6 @@ TEXT_SEEN: A piano is in the room.
 TEXT_EXAMINE: You look at a very old, dusty, black, Steinway & Sons grand piano.
 TEXT_EXAMINE_SOLVED: An old black Steinway with an open cubby hole is in the corner.
 TEXT_SOLVING: As you finish pressing the proper piano keys, a door just above the last key you pressed pops open, revealing a key.
+TEXT_TO_SOLVE: eac
 WEIGHT: 100
 DEPENDS_ON: null

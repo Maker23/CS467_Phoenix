@@ -1,10 +1,10 @@
-NAME: Carved Wooden Box
+NAME: Carved Wooden Box|box,wooden,carved
 TYPE: container
-# Gah, fix this later. What does "open" do?
-ACTIONS: open|open
-TEXT_NEVERSEEN: TODO(FIX THIS LINE): A wooden box sits ... somewhere.
-TEXT_SEEN: TODO(FIX THIS LINE): A wooden box sits somewhere.
+ACTIONS: use|open
+TEXT_NEVERSEEN: A wooden box sits on top of a bureau.
+TEXT_SEEN: A wooden box sits on the bureau.
 TEXT_EXAMINE: The box looks to be made from mahogany. Carved on it is a detailed picture of ghosts flying around a room.
 TEXT_EXAMINE_SOLVED: The wooden box is open.
+TEXT_SOLVING: You open the box to reveal a pair of antique spectacles inside.
 TRIGGERS: Spectacles
 DEPENDS_ON: null

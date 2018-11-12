@@ -1,0 +1,9 @@
+NAME: NurseryGhost|ghost,nurseryghost
+ACTIONS: look|use,solve
+TYPE: item
+TEXT_NEVERSEEN: A misty apparition hovers in the room... it's a ghost! You can dimly see a small object through its creepy translucent form.
+TEXT_EXAMINE: A ghost hovers in the room, hiding something.
+TEXT_SEEN: A ghost hovers in the room, hiding something.
+TEXT_EXAMINE_SOLVED: The ghost has vanished.
+WEIGHT: 0
+TEXT_USING: The ghost vanishes, revealing an antique baby's rattle.

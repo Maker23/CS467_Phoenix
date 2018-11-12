@@ -1,10 +1,10 @@
-NAME: Puzzle
+NAME: Puzzle|sentence,words,puzzle
 TYPE: puzzle
 ACTIONS: use|try,solve
 TEXT_NEVERSEEN: There's a series of words painted on the wall. It looks like a sentence, but it don't make any sense.
 TEXT_SEEN: A sentence is painted on the wall.
 TEXT_EXAMINE: The words are garbled - could it be some kind of puzzle to solve?
 TEXT_EXAMINE_SOLVED: The secret message is painted on the wall.
-TEXT_SOLVING: Solving the puzzle reveals pieces of flint and and steel.
+TEXT_SOLVING: Solving the puzzle reveals an old lighter.
 WEIGHT: 100
-TRIGGERS: Firestarter
+TRIGGERS: Lighter

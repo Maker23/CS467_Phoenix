@@ -11,7 +11,11 @@
 #define CRYPTED_STRING "Muaf o whxxwd psoub fog krupx xid mwofd lihzi whyixp xid wofs xa udqdow xid yofd."
 #define CLEAR_STRING   "From a little spark may burst the flame which lights the lamp to reveal the game."
 
+// TODO : Is this the right set of verbs
+//save and load added to list
 enum validVerbs { look, go, use, take, drop, open, shut, hurl, hit, unlock, inventory, LastAction, help, save, load, quit, unknown, LastVerb};
+//                0     1   2    3     4     5     6     7     8    9       10         11          12    13    14    15    16       17
+                 
 
 #include "utilities.hpp"
 #include "house.hpp"
@@ -27,9 +31,6 @@ struct Choice; // Forward declaration
 
 #define numGameTasks 5
 
-// TODO : Is this the right set of verbs
-//save and load added to list
-//                0     1   2    3     4     5     6      7     8    9    10         11          12    13    14    15    16       17
 
 /*
  * The GameState 
@@ -60,6 +61,11 @@ public:
 	Room * playerTurn (Room *);
 	Room * actInRoom (Room *, Choice *);
 	Room * actOnFeature (Room *, Choice *);
+	void printHelp();
+	void printHelp(Room *);
+	void printHelp(bool);
+	void unlockRoom (Room *, Choice *);
+	void unlockFeature (Room *, Choice *);
 	bool featureInHand (Feature *);
 	bool featureInRoom (Room *, std::string);
 	bool featureWithinReach (Room *, std::string);
@@ -69,9 +75,37 @@ public:
 	int getCapacity() { return Capacity;}
 	void UpdateGameState(int &GameClock, Room* currentRoom);
 	void getOverrideVerb(Choice *);
-	std::string printTheInstructions(); // Not implemented
+	void saveGame();
+	void loadGame();
 };
 
+class LongString
+{
+private:
+	std::string Text;
+	std::string WrapText;
+	unsigned short WrapLength;
+	void Wrap ();
+
+public:
+	LongString(std::string inPut) {
+		Text = inPut;
+		WrapText = "";
+		WrapLength=80; // default
+	};
+
+	std::string getWrappedText() {
+		Wrap();
+		return WrapText;
+	};
+	
+	friend std::ostream& operator<< (std::ostream &out, LongString &lstring)
+	{
+		lstring.Wrap();
+		out << lstring.WrapText;
+		return out;
+	};
+};
 
 
 struct Choice {

@@ -44,10 +44,7 @@ int main(int argc, char *argv[])
 	house->printFeatures(&GS);
 	house->debugHouse();
 
-	std::cout << "=============================================" << std::endl;
-	std::cout << "\nTo move around use verbs like 'go', 'move', 'walk', etc" << std::endl;
-	std::cout << "\nTo interact with objects in the room try words like 'use','take','move', etc" << std::endl;
-	std::cout << "=============================================" << std::endl;
+	GS.printHelp();
 
 	currentRoom->Examine(&GS);
 	while ( currentRoom != NULL )
@@ -74,15 +71,14 @@ void cmdLineFlags(int argc, char **argv, GameState*GS){
 
 	if (DEBUG_FUNCTION) std::cout << "++++   In CmdLineFlags,argc=" << argc << std::endl;
 	for ( int i = 0; i < argc; i++ ) {
-		std::cout << "argv[" << i << "] = " << argv[i] << std::endl; 
+		//std::cout << "argv[" << i << "] = " << argv[i] << std::endl; 
 		if ( testArg.compare(argv[i]) == 0 ) 
 		{
 			if ( (i + 2) <= argc ) {
 				// Is there another argument?  if not error
-			  if (DEBUG_FUNCTION) std::cout << "Yes Virginia there is another argument" << fileName <<std::endl;
 				fileName = argv[i+1];
 				i++;
-			  std::cout << "filename =" << fileName <<std::endl;
+			  if (DEBUG_FUNCTION)std::cout << "In TEST mode, input filename =" << fileName <<std::endl;
 				GS->GameTestFilename = fileName;
 				if (DEBUG_FUNCTION) std::cout << "GameTestFilename =" << GS->GameTestFilename  << std::endl;
 				
@@ -104,7 +100,7 @@ void cmdLineFlags(int argc, char **argv, GameState*GS){
 				std::cout << "ERROR: expected a filename after the -test flag" << std::endl;
 				exit(1);
 			}
-			std::cout << " .";
+			//std::cout << " .";
 		}
 	}
 }

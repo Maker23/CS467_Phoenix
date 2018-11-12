@@ -1,8 +1,10 @@
-NAME: Top Shelf
+NAME: Top Shelf|shelf,high,top
+ACTIONS: use|examine,look,explore
 TYPE: container
-TEXT_NEVERSEEN: Several shelves are in the closet. What you can see at a glance they are dusty, but empty. You can't see the top shelf.
-TEXT_SEEN: Dusty shelves, empty except maybe the top shelf.
-TEXT_EXAMINE: On the top shelf, you find a camera.
-TEXT_EXAMINE_SOLVED: Empty shelves
+TEXT_NEVERSEEN: You can't easily see onto the top shelf. Is there something there?
+TEXT_SEEN: High shelf.
+TEXT_EXAMINE: An old dusty camera sits on the top shelf.
+TEXT_SOLVING: On the top shelf, you find a camera.
+TEXT_EXAMINE_SOLVED: Empty shelf
 TRIGGERS: Camera
 DEPENDS_ON: null

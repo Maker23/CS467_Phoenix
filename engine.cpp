@@ -78,10 +78,15 @@ Room * GameState::playerTurn(Room * currentRoom)
 		//std::cout << "THERE IS NO HELP FOR YOU" << std::endl;
 		return currentRoom;
 	}
-	if( (userChoice->Verb == (validVerbs)save) ||
-			(userChoice->Verb == (validVerbs)load) )
+	if (userChoice->Verb == (validVerbs)save)
 	{
-		std::cout << "Game does not yet support Save or Load" << std::endl;
+		saveGame();
+		return currentRoom;
+
+	}
+	if (userChoice->Verb == (validVerbs)load) 
+	{
+		loadGame();
 		return currentRoom;
 	}
 
@@ -741,4 +746,12 @@ void GameState::printHelp(bool Long) {
 		std::cout << "supported.                                   " << std::endl;
 		std::cout << "=============================================" << std::endl;
 	}
+}
+
+void GameState::saveGame() {
+	//
+}
+
+void GameState::loadGame() {
+	//
 }

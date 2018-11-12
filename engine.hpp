@@ -75,7 +75,8 @@ public:
 	int getCapacity() { return Capacity;}
 	void UpdateGameState(int &GameClock, Room* currentRoom);
 	void getOverrideVerb(Choice *);
-	std::string printTheInstructions(); // Not implemented
+	void saveGame();
+	void loadGame();
 };
 
 class LongString

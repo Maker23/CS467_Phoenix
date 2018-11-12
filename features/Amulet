@@ -1,0 +1,10 @@
+NAME: Glowing Amulet|amulet
+TYPE: item
+TEXT_NEVERSEEN: An amulet lays on the floor.
+TEXT_SEEN: An amulet
+TEXT_EXAMINE: The amulet is glowing, pulsing with an eerie green light.
+TEXT_TAKING: You place the amulet around your neck.
+WEIGHT: 1
+#starts out solved
+SOLVED: 1
+DEPENDS_ON: rattlesnake

@@ -1,0 +1,11 @@
+NAME: Moose head|moosehead, moose
+TYPE: item
+ACTIONS: use|talk,poke,examine,say
+TEXT_NEVERSEEN: A moth-eaten moose head hangs on the wall.
+TEXT_SEEN: A moose head hangs on the wall.
+TEXT_EXAMINE: A moth-eaten moose head hangs on the wall. Although it's obviously seen better days, with patchy fur and darkened horns, something about it's expressions looks both happy and friendly.
+TEXT_EXAMINE_SOLVED: A sleeping moose head hangs on the wall
+TEXT_SOLVING: The moose grins down and you and says, 'Well how are you today?' Then it closes its eyes and appears to go to sleep.
+TEXT_TO_SOLVE: hello
+WEIGHT: 100
+DEPENDS_ON: null

@@ -33,6 +33,7 @@ TODO: quite a bit, including:
 #include <typeindex>
 #include <sstream>
 #include <algorithm>
+#include <stdlib.h>  // for rand. Not seeding it for now.
 #include "engine.hpp"
 #include "house.hpp"
 #include "room.hpp"
@@ -49,13 +50,13 @@ Feature::Feature(string fileToOpen)
 
 	// set defaults
 	key = "";
-	//name = "";
 	solved = false;
-	weight = 0;
+	weight = 1; // Zero is for intangible objects like ghosts
+	seen = 0;
+	//name = "";
 	//triggers = "";
 	//dependsOn = "";
 	//uses = "";
-	seen = 0;
 	//neverSeenText = "";
 	//observeText = "";
 	//seenText = "";
@@ -136,6 +137,34 @@ Feature::Feature(string fileToOpen)
 						type = dropped_item;
 					if (DEBUG_FEATURES) { std::cout << "Feature() - Type: " << type << std::endl;}
 				}
+			}
+			if(lineStr.find("SOLVED: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(8, lineStr.length()-1);
+				if(tempStr.compare("true") == 0 || tempStr.compare("1") == 0){
+					if (DEBUG_FEATURES) { std::cout << "Feature() - setting solved to true" << std::endl;}
+					solved = true;
+				}
+				else if(tempStr.compare("false") == 0 || tempStr.compare("0") == 0){
+					solved = false;
+				}
+				else if (DEBUG_FEATURES) { std::cout << "Feature() - found unknown 'solved' valaue " << tempStr << std::endl;}
+			}
+			if(lineStr.find("OPEN: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(6, lineStr.length()-1);
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					featureStrings["open"] = tempStr;
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Open: " << tempStr << std::endl;}
+			}
+
+			if(lineStr.find("SOLVES_HERE: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(13, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found SOLVES_HERE " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					featureStrings["solvesHere"] = tempStr;
 			}
 
 			if(lineStr.find("TEXT_NEVERSEEN: ") != std::string::npos) 
@@ -373,6 +402,9 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 {
 	std::string nounUses;
 	Feature * checkFeature=NULL;
+	//std::string solvesHere;
+	//Feature * solvesFeature=NULL;
+	bool printedSomething=false;
 
 	//if ( getName().compare(getNoun("puzzle") == 0 ) {
 	if ( getName().compare("Puzzle") == 0 ) {
@@ -389,26 +421,40 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 	if ( getStringByKey("solvingText").compare("") != 0 )
 	{
 		std::cout << getSolvingText() << std::endl;
+		printedSomething=true;
 	}
-	if ( getStringByKey("usingText").compare("") != 0 )
-	{
-		std::cout << getStringByKey("usingText") << std::endl;
-	}
-	else
-	{
-		nounUses = getUses();
-		checkFeature = GS->housePtr->getFeaturePtr(nounUses);
-		if ( nounUses.compare("") != 0  &&  checkFeature != NULL )
-		{
-			if ( checkFeature->getStringByKey("usingText").compare("") != 0 ) {
-				std::cout << checkFeature->getStringByKey("usingText") << std::endl;
-			}
-		}
-		// get the used text from the dependency
-	}
-
 	if (DEBUG_FEATURES) { std::cout << "      Setting isSolved to true " << std::endl;}
 	setSolved(true);
+
+
+  //solvesHere = getStringByKey("solvesHere");
+  //if ( solvesHere.compare("") != 0 && GS->featureWithinReach(currentRoom,solvesHere)) {
+  //  solvesFeature = GS->housePtr->getFeaturePtr(solvesHere);
+  //  if (solvesFeature) {
+  //    solvesFeature->setSolved(true);
+  //  }
+ // }
+
+	if ( getStringByKey("usingText").compare("") != 0 )
+	{
+		if (DEBUG_FEATURES) { std::cout << "      printing primary usingText" << std::endl;}
+		std::cout << getStringByKey("usingText") << std::endl;
+		printedSomething=true;
+	}
+	nounUses = getUses();
+	checkFeature = GS->housePtr->getFeaturePtr(nounUses);
+	if ( nounUses.compare("") != 0  &&  checkFeature != NULL )
+	{
+		// If there's a dependency get the usingText from that
+		if ( checkFeature->getStringByKey("usingText").compare("") != 0 ) {
+			if (DEBUG_FEATURES) { std::cout << "      printing secondary usingText" << std::endl;}
+			std::cout << checkFeature->getStringByKey("usingText") << std::endl;
+			checkFeature->setSolved(true);
+			printedSomething=true;
+		}
+	}
+
+	if (! printedSomething) std::cout << "Nothing much happens." << std::endl;
 	return;
 }
 
@@ -537,15 +583,28 @@ void Feature::hitFeature(Feature * Subject)
 {
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::hitFeature()" << std::endl;}
 
+	std::string Response[4];
+	Response[0] = "What were you expecting?";
+	Response[1] = "That was dumb.";
+	Response[2] = "Maybe somebody needs some anger management.";
+	Response[3] = "Got any other ideas?";
+
+
 	std::string FName = getName(); // TODO: should use the noun that the user typed. Just pass the Choice in 
+
+	if ( weight == 0 ) {
+		std::cout << "Your hand passes through the incorporeal "<< FName <<" without affecting it." << std::endl;
+		std::cout << "You feel a chill." << std::endl;
+		return;
+	}
 
 	// TODO: support TEXT_HITTING in the future.. if we care
 	std::cout << "You hit the " << FName << ". ";
 	if ( weight >= 10 ) {
 		std::cout << "Your hand hurts. ";
 	}
-	
-	std::cout << "Nothing happens. What were you expecting?" << std::endl;
+	int i = rand() % 4;
+	std::cout << Response[i] << std::endl;
 	return;
 }
 
@@ -563,25 +622,27 @@ std::string Feature::getWalkingInRoomText()
 	}
 	else
 	{
-		return getStringByKey("seenText");
-		//return seenText;
-	}
+		//return getStringByKey("seenText");
 
-		// taking this out, shouldn't have text here that changes when solved
-		//if(solved) 
-		//{
+		// This is a bad idea taking this out, shouldn't have text here that changes when solved
+		if(solved && getStringByKey("solvedText").length() > 0) 
+		{
 			//return solvedText;	
-		//}
-		//else
-		//{
-			//return seenText;
-		//}
+			return getStringByKey("solvedText");
+		}
+		else
+		{
+			return getStringByKey("seenText");
+		}
+	}
 }
 
 std::string Feature::getExamineText()
 {
 	std::string tmpS;
-	if(solved) 
+	tmpS = getStringByKey("solvedText");
+
+	if(solved && tmpS.length() > 0 ) 
 	{
 		tmpS = getStringByKey("solvedText");
 	}
@@ -642,6 +703,13 @@ std::string Feature::getUsingText()
 {
 	return getStringByKey("usingText");
 	//return usingText;
+}
+
+bool Feature::isOpen()
+{
+	//return getStringByKey("open");
+	//TODO
+	return true;
 }
 
 bool Feature::isSolved()

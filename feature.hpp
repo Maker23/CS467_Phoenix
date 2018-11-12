@@ -32,6 +32,7 @@ class Feature
 		//		triggers;
 		//		dependsOn;
 		//    unlocks;
+		//		open;
 		//		uses; // in the real world this would be a list. meh.
 		bool solved;
 		bool seen;
@@ -67,6 +68,7 @@ class Feature
 		void examineFeature();
 		void Examine();
 		bool isSolved();
+		bool isOpen();
 		bool isSeen();
 		void printFeaturesActions();
 		bool solveFeature(GameState *GS, std::string solveString);

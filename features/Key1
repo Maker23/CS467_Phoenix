@@ -5,6 +5,8 @@ TEXT_SEEN: A key.
 TEXT_EXAMINE: The key is dusty, and you can see the top part of the key is the shape of a clover.
 TEXT_TAKING: You place the key in your inventory.
 WEIGHT: 1
+#starts out solved
+SOLVED: 1
 TRIGGERS: 2nd Floor Doors
 DEPENDS_ON: Piano1
 UNLOCKS: Nursery

@@ -1,5 +1,7 @@
 # Do not use 'lock' as a synonym here, we use that for the 2ndFloorDoors
 NAME: Padlock|padlock
+ACTIONS: unlock|open,use,try,jimmy
+ACTIONS: hit|break
 TYPE: item
 TEXT_NEVERSEEN: A padlock locks a doorway down to the basement.
 TEXT_SEEN: There's a padlock on the door.

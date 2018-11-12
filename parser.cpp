@@ -114,7 +114,7 @@ Choice * Parser::ParseLine(std::string inString){
 		for (list<string>::iterator iter=words.begin(); iter!=words.end(); iter++)
     {
   		action = getVerb ( *iter );
-      if (action != 16)
+      if (action != (validVerbs)unknown)
       {
         userChoice->Verb = action;
   			userChoice->inputVerb = *iter;
@@ -170,12 +170,18 @@ Choice * Parser::TestLine()
 		exit(1);
 	}
 	if ( ! inputFile->good() ) {
-		std::cout << "ERROR: inputFile is empty, switching to user input"<< std::endl;
+		std::cout << "WARNING: inputFile is empty, switching to user input"<< std::endl;
 		GS->GameTest=false;
 		return ParseLine("");
 	}
 	else {
 		std::getline(*inputFile, inputString);
+		if ( inputString.substr(0,1).compare("#") == 0 )
+		{
+			//Found a comment, print instead of executing
+			std::cout << inputString << std::endl;
+			return TestLine(); // Go to the next line in the file
+		}
 		std::cout << "TEST command = " << inputString<< std::endl;
 		return ParseLine(inputString);
 	}

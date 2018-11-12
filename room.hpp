@@ -43,6 +43,7 @@ class Room
 		std::string longDesc;
 		std::string shortDesc;
 		std::string additionalDesc;
+		std::string blockedText;
 		std::string unlockText;
 		int numExits;
 		Doorway * Connections[MAX_RM_CONNECTIONS]; 	// Exits from the room
@@ -51,8 +52,8 @@ class Room
 
 	public:
 	 	// IRL these would be private with iterator and get/set functions. TODO
+		std::string dependsOn;
 		std::vector<std::string> roomFeatures;
-
 		std::vector<Feature *> features;
 		
 		Room(std::string, std::string, std::stack<lockDoorStruct> &);
@@ -66,6 +67,7 @@ class Room
 		std::string getAdditionalDesc();					// returns the additional description of this room.
 		std::string getKeyName();						// return the 'canonical' name of the room
 		std::string getUnlockText();
+		std::string getBlockedText();
 		void setKeyName(std::string);
 		void setRoomSeen();
 		void Examine(GameState *);

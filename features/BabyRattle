@@ -7,5 +7,5 @@ TEXT_TAKING: The rattle makes a nice rattling sound as you pick it up.
 TEXT_EXAMINE: It's a silver antique baby's rattle. It might scare something if you shake it hard enough.
 TEXT_USING: It makes a rattling noise.
 WEIGHT: 1
-TRIGGERS: RattleSnake
+SOLVES_HERE: RattleSnake
 DEPENDS_ON: NurseryGhost

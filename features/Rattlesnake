@@ -1,5 +1,6 @@
 NAME: RattleSnake|snake,rattler
 TYPE: item
+ACTIONS: look|use,solve
 TEXT_NEVERSEEN: A rattlesnake slides out onto the floor, raises its head and rattles its tail in a dire warning.
 TEXT_SEEN: A rattlesnake glares at you.
 TEXT_TAKING: The rattlesnake bites you as you pick it up.

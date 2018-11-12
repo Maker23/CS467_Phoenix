@@ -44,3 +44,17 @@ go north
 go east
 unlock nursery
 go nursery
+dust furniture
+use camera
+get rattle
+go right
+go up
+inventory
+#
+# If you don't have the lighter you can't get past this point
+#
+go hall
+light the lamp
+go hall
+go bedroom3
+say hello to the moose

@@ -276,7 +276,7 @@ std::string Parser::getRoom(std::string lcNounString) {
       {
         returnString = "2ndFloorHallway";
       }
-			else if( lcNounString == "3rd" || lcNounString == "third" || lcNounString == "Third")
+			else if( lcNounString == "hall" || lcNounString == "3rd" || lcNounString == "third" || lcNounString == "Third")
       {
         returnString = "3rdFloorHallway";
       }
@@ -420,6 +420,10 @@ std::string Parser::getSubject(std::string subjectstring) {
   if(subjectstring == "1894")
   {
     returnString = "1894";
+  }
+  if(subjectstring == "hello" || subjectstring == "Hello")
+  {
+    returnString = "hello";
   }
 
   return returnString;

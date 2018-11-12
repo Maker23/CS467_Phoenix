@@ -438,7 +438,7 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 	if ( getStringByKey("usingText").compare("") != 0 )
 	{
 		if (DEBUG_FEATURES) { std::cout << "      printing primary usingText" << std::endl;}
-		std::cout << getStringByKey("usingText") << std::endl;
+		std::cout << getUsingText() << std::endl;
 		printedSomething=true;
 	}
 	nounUses = getUses();
@@ -448,7 +448,7 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 		// If there's a dependency get the usingText from that
 		if ( checkFeature->getStringByKey("usingText").compare("") != 0 ) {
 			if (DEBUG_FEATURES) { std::cout << "      printing secondary usingText" << std::endl;}
-			std::cout << checkFeature->getStringByKey("usingText") << std::endl;
+			std::cout << checkFeature->getUsingText() << std::endl;
 			checkFeature->setSolved(true);
 			printedSomething=true;
 		}
@@ -705,8 +705,13 @@ std::string Feature::getDroppingText()
 
 std::string Feature::getUsingText()
 {
-	return getStringByKey("usingText");
-	//return usingText;
+	std::string tmpS;
+	
+	tmpS = getStringByKey("usingText");
+
+	LongString LString(tmpS);
+	return LString.getWrappedText();
+
 }
 
 bool Feature::isOpen()

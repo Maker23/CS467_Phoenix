@@ -50,6 +50,8 @@ Room::Room(string filename, string roomKey, std::stack<lockDoorStruct> &doorwayS
 	int roomCount=0;
 	numExits = 0;
 	lockDoorStruct lockThisDoor;
+	dependsOn = "";
+	blockedText = "";
 	//Feature * newFeature;
 
 	for (int i=0;i<MAX_RM_CONNECTIONS; i++)
@@ -94,6 +96,16 @@ Room::Room(string filename, string roomKey, std::stack<lockDoorStruct> &doorwayS
    		if(lineStr.find("UNLOCKED_TEXT: ") != std::string::npos)
    		{
    			unlockText = lineStr.substr(15, lineStr.length()-1);
+				continue;
+   		}
+   		if(lineStr.find("BLOCKED_TEXT: ") != std::string::npos)
+   		{
+   			blockedText = lineStr.substr(14, lineStr.length()-1);
+				continue;
+   		}
+   		if(lineStr.find("DEPENDS_ON: ") != std::string::npos)
+   		{
+   			dependsOn = lineStr.substr(12, lineStr.length()-1);
 				continue;
    		}
 
@@ -202,6 +214,11 @@ void Room::setRoomSeen()
 std::string Room::getUnlockText()
 {
 	return unlockText;
+}
+
+std::string Room::getBlockedText()
+{
+	return blockedText;
 }
 
 
@@ -388,6 +405,22 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
   		roomPtr = PlayerState->housePtr->getRoomPtr(exitStringReturned);
   		if(roomPtr != NULL)
   		{
+				if ( roomPtr->dependsOn.length() > 0 ) {
+					// If this room has a dependsOn...
+					std::string FName = PlayerState->housePtr->findFeatureByName(roomPtr->dependsOn);
+					if ( FName.compare(NOTFOUND) != 0 )
+					{
+						// And the dependsOn exists in the features map...
+						Feature * FPtr = PlayerState->housePtr->getFeaturePtr (FName);
+						if (FPtr) {
+							if (! FPtr->isSolved() ) {
+								std::cout << "You can't go that way right now." << std::endl;
+								std::cout << roomPtr->getBlockedText() << std::endl;
+								return this;
+							}
+						}
+					}
+				}
   			if (DEBUG_FUNCTION) std::cout << "===== Return room pointer." << std::endl;
   			return roomPtr;
   		}

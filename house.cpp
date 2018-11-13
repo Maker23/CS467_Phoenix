@@ -161,19 +161,27 @@ Room *House::buildHouse(string startingRoom){
 void House::reloadHouse()
 {
 	// delete the rooms from memory and erase from the map
-	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) 
+	{
 		delete(it->second);
 	}
 	houseMap.clear();
 
 	// delete houseFeatures
-	for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
+	for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) 
+	{
 		delete(it->second);
 	}
 	houseFeatures.clear();
 	houseFeatureAliases.clear(); 
 
 	buildHouse(firstRoomToLoad);
+	// unlock all doors, the save file will lock the ones that need locking
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) 
+	{
+		it->second->unlockAllDoorsInThisRoom();
+		//delete(it->second);
+	}
 }
 
 

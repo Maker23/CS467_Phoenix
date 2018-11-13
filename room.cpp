@@ -308,6 +308,14 @@ bool Room::unlockExitDoorByKey(std::string searchKey)
 	return false;
 }
 
+void Room::unlockAllDoorsInThisRoom()
+{
+	for(int i=0;i < numExits; i++)
+	{
+		Connections[i]->unlockDoor();
+	}
+}
+
 
 /*
  * TODO: Function info goes here

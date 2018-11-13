@@ -371,6 +371,25 @@ std::vector<std::string> House::getSolvedFeatures()
 	return completedVector;
 }
 
+std::vector<std::string> House::getDroppedFeatures()
+{
+	std::vector<std::string> completedVector;
+	Feature *f1;
+	//if (DEBUG_BRENT) std::cout << "Solved Features Starts ====" << std::endl;
+
+	for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) 
+	{
+		f1 = getFeaturePtr(it->first);
+		if(f1->isDropped())
+		{
+			//if (DEBUG_BRENT) std::cout << it->first << std::endl;
+			completedVector.push_back(it->first);
+		}
+	}
+	//if (DEBUG_BRENT) std::cout << "Solved Features Ends   ====" << std::endl;
+	return completedVector;
+}
+
 void House::printRoomFeatures(Room *room)
 {
 	std::vector<std::string> roomFeatures = room->getFeaturesVector();

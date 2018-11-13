@@ -722,6 +722,11 @@ bool Feature::isSolved()
 	return solved;
 }
 
+bool Feature::isDropped()
+{
+	return dropped;
+}
+
 bool Feature::isSeen()
 {
 	return seen;
@@ -730,6 +735,11 @@ bool Feature::isSeen()
 void Feature::setSolved(bool value)
 {
 	solved = value;
+}
+
+void Feature::setDropped(bool value)
+{
+	dropped = value;
 }
 
 void Feature::setKeyName(std::string keyName)

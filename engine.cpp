@@ -786,6 +786,16 @@ void GameState::saveGame(Room *currentRoom) {
 		saveString.append("\n");
 	}
 
+	// need to save all the done features by key
+	stringVector = housePtr->getDroppedFeatures();
+	for (std::vector<std::string>::iterator iter = stringVector.begin(); iter != stringVector.end(); iter ++ )
+	{
+		//if(DEBUG_BRENT) std::cout << (*iter) << std::endl;
+		saveString.append("DROPPED:");
+		saveString.append((*iter));
+		saveString.append("\n");
+	}
+
 	// room features:
 	saveString.append(housePtr->getRoomFeaturesSaveString());
 
@@ -851,6 +861,15 @@ Room * GameState::loadGame(Room *currentRoom) {
    			//std::cout << "set feature " << tempStr << " as solved. " << std::endl;
    			feature = housePtr->getFeaturePtr(tempStr);
    			feature->setSolved(true);
+				continue;
+   		}
+
+   		if(lineStr.find("DROPPED:") != std::string::npos)
+   		{
+   			tempStr = lineStr.substr(8, lineStr.length()-1);
+   			//std::cout << "set feature " << tempStr << " as solved. " << std::endl;
+   			feature = housePtr->getFeaturePtr(tempStr);
+   			feature->setDropped(true);
 				continue;
    		}
  

@@ -34,6 +34,7 @@ class House
 		void printRoomFeatures(Room *);		// display the features in the room.
 		void debugHouse();
 		std::vector<std::string> getSolvedFeatures();
+		std::vector<std::string> getDroppedFeatures();
 		std::string getRoomFeaturesSaveString();
 		std::string getRoomLockedDoorsSaveString();
 		void reloadHouse();

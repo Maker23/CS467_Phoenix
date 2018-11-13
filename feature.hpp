@@ -58,6 +58,7 @@ class Feature
 		std::string getTriggers();						// calls getStringByKey
 		std::string getUses();							// calls getStringByKey
 		void setSolved(bool);
+		void setDropped(bool);
 		void setKeyName(std::string);
 		std::string getKeyName();						// calls getStringByKey
 		void useFeature(GameState *GS, Feature *Subject);
@@ -69,6 +70,7 @@ class Feature
 		void examineFeature();
 		void Examine();
 		bool isSolved();
+		bool isDropped();
 		bool isOpen();
 		bool isSeen();
 		void printFeaturesActions();

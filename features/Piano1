@@ -1,5 +1,4 @@
 NAME: Grand Piano|piano,steinway,grand,instrument
-TYPE: container
 ACTIONS: use|play,play eac, play e a c
 TEXT_NEVERSEEN: A piano sits in one corner of the room.
 TEXT_SEEN: A piano is in the room.

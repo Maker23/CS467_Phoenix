@@ -1,6 +1,5 @@
 NAME: BabyRattle|rattle
 ACTIONS: use|shake,rattle
-TYPE: item
 TEXT_NEVERSEEN: An ornate antique baby rattle lies on the floor, covered in dust.
 TEXT_SEEN: A baby rattle lies on the floor.
 TEXT_TAKING: The rattle makes a nice rattling sound as you pick it up.

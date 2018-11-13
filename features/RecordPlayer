@@ -1,5 +1,4 @@
 NAME: RecordPlayer|player,recordplayer
-TYPE: used_with_another_item
 ACTIONS: use|play, play record
 TEXT_NEVERSEEN: An old record player sits in the corner of the room.
 TEXT_SEEN: The record player is in the room.

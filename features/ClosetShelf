@@ -1,6 +1,5 @@
 NAME: Top Shelf|shelf,high,top
 ACTIONS: use|examine,look,explore
-TYPE: container
 TEXT_NEVERSEEN: You can't easily see onto the top shelf. Is there something there?
 TEXT_SEEN: High shelf.
 TEXT_EXAMINE: An old dusty camera sits on the top shelf.

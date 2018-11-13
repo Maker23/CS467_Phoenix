@@ -1,5 +1,4 @@
 NAME: Dirty Dishes|dishes
-TYPE: container
 ACTIONS: use|clean, move, wash, scrub
 TEXT_NEVERSEEN: The counter and sink are piled with dirty, dusty, dishes.
 TEXT_SEEN: The dishes aren't going to clean themselves.

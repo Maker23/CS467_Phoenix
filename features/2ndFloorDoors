@@ -1,5 +1,4 @@
 NAME: 2nd Floor Doors|2ndFloorDoors,door,lock
-TYPE: door_lock
 ACTIONS: use|unlock
 TEXT_NEVERSEEN: The door will not open.
 TEXT_SEEN: The door will not open.

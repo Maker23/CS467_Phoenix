@@ -1,5 +1,4 @@
 NAME: Oil Lamp|lamp
-TYPE: block_room
 ACTIONS: use|light
 TEXT_NEVERSEEN: You can just make out the silhouette of an oil lamp on the wall at the top of the stair case. 
 TEXT_SEEN: Unlit oil lamp is attached to the wall.

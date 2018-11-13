@@ -1,5 +1,4 @@
 NAME: Lighter|lighter
-TYPE: item
 ACTIONS: use|light,strike
 TEXT_NEVERSEEN: Old lighter
 TEXT_SEEN: Old lighter

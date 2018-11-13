@@ -1,5 +1,4 @@
 NAME: Carved Wooden Box|box,wooden,carved
-TYPE: container
 ACTIONS: use|open
 TEXT_NEVERSEEN: A wooden box sits on top of a bureau.
 TEXT_SEEN: A wooden box sits on the bureau.

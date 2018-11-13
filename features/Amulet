@@ -1,5 +1,4 @@
 NAME: Glowing Amulet|amulet
-TYPE: item
 TEXT_NEVERSEEN: An amulet lays on the floor.
 TEXT_SEEN: An amulet
 TEXT_EXAMINE: The amulet is glowing, pulsing with an eerie green light.

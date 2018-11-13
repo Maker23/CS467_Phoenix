@@ -1,5 +1,4 @@
 NAME: Rug|Rug1,rug,rug1
-TYPE: container
 ACTIONS: use|move,push,shove,lift
 TEXT_NEVERSEEN: A dark blue rug sits in the middle of the room.
 TEXT_SEEN: Rug is in the middle of the room.

@@ -1,5 +1,4 @@
 NAME: Moose head|moosehead, moose
-TYPE: item
 ACTIONS: use|talk,poke,examine,say
 TEXT_NEVERSEEN: A moth-eaten moose head hangs on the wall.
 TEXT_SEEN: A moose head hangs on the wall.

@@ -1,5 +1,4 @@
 NAME: NurseryFurniture|furniture
-TYPE: item
 ACTIONS: use|dust,clean
 TEXT_NEVERSEEN: A dusty rocking chair and crib are in the corners. 
 TEXT_SEEN:  A dusty rocking chair and crib are in the corners. 

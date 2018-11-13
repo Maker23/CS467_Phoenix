@@ -2,7 +2,6 @@
 NAME: Padlock|padlock
 ACTIONS: unlock|open,use,try,jimmy
 ACTIONS: hit|break
-TYPE: item
 TEXT_NEVERSEEN: A padlock locks a doorway down to the basement.
 TEXT_SEEN: There's a padlock on the door.
 TEXT_EXAMINE: There are 4 dials to set a number for it to unlock.

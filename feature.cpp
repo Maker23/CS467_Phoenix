@@ -111,33 +111,7 @@ Feature::Feature(string fileToOpen)
 				}
 				if (DEBUG_FEATURES) { std::cout << "Feature() - setting NAME to " << tempStr << std::endl;}
 			}
-
-			if(lineStr.find("TYPE: ") != std::string::npos) 
-			{
-				tempStr = lineStr.substr(6, lineStr.length()-1);
-				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TYPE " << tempStr << std::endl;}
-				// check if not empty and isn't set to "null"
-				if((tempStr.length() > 0) && (tempStr.compare("null") != 0))
-				{
-					if(tempStr.compare("container") == 0)
-						type = container;
-					else if(tempStr.compare("item") == 0)
-						type = item;
-					else if(tempStr.compare("door_lock") == 0)
-						type = door_lock;
-					else if(tempStr.compare("block_room") == 0)
-						type = block_room;
-					else if(tempStr.compare("used_with_another_item") == 0)
-						type = used_with_another_item;
-					else if(tempStr.compare("decoration") == 0)
-						type = decoration;
-					else if(tempStr.compare("puzzle") == 0)
-						type = puzzle;
-					else if(tempStr.compare("dropped_item") == 0)
-						type = dropped_item;
-					if (DEBUG_FEATURES) { std::cout << "Feature() - Type: " << type << std::endl;}
-				}
-			}
+	
 			if(lineStr.find("SOLVED: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(8, lineStr.length()-1);

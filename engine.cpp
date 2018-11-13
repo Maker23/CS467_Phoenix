@@ -829,6 +829,14 @@ void GameState::loadGame() {
    			std::cout << "TODO: Set current room pointer to " << currentRoomStr << std::endl;
 				continue;
    		}
+
+   		if(lineStr.find("HOLDING:") != std::string::npos)
+   		{
+   			tempStr = lineStr.substr(8, lineStr.length()-1);
+   			std::cout << "TODO: add " << tempStr << " to holding. " << std::endl;
+				continue;
+   		}
+
    		if(lineStr.find("SOLVED:") != std::string::npos)
    		{
    			tempStr = lineStr.substr(7, lineStr.length()-1);

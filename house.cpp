@@ -67,6 +67,8 @@ Room *House::buildHouse(string startingRoom){
 	stack<lockDoorStruct> doorsToLock;
 	lockDoorStruct lockThisDoor;
 
+	firstRoomToLoad = startingRoom;
+
 	// Push the startingRoom to the stack
 	roomsToLoad.push(startingRoom);
 

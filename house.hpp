@@ -16,6 +16,7 @@ class House
 		std::map<std::string,Feature *> houseFeatures; // this is a map of all features... feature name is key, holds the feature pointer
 		std::map<std::string,std::string> houseFeatureAliases; // Feature aliases. Alias is the key, canonical name is the value.
 		std::string strToLowercase(std::string);
+		std::string firstRoomToLoad;
 
 	public:
 		House(); // constructor
@@ -35,6 +36,7 @@ class House
 		std::vector<std::string> getSolvedFeatures();
 		std::string getRoomFeaturesSaveString();
 		std::string getRoomLockedDoorsSaveString();
+		void reloadHouse();
 };
 
 #endif

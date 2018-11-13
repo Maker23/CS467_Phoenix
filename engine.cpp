@@ -95,8 +95,7 @@ Room * GameState::playerTurn(Room * currentRoom)
 	}
 	if (userChoice->Verb == (validVerbs)load) 
 	{
-		loadGame();
-		return currentRoom;
+		return loadGame(currentRoom);
 	}
 
 	getOverrideVerb(userChoice); 
@@ -803,7 +802,7 @@ void GameState::saveGame(Room *currentRoom) {
 
 
 
-void GameState::loadGame() {
+Room * GameState::loadGame(Room *currentRoom) {
 	//
 	ifstream loadFile;
 	std::string lineStr, currentRoomStr = "", tempStr;
@@ -814,6 +813,12 @@ void GameState::loadGame() {
 	loadFile.open("saveGame.txt");  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
 	if (loadFile.is_open())
 	{
+
+		housePtr->reloadHouse();
+		Holding.clear();
+
+
+
 		// https://stackoverflow.com/questions/13035674/how-to-read-line-by-line-or-a-whole-text-file-at-once
 		// http://www.cplusplus.com/reference/string/string/substr/
 	   while (std::getline(loadFile, lineStr))  
@@ -826,6 +831,7 @@ void GameState::loadGame() {
    		if(lineStr.find("CURRENT_ROOM:") != std::string::npos)
    		{
    			currentRoomStr = lineStr.substr(13, lineStr.length()-1);
+   			
    			std::cout << "TODO: Set current room pointer to " << currentRoomStr << std::endl;
 				continue;
    		}
@@ -898,7 +904,9 @@ void GameState::loadGame() {
 	 }
 	 else {
 	 	std::cout << "Error opening save file." << std::endl;
+	 	return currentRoom;
 	 }
 
+	 return housePtr->getRoomPtr(currentRoomStr);
 	// make sure to set currentRoom.
 }

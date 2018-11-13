@@ -50,7 +50,13 @@ House::~House()
 	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
 		delete(it->second);
 	}
+
+	for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
+		delete(it->second);
+	}
+
 	houseMap.clear();
+	houseFeatures.clear();
 }
 
 /*
@@ -150,6 +156,24 @@ Room *House::buildHouse(string startingRoom){
 
     }
 	return  startingRoomPtr;
+}
+
+void House::reloadHouse()
+{
+	// delete the rooms from memory and erase from the map
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
+		delete(it->second);
+	}
+	houseMap.clear();
+
+	// delete houseFeatures
+	for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) {
+		delete(it->second);
+	}
+	houseFeatures.clear();
+	houseFeatureAliases.clear(); 
+
+	buildHouse(firstRoomToLoad);
 }
 
 

@@ -76,7 +76,7 @@ public:
 	void UpdateGameState(int &GameClock, Room* currentRoom);
 	void getOverrideVerb(Choice *);
 	void saveGame(Room *);
-	void loadGame();
+	Room * loadGame(Room *);
 };
 
 class LongString

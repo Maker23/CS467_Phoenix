@@ -2,6 +2,6 @@ ROOM NAME: Conservatory
 CONNECTION:West door|Foyer|foyer, west, west door, door
 LONG DESC: The Conservatory is filled with bookshelves that cover the wall from floor to ceiling, but the dimly lit candle makes it difficult to make out any of the book titles. In full view lies a grand piano that looks to be in great condition underneath the dust that has accumulated on the piano seat and keys. Spiderwebs are covering the bookshelves so that seems to have been abandoned for quite some time as well. The Conservatory was usually off-limits for guests, so this seems like the perfect place for the owner to stash something secret. There is a door to the west leading back to the Foyer.
 SHORT DESC: Though there are books filled in this room, it's too difficult to take out a single one or read any of the texts for clues. Since the grand piano takes up most of the room, you wonder if the hidden clue is buried in plain sight! There is a door to the west leading back to the Foyer.
-ADITIONAL DESC: Play specific notes on the piano to find a rare clue left by the house owner. There is a door to the west leading back to the Foyer.
+ADDITIONAL DESC: Play specific notes on the piano to find a rare clue left by the house owner. There is a door to the west leading back to the Foyer.
 FEATURE: Piano1
 FEATURE: Key1

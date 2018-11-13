@@ -6,6 +6,6 @@ CONNECTION:West door outside|Balcony|balcony, west door outside, outside
 CONNECTION:Stair down|3rd Floor Stairs|3rdFloorStairs, stairs down, down, downstairs
 LONG DESC: 3rd Floor Hallway Long Desc. There is a door on the east wall near the stairs, on the south wall just as the hallway turns to the east. There's another in the center of the hallway and at the far end of the hallway on the east wall.
 SHORT DESC: 3rd Floor Hallway Short Desc
-ADITIONAL DESC: 3rd Floor Hallway Additional Desc
+ADDITIONAL DESC: 3rd Floor Hallway Additional Desc
 DEPENDS_ON: floor3lamps
 BLOCKED_TEXT: It's much too dark.

@@ -88,9 +88,9 @@ Room::Room(string filename, string roomKey, std::stack<lockDoorStruct> &doorwayS
    			shortDesc = lineStr.substr(12, lineStr.length()-1);
 				continue;
    		}
-   		if(lineStr.find("ADITIONAL DESC: ") != std::string::npos)
+   		if(lineStr.find("ADDITIONAL DESC: ") != std::string::npos)
    		{
-   			additionalDesc = lineStr.substr(16, lineStr.length()-1);
+   			additionalDesc = lineStr.substr(17, lineStr.length()-1);
 				continue;
    		}
    		if(lineStr.find("UNLOCKED_TEXT: ") != std::string::npos)

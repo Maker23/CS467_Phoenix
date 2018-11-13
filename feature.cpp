@@ -53,6 +53,7 @@ Feature::Feature(string fileToOpen)
 	solved = false;
 	weight = 1; // Zero is for intangible objects like ghosts
 	seen = 0;
+	dropped = 0;
 	//name = "";
 	//triggers = "";
 	//dependsOn = "";

@@ -37,6 +37,7 @@ class Feature
 		bool solved;
 		bool seen;
 		int weight;
+		bool dropped;
 		std::string strToLowercase(std::string);
 
 	public:

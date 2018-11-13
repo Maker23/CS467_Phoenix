@@ -32,6 +32,9 @@ class House
 		void printFeatures(GameState *);						// For debugging really
 		void printRoomFeatures(Room *);		// display the features in the room.
 		void debugHouse();
+		std::vector<std::string> getSolvedFeatures();
+		std::string getRoomFeaturesSaveString();
+		std::string getRoomLockedDoorsSaveString();
 };
 
 #endif

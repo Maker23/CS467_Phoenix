@@ -80,7 +80,7 @@ Room * GameState::playerTurn(Room * currentRoom)
 	}
 	if (userChoice->Verb == (validVerbs)save)
 	{
-		saveGame();
+		saveGame(currentRoom);
 		return currentRoom;
 
 	}
@@ -748,9 +748,51 @@ void GameState::printHelp(bool Long) {
 	}
 }
 
-void GameState::saveGame() {
-	//
+// Saves the game state to saveGame.txt
+void GameState::saveGame(Room *currentRoom) {
+
+	std::vector<std::string> stringVector;
+	std::string saveString = "";
+
+	// need to save current room key
+	saveString.append("CURRENT_ROOM:");
+	saveString.append(currentRoom->getKeyName());
+	saveString.append("\n");
+
+
+	// need to save keys of curent inventory
+	for (std::vector<Feature*>::iterator iter = Holding.begin(); iter != Holding.end(); iter ++ )
+	{
+		saveString.append("HOLDING:");
+		saveString.append((*iter)->getKeyName());
+		saveString.append("\n");
+	}
+
+	// need to save all the done features by key
+	stringVector = housePtr->getSolvedFeatures();
+	for (std::vector<std::string>::iterator iter = stringVector.begin(); iter != stringVector.end(); iter ++ )
+	{
+		//if(DEBUG_BRENT) std::cout << (*iter) << std::endl;
+		saveString.append("SOLVED:");
+		saveString.append((*iter));
+		saveString.append("\n");
+	}
+
+	// room features:
+	saveString.append(housePtr->getRoomFeaturesSaveString());
+
+
+	// locked doors  
+	saveString.append(housePtr->getRoomLockedDoorsSaveString());
+
+	if(DEBUG_BRENT) std::cout << saveString << std::endl;
+   std::ofstream of("saveGame.txt");
+   of << saveString;
+   of.close();
+
 }
+
+
 
 void GameState::loadGame() {
 	//

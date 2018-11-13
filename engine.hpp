@@ -75,7 +75,7 @@ public:
 	int getCapacity() { return Capacity;}
 	void UpdateGameState(int &GameClock, Room* currentRoom);
 	void getOverrideVerb(Choice *);
-	void saveGame();
+	void saveGame(Room *);
 	void loadGame();
 };
 

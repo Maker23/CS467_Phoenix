@@ -86,6 +86,7 @@ class Room
 		void addFeature(std::string, GameState *); // byName ?
 		bool isFeatureInThisRoom(std::string);
 		Feature * findFeatureByUnlocksString(std::string, GameState *);
+		std::string getLockedDoorsSaveString();
 
 };
 

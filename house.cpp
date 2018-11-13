@@ -270,6 +270,71 @@ Feature * House::getFeaturePtr(string featureName)
 	}
 }
 
+std::string House::getRoomFeaturesSaveString()
+{
+	std::string saveString = "";
+	std::vector<std::string> stringVector;
+	Room *r1;
+
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) {
+		//std::cout << "\t" << it->first << "\t" << it->second->getRoomName() << std::endl;
+		saveString.append("ROOM_FEATURE:");
+		saveString.append(it->first);
+		saveString.append("|");
+		int count = 0;
+		r1 = getRoomPtr(it->first);
+		stringVector = r1->getFeaturesVector();
+		for (std::vector<std::string>::iterator it = stringVector.begin() ; it != stringVector.end(); ++it)
+		{
+			if(count == 0)
+				saveString.append((*it));
+			else
+			{
+				saveString.append(",");
+				saveString.append((*it));
+			}
+			count++;
+		}
+		saveString.append("\n");
+	}
+	return saveString;
+}
+
+std::string House::getRoomLockedDoorsSaveString()
+{
+	std::string saveString = "";
+	std::vector<std::string> stringVector;
+	Room *r1;
+
+	// for each room in the map
+	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) 
+	{
+		r1 = getRoomPtr(it->first);
+		saveString.append(r1->getLockedDoorsSaveString());
+	}
+
+
+	return saveString;
+}
+
+std::vector<std::string> House::getSolvedFeatures()
+{
+	std::vector<std::string> completedVector;
+	Feature *f1;
+	//if (DEBUG_BRENT) std::cout << "Solved Features Starts ====" << std::endl;
+
+	for (auto it=houseFeatures.cbegin(); it != houseFeatures.cend(); it++) 
+	{
+		f1 = getFeaturePtr(it->first);
+		if(f1->isSolved())
+		{
+			//if (DEBUG_BRENT) std::cout << it->first << std::endl;
+			completedVector.push_back(it->first);
+		}
+	}
+	//if (DEBUG_BRENT) std::cout << "Solved Features Ends   ====" << std::endl;
+	return completedVector;
+}
 
 void House::printRoomFeatures(Room *room)
 {
@@ -311,6 +376,7 @@ std::string House::strToLowercase(std::string mixedStr)
     mixedStr[i] = std::tolower(mixedStr[i],loc);
 	return mixedStr;
 }
+
 
 void House::debugHouse()
 {

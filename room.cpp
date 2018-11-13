@@ -526,7 +526,23 @@ bool Room::isFeatureInThisRoom(std::string searchFor)
 
 }
 
+std::string Room::getLockedDoorsSaveString()
+{
+	std::string saveString = "";
 
+	for(int i=0;i < numExits; i++)
+	{
+		if(Connections[i]->isDoorLocked())
+		{
+			saveString.append("LOCKED_DOOR:");
+			saveString.append(getKeyName());
+			saveString.append("|");
+			saveString.append(Connections[i]->getExitRoomName());
+			saveString.append("\n");
+		}
+	}
+	return saveString;
+}
 
 // returns lowercase string
 // http://www.cplusplus.com/reference/locale/tolower/

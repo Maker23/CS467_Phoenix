@@ -213,6 +213,16 @@ Feature::Feature(string fileToOpen)
 					featureStrings["droppingText"] = tempStr;
 			}
 
+			if(lineStr.find("TEXT_ONFLOOR: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(14, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_ONFLOOR " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					//solvingText = tempStr;
+					featureStrings["onfloorText"] = tempStr;
+			}
+
 			if(lineStr.find("TEXT_USING: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(12, lineStr.length()-1);
@@ -491,6 +501,7 @@ void Feature::takeFeature(GameState *GS, Room * Rm,Feature * Subject)
 		return;
 	}
 	else {
+		dropped = false;
 		if ( getStringByKey("takingText").length() > 0 )
 		{
 			std::cout << getStringByKey("takingText") << std::endl;
@@ -516,6 +527,7 @@ void Feature::dropFeature(GameState *GS, Room * Rm,Feature * Subject, bool Silen
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::dropFeature()" << std::endl;}
 	std::string FName = getName();
 	std::string CName = "";
+	dropped = true;
 
 	if (! Silent) std::cout << "You drop the " << FName << std::endl;
 	for (std::vector<Feature*>::iterator iter = GS->Holding.begin(); iter != GS->Holding.end(); iter ++ ) {
@@ -539,6 +551,7 @@ void Feature::hurlFeature( GameState * GS, Room * Rm, Feature * Subject)
 	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::hurlFeature()" << std::endl;}
 	std::string hurlWhere;
 	bool Silent = true;
+	dropped = true;
 
 	std::cout << "You throw the " << getName();
 	if ( Subject ) {
@@ -591,9 +604,11 @@ std::string Feature::getWalkingInRoomText()
 {
 	std::string tmpS;
 
-	if(!seen)
+	if(!seen && !dropped)
 	{
 		seen = true;
+		if (DEBUG_FEATURES) { std::cout << getName() << " dropped: " << dropped << " neverSeenText: " << getStringByKey("solvedText") << std::endl;}
+
 		tmpS = getStringByKey("neverSeenText");
 		//return neverSeenText;
 	}
@@ -602,10 +617,16 @@ std::string Feature::getWalkingInRoomText()
 		//return getStringByKey("seenText");
 
 		// This is a bad idea taking this out, shouldn't have text here that changes when solved
+		if (DEBUG_FEATURES) {std::cout << getName() << " dropped: " << dropped << " text: " << getStringByKey("solvedText") << std::endl;}
+
 		if(solved && getStringByKey("solvedText").length() > 0) 
 		{
 			//return solvedText;	
 			tmpS = getStringByKey("solvedText");
+		}
+		else if (dropped && getStringByKey("onfloorText").length() > 0)
+		{
+			tmpS = getStringByKey("onfloorText");
 		}
 		else
 		{

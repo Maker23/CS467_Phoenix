@@ -4,6 +4,7 @@ TEXT_NEVERSEEN: Old, wired spectacles with round lenses sits in the wooden box.
 TEXT_SEEN: Spectacles in the box.
 TEXT_EXAMINE: Though old, they look useable. 
 TEXT_TAKING: You take the spectacles and decide to wear them.
+TEXT_ONFLOOR: The old spectacles sits on the floor where you dropped it.
 WEIGHT: 1
 TRIGGERS: Ghosts
 DEPENDS_ON: WoodBox1

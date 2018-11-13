@@ -3,6 +3,7 @@ TEXT_NEVERSEEN: A Bronze Key sits in the secret compartment.
 TEXT_SEEN: A key.
 TEXT_EXAMINE: The key is dusty, and you can see the top part of the key is the shape of a clover.
 TEXT_TAKING: You place the key in your inventory.
+TEXT_ONFLOOR: A bronze key sits on the floor where you left it.
 WEIGHT: 1
 #starts out solved
 SOLVED: 1

@@ -82,7 +82,7 @@ Feature::Feature(string fileToOpen)
 				// Skip lines that begin with # for comments
 				continue;
 			}
-			if(lineStr.find("NAME: ") != std::string::npos) 
+			if(lineStr.find("NAME: ") != std::string::npos)
 			{
 				tempStr = lineStr.substr(6, lineStr.length()-1);
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found NAME " << tempStr << std::endl;}

@@ -20,6 +20,15 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include <string.h>
+#include <stdlib.h>
+//#include <map>
+//#include <stack>
+//#include <vector>
+//#include <typeindex>
+//#include <sstream>
+//#include <algorithm>
+
 #include "room.hpp"
 #include "feature.hpp"
 #include "engine.hpp"
@@ -796,4 +805,92 @@ void GameState::saveGame(Room *currentRoom) {
 
 void GameState::loadGame() {
 	//
+	ifstream loadFile;
+	std::string lineStr, currentRoomStr = "", tempStr;
+	const char * nameCstr;
+	char nwords[256];
+	char * nptr;
+
+	loadFile.open("saveGame.txt");  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
+	if (loadFile.is_open())
+	{
+		// https://stackoverflow.com/questions/13035674/how-to-read-line-by-line-or-a-whole-text-file-at-once
+		// http://www.cplusplus.com/reference/string/string/substr/
+	   while (std::getline(loadFile, lineStr))  
+	   {
+			if (lineStr.substr(0,1).find("#") != std::string::npos )
+			{
+				// Skip lines that begin with # for comments
+				continue;
+			}
+   		if(lineStr.find("CURRENT_ROOM:") != std::string::npos)
+   		{
+   			currentRoomStr = lineStr.substr(13, lineStr.length()-1);
+   			std::cout << "TODO: Set current room pointer to " << currentRoomStr << std::endl;
+				continue;
+   		}
+   		if(lineStr.find("SOLVED:") != std::string::npos)
+   		{
+   			tempStr = lineStr.substr(7, lineStr.length()-1);
+   			std::cout << "TODO: set feature " << tempStr << " as solved. " << std::endl;
+				continue;
+   		}
+ 
+			if(lineStr.find("ROOM_FEATURE:") != std::string::npos)
+			{
+				tempStr = lineStr.substr(13, lineStr.length()-1);
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+				{
+					if ( tempStr.find("|") != std::string::npos)
+					{
+						nameCstr = tempStr.c_str();
+						strcpy(nwords, nameCstr);
+						nptr = strtok (nwords, "|");
+						if (nptr != NULL) {
+							tempStr.erase(tempStr.find("|"));
+							nptr = strtok(NULL, ", ");
+							while (nptr != NULL ) 
+							{
+								std::cout << "TODO: add " << nptr << " as a feature to " << tempStr << std::endl;
+								nptr = strtok(NULL, ", ");
+							}
+						}
+					}
+
+				}
+			}
+
+			if(lineStr.find("LOCKED_DOOR:") != std::string::npos)
+			{
+				tempStr = lineStr.substr(12, lineStr.length()-1);
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+				{
+					if ( tempStr.find("|") != std::string::npos)
+					{
+						nameCstr = tempStr.c_str();
+						strcpy(nwords, nameCstr);
+						nptr = strtok (nwords, "|");
+						if (nptr != NULL) {
+							tempStr.erase(tempStr.find("|"));
+							nptr = strtok(NULL, ", ");
+							while (nptr != NULL ) 
+							{
+								std::cout << "TODO: Lock door in " << tempStr << " going to " << nptr << std::endl;
+								nptr = strtok(NULL, ", ");
+							}
+						}
+					}
+
+				}
+			}
+
+	   }
+	 }
+	 else {
+	 	std::cout << "Error opening save file." << std::endl;
+	 }
+
+	// make sure to set currentRoom.
 }

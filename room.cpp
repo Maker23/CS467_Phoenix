@@ -316,6 +316,10 @@ void Room::unlockAllDoorsInThisRoom()
 	}
 }
 
+void Room::deleteAllFeaturesInThisRoom()
+{
+	roomFeatures.clear();
+}
 
 /*
  * TODO: Function info goes here

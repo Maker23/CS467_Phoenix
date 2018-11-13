@@ -180,6 +180,7 @@ void House::reloadHouse()
 	for (auto it=houseMap.cbegin(); it != houseMap.cend(); it++) 
 	{
 		it->second->unlockAllDoorsInThisRoom();
+		it->second->deleteAllFeaturesInThisRoom();
 		//delete(it->second);
 	}
 }

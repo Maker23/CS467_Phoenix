@@ -793,10 +793,11 @@ void GameState::saveGame(Room *currentRoom) {
 	// locked doors  
 	saveString.append(housePtr->getRoomLockedDoorsSaveString());
 
-	if(DEBUG_BRENT) std::cout << saveString << std::endl;
+	//if(DEBUG_BRENT) std::cout << saveString << std::endl;
    std::ofstream of("saveGame.txt");
    of << saveString;
    of.close();
+   std::cout << "Game saved." << std::endl;
 
 }
 
@@ -809,6 +810,8 @@ Room * GameState::loadGame(Room *currentRoom) {
 	const char * nameCstr;
 	char nwords[256];
 	char * nptr;
+	Feature *feature;
+	Room *room;
 
 	loadFile.open("saveGame.txt");  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
 	if (loadFile.is_open())
@@ -837,14 +840,17 @@ Room * GameState::loadGame(Room *currentRoom) {
    		if(lineStr.find("HOLDING:") != std::string::npos)
    		{
    			tempStr = lineStr.substr(8, lineStr.length()-1);
-   			std::cout << "TODO: add " << tempStr << " to holding. " << std::endl;
+   			//std::cout << "DONE: add " << tempStr << " to holding. " << std::endl;
+   			Holding.push_back(housePtr->getFeaturePtr(strToLowercase(tempStr)));
 				continue;
    		}
 
    		if(lineStr.find("SOLVED:") != std::string::npos)
    		{
    			tempStr = lineStr.substr(7, lineStr.length()-1);
-   			std::cout << "TODO: set feature " << tempStr << " as solved. " << std::endl;
+   			//std::cout << "set feature " << tempStr << " as solved. " << std::endl;
+   			feature = housePtr->getFeaturePtr(tempStr);
+   			feature->setSolved(true);
 				continue;
    		}
  
@@ -864,7 +870,9 @@ Room * GameState::loadGame(Room *currentRoom) {
 							nptr = strtok(NULL, ", ");
 							while (nptr != NULL ) 
 							{
-								std::cout << "TODO: add " << nptr << " as a feature to " << tempStr << std::endl;
+								//std::cout << "DONE: add " << nptr << " as a feature to " << tempStr << std::endl;
+								room = housePtr->getRoomPtr(strToLowercase(tempStr));
+								room->addFeature(strToLowercase(nptr), this);
 								nptr = strtok(NULL, ", ");
 							}
 						}
@@ -889,7 +897,9 @@ Room * GameState::loadGame(Room *currentRoom) {
 							nptr = strtok(NULL, ", ");
 							while (nptr != NULL ) 
 							{
-								std::cout << "TODO: Lock door in " << tempStr << " going to " << nptr << std::endl;
+								//std::cout << "DONE: Lock door in " << tempStr << " going to " << nptr << std::endl;
+								room = housePtr->getRoomPtr(strToLowercase(tempStr));
+								room->lockExitDoorByKey(strToLowercase(nptr));
 								nptr = strtok(NULL, ", ");
 							}
 						}
@@ -905,6 +915,7 @@ Room * GameState::loadGame(Room *currentRoom) {
 	 	return currentRoom;
 	 }
 
+	 std::cout << "Game loaded sucessfully." << std::endl;
 	 return housePtr->getRoomPtr(currentRoomStr);
 	// make sure to set currentRoom.
 }

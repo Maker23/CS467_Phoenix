@@ -87,7 +87,8 @@ class Room
 		bool isFeatureInThisRoom(std::string);
 		Feature * findFeatureByUnlocksString(std::string, GameState *);
 		std::string getLockedDoorsSaveString();
-		void unlockAllDoorsInThisRoom();
+		void unlockAllDoorsInThisRoom();  // used for loading saved game.
+		void deleteAllFeaturesInThisRoom(); // used for loading saved game.
 
 };
 

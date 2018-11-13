@@ -479,7 +479,7 @@ Parser::getVerb(std::string verbString) {
 		       return (validVerbs)hurl;
 	     }
 	else if ((verbString.compare("save") == 0 ) ||
-  (verbString.compare("Save") == 0 ))
+  (verbString.compare("Save") == 0) || (verbString.compare("savegame") == 0) || (verbString.compare("Savegame") == 0 ))
 	{
 		return (validVerbs)save;
 	}
@@ -495,7 +495,7 @@ Parser::getVerb(std::string verbString) {
 		       return (validVerbs)use;
 	     }
 	else if ((verbString.compare("load") == 0 ) ||
-      (verbString.compare("Load") == 0 ))           //sets validVerb to 13
+      (verbString.compare("Load") == 0) || (verbString.compare("loadgame") == 0) ||  (verbString.compare("Loadgame") == 0))           //sets validVerb to 13
 	     {
 		       return (validVerbs)load;
 	     }

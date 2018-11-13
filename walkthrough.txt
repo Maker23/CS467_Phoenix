@@ -23,8 +23,8 @@ go basement
 # Enter 'q' to skip the puzzle - but you won't be able to get the lighter
 #
 solve the puzzle
-get lighter
-go up
+take lighter
+move up
 go kitchen
 go ballroom
 go foyer

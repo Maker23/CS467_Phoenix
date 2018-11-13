@@ -831,8 +831,6 @@ Room * GameState::loadGame(Room *currentRoom) {
    		if(lineStr.find("CURRENT_ROOM:") != std::string::npos)
    		{
    			currentRoomStr = lineStr.substr(13, lineStr.length()-1);
-   			
-   			std::cout << "TODO: Set current room pointer to " << currentRoomStr << std::endl;
 				continue;
    		}
 

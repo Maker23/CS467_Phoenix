@@ -148,6 +148,10 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 		{
 			Examine(); // Examine the GameState (player inventory)
 		}
+		else if (userChoice->Verb == (validVerbs)hint) 
+		{
+			currentRoom->getRoomHint();
+		}
 		else if (userChoice->Verb == (validVerbs)go) 
 		{
 			std::cout << "Where do you want to " << userChoice->printVerb()<< "?" << std::endl;
@@ -316,6 +320,10 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 			else {
 				Examine();
 			}
+			break;
+		case hint:
+			if (DEBUG_FUNCTION) std::cout << "      matched hint " << std::endl;
+			theNoun->getFeatureHint(theSubject);
 			break;
 		default:
 			if (DEBUG_FUNCTION) std::cout << "      ERROR: fell through to default " << std::endl;

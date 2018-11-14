@@ -604,6 +604,12 @@ Feature * Room::findFeatureByUnlocksString(std::string searchString, GameState *
 	return NULL;
 }
 
+void Room::getRoomHint() {
+	LongString LString(this->additionalDesc);
+	std::cout << LString.getWrappedText() << std::endl;
+	return;
+}
+
 // Constructor for Doorway class. 
 Doorway::Doorway()
 {

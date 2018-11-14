@@ -68,6 +68,7 @@ class Room
 		std::string getKeyName();						// return the 'canonical' name of the room
 		std::string getUnlockText();
 		std::string getBlockedText();
+		void getRoomHint();
 		void setKeyName(std::string);
 		void setRoomSeen();
 		void Examine(GameState *);

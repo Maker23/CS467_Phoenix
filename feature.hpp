@@ -67,6 +67,7 @@ class Feature
 		void dropFeature(GameState *GS, Room * Rm, Feature *Subject);
 		void hurlFeature(GameState *GS, Room * Rm, Feature *Subject);
 		void hitFeature(Feature *Subject);
+		void getFeatureHint(Feature *Subject);
 		void examineFeature();
 		void Examine();
 		bool isSolved();

@@ -551,6 +551,11 @@ Parser::getVerb(std::string verbString) {
   {
     return (validVerbs)inventory; //sets validVerb to 10
   }
+  else if ((verbString.compare("hint") == 0 )  ||
+            (verbString.compare("Hint") == 0 ))    //sets validVerb to 
+  {
+    return (validVerbs)hint;
+  }
 
 	else if ((verbString.compare("quit") == 0 )||
 			(verbString.compare("q") == 0 ) ||

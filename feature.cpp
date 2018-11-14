@@ -616,7 +616,7 @@ std::string Feature::getWalkingInRoomText()
 	{
 		//return getStringByKey("seenText");
 
-		// This is a bad idea taking this out, shouldn't have text here that changes when solved
+		// This is a bad idea, shouldn't have text here that changes when solved
 		if (DEBUG_FEATURES) {std::cout << getName() << " dropped: " << dropped << " text: " << getStringByKey("solvedText") << std::endl;}
 
 		if(solved && getStringByKey("solvedText").length() > 0) 
@@ -751,6 +751,12 @@ void Feature::setKeyName(std::string keyName)
 std::string Feature::getKeyName()
 {
 	return key;
+}
+
+void Feature::getFeatureHint(Feature * Subject)
+{
+	std::cout << "Feature hint not yet implemented" << std::endl;
+	return;
 }
 
 // returns lowercase string

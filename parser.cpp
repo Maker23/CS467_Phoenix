@@ -53,11 +53,11 @@ Choice * Parser::ParseLine(std::string inString){
 			mystr = inString;
 		}
 
-
+		// Tokenize the user input with the strtok command,
+		// and push all the tokens onto the ordered list 'words'
 		char * sptr;
 		char myCstr[mystr.length()+1];
 		strcpy(myCstr, mystr.c_str());
-    int j = 1;
 		sptr = strtok(myCstr, " ");
 		while (sptr != NULL ) {
 			oneword = sptr;
@@ -65,6 +65,10 @@ Choice * Parser::ParseLine(std::string inString){
 			sptr = strtok(NULL, " ");
 		}
 
+		// I think this is leftover from the previous tokenization method,
+		// commenting it out for now.
+		/*
+    int j = 1;
     for (int i=0; i < (int) mystr.size(); i++) {
         if(mystr[i] == ' ' && mystr[i+1] != ' ')
         {
@@ -98,7 +102,10 @@ Choice * Parser::ParseLine(std::string inString){
 			if (DEBUG_PARSER) cout << "array[" << i << "] " << array[i] << endl;
     }
 		if (DEBUG_PARSER) std::cout << "num args: " << j << std::endl;
+		*/
 
+		// Need to convert this to use the "words" list if we're going to keep it.
+    string array[1];
 		int i=0;
 		if((array[i] == "pick" && array[i+1] == "up") ||
 			(array[i] == "Pick" && array[i+1] == "up") ||
@@ -276,7 +283,7 @@ std::string Parser::getRoom(std::string lcNounString) {
       {
         returnString = "2ndFloorHallway";
       }
-			else if( lcNounString == "hall" || lcNounString == "3rd" || lcNounString == "third" || lcNounString == "Third")
+			else if( lcNounString == "hall" || lcNounString == "hallway" || lcNounString == "3rd" || lcNounString == "third" || lcNounString == "Third")
       {
         returnString = "3rdFloorHallway";
       }

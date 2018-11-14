@@ -133,6 +133,8 @@ void GameState::getOverrideVerb(Choice * userChoice)
 Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 {
 	Room * nextRoom = currentRoom;
+	Parser parse(this); // so we can run getRoom :b
+
 	std::string nextroomKeyName = currentRoom->getExitRoomByKey(userChoice->Noun, false);
 
 	if (DEBUG_FUNCTION) std::cout << "===== begin GameState::actInRoom" << std::endl;
@@ -187,9 +189,21 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 		// Pass the verb and noun(s) to ActInRoom
 		nextRoom = actOnFeature(currentRoom, userChoice);
 	}
+	else if ( userChoice->Verb == (validVerbs)unknown  && 
+						parse.getRoom(userChoice->Noun).compare(NOTFOUND) != 0 )
+	{
+		if(DEBUG_ROOM) std::cout << "    [DEBUG_ROOM] calling goRoom with no verb '" << userChoice->inputVerb << "'" << std::endl;
+		// 1. If Noun is a valid room name , and call goRoom()  
+		// This code should be moved into the parser
+		nextRoom = currentRoom->goRoom(userChoice->Noun, this);
+		if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
+		{
+			nextRoom->Examine(this);
+		}
+	}
 	else 
 	{
-		// Unknown  ;)
+		// If verb is not a valid room name then it really is unknown :)
 		std::cout << "I have no idea what you just said." << std::endl;
 	}
 

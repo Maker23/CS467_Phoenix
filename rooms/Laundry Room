@@ -1,5 +1,5 @@
-ROOM NAME: Bedroom3
-CONNECTION:North Door|3rd Floor Hallway|north, north door, door, hallway
+ROOM NAME: Laundry Room
+CONNECTION:North Door|3rd Floor Hallway|north, north door, door, hallway,3rdFloorHallway
 LONG DESC: Bedroom3 Long Desc. There is a single door on the north wall.
 SHORT DESC: Bedroom3 Short Desc
 ADDITIONAL DESC: Bedroom3 Additional Desc

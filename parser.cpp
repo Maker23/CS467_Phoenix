@@ -17,7 +17,7 @@ Parser::Parser()
 {
 	// Limited capabilities if we don't get a GS pointer -
 	// basically will only parse verbs correctly
-	GS = NULL ; 
+	GS = NULL ;
 }
 Parser::Parser(GameState *GameStatePtr)
 {
@@ -204,7 +204,7 @@ std::string Parser::getNoun(std::string nounString) {
 	returnString = getRoom(lcNounString);
 	if ( returnString.compare(NOTFOUND) == 0 ) {
 		returnString = getFeature(lcNounString);
-	}	
+	}
 
 	return returnString;
 }
@@ -283,7 +283,7 @@ std::string Parser::getRoom(std::string lcNounString) {
       {
         returnString = "2ndFloorHallway";
       }
-			else if( lcNounString == "hall" || lcNounString == "hallway" || lcNounString == "3rd" || lcNounString == "third" || lcNounString == "Third")
+			else if( lcNounString == "hall" || lcNounString == "3rd" || lcNounString == "third" || lcNounString == "Third")
       {
         returnString = "3rdFloorHallway";
       }
@@ -295,7 +295,7 @@ std::string Parser::getRoom(std::string lcNounString) {
       {
         returnString = "bedroom3";
       }
-      else if( lcNounString == "MasterBedroom" || lcNounString == "masterbedroom")
+      else if( lcNounString == "MasterBedroom" || lcNounString == "masterbedroom" || lcNounString == "master")
       {
         returnString = "masterbedroom";
       }
@@ -306,6 +306,18 @@ std::string Parser::getRoom(std::string lcNounString) {
       else if( lcNounString == "Library" || lcNounString == "library")
       {
         returnString = "library";
+      }
+			else if( lcNounString == "bedroom" || lcNounString == "Bedroom")
+      {
+        returnString = "bedroom";
+      }
+			else if( lcNounString == "hallway" || lcNounString == "Hallway")
+      {
+        returnString = "hallway";
+      }
+			else if( lcNounString == "laundry" || lcNounString == "Laundry")
+      {
+        returnString = "laundry";
       }
 
 	return returnString;
@@ -559,7 +571,7 @@ Parser::getVerb(std::string verbString) {
     return (validVerbs)inventory; //sets validVerb to 10
   }
   else if ((verbString.compare("hint") == 0 )  ||
-            (verbString.compare("Hint") == 0 ))    //sets validVerb to 
+            (verbString.compare("Hint") == 0 ))    //sets validVerb to
   {
     return (validVerbs)hint;
   }

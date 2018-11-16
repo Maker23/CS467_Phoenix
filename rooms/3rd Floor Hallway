@@ -1,6 +1,6 @@
 ROOM NAME: 3rd Floor Hallway
-CONNECTION:South Wall East door|Bedroom2|bedroom2, south wall east door, east door, east
-CONNECTION:South wall center door|Bedroom3|bedroom3, south wall center door, center door, center
+CONNECTION:South Wall East door|Bedroom2|bedroom2, south wall east door, east door, east, bedroom
+CONNECTION:South wall center door|Laundry Room|Laundry Room, south wall center door, center door, center, Laundry, LaundryRoom,
 CONNECTION:West room door|MasterBedroom|masterbedroom, master, master bedroom, west room door
 CONNECTION:West door outside|Balcony|balcony, west door outside, outside
 CONNECTION:Stair down|3rd Floor Stairs|3rdFloorStairs, stairs down, down, downstairs

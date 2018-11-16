@@ -1,0 +1,10 @@
+NAME: Directory|directory
+TYPE: item
+ACTIONS: look|read,read directory, Read
+TEXT_NEVERSEEN: A directory lies on the desk of the Study.
+TEXT_SEEN: When the wind dies down, you see a directory of the team that used to staff the Haunted House.
+TEXT_EXAMINE: The directory shows the names of the staff. The list does not appear to have any value to it.
+TEXT_TAKING: You take the directory hoping it might be useful later
+WEIGHT: 1
+TRIGGERS: null
+DEPENDS_ON: null

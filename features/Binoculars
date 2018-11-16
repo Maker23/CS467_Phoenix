@@ -1,0 +1,10 @@
+NAME: Binoculars|binoculars
+TYPE: item
+ACTIONS: look|see,Look
+TEXT_NEVERSEEN: A pair of binoculars appear to have been left on the edge of the Balcony
+TEXT_SEEN: There are a pair of binoculars that have been left on the Balcony edge.
+TEXT_EXAMINE: The binoculars give greater visibility than you had before standing on the Balcony. You see a pathway from the front Porch leading out to a road up ahead.
+TEXT_TAKING: You take the binoculars hoping they may be useful in your journey.
+WEIGHT: 11
+TRIGGERS: null
+DEPENDS_ON: null

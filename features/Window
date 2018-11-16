@@ -1,0 +1,9 @@
+NAME: Window|window
+TYPE: decoration
+TEXT_NEVERSEEN: A window lets in plenty of light from the full moon outside, but the storm makes it too blurry to see far outside.
+TEXT_SEEN: The window has a constant stream of rain running down and the moonlight illuminates the room.
+TEXT_EXAMINE: The window looks tampered with, but no force could make this budge. It looks like someone tried to escape this way with no luck.
+TEXT_TAKING: You try to move the window, but it won't budge.
+WEIGHT: 100
+TRIGGERS: null
+DEPENDS_ON: null

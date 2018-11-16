@@ -4,6 +4,6 @@ TEXT_NEVERSEEN: You can't easily see onto the top shelf. Is there something ther
 TEXT_SEEN: High shelf.
 TEXT_EXAMINE: An old dusty camera sits on the top shelf.
 TEXT_SOLVING: On the top shelf, you find a camera.
-TEXT_EXAMINE_SOLVED: Empty shelf
+TEXT_EXAMINE_SOLVED: The shelf is now empty.
 TRIGGERS: Camera
 DEPENDS_ON: null

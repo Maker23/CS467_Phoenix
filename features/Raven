@@ -1,0 +1,8 @@
+NAME: Raven|raven
+TYPE: item
+TEXT_NEVERSEEN: A raven stares at you with dark, cold eyes as it sits on the Balcony rail.
+TEXT_SEEN: A raven shuffles across the rail to get a better look at you.
+TEXT_EXAMINE: The raven is covered in rain from the storm and doesn't seem to want to move.
+TEXT_TAKING: The raven bites you as you pick it up.
+WEIGHT: 10
+DEPENDS_ON: null

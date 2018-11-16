@@ -1,6 +1,6 @@
 NAME: Library Shelves|shelves,library,books
 ACTIONS: use|examine,look,explore
-TEXT_NEVERSEEN: Along each of the walls are shelves filled with dusty books.
+TEXT_NEVERSEEN: Along each of the walls are shelves that appear to be full, but it's too dark to make out what's on the shelf.
 TEXT_SEEN: Dusty book filled shelves.
 TEXT_EXAMINE_SOLVED: Rows of shelves line the walls, completely filled with books. These books have seen better days. One book peaks your interest. You find a book called "Ghosts and Other Undead"
 TEXT_EXAMINE: Dusty book filled shelves.

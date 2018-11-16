@@ -11,4 +11,6 @@ SHORT DESC: The 2nd floor serves as an entry point for just about every room on 
 ADDITIONAL DESC: The door to the Library, Study, and Balcony appear to be unlocked if you don't have a key for the Bedroom or Nursery.
 UNLOCKED_TEXT: Using the Bronze Key you are able to unlock the door.
 FEATURE: 2ndFloorDoors
+FEATURE: OilLamps
+
 LOCKED_DOOR: Nursery

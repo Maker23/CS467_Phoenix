@@ -1,9 +1,0 @@
-NAME: OilLamps|oil lamps,Oil Lamps,Lamp,lamps,lamp
-ACTIONS: use|light, light lamp,light lamps
-TEXT_NEVERSEEN: Oil lamps are stationed throughout the 2nd Floor Hallway, maybe try lighting the lamps to get better visibility.
-TEXT_SEEN: The Oil Lamps appear to be fully functional and may be
-TEXT_EXAMINE: Upon closer look, it appears that the Oil Lamps are fully functional. Try lighting them if you are able to.
-TEXT_USING: Now that the Oil Lamps are lit, you're able to clearly see all the entryways to the other rooms from the 2nd Floor Hallway, the Bedroom, Nursery, Library, Study, Balcony, and stairs back to the Foyer and stairs up to the the 3rd Floor Hallway.
-WEIGHT: 10
-TRIGGERS: null
-USES: Lighter

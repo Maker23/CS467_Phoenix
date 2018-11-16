@@ -1,5 +1,5 @@
 ROOM NAME: 3rd Floor Hallway
-CONNECTION:South Wall East door|Bedroom2|bedroom2, south wall east door, east door
+CONNECTION:South Wall East door|Bedroom2|bedroom2, south wall east door, east door, east
 CONNECTION:South wall center door|Bedroom3|bedroom3, south wall center door, center door, center
 CONNECTION:West room door|MasterBedroom|masterbedroom, master, master bedroom, west room door
 CONNECTION:West door outside|Balcony|balcony, west door outside, outside
@@ -7,5 +7,5 @@ CONNECTION:Stair down|3rd Floor Stairs|3rdFloorStairs, stairs down, down, downst
 LONG DESC: 3rd Floor Hallway Long Desc. There is a door on the east wall near the stairs, on the south wall just as the hallway turns to the east. There's another in the center of the hallway and at the far end of the hallway on the east wall.
 SHORT DESC: 3rd Floor Hallway Short Desc
 ADDITIONAL DESC: 3rd Floor Hallway Additional Desc
-DEPENDS_ON: floor3lamps
+DEPENDS_ON: Floor3Lamps
 BLOCKED_TEXT: It's much too dark.

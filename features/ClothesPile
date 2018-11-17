@@ -1,0 +1,10 @@
+NAME: ClothesPile|clothes,pile,clothespile,ClothesPile
+TYPE: item
+ACTIONS: look|see,Look
+TEXT_NEVERSEEN: You see some dirty clothes sitting in a pile ready to be washed.
+TEXT_SEEN: There is a stack of dirty clothes in the corner.
+TEXT_EXAMINE: Theres nothing underneath the pile of clothes.
+TEXT_TAKING: You take some clothes hoping they may be useful in your journey.
+WEIGHT: 11
+TRIGGERS: null
+DEPENDS_ON: null

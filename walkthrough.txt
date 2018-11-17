@@ -53,8 +53,10 @@ inventory
 #
 # If you don't have the lighter you can't get past this point
 #
-go hall
+go hallway
 light the lamp
 go hall
-go bedroom3
+go bedroom2
 say hello to the moose
+go hallway
+go Master Bedroom

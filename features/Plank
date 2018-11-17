@@ -1,0 +1,8 @@
+NAME: Plank|plank, wood
+TEXT_NEVERSEEN: You see wooden plank standing by the door.
+TEXT_SEEN: A wooden plank is resting against the wall.
+TEXT_EXAMINE: The wood plank has termites burrowing inside, might not be a good item to take with you!
+TEXT_TAKING: You try to take the wooden plank, but it's too heavy to bring with you!
+WEIGHT: 100
+TRIGGERS: null
+DEPENDS_ON: null

@@ -1,5 +1,5 @@
 ROOM NAME: 2nd Floor Hallway
-CONNECTION:Door1|Bedroom1|bedroom1, door 1, 1, west
+CONNECTION:Door1|Bedroom1|bedroom1, door 1, 1, west,bedroom
 CONNECTION:Door2|Nursery|nursery, door 2, 2,southwest
 CONNECTION:Door3|Library|library, door 3, 3, southcenter
 CONNECTION:Door4|Study|study, door 4, 4, southeast

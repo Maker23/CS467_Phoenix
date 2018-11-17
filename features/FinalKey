@@ -1,0 +1,8 @@
+NAME: FinalKey|key,final key,finalkey
+TEXT_NEVERSEEN: A key lies in the center of the Master Bedroom. This may be the key to the way out!
+TEXT_SEEN: A key lies in the center of the Master Bedroom.
+TEXT_TAKING: You secure the Final Key in your inventory and can now escape the Haunted House!
+TEXT_EXAMINE: The key looks like it will work on the lock in the Foyer out to the Porch on the First Floor
+TEXT_ONFLOOR: The Final Key is dropped on the floor
+WEIGHT: 1
+DEPENDS_ON: MasterGhost

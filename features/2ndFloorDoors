@@ -3,7 +3,7 @@ ACTIONS: use|unlock
 TEXT_NEVERSEEN: The door will not open.
 TEXT_SEEN: The door will not open.
 TEXT_EXAMINE: You see the door has a lock on it. Just above the lock is a picture of a clover.
-TEXT_EXAMINE_SOLVED: ""
+TEXT_EXAMINE_SOLVED: The door to the Nursery is unlocked!
 TEXT_SOLVING: The door opens
 TRIGGERS: null
 USES: Key1

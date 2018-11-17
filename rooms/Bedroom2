@@ -1,5 +1,8 @@
 ROOM NAME: Bedroom2
 CONNECTION:North Door|3rd Floor Hallway|north, north door, door, hallway
-LONG DESC: Bedroom2 Long Desc. There is a single doorway on the north wall.
-SHORT DESC: Bedroom2 Short Desc
-ADDITIONAL DESC: Bedroom2 Additional Desc
+LONG DESC: This Bedroom on the 3rd Floor is filled with clutter, but what stands out the most is the Amulet, the Rattle Snake, and the giant Moose Head hanging from the wall! It looks as if junk was piled up in here over the years, but be careful with how you interact with certain objects in the Bedroom. There is a single door on the north wall back to the 3rd Floor Hallway.
+SHORT DESC: This Bedroom has a random collection of items accumulated over the years, including a rattlesnake, an amulet, and a giant Moose Head hanging on the wall. Check them out at your own risk! The only exit from here is going back to the 3rd Floor Hallway on the north wall.
+ADDITIONAL DESC: Check out the rattlesnake, amulet or moosehead. The exit on the north wall leads you back to the 3rd Floor Hallway.
+FEATURE: RattleSnake
+FEATURE: Amulet
+FEATURE: MooseHead

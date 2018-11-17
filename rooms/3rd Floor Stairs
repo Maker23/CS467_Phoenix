@@ -1,7 +1,5 @@
 ROOM NAME: 3rd Floor Stairs
-CONNECTION:Hall|3rd Floor Hallway|3rdFloorHallway, south,up
-CONNECTION:Stairs Down|2nd Floor Hallway|2ndFloorHallway, south, down
-
+CONNECTION:Hall|3rd Floor Hallway|3rdFloorHallway, hall, south,hallway
 LONG DESC: There is just enough light coming up the stairs to see an oil lamp hung on the wall.  A hallway leads to the south but it's much too dark to walk that way.
 SHORT DESC: Dark staircase.
 ADDITIONAL DESC:  3FStairs Addl desc. TODO

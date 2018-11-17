@@ -1,8 +1,7 @@
 ROOM NAME: Laundry Room
 CONNECTION:North Door|3rd Floor Hallway|north, north door, door, hallway,3rdFloorHallway
-LONG DESC: Bedroom3 Long Desc. There is a single door on the north wall.
-SHORT DESC: Bedroom3 Short Desc
-ADDITIONAL DESC: Bedroom3 Additional Desc
-FEATURE: RattleSnake
-FEATURE: Amulet
-FEATURE: MooseHead
+LONG DESC: The Laundry Room is massive and was the central place and you can faintly smell the soap used to clean the residents and guests' clothing. Metallic equipment in here is glimmering from the moonlight and you notice a pile of clothes and wood plank in here. Everything else looks worn and run down, but the final key has to be somewhere on the 3rd Floor! The exit from here is on the north wall back to the 3rd Floor Hallway.
+SHORT DESC: The Laundry Room has dingy walls and equipment, but a clothes pile and wooden plank stand out in the room. Examine these items or exit back to the 3rd Floor Hallway on the north wall.
+ADDITIONAL DESC: Check out the wood plank or clothes pile in the Laundry Room. The only exit from here is on the north wall which leads back to the 3rd Floor Hallway.
+FEATURE: ClothesPile
+FEATURE: Plank

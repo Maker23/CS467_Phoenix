@@ -1,7 +1,7 @@
 ROOM NAME: Porch
-LONG DESC: Porch Long Desc
-SHORT DESC: Porch Short Desc
-ADDITIONAL DESC: Porch Additional Desc
+LONG DESC: You made it out to the Porch. The storm has died down and you have successfully found a way out of the Haunted House! Congratulations on escaping the ghosts and danger that filled these floors, you have won the game!!
+SHORT DESC: You are now on the Porch and have successfully made it out of the Haunted House! Congratulations!!
+ADDITIONAL DESC: You are now on the Porch outside. You won!!
 LONG EXIT DESC: Porch Long Desc
 SHORT EXIT DESC: Done!!
 CONNECTION:North|Foyer|north,foyer,inside

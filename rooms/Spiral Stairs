@@ -1,0 +1,7 @@
+ROOM NAME: Spiral Stairs
+CONNECTION:Stairs Down|Balcony|balcony,down,downstairs,stairs
+CONNECTION:Hall|3rd Floor Hallway|3rdFloorHallway, hall, south,hallway,up
+LONG DESC: There is just enough light shining through the doorway for you to see an oil lamp hung on the wall.  A hallway leads to the west but it's much too dark to walk that way.
+SHORT DESC:  The 3rd floor hallway lead off from this staircase; the Balcony is at the bottom of the stairs. An oil lamp hangs on the wall.
+ADDITIONAL DESC: The Oil Lamp must be lit to access the 3rd Floor. Find a lighter somewhere in the house to light the way! If the 3rd floor hall is not accessible, stairs down will lead you back to the Balcony.
+FEATURE: Floor3Lamps

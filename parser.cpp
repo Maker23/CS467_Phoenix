@@ -219,6 +219,8 @@ std::string Parser::getRoom(std::string lcNounString) {
 				|| lcNounString == "north"
 				|| lcNounString == "south"
 				|| lcNounString == "up"
+				|| lcNounString == "bedroom"
+				|| lcNounString == "hallway"
 				|| lcNounString == "upstairs"
 				|| lcNounString == "down"
         || lcNounString == "southwest" || lcNounString == "southcenter"
@@ -306,14 +308,6 @@ std::string Parser::getRoom(std::string lcNounString) {
       else if( lcNounString == "Library" || lcNounString == "library")
       {
         returnString = "library";
-      }
-			else if( lcNounString == "bedroom" || lcNounString == "Bedroom")
-      {
-        returnString = "bedroom";
-      }
-			else if( lcNounString == "hallway" || lcNounString == "Hallway")
-      {
-        returnString = "hallway";
       }
 			else if( lcNounString == "laundry" || lcNounString == "Laundry")
       {

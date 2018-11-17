@@ -6,3 +6,6 @@ TEXT_EXAMINE: The key looks like it will work on the lock in the Foyer out to th
 TEXT_ONFLOOR: The Final Key is dropped on the floor
 WEIGHT: 1
 DEPENDS_ON: MasterGhost
+UNLOCKS: Porch
+#starts out solved
+SOLVED: 1

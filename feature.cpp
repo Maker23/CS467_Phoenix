@@ -54,6 +54,7 @@ Feature::Feature(string fileToOpen)
 	weight = 1; // Zero is for intangible objects like ghosts
 	seen = 0;
 	dropped = 0;
+
 	//name = "";
 	//triggers = "";
 	//dependsOn = "";
@@ -139,7 +140,16 @@ Feature::Feature(string fileToOpen)
 				if (DEBUG_FEATURES) { std::cout << "Feature() - Found SOLVES_HERE " << tempStr << std::endl;}
 				// check if not empty and isn't set to "null"
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
-					featureStrings["solvesHere"] = tempStr;
+					// Chunk up the string
+					nameCstr = tempStr.c_str();
+					strcpy(nwords, nameCstr);
+					nptr = strtok (nwords, ", ");
+					while (nptr != NULL ) {
+						if (DEBUG_FEATURES) std::cout << "     Finding SOLVES_HERE token = '" << nptr << "'" << std::endl;
+						solvesHere.push_back(nptr);
+						nptr = strtok(NULL, ", ");
+					}
+					//featureStrings["solvesHere"] = tempStr;
 			}
 
 			if(lineStr.find("TEXT_NEVERSEEN: ") != std::string::npos) 
@@ -221,6 +231,15 @@ Feature::Feature(string fileToOpen)
 				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
 					//solvingText = tempStr;
 					featureStrings["onfloorText"] = tempStr;
+			}
+
+			if(lineStr.find("TEXT_HINT: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(11, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found TEXT_HINT " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					featureStrings["hintText"] = tempStr;
 			}
 
 			if(lineStr.find("TEXT_USING: ") != std::string::npos) 
@@ -382,6 +401,12 @@ void Feature::examineFeature()
 	return;
 }
 
+vector<std::string> * Feature::getSolvesHere()
+{
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::getSolvesHere()" << std::endl;}
+	return & solvesHere;
+}
+
 
 void Feature::useFeature(GameState *GS, Feature * Subject)
 {
@@ -392,6 +417,7 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 	bool printedSomething=false;
 
 	//if ( getName().compare(getNoun("puzzle") == 0 ) {
+	// Can't think of a way not to hardcode these
 	if ( getName().compare("Puzzle") == 0 ) {
 		if (DEBUG_PUZZLE) { std::cout << "      Going off to solve a puzzle " << std::endl;}
 		bool solved = GS->puzzle->solvePuzzle();
@@ -400,7 +426,7 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 		}
 	}
 	else {
-		if (DEBUG_PUZZLE) { std::cout << "      getName '" << getName() << "' does not match 'puzzle1'" << std::endl;}
+		if (DEBUG_PUZZLE) { std::cout << "      getName '" << getName() << "' does not match 'Puzzle'" << std::endl;}
 	}
 	
 	if ( getStringByKey("solvingText").compare("") != 0 )
@@ -408,7 +434,7 @@ void Feature::useFeature(GameState *GS, Feature * Subject)
 		std::cout << getSolvingText() << std::endl;
 		printedSomething=true;
 	}
-	if (DEBUG_FEATURES) { std::cout << "      Setting isSolved to true " << std::endl;}
+	if (DEBUG_FEATURES) { std::cout << "      Setting isSolved to true" << std::endl;}
 	setSolved(true);
 
 
@@ -565,6 +591,17 @@ void Feature::hurlFeature( GameState * GS, Room * Rm, Feature * Subject)
 		std::cout << " across the room. It lands on the floor." << std::endl;
 	}
 	dropFeature (GS, Rm, Subject, Silent);
+}
+
+void Feature::openFeature(GameState * GS, Feature * Subject)
+{
+	if (DEBUG_FEATURES) { std::cout << "----- begin Feature::openFeature()" << std::endl;}
+	// We don't implement anything special for this actually
+	// This is entirely implemented with override verbs
+	//return useFeature(GS, Subject);
+
+	std::cout << "The " << getName() << " can't be opened." << std::endl;
+	return;
 }
 
 void Feature::hitFeature(Feature * Subject)
@@ -753,10 +790,17 @@ std::string Feature::getKeyName()
 	return key;
 }
 
-void Feature::getFeatureHint(Feature * Subject)
+std::string Feature::getHintText(Feature * Subject)
 {
-	std::cout << "Feature hint not yet implemented" << std::endl;
-	return;
+	std::string tmpS;
+	
+	tmpS = getStringByKey("hintText");
+	if (tmpS.length() == 0) {
+		return "Sorry, no hints for " + getName();
+	}
+
+	LongString LString(tmpS);
+	return LString.getWrappedText();
 }
 
 // returns lowercase string

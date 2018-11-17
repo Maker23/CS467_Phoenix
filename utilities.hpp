@@ -4,6 +4,9 @@
 #define ROOM_DIRECTORY "rooms/"
 #define FEATURE_DIRECTORY "rooms/features/"
 
+// This is only useful for testing :)
+#define SILENCE_DESCRIPTIONS false
+
 //  Global debugging flags
 #define DEBUG_EXAMINE false
 #define DEBUG_FUNCTION false

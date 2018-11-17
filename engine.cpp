@@ -171,8 +171,17 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 	//
 	// If noun - go or act
 	//
-	else if (userChoice->Verb == (validVerbs)go) 
+	else if (userChoice->Verb == (validVerbs)go ) 
 	{
+		nextRoom = currentRoom->goRoom(userChoice->Noun, this);
+		if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
+		{
+			nextRoom->Examine(this);
+		}
+	}
+	else if (userChoice->Verb == (validVerbs)open && nextroomKeyName.length() > 0){
+		// We treat "open" separately from "go" -- if the noun is a room name,
+		// we use it -otherwise we drop through to opening a feature
 		nextRoom = currentRoom->goRoom(userChoice->Noun, this);
 		if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
 		{
@@ -225,7 +234,7 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 	Feature * solvesFeature = NULL;
 	std::string nounUses = "";
 	std::string textToSolve = "";
-	std::string solvesHere = "";
+	vector<std::string> * solvesHere = NULL;
 	std::string solvesAnywhere = "";
 	bool inHand = false;
 	bool inRoom = false;
@@ -278,10 +287,27 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 
 			// Is there a USES, and if so is it nearby?
 			if (  nounUses.compare("") == 0 ||(featureWithinReach(currentRoom,nounUses))) {
+
+				// Is there textToSolve, and if so do we have something that might be it?
 				if (  textToSolve.compare("") == 0 || textToSolve.compare(userChoice->Subject) == 0 ) {
+			
+					// If we're clear to use the feature -- Do so!
 					if (DEBUG_FUNCTION) std::cout << "      UsingFeature " << theSubject << std::endl;
 					theNoun->useFeature(this, theSubject); 
 
+					// Handle any SolveHere objects. This should probably be moved into the 
+					// useFeature()  function  TODO
+					solvesHere = theNoun->getSolvesHere();
+					for ( std::vector<std::string>::iterator iter = solvesHere->begin(); iter != solvesHere->end(); iter++) {
+						if (featureWithinReach(currentRoom, (*iter))) {
+							solvesFeature = housePtr->getFeaturePtr(*iter);
+							if (solvesFeature) {
+								solvesFeature->setSolved(true);
+								solvesFeature->useFeature(this, theSubject);
+							}
+						}
+					}
+					/*
 					solvesHere = theNoun->getStringByKey("solvesHere");
 					if ( solvesHere.compare("") != 0 && featureWithinReach(currentRoom,solvesHere)) {
 						// Need "find one of the featuers on this list that is in reach"
@@ -291,6 +317,7 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 							solvesFeature->useFeature(this, theSubject);
 						}
 					}
+					*/
 				}
 				else {
 					// Needed "textToSolve" but didn't get it :)
@@ -301,6 +328,10 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 				std::cout << "Can't find a way to " << userChoice->inputVerb 
 									<< " the " << userChoice->inputNoun << " right now." << std::endl; 
 			}
+			break;
+		case open:
+			if (DEBUG_FUNCTION) std::cout << "      matched take " << std::endl;
+			theNoun->openFeature(this, theSubject);
 			break;
 		case take:
 			if (DEBUG_FUNCTION) std::cout << "      matched take " << std::endl;
@@ -337,7 +368,7 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 			break;
 		case hint:
 			if (DEBUG_FUNCTION) std::cout << "      matched hint " << std::endl;
-			theNoun->getFeatureHint(theSubject);
+			std::cout << theNoun->getHintText(theSubject) << std::endl;
 			break;
 		default:
 			if (DEBUG_FUNCTION) std::cout << "      ERROR: fell through to default " << std::endl;

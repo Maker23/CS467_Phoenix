@@ -13,8 +13,8 @@
 
 // TODO : Is this the right set of verbs
 //save and load added to list
-enum validVerbs { look, go, use, take, drop, open, shut, hurl, hit, unlock, inventory, LastAction, help, save, load, quit, hint, unknown, LastVerb};
-//                0     1   2    3     4     5     6     7     8    9       10         11          12    13    14    15    16       17
+enum validVerbs { look, go, use, take, drop, open, shut, hurl, hit, unlock, inventory, hint, LastAction, help, save, load, quit, unknown, LastVerb};
+//                0     1   2    3     4     5     6     7     8    9       10         11    12          13    14    15    16    17
                  
 
 #include "utilities.hpp"
@@ -95,6 +95,7 @@ public:
 	};
 
 	std::string getWrappedText() {
+		if (SILENCE_DESCRIPTIONS) return "";
 		Wrap();
 		return WrapText;
 	};

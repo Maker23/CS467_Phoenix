@@ -18,6 +18,7 @@ class Feature
 
 		FeatureType type;
 		std::map<std::string, std::string> featureStrings;
+		std::vector<std::string> solvesHere; 
 		// expected keys from the feature files:
 		//		neverSeenText;
 		//		observeText;
@@ -50,6 +51,7 @@ class Feature
 		std::string getName();
 		std::string getWalkingInRoomText();	// Prints the feature as you walk in the room.
 		std::string getExamineText();
+		std::string getHintText(Feature *Subject);
 		std::string getSolvingText();
 		std::string getTakingText();					// calls getStringByKey
 		std::string getDroppingText();				// calls getStringByKey
@@ -57,17 +59,18 @@ class Feature
 		std::string getDependsOn();					// calls getStringByKey
 		std::string getTriggers();						// calls getStringByKey
 		std::string getUses();							// calls getStringByKey
+		std::vector<std::string> * getSolvesHere(); // returns a pointer to the private vector
 		void setSolved(bool);
 		void setDropped(bool);
 		void setKeyName(std::string);
 		std::string getKeyName();						// calls getStringByKey
+		void openFeature(GameState *GS, Feature *Subject);
 		void useFeature(GameState *GS, Feature *Subject);
 		void takeFeature(GameState *GS, Room * Rm, Feature *Subject);
 		void dropFeature(GameState *GS, Room * Rm, Feature *Subject, bool Silent);
 		void dropFeature(GameState *GS, Room * Rm, Feature *Subject);
 		void hurlFeature(GameState *GS, Room * Rm, Feature *Subject);
 		void hitFeature(Feature *Subject);
-		void getFeatureHint(Feature *Subject);
 		void examineFeature();
 		void Examine();
 		bool isSolved();

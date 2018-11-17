@@ -65,58 +65,24 @@ Choice * Parser::ParseLine(std::string inString){
 			sptr = strtok(NULL, " ");
 		}
 
-		// I think this is leftover from the previous tokenization method,
-		// commenting it out for now.
-		/*
-    int j = 1;
-    for (int i=0; i < (int) mystr.size(); i++) {
-        if(mystr[i] == ' ' && mystr[i+1] != ' ')
-        {
-            j++;
-        }
-    }
-    for (int i=0; i < (int) mystr.size(); i++) {
-       // cout << "mystr[" << i << " ] = " << mystr[i] << endl;
-    }
-
-    string array[j+1];
-    string testing2;
-    int test = 1;
-    cout << endl;
-		if (DEBUG_PARSER) cout << "string size = " << mystr.size() << endl;
-    for (int i=0; i < (int) mystr.size(); i++)
-        {
-            if(mystr[i] == ' ' && mystr[i+1] != ' ')
-            {
-                array[test] = testing2;
-                testing2 = "";
-								i++;
-                test++;
-            }
-            testing2 += mystr[i];
-        }
-    array[test] = testing2;
-
-    for (int i = 1; i < j+1; i++)
-    {
-			if (DEBUG_PARSER) cout << "array[" << i << "] " << array[i] << endl;
-    }
-		if (DEBUG_PARSER) std::cout << "num args: " << j << std::endl;
-		*/
-
-		// Need to convert this to use the "words" list if we're going to keep it.
-    string array[1];
-		int i=0;
-		if((array[i] == "pick" && array[i+1] == "up") ||
-			(array[i] == "Pick" && array[i+1] == "up") ||
-			(array[i] == "Pick" && array[i+1] == "Up"))
+		// This Is A Terrible Hack  :) Turn "pick up" into a single word
+		list<string>::iterator itTwo=words.begin();
+		list<string>::iterator itOne = itTwo++;
+		if (   ( (*itOne).compare("pick") ==0 || (*itOne).compare("Pick") == 0)
+				&& ( (*itTwo).compare("up") ==0 || (*itTwo).compare("Up") == 0 )) 
 		{
-			array[i] = "pickup";
-			// TODO: should shuffle-delete array[i+1]
+			
+			if (DEBUG_PARSER) std::cout << "Fixing Pick Up" << std::endl;
+
+			(*itOne) = "pickup";
+			(*itTwo) = "";
+		}
+		else {
+			if (DEBUG_PARSER) std::cout << "No PickUp found, '" << (*itOne) << "','" << (*itTwo) << std::endl;
 		}
 
-    //while ( ! words.empty() && myVerb.compare(NOTFOUND) == 0 ) //nick changed this
-    // while (( ! words.empty() && userChoice->Verb == 16 )
+		// Main parser logic: Go through the words list and recognize verbs
+		// and nouns
   	userChoice->inputVerb = words.front();
 		for (list<string>::iterator iter=words.begin(); iter!=words.end(); iter++)
     {
@@ -223,6 +189,8 @@ std::string Parser::getRoom(std::string lcNounString) {
 				|| lcNounString == "hallway"
 				|| lcNounString == "upstairs"
 				|| lcNounString == "down"
+				|| lcNounString == "outside"
+				|| lcNounString == "front"
         || lcNounString == "southwest" || lcNounString == "southcenter"
         || lcNounString == "southeast" || lcNounString == "right"
         || lcNounString == "left" || lcNounString == "ne" || lcNounString == "se"
@@ -325,100 +293,10 @@ std::string Parser::getFeature(std::string lcNounString) {
 	if (GS !=NULL){
 		returnString = GS->housePtr->findFeatureByName(lcNounString);
 	}
-	/*
-	if (DEBUG_PARSER) std::cout << "   findFeatureByNamer returns '" << returnString << "'" << std::endl;
-
-			if( lcNounString == "book" || lcNounString == "Book")
-			{
-				returnString = "book1";
-			}
-      else if( lcNounString == "Rug" || lcNounString == "rug" || lcNounString == "Rug1" || lcNounString == "rug1")
-      {
-        returnString = "rug1";
-      }
-      else if( lcNounString == "Note" || lcNounString == "note" || lcNounString == "Paper" || lcNounString == "paper" || lcNounString == "Note1" || lcNounString == "note1")
-      {
-        returnString = "note1";
-      }
-      else if( lcNounString == "RecordPlayer" || lcNounString == "recordplayer" || lcNounString == "player")
-      {
-        returnString = "recordplayer";
-      }
-      else if( lcNounString == "Tapestry" || lcNounString == "tapestry" || lcNounString == "Tapestry1" || lcNounString == "tapestry1")
-      {
-        returnString = "tapestry1";
-      }
-      else if( lcNounString == "Dishes" || lcNounString == "dishes" || lcNounString == "DirtyDishes" )
-      {
-        returnString = "dirtydishes";
-      }
-      else if( lcNounString == "Record" || lcNounString == "record" || lcNounString == "Record1")
-      {
-        returnString = "record1";
-      }
-      else if( lcNounString == "Padlock" || lcNounString == "padlock")
-      {
-        returnString = "padlock";
-      }
-      else if( lcNounString == "Piano" || lcNounString == "piano" || lcNounString == "Piano1")
-      {
-        returnString = "piano1";
-      }
-      else if( lcNounString == "Key" || lcNounString == "key" || lcNounString == "Key1")
-      {
-        returnString = "key1";
-      }
-      else if( lcNounString == "2ndFloorDoors")
-      {
-        returnString = "2ndfloordoors";
-      }
-      else if( lcNounString == "ClosetShelf" || lcNounString == "closetshelf" ||  lcNounString == "ClosetShelves" || lcNounString == "closetshelves")
-      {
-        returnString = "closetshelf";
-      }
-      else if( lcNounString == "LibraryShelf" || lcNounString == "libraryshelf" ||  lcNounString == "LibraryShelves" || lcNounString == "libraryshelves")
-      {
-        returnString = "libraryshelves";
-      }
-      else if( lcNounString == "Camera" || lcNounString == "camera")
-      {
-        returnString = "camera";
-      }
-      else if( lcNounString == "Puzzle1" || lcNounString == "puzzle1" || lcNounString == "Puzzle"
-						|| lcNounString == "puzzle"  || lcNounString == "sentence" || lcNounString == "Sentence"
-						|| lcNounString == "words"  || lcNounString == "Words" )
-      {
-        returnString = "puzzle1";
-      }
-      else if( lcNounString == "VisionHallway2" || lcNounString == "visionhallway2")
-      {
-        returnString = "visionhallway2";
-      }
-      else if( lcNounString == "Firestarter" || lcNounString == "firestarter" || lcNounString == "fire" || lcNounString == "Fire" || lcNounString == "Lighter" || lcNounString == "lighter")
-      {
-        returnString = "lighter";
-      }
-      else if( lcNounString == "Ghosts" || lcNounString == "ghosts")
-      {
-        returnString = "ghosts";
-      }
-      else if( lcNounString == "WoodBox1" || lcNounString == "woodbox1" || lcNounString == "box"|| lcNounString == "Box")
-      {
-        returnString = "woodbox1";
-      }
-      else if( lcNounString == "Spectacles" || lcNounString == "spectacles" || lcNounString == "glasses" || lcNounString == "Glasses")
-      {
-        returnString = "spectacles";
-      }
-      else if( lcNounString == "Floor2Lamps" || lcNounString == "floor2lamps")
-      {
-        returnString = "floor2lamps";
-      }
-			else if( lcNounString == "canned" || lcNounString == "food" || lcNounString == "Canned" || lcNounString == "Food")
-      {
-        returnString = "cannedfood";
-      }
-	*/
+	else {
+		std::cout << "ERROR:  GameState pointer is NULL in Parser::getFeature" 
+							<< "        Game may not work correctly!" << std::endl;
+	}
 	if (DEBUG_PARSER) std::cout << "=====   end Parser::getFeature, noun is '" << returnString << "'" << std::endl;
 	return returnString;
 }
@@ -433,6 +311,10 @@ std::string Parser::getSubject(std::string subjectstring) {
   if(subjectstring == "1894")
   {
     returnString = "1894";
+  }
+  if(subjectstring == "amulet" || subjectstring == "Amulet")
+  {
+		returnString = getFeature("amulet");
   }
   if(subjectstring == "hello" || subjectstring == "Hello")
   {

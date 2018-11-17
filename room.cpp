@@ -408,7 +408,7 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 	if(exitStringReturned.compare("locked") == 0)
 	{
 		if (DEBUG_FUNCTION) std::cout << "===== exitStringReturned.compare(\"locked\") returned locked." << std::endl;
-		std::cout << "Door won't open." << std::endl;
+		std::cout << "Door won't open - it's locked." << std::endl;
 		return this;
 	}
 	else if(exitStringReturned.length() > 0)

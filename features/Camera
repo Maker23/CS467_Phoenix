@@ -9,5 +9,4 @@ TEXT_ONFLOOR: The camera sits on the floor where you dropped it.
 WEIGHT: 1
 TRIGGERS: null
 DEPENDS_ON: ClosetShelf
-SOLVES_HERE: NurseryGhost
-SOLVES_HERE: MasterGhost
+SOLVES_HERE: NurseryGhost,MasterGhost

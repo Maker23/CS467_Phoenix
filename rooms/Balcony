@@ -4,6 +4,6 @@ CONNECTION:Spiral stairs up|3rd Floor Hallway|3rdFloorHallway, stairs, stairs up
 CONNECTION:South|Study|study, south, south door
 LONG DESC: The Balcony would have been an ideal spot to get a view of the property, but with the storm outside, it makes it difficult to see past the front lawn, but you notice a raven and a pair of binoculars on the Balcony edge. From here, there is a door on the west wall, a door on the south wall, and a spiral staircase going up.
 SHORT DESC: The Balcony is very narrow, but you notice a raven and a pair of binoculars left behind. The Balcony, 2nd Floor Hallway, 3rd Floor Hallway are your exits from here.
-ADITIONAL DESC: Go to the 2nd Floor Hallway, 3rd Floor Hallway, or the Study, there doesn't appear to be anything here.
+ADDITIONAL DESC: Go to the 2nd Floor Hallway, 3rd Floor Hallway, or the Study, there doesn't appear to be anything here.
 FEATURE: Raven
 FEATURE: Binoculars

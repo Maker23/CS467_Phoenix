@@ -3,9 +3,9 @@ CONNECTION:South Wall East door|Bedroom2|bedroom2, south wall east door, east do
 CONNECTION:South wall center door|Laundry Room|Laundry Room, south wall center door, center door, center, Laundry, LaundryRoom,laundryroom
 CONNECTION:West room door|MasterBedroom|masterbedroom, master, master bedroom, west room door
 CONNECTION:West door outside|Balcony|balcony, west door outside, outside
-CONNECTION:Stair down|3rd Floor Stairs|3rdFloorStairs, stairs down, down, downstairs
-LONG DESC: 3rd Floor Hallway Long Desc. There is a door on the east wall near the stairs, on the south wall just as the hallway turns to the east. There's another in the center of the hallway and at the far end of the hallway on the east wall.
-SHORT DESC: 3rd Floor Hallway Short Desc
+CONNECTION:Stair down|3rd Floor Stairs|3rdFloorStairs, stairs down, down, downstairs, stairs
+LONG DESC: The storm rages on and the options of rooms left for a key to escape this house are dwindling down. The 3rd Floor rarely received a visit by guests, so something may have been intentionally left behind. There is a door on the east wall near the stairs, on the south wall just as the hallway turns to the east. There's another in the center of the hallway and at the far end of the hallway on the east wall.
+SHORT DESC: The 3rd Floor is narrow and the rain from the storm outside covers the windows. The door to the Master Bedroom is glowing a bit, and you hear a rattling noise coming from the Bedroom. Look to see what this 3rd Floor holds for you.
 ADDITIONAL DESC: 3rd Floor Hallway Additional Desc
 DEPENDS_ON: floor3lamps
 BLOCKED_TEXT: It's much too dark.

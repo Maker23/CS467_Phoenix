@@ -1,5 +1,6 @@
 ROOM NAME: 3rd Floor Stairs
-CONNECTION:Hall|3rd Floor Hallway|3rdFloorHallway, hall, south,hallway
+CONNECTION:Hall|3rd Floor Hallway|3rdFloorHallway, hall, south,hallway,up
+CONNECTION:Stairs Down|2nd Floor Hallway|2ndFloorHallway, down, downstairs
 LONG DESC: There is just enough light coming up the stairs to see an oil lamp hung on the wall.  A hallway leads to the south but it's much too dark to walk that way.
 SHORT DESC: The Oil Lamps on the stairs to the 3rd Floor Hallway must be lit to access the 3rd Floor. Find a lighter somewhere in the house to light the way! If stairs up are not accessible, stairs down will lead you back to the 2nd Floor Hallway.
 ADDITIONAL DESC:  The Oil Lamps above the stair rail can be lit to enter into the 3rd Floor Hallway.

@@ -1,9 +1,9 @@
 ROOM NAME: Balcony
-CONNECTION:West door|2nd Floor Hallway|2nd floor, 2nd floor hallway, 2ndFloorHallway, west, west door
+CONNECTION:West door|2nd Floor Hallway|2nd floor, 2nd floor hallway, 2ndFloorHallway, west, west door,2nd,hall,hallway
 CONNECTION:Spiral stairs up|Spiral Stairs|SpiralStairs, spiral, staircase, stairs up, up, upstairs
 CONNECTION:South|Study|study, south, south door
-LONG DESC: The Balcony would have been an ideal spot to get a view of the property, but with the storm outside, it makes it difficult to see past the front lawn, but you notice a raven and a pair of binoculars on the Balcony edge. From here, there is a door on the west wall, a door on the south wall, and a spiral staircase going up.
-SHORT DESC: The Balcony is very narrow, but you notice a raven and a pair of binoculars left behind. The Balcony, 2nd Floor Hallway, 3rd Floor Hallway are your exits from here.
+LONG DESC: The Balcony would have been an ideal spot to get a view of the property, but with the storm outside, it makes it difficult to see past the front lawn. From here, there is a door on the west wall, a door on the south wall, and a spiral staircase going up.
+SHORT DESC: The Balcony is very narrow. The Balcony, 2nd Floor Hallway, 3rd Floor Hallway are your exits from here.
 ADDITIONAL DESC: Go to the 2nd Floor Hallway, 3rd Floor Hallway, or the Study, there doesn't appear to be anything here.
 FEATURE: Raven
 FEATURE: Binoculars

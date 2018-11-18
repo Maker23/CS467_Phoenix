@@ -3,6 +3,7 @@
 
 #include <string>
 #include "engine.hpp"
+#include "room.hpp"
 
 class Parser
 {
@@ -14,12 +15,12 @@ class Parser
     Parser(); // constructor
     Parser(GameState *GameStatePtr); // constructor
     ~Parser();	// destructor
-    Choice * TestLine();
-    Choice * ParseLine(std::string);
-    Choice * ParseLine();
+    Choice * TestLine(Room *);
+    Choice * ParseLine(Room *, std::string);
+    Choice * ParseLine(Room *);
     validVerbs getVerb(std::string);
-    std::string getNoun(std::string);
-    std::string getRoom(std::string);
+    std::string getNoun(std::string, Room *);
+    std::string getRoom(std::string, Room *);
     std::string getFeature(std::string);
     std::string getSubject(std::string);
 };

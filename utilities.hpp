@@ -2,7 +2,7 @@
 #define _UTE_H
 
 #define ROOM_DIRECTORY "rooms/"
-#define FEATURE_DIRECTORY "rooms/features/"
+#define FEATURE_DIRECTORY "features/"
 
 // This is only useful for testing :)
 #define SILENCE_DESCRIPTIONS false

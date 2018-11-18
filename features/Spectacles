@@ -1,5 +1,5 @@
 NAME: Spectacles|glasses,lenses
-ACTIONS: use| wear
+ACTIONS: take | wear
 TEXT_NEVERSEEN: Old, wired spectacles with round lenses sits in the wooden box.
 TEXT_SEEN: Spectacles in the box.
 TEXT_EXAMINE: Though old, they look useable. 

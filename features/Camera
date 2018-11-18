@@ -1,10 +1,10 @@
-NAME: Camera|camera
-ACTIONS: use|snap, picture, pic,shoot,photograph
+NAME: Camera|camera,picture,photograph,photo
+ACTIONS: use|snap, picture, pic,shoot,photograph,take
 TEXT_NEVERSEEN: An old dusty camera sits on the top shelf.
 TEXT_SEEN: Dusty camera on top shelf.
 TEXT_EXAMINE: 1930s camera with accordian style focus and cracked leather with plenty of film.
 TEXT_TAKING: You take the camera and place it in your bag. To use this camera, try entering "snap shot on camera" or "use camera" to take a picture.
-TEXT_USING: The flashbulb goes off with a bright flash and a loud pop.
+TEXT_USING: You take a picture with the camera. The flashbulb goes off with a bright flash and a loud pop.
 TEXT_ONFLOOR: The camera sits on the floor where you dropped it.
 WEIGHT: 1
 TRIGGERS: null

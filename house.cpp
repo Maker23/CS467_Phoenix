@@ -35,9 +35,9 @@ using namespace std;
  * Constructor for House. Does nothing at all. 
  * Need to call buildHouse seperately.  
  */
-House::House()
+House::House(std::string DirName)
 {
-
+	fileDirectory = DirName;
 }
 
 
@@ -87,6 +87,7 @@ Room *House::buildHouse(string startingRoom){
 		if(!hasRoom(roomName))
 		{
 			string str;
+			str.append(fileDirectory);
 			str.append(ROOM_DIRECTORY);
 			str.append(roomName);
 			//roomPtr = new Room(str, roomName, doorsToLock);
@@ -113,7 +114,8 @@ Room *House::buildHouse(string startingRoom){
 		roomPtr->lockExitDoorByKey(lockThisDoor.doorTo);
 	}
 
-	 string featuresFolder = "features";
+	 string featuresFolder = fileDirectory;
+	 featuresFolder.append(FEATURE_DIRECTORY);
 	 string FeatureFileToOpen;
     DIR* dirp = opendir(featuresFolder.c_str());
     struct dirent * dp;
@@ -121,7 +123,7 @@ Room *House::buildHouse(string startingRoom){
     	if (dp->d_name[0] != '.')
     	{
     		std::string fileName(dp->d_name);
-    		FeatureFileToOpen = "features/" + fileName;
+    		FeatureFileToOpen = featuresFolder + fileName;
     		houseFeatures[strToLowercase(fileName)] = new Feature(FeatureFileToOpen);
     		houseFeatures[strToLowercase(fileName)]->setKeyName(fileName);
     	}
@@ -390,32 +392,43 @@ std::vector<std::string> House::getDroppedFeatures()
 	return completedVector;
 }
 
-void House::printRoomFeatures(Room *room)
+void House::printRoomFeatures(GameState * GS, Room *room)
 {
 	std::vector<std::string> roomFeatures = room->getFeaturesVector();
 	Feature *f1, *f2;
+	bool printThis;
 
-	//if (DEBUG_BRENT) std::cout << "Start House::printFeatures()" << std::endl;
+	if (DEBUG_BRENT) std::cout << "Start House::printRoomFeatures()" << std::endl;
 	for (std::vector<std::string>::iterator it = roomFeatures.begin() ; it != roomFeatures.end(); ++it)
 	{
-   	//if (DEBUG_BRENT) std::cout << (*it) << std::endl;
+		printThis = true;
+   	if (DEBUG_BRENT) std::cout << "printing feature " << (*it) << std::endl;
    	f1 = getFeaturePtr((*it));
 
-		if (f1==NULL) std::cout << "Error getting pointer for " << (*it) << std::endl;
+		if (! f1) {
+			std::cout << "Error getting pointer for " << (*it) << std::endl;
+			continue; // This should never happen
+		}
 
-   	if(f1->getDependsOn().size() == 0)
-   	{
-   		std::cout << f1->getWalkingInRoomText() << std::endl;
-   	}
-   	else
+   	if(f1->getDependsOn().size() != 0)
    	{
    		f2 = getFeaturePtr(f1->getDependsOn());
-   		//if (DEBUG_BRENT) std::cout << "DEBUG: " << f1->getName() << " depends on: " << f2->getName() << " solved: " << f2->isSolved() << std::endl;
-   		if(f2->isSolved())
+   		if (DEBUG_BRENT) std::cout << "DEBUG: " << f1->getName() << " depends on: " << f2->getName() << " solved: " << f2->isSolved() << std::endl;
+   		if(! f2->isSolved())
    		{
-   			std::cout << f1->getWalkingInRoomText() << std::endl;
+   			printThis = false;
    		}
    	}
+		if (f1->getDependsOnInventory().size() != 0 )
+		{
+   		f2 = getFeaturePtr(f1->getDependsOnInventory());
+   		if (DEBUG_BRENT) std::cout << "DEBUG: " << f1->getName() << " depends on inventory: " << f2->getName() << std::endl;
+   		if( f2 && ! GS->featureInHand(f2))
+   		{
+   			printThis = false;
+   		}
+		}
+   	if ( printThis ) std::cout << f1->getWalkingInRoomText() << std::endl;
 	}
 	//if (DEBUG_BRENT) std::cout << "Exit House::printFeatures()" << std::endl;
 }

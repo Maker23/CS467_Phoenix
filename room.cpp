@@ -211,6 +211,12 @@ void Room::setRoomSeen()
 	roomSeen = true;
 }
 
+bool Room::getRoomSeen()
+{
+	return roomSeen;
+}
+
+
 std::string Room::getUnlockText()
 {
 	return unlockText;
@@ -233,10 +239,13 @@ std::string Room::getExitRoomByKey(std::string searchKey, bool returnLocked=true
 	// if found, return that object.
 
 	//std::cout << "Enter Room::getExitRoomByKey(" << searchKey << ")" << std::endl;
-	if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] START Room::getExitRoomByKey" << std::endl;
+	if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] START Room::getExitRoomByKey with '" << searchKey << "'" << std::endl;
 	for (int r = 0; r < numExits; r++)
 	{
-		if(Connections[r]->isExitKeywordFound(searchKey))
+		//if ( Connections[r]->getExitRoomName().compare (searchKey) == 0 ) {
+			//return searchKey;
+		//}
+		if(Connections[r]->isExitKeywordFound(searchKey) ||  Connections[r]->getExitRoomName().compare (searchKey) == 0  )
 		{ // it is found, return the name of the room.
 			if(returnLocked == true && Connections[r]->isDoorLocked())
 			{
@@ -339,12 +348,11 @@ void Room::Examine(GameState * GS)
 		std::cout << getLongDesc() << std::endl;
 	}
 	
-	GS->housePtr->printRoomFeatures(this);
+	GS->housePtr->printRoomFeatures(GS, this);
 
 	// TODO:? Move this to a command word exits and not all the time?
-	// TODO:? Show room name once player has seen that room?
 	if(roomSeen)
-		std::cout << "Room exits: " << this->getExitsForDisplay() << std::endl;
+		std::cout << "Room exits: " << this->getExitsForDisplay(GS) << std::endl;
 	else
 		roomSeen = true;
 }
@@ -361,12 +369,20 @@ void Room::addExitsToStack(std::stack<std::string> &exits)
 
 }
 
-std::string Room::getExitsForDisplay()
+std::string Room::getExitsForDisplay(GameState *GS)
 {
 	std::string exitString;
+	Room * roomPtr;
 	for(int i=0; i<numExits; i++)
 	{
-		exitString.append(Connections[i]->getDisplayName());
+		roomPtr = GS->housePtr->getRoomPtr( Connections[i]->getExitRoomName());
+		if ( roomPtr != NULL  && roomPtr->getRoomSeen() ) {
+			exitString.append(Connections[i]->getExitRoomName());
+		}
+		else 
+		{
+			exitString.append(Connections[i]->getDisplayName());
+		}
 		if(i < numExits-1)
 			exitString.append(", ");
 	}
@@ -407,13 +423,13 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 
 	if(exitStringReturned.compare("locked") == 0)
 	{
-		if (DEBUG_FUNCTION) std::cout << "===== exitStringReturned.compare(\"locked\") returned locked." << std::endl;
+		if (DEBUG_FUNCTION) std::cout << "      exitStringReturned.compare(\"locked\") returned locked." << std::endl;
 		std::cout << "Door won't open - it's locked." << std::endl;
 		return this;
 	}
 	else if(exitStringReturned.length() > 0)
 	{
-		if (DEBUG_FUNCTION) std::cout << "===== Get the room pointer of the room we want." << std::endl;
+		if (DEBUG_FUNCTION) std::cout << "      Get the room pointer of the room we want." << std::endl;
   		roomPtr = PlayerState->housePtr->getRoomPtr(exitStringReturned);
   		if(roomPtr != NULL)
   		{
@@ -433,17 +449,18 @@ Room * Room::goRoom(std::string roomName, GameState * PlayerState){
 						}
 					}
 				}
-  			if (DEBUG_FUNCTION) std::cout << "===== Return room pointer." << std::endl;
+  			if (DEBUG_FUNCTION) std::cout << "      Return room pointer." << std::endl;
   			return roomPtr;
   		}
 	}
-
-	if (DEBUG_FUNCTION) std::cout << "===== Did not return already, so something was not found." << std::endl;
+	if (DEBUG_FUNCTION) std::cout << "      Did not return already, so something was not found." << std::endl;
 	std::cout << roomName << "? Hm, I don't see a doorway that leads that way." << std::endl;
 	return this;
 
 }
 
+/*
+ * I think this is redundant with Room::Examine :/
 // prints the room.
 // TODO: game engine should correctly word wrap in the terminal.
 void Room::displayRoom()
@@ -460,6 +477,7 @@ void Room::displayRoom()
 	//if (DEBUG_BRENT) std::cout << "# of Features in Room: " << Features.size() << std::endl;
 	std::cout << "Exits: " << getExitsForDisplay() << std::endl;
 }
+*/
 
 std::vector<std::string> Room::getFeaturesVector()
 {
@@ -471,7 +489,7 @@ void Room::addFeature(std::string FName, GameState *GS)
 	// TODO: Check that FName is in the houseMap
 	//
 	Parser parse(GS);
-	std::string realName = parse.getNoun(FName);
+	std::string realName = parse.getFeature(FName);
 
 	if (DEBUG_FEATURES) std::cout << "===== begin Room::addFeature, realName= " << realName << std::endl;
 	roomFeatures.push_back(realName);
@@ -667,6 +685,7 @@ std::string Doorway::getDisplayName()
 
 std::string Doorway::getExitRoomName()
 {
+	if(DEBUG_FUNCTION) std::cout << "[DEBUG_FUNCTION] END Doorway::getExitRoomName returning '" << goesTo << "'" << std::endl;
 	return goesTo;
 }
 

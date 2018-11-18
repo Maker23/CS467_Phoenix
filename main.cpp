@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
 	cmdLineFlags(argc, argv, &GS);
 
-	house = new House();
+	house = new House(GS.GameDirectory);
 	currentRoom = house->buildHouse("Foyer");
 	GS.housePtr = house;
 	GS.puzzle = new Puzzle(CRYPTED_STRING, CLEAR_STRING);
@@ -65,12 +65,13 @@ int main(int argc, char *argv[])
  * ********************************************************** */
 void cmdLineFlags(int argc, char **argv, GameState*GS){
 	std::string testArg = "-test";
+	std::string dirArg = "-dir";
 	std::string fileName = "";
 	std::ifstream testFileIn;
 
 
 	if (DEBUG_FUNCTION) std::cout << "++++   In CmdLineFlags,argc=" << argc << std::endl;
-	for ( int i = 0; i < argc; i++ ) {
+	for ( int i = 1; i < argc; i++ ) {
 		//std::cout << "argv[" << i << "] = " << argv[i] << std::endl; 
 		if ( testArg.compare(argv[i]) == 0 ) 
 		{
@@ -101,6 +102,27 @@ void cmdLineFlags(int argc, char **argv, GameState*GS){
 				exit(1);
 			}
 			//std::cout << " .";
+		}
+		else if ( dirArg.compare(argv[i]) == 0 ) {
+			if ( (i + 2) <= argc ) {
+				// Is there another argument?  if not error
+				fileName = argv[i+1];
+				i++;
+				
+				if (fileName.back() != '/') {
+					fileName.append("/");  // Append a trailing slash if necessary
+				}
+			  if (DEBUG_FUNCTION)std::cout << "In TEST mode, argv Game Directory =" << fileName <<std::endl;
+				// Let's leave the error checking to someone else...
+				GS->GameDirectory = fileName;
+			}
+			else {
+				std::cout << "ERROR: expected a directory name after the -dir flag" << std::endl;
+				exit(1);
+			}
+		}
+		else {
+			std::cout << "Unrecognized command-line option " << argv[i] << std::endl;
 		}
 	}
 }

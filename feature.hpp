@@ -57,6 +57,7 @@ class Feature
 		std::string getDroppingText();				// calls getStringByKey
 		std::string getUsingText();					// calls getStringByKey
 		std::string getDependsOn();					// calls getStringByKey
+		std::string getDependsOnInventory();// calls getStringByKey
 		std::string getTriggers();						// calls getStringByKey
 		std::string getUses();							// calls getStringByKey
 		std::vector<std::string> * getSolvesHere(); // returns a pointer to the private vector

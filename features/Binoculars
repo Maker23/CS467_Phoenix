@@ -6,6 +6,7 @@ TEXT_SEEN: There are a pair of binoculars that have been left on the Balcony edg
 TEXT_EXAMINE: The binoculars give greater visibility than you had before standing on the Balcony. You see a pathway from the front Porch leading out to a road up ahead.
 TEXT_TAKING: You take the binoculars hoping they may be useful in your journey.
 TEXT_USING: You peer through the binoculars, but the lenses are so fogged that you can't see anything.
+TEXT_HINT: Don't bother trying to use them, they're too dirty to clean.
 WEIGHT: 11
 TRIGGERS: null
 DEPENDS_ON: null

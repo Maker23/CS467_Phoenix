@@ -17,9 +17,10 @@ class House
 		std::map<std::string,std::string> houseFeatureAliases; // Feature aliases. Alias is the key, canonical name is the value.
 		std::string strToLowercase(std::string);
 		std::string firstRoomToLoad;
+		std::string fileDirectory;
 
 	public:
-		House(); // constructor
+		House(std::string); // constructor, takes the directory name of the game files as argument
 		~House();	// destructor
 		Room *buildHouse(std::string);		// Takes starting Room, Builds House, then returns the ptr of the starting room
 		bool hasRoom(std::string);   			// Returns true if room ("Foyer" for instance) is found in the houseMap
@@ -31,7 +32,7 @@ class House
 		void printRooms(GameState *);						// For debugging really
 		void printRooms();						// debugging
 		void printFeatures(GameState *);						// For debugging really
-		void printRoomFeatures(Room *);		// display the features in the room.
+		void printRoomFeatures(GameState *, Room *);		// display the features in the room.
 		void debugHouse();
 		std::vector<std::string> getSolvedFeatures();
 		std::vector<std::string> getDroppedFeatures();

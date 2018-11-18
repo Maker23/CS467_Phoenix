@@ -281,6 +281,16 @@ Feature::Feature(string fileToOpen)
 					featureStrings["dependsOn"] = strToLowercase(tempStr);
 			}
 
+			if(lineStr.find("DEPENDS_ON_INVENTORY: ") != std::string::npos) 
+			{
+				tempStr = lineStr.substr(22, lineStr.length()-1);
+				if (DEBUG_FEATURES) { std::cout << "Feature() - Found DEPENDS_ON " << tempStr << std::endl;}
+				// check if not empty and isn't set to "null"
+				if(tempStr.length() > 0 && tempStr.compare("null") != 0)
+					//dependsOn = strToLowercase(tempStr);
+					featureStrings["dependsOnInventory"] = strToLowercase(tempStr);
+			}
+
 			if(lineStr.find("UNLOCKS: ") != std::string::npos) 
 			{
 				tempStr = lineStr.substr(9, lineStr.length()-1);
@@ -692,9 +702,15 @@ std::string Feature::getExamineText()
 
 std::string Feature::getDependsOn()
 {
-	if (DEBUG_EXAMINE) std::cout << "In getDependsOn for " << getStringByKey("name") << " returning " << getStringByKey("dependsOn") << std::endl;
+	if (DEBUG_EXAMINE || DEBUG_BRENT ) std::cout << "In getDependsOn for " << getStringByKey("name") << " returning " << getStringByKey("dependsOn") << std::endl;
 	return getStringByKey("dependsOn");
 	//return dependsOn;
+}
+
+std::string Feature::getDependsOnInventory()
+{
+	if (DEBUG_EXAMINE) std::cout << "In getDependsOnInventory for " << getStringByKey("name") << " returning " << getStringByKey("dependsOnInventory") << std::endl;
+	return getStringByKey("dependsOnInventory");
 }
 
 std::string Feature::getUses()

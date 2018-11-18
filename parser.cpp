@@ -30,11 +30,11 @@ Parser::~Parser()
 	// need to delete the memory allocated
 }
 
-Choice * Parser::ParseLine(){
-	return ParseLine("");
+Choice * Parser::ParseLine(Room * rPtr){
+	return ParseLine(rPtr, "");
 }
 
-Choice * Parser::ParseLine(std::string inString){
+Choice * Parser::ParseLine(Room * rPtr, std::string inString){
     string mystr;
 		string myNoun = NOTFOUND;
     string myVerb = NOTFOUND;
@@ -100,7 +100,7 @@ Choice * Parser::ParseLine(std::string inString){
 		{
 			if (myNoun.compare(NOTFOUND) == 0 )
 			{
-				myNoun = getNoun(words.front());
+				myNoun = getNoun(words.front(), rPtr);
       	if (myNoun.compare(NOTFOUND) != 0) {
 					userChoice->inputNoun = words.front();
 					words.pop_front();
@@ -113,8 +113,9 @@ Choice * Parser::ParseLine(std::string inString){
 			}
 			words.pop_front();
 		}
-		userChoice->Noun = strToLowercase(myNoun);
-		userChoice->Subject = strToLowercase(mySubject);
+	//userChoice->Noun = strToLowercase(myNoun);
+	userChoice->Noun = myNoun;
+	userChoice->Subject = strToLowercase(mySubject);
 
 	if (DEBUG_PARSER)  cout << "THIS IS THE INPUT VERB: " << userChoice->inputVerb << endl;
 	if (DEBUG_PARSER)  cout << "THIS IS THE INPUT NOUN: " << userChoice->inputNoun << endl;
@@ -126,7 +127,7 @@ Choice * Parser::ParseLine(std::string inString){
 	return userChoice;
 }
 
-Choice * Parser::TestLine()
+Choice * Parser::TestLine(Room * rPtr)
 {
 	if (DEBUG_PARSER) std::cout << "===== begin Parser::TestLine" << std::endl;
 	if ( GS == NULL ) std::cout << "WARNING : Attempting to test with NULL GS " << std::endl;
@@ -145,7 +146,7 @@ Choice * Parser::TestLine()
 	if ( ! inputFile->good() ) {
 		std::cout << "WARNING: inputFile is empty, switching to user input"<< std::endl;
 		GS->GameTest=false;
-		return ParseLine("");
+		return ParseLine(rPtr, "");
 	}
 	else {
 		std::getline(*inputFile, inputString);
@@ -153,33 +154,46 @@ Choice * Parser::TestLine()
 		{
 			//Found a comment, print instead of executing
 			std::cout << inputString << std::endl;
-			return TestLine(); // Go to the next line in the file
+			return TestLine(rPtr); // Go to the next line in the file
 		}
 		std::cout << "TEST command = " << inputString<< std::endl;
-		return ParseLine(inputString);
+		return ParseLine(rPtr, inputString);
 	}
 }
 
-std::string Parser::getNoun(std::string nounString) {
+std::string Parser::getNoun(std::string nounString, Room * rPtr) {
 	if (DEBUG_PARSER) std::cout << "===== begin Parser::getNoun, noun is '" << strToLowercase(nounString) << "'" << std::endl;
 
 	std::string returnString;
   std::string lcNounString = strToLowercase(nounString);
 	std::string tmpString;
 
-	returnString = getRoom(lcNounString);
+	returnString = getRoom(lcNounString, rPtr);
 	if ( returnString.compare(NOTFOUND) == 0 ) {
-		returnString = getFeature(lcNounString);
+		returnString = strToLowercase(getFeature(lcNounString));
 	}
 
 	return returnString;
 }
 
-std::string Parser::getRoom(std::string lcNounString) {
+std::string Parser::getRoom(std::string lcNounString, Room * rPtr) {
 
 	if (DEBUG_PARSER) std::cout << "===== begin Parser::getRoom, noun is '" << lcNounString << "'" << std::endl;
 	std::string returnString = NOTFOUND;
+	std::string tmpString = "";
 
+	if (rPtr !=NULL){
+		tmpString = rPtr->getExitRoomByKey(lcNounString, false);
+		if ( tmpString.length() > 0 ) returnString = tmpString;
+	}
+	else {
+		std::cout << "ERROR:  Room pointer is NULL in Parser::getRoom!"
+							<< "        Game may not work correctly!" << std::endl;
+	}
+	if (DEBUG_PARSER) std::cout << "===== end Parser::getRoom, returning '" << returnString << "'" << std::endl;
+	return returnString;
+
+/*
       if(lcNounString == "west"
 				|| lcNounString == "east"
 				|| lcNounString == "north"
@@ -251,11 +265,13 @@ std::string Parser::getRoom(std::string lcNounString) {
       }
       else if( lcNounString == "2nd" || lcNounString == "second" || lcNounString == "Second")
       {
-        returnString = "2ndFloorHallway";
+        //returnString = "2ndFloorHallway";
+        returnString = lcNounString;
       }
 			else if( lcNounString == "hall" || lcNounString == "3rd" || lcNounString == "third" || lcNounString == "Third")
       {
-        returnString = "3rdFloorHallway";
+        //returnString = "3rdFloorHallway";
+        returnString = lcNounString;
       }
       else if( lcNounString == "Bedroom2" || lcNounString == "bedroom2")
       {
@@ -281,8 +297,7 @@ std::string Parser::getRoom(std::string lcNounString) {
       {
         returnString = "laundry";
       }
-
-	return returnString;
+*/
 }
 
 std::string Parser::getFeature(std::string lcNounString) {
@@ -357,6 +372,7 @@ Parser::getVerb(std::string verbString) {
 			(verbString.compare("investigate") == 0 ) ||
 			(verbString.compare("examine") == 0) ||
       (verbString.compare("read") == 0) ||
+      (verbString.compare("where") == 0) ||
       (verbString.compare("Look") == 0 )||
     	(verbString.compare("Investigate") == 0 ) ||
       (verbString.compare("Read") == 0) ||
@@ -380,10 +396,10 @@ Parser::getVerb(std::string verbString) {
 	}
   else if ((verbString.compare("use") == 0 ) ||
       		(verbString.compare("Use") == 0 )  ||
-          (verbString.compare("clean") == 0 ) ||
-          (verbString.compare("Clean") == 0 ) ||
-          (verbString.compare("Wash") == 0 ) ||
-          (verbString.compare("wash") == 0 ) ||
+          //(verbString.compare("clean") == 0 ) ||
+          //(verbString.compare("Clean") == 0 ) ||
+          //(verbString.compare("Wash") == 0 ) ||
+          //(verbString.compare("wash") == 0 ) ||
 					(verbString.compare("Play") == 0 ) ||
 					(verbString.compare("play") == 0 )  )
 	     {

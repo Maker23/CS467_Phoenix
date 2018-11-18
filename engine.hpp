@@ -49,6 +49,7 @@ public:
 	bool GameTest;
 	std::string   GameTestFilename;
 	std::ifstream GameTestFile;
+	std::string   GameDirectory;
 	House * housePtr;
 	unsigned short winCols;
 	unsigned short winRows;

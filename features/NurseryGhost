@@ -6,3 +6,4 @@ TEXT_SEEN: A ghost hovers in the room, hiding something.
 TEXT_EXAMINE_SOLVED: The ghost has vanished.
 WEIGHT: 0
 TEXT_USING: The ghost vanishes, revealing an antique baby's rattle.
+DEPENDS_ON_INVENTORY: Spectacles

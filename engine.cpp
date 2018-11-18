@@ -70,10 +70,10 @@ Room * GameState::playerTurn(Room * currentRoom)
 	Parser parse (this);
 
 	if ( GameTest) {
-		userChoice = parse.TestLine();
+		userChoice = parse.TestLine(currentRoom);
 	}
 	else {
-		userChoice = parse.ParseLine();
+		userChoice = parse.ParseLine(currentRoom);
 	}
 
 	// Look for Reserved words - Help, Quit, Load, Save
@@ -199,7 +199,7 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 		nextRoom = actOnFeature(currentRoom, userChoice);
 	}
 	else if ( userChoice->Verb == (validVerbs)unknown  && 
-						parse.getRoom(userChoice->Noun).compare(NOTFOUND) != 0 )
+						parse.getRoom(userChoice->Noun, currentRoom).compare(NOTFOUND) != 0 )
 	{
 		if(DEBUG_ROOM) std::cout << "    [DEBUG_ROOM] calling goRoom with no verb '" << userChoice->inputVerb << "'" << std::endl;
 		// 1. If Noun is a valid room name , and call goRoom()  
@@ -299,9 +299,9 @@ Room * GameState::actOnFeature(Room * currentRoom, Choice * userChoice)
 					// useFeature()  function  TODO
 					solvesHere = theNoun->getSolvesHere();
 					for ( std::vector<std::string>::iterator iter = solvesHere->begin(); iter != solvesHere->end(); iter++) {
-						if (featureWithinReach(currentRoom, (*iter))) {
+						if (featureWithinReach(currentRoom, (*iter))) { 
 							solvesFeature = housePtr->getFeaturePtr(*iter);
-							if (solvesFeature) {
+							if (solvesFeature && featureDependenciesSolved(solvesFeature)){
 								solvesFeature->setSolved(true);
 								solvesFeature->useFeature(this, theSubject);
 							}
@@ -466,6 +466,21 @@ bool GameState::featureDependenciesSolved(Feature * theNoun)
 		}
 		//Missing a test case here - if checkFeature is NULL that's an error...
 	}
+	// If we need an object in inventory to use THIS feature, 
+	// confirm we have that object in our inventory
+	std::string needInventory = theNoun -> getDependsOnInventory();
+	if ( needInventory.compare("") != 0 )
+	{ 
+		Feature * fPtr = housePtr->getFeaturePtr(needInventory);
+		if (fPtr) {
+			if (! featureInHand(fPtr) ){
+				return false;
+			}
+		}
+		else {
+			std::cout << "WARNING: Got a NULL pointer looking up " << needInventory << std::endl;
+		}
+	}
 	// Depends on nothing, or dependency is solved
 	return true;
 }
@@ -480,6 +495,7 @@ GameState::GameState(std::string Na)
 	housePtr = NULL;
 	puzzle = NULL;
 	GameTest = false;
+	GameDirectory = "./";
 
 	GameTask[0] = false;
 	GameTask[1] = false;
@@ -554,7 +570,7 @@ int GameState::getAvailableCapacity()
  * TODO: move this into the playerTurn now that we have shared state
  *
  ************************************************************ */
-void GameState::UpdateGameState(int &GameClock, Room* currentRoom)
+void GameState::UpdateGameState(int &GameClock, Room* currentRoomPtr)
 {
   int points = getGameTaskStatus();
 
@@ -583,6 +599,7 @@ void LongString::Wrap() {
   // First get the current window size
 	ioctl(0, TIOCGWINSZ, &WS);
 	WrapLength=WS.ws_col;
+	if ( WrapLength > 80) WrapLength=80; // Hardcoded for readability
 	searchPos = WrapLength - 12; // Hardcoded.  Sad.  TODO.
 	WrapText = Text;
 

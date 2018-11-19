@@ -565,7 +565,14 @@ void Feature::dropFeature(GameState *GS, Room * Rm,Feature * Subject, bool Silen
 	std::string CName = "";
 	dropped = true;
 
-	if (! Silent) std::cout << "You drop the " << FName << std::endl;
+	if (! Silent) {
+		if ( getDroppingText().length() != 0 ) {
+			std::cout << getDroppingText() << std::endl;
+		}
+		else {
+			std::cout << "You drop the " << FName << std::endl;
+		}
+	}
 	for (std::vector<Feature*>::iterator iter = GS->Holding.begin(); iter != GS->Holding.end(); iter ++ ) {
 		CName = (*iter)->getName();
 		if ( CName.compare(FName) == 0 ) {

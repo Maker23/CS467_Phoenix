@@ -75,6 +75,7 @@ Room *House::buildHouse(string startingRoom){
 
 	firstRoomToLoad = startingRoom;
 
+	if(DEBUG_HOUSE) std::cout << "[DEBUG_HOUSE] begin House::buildHouse, starting room='" << startingRoom << "'" << std::endl;
 	// Push the startingRoom to the stack
 	roomsToLoad.push(startingRoom);
 
@@ -102,9 +103,9 @@ Room *House::buildHouse(string startingRoom){
 		}
 	}
 
-	//if(DEBUG_BRENT) printRooms();
+	if(DEBUG_HOUSE) printRooms();
 	// lock all the doors.
-	//if(DEBUG_BRENT) std::cout << "[DEBUG_BRENT] Lockup the " << doorsToLock.size()  << " doors House" << std::endl;
+	if(DEBUG_HOUSE) std::cout << "[DEBUG_HOUSE] Lockup the " << doorsToLock.size()  << " doors in House" << std::endl;
 	while (!doorsToLock.empty())
 	{
 		lockThisDoor = doorsToLock.top();

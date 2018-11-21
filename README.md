@@ -3,6 +3,7 @@ Shared repository for CS467 Team Phoenix Week 04 branch
 
 Recent changelogs:
 
+* [Nov 18 changelog](https://docs.google.com/document/d/1n9iLu1SsKXg5r9c4yZTBoM5bjmr6WE_wcwz9ctGmbO8)
 * [Nov 11 changelog](https://docs.google.com/document/d/1i1ym1oiwkVLkDJnnqWR0Xu9vIKqjrqg7QbATehCOPgs)
 * [Nov  6 changelog](https://docs.google.com/document/d/195l83ZnKcqkBQI3VFZ3RitSjwrIvR9FeTapJ03upab0)
 * [Oct 27 changelog](https://docs.google.com/document/d/1qrRssbhig6v8y5otEunce0lCNV8vEc7iDRUUC3Kh1qI)

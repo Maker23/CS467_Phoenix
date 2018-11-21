@@ -495,7 +495,7 @@ GameState::GameState(std::string Na)
 	housePtr = NULL;
 	puzzle = NULL;
 	GameTest = false;
-	GameDirectory = "./";
+	GameDirectory = "./hauntedhouse/";
 
 	GameTask[0] = false;
 	GameTask[1] = false;

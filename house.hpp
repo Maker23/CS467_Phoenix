@@ -18,10 +18,12 @@ class House
 		std::string strToLowercase(std::string);
 		std::string firstRoomToLoad;
 		std::string fileDirectory;
+		std::string startingRoom;
 
 	public:
 		House(std::string); // constructor, takes the directory name of the game files as argument
 		~House();	// destructor
+		Room *buildHouse();						// Uses the config file and calls buildHouse(std::string)
 		Room *buildHouse(std::string);		// Takes starting Room, Builds House, then returns the ptr of the starting room
 		bool hasRoom(std::string);   			// Returns true if room ("Foyer" for instance) is found in the houseMap
 		bool hasFeature(std::string);   			// Returns true if feature is in the house 

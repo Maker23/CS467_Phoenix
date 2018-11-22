@@ -1,0 +1,5 @@
+ROOM NAME: Airlock
+CONNECTION:North|RebelShipEntrance|rebelshipentrance,north
+LONG DESC: Walking through the cut airlock, you see a bright white hallway. Two dead stormtroopers lay at your feet and the corridor is littered with dead rebels. You can move "north" through the airlock.
+SHORT DESC: You are standing in corridor of the rebel ship with two stormtroopers. You can move "north" through the airlock.
+ADDITIONAL DESC: You are the only one here.

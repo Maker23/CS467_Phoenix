@@ -1,0 +1,7 @@
+ROOM NAME: RebelShipEntrance
+CONNECTION:South|Airlock|airlock,south
+LONG DESC: Walking through the cut airlock, you see a bright white hallway. Two dead stormtroopers lay at your feet and the corridor is littered with dead rebels. (This is the end of the star wars demo)
+SHORT DESC: You are standing in corridor of the rebel ship with two stormtroopers.
+ADDITIONAL DESC: Just you, the stormtroopers and the dead rebels.
+FEATURE: Stormtroopers
+FEATURE: Rebels

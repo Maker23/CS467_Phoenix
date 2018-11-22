@@ -4,6 +4,7 @@ TEXT_NEVERSEEN: A dark blue rug sits in the middle of the room.
 TEXT_SEEN: Rug is in the middle of the room.
 TEXT_EXAMINE: It's dusty, but you can make out the picture of a fiery bird - a Phoenix.
 TEXT_SOLVING: When you straigten the rug you find a piece of paper underneath it.
+TEXT_HINT: There might be something under the rug, if you can find a way to move it.
 WEIGHT: 10
 TRIGGERS: Note1
 DEPENDS_ON: null

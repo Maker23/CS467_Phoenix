@@ -1,0 +1,9 @@
+ROOM NAME: Atrium
+CONNECTION:West Door|Media Room|media,mediaroom,west
+CONNECTION:East Door|Sun Room|sun, sunroom,east
+FEATURE: Painting1
+LONG DESC: This tall atrium is the entryway of a very modern house. The floor is white marble, and the stark gray walls are only interrupted by the doorways and by a colorful painting that hangs on the wall.  Behind you is a tall double doorway that seems to lead outside.
+SHORT DESC: There are white marble floors and no furniture.
+ADDITIONAL DESC: The only interesting thing in this room is the painting.
+LOCKED_DOOR: FrontLawn
+UNLOCKED_TEXT: You have unlocked the Front Door leading out to the front lawn.

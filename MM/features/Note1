@@ -1,0 +1,6 @@
+NAME: Secret Note|Note1,note,paper,secret
+TEXT_NEVERSEEN: Note TEXT neverseen
+TEXT_SEEN: Note TEXT seen
+TEXT_EXAMINE: Note TEXT Examine
+SOLVED:true
+WEIGHT: 1

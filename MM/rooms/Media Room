@@ -1,0 +1,7 @@
+ROOM NAME: Media Room
+CONNECTION:East Door|Atrium|atrium,east
+FEATURE: SoundSystem
+FEATURE: Note1
+LONG DESC: Media Room LONG description
+SHORT DESC: Media Room SHORT desc.
+ADDITIONAL DESC: Media Room HINT

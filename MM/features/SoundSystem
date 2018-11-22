@@ -1,0 +1,7 @@
+NAME: SoundSystem|sound,audio,bang,olufssen,button
+ACTIONS: use|play,hit
+TEXT_NEVERSEEN: A sleek Bang & Olufssen audio system has pride of place on a narrow table against the wall. The play button pulses gently on and off with a soothing blue light. It's clearly ready to play.
+TEXT_SEEN: An audio system is against the wall.
+TEXT_EXAMINE: Hit the play button. What could possibly go wrong?
+WEIGHT: 20
+TEXT_SOLVING: Playing the Victrola

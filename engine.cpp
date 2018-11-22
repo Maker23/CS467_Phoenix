@@ -495,7 +495,7 @@ GameState::GameState(std::string Na)
 	housePtr = NULL;
 	puzzle = NULL;
 	GameTest = false;
-	GameDirectory = "./";
+	GameDirectory = "./hauntedhouse/";
 
 	GameTask[0] = false;
 	GameTask[1] = false;
@@ -831,6 +831,11 @@ void GameState::saveGame(Room *currentRoom) {
 
 	std::vector<std::string> stringVector;
 	std::string saveString = "";
+	std::string saveFileName;
+
+	saveFileName.append(GameDirectory);
+	saveFileName.append("saveGame.txt");
+
 
 	// need to save current room key
 	saveString.append("CURRENT_ROOM:");
@@ -874,7 +879,7 @@ void GameState::saveGame(Room *currentRoom) {
 	saveString.append(housePtr->getRoomLockedDoorsSaveString());
 
 	//if(DEBUG_BRENT) std::cout << saveString << std::endl;
-   std::ofstream of("saveGame.txt");
+   std::ofstream of(saveFileName);
    of << saveString;
    of.close();
    std::cout << "Game saved." << std::endl;
@@ -892,8 +897,12 @@ Room * GameState::loadGame(Room *currentRoom) {
 	char * nptr;
 	Feature *feature;
 	Room *room;
+	std::string loadFileName;
 
-	loadFile.open("saveGame.txt");  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
+	loadFileName.append(GameDirectory);
+	loadFileName.append("saveGame.txt");
+
+	loadFile.open(loadFileName);  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
 	if (loadFile.is_open())
 	{
 

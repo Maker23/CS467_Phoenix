@@ -1,0 +1,6 @@
+NAME: Rebels|rebel, rebels
+TEXT_NEVERSEEN: Multiple rebel bodies lay on the floor for you to walk over as if they aren't even there.
+TEXT_SEEN: Dozen rebel bodies on the floor.
+TEXT_EXAMINE: Looking closer at these rebel bodies, you can see where they were hit with blaster fire.
+WEIGHT: 100
+DEPENDS_ON: null

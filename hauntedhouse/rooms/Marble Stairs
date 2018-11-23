@@ -1,4 +1,4 @@
-ROOM NAME: 3rd Floor Stairs
+ROOM NAME: Marble Stairs
 CONNECTION:Hall|3rd Floor Hallway|3rdFloorHallway, hall, south,hallway,up,3rd
 CONNECTION:Stairs Down|2nd Floor Hallway|2ndFloorHallway, down, downstairs,stairs,2nd
 LONG DESC: There is just enough light coming up the stairs to see an oil lamp hung on the wall.  A hallway leads to the south but it's much too dark to walk that way.

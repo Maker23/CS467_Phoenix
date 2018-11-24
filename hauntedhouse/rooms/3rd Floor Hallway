@@ -1,11 +1,11 @@
 ROOM NAME: 3rd Floor Hallway
-CONNECTION:South Wall East door|Bedroom2|bedroom2, south wall east door, east door, east, bedroom
-CONNECTION:South wall center door|Laundry Room|Laundry Room, south wall center door, center door, center, Laundry, LaundryRoom,laundryroom
-CONNECTION:West room door|MasterBedroom|masterbedroom, master, master bedroom, west room door
-CONNECTION:West door outside|Spiral Stairs|spiral, stairs, balcony, west door outside, outside
+CONNECTION:South Wall West door|Bedroom2|bedroom2, south wall east door, east door, east, bedroom, southwest, west
+CONNECTION:South wall center door|Laundry Room|Laundry Room, south wall center door, center door, center, Laundry, LaundryRoom,laundryroom, laundry, southeast
+CONNECTION:North room door|MasterBedroom|masterbedroom, master, master bedroom, north room door, Master, north
+CONNECTION:East door outside|Spiral Stairs|spiral, stairs, balcony, east door outside, outside
 CONNECTION:Stair down|Marble Stairs|marble, Marble, stairs down, down, downstairs, stairs
-LONG DESC: The storm rages on and the options of rooms left for a key to escape this house are dwindling down. The 3rd Floor rarely received a visit by guests, so something may have been intentionally left behind. There is a door on the east wall near the stairs, on the south wall just as the hallway turns to the east. There's another in the center of the hallway and at the far end of the hallway on the east wall.
-SHORT DESC: The 3rd Floor is narrow and the rain from the storm outside covers the windows. The door to the Master Bedroom is glowing a bit, and you hear a rattling noise coming from the Bedroom. Look to see what this 3rd Floor holds for you.
-ADDITIONAL DESC: 3rd Floor Hallway Additional Desc
+LONG DESC: The storm rages on and the options of rooms left to find a key to escape this house are dwindling down. The 3rd Floor rarely received a visit by outside guests, so something may have been intentionally left behind for those looking. There is a door on the east wall that leads to the Spiral Stairs, and a door on the north wall that leads to the Master Bedroom. There are two exits on the south wall, the southeast exit leads to the Laundry Room and the southwest exit leads to the Bedroom.
+SHORT DESC: The 3rd Floor creaks with every step you take and the rain from the storm outside covers the windows. The exits from here include the Marble Stairs, Bedroom, Laundry Room, Master Bedroom, and Spiral Stairs
+ADDITIONAL DESC: Look in one of the rooms to find the Final Key.
 DEPENDS_ON: floor3lamps
 BLOCKED_TEXT: It's much too dark.

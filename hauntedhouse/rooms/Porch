@@ -1,7 +1,7 @@
 ROOM NAME: Porch
-LONG DESC: You made it out to the Porch. The storm has died down and you have successfully found a way out of the Haunted House! Just in time. A klaxon sounds. The house, porch and surrounding land fade away and the holodeck appear before you. "Red Alrert! Captain to the bridge!" You need to make your way to bridge now. Congradulations, you have won this game.
+LONG DESC: You made it out to the Porch. The storm has died down and you have successfully found a way out of the Haunted House! Just in time. A klaxon sounds. The house, porch and surrounding land fade away and the holodeck appear before you. "Red Alert! Captain to the bridge!" You need to make your way to bridge now. Congratulations, you have won this game.
 SHORT DESC: After leaving the house, you are now standing on the holodeck. You need to exit the game and head to the bridge.
 ADDITIONAL DESC: After leaving the house, you are now standing on the holodeck. You need to exit the game and head to the bridge.
 LONG EXIT DESC: Porch Long Desc
 SHORT EXIT DESC: Done!!
-CONNECTION:North|Foyer|north,foyer,inside
+CONNECTION:North|Foyer|north,foyer,inside,Foyer

@@ -1,7 +1,7 @@
 ROOM NAME: Bedroom2
 CONNECTION:North Door|3rd Floor Hallway|north, north door, door, hallway
-LONG DESC: This Bedroom on the 3rd Floor is filled with clutter. It looks as if junk was piled up in here over the years, but be careful with how you interact with certain objects in the room. There is a single door on the north wall back to the 3rd Floor Hallway.
-SHORT DESC: This Bedroom has a random collection of items accumulated over the years.
+LONG DESC: This Bedroom on the 3rd Floor is absolutely filled with clutter. Some guests wanted to show their appreciation to visit this incredible house by bringing an antique or gift. In most cases, these gifts ended up in the 3rd Floor Bedroom. It looks as if junk was piled up in here over the years, so be careful with how you interact with certain objects in the room. There is a single door on the north wall back to the 3rd Floor Hallway.
+SHORT DESC: This Bedroom has a random collection of items accumulated over the years. Treasured antiques and boxes of photographs cover the bed -- there's no time to rest! The door on the north wall leads back to the 3rd Floor Hallway.
 ADDITIONAL DESC: Is the rattlesnake guarding something? Maybe you can scare it away with noise. The Moosehead might have something to say.
 FEATURE: RattleSnake
 FEATURE: Amulet

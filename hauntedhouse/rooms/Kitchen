@@ -1,8 +1,8 @@
 ROOM NAME: Kitchen
 CONNECTION:West door|Ballroom|ballroom, west, west door
 CONNECTION:East door|Pantry|pantry, east, east door
-LONG DESC: The Kitchen is an absolute mess. Culinary equipment covers the countertops and old menus and orders are strewn across the floor. The sink has a leaky faucet, yet still there seems to be dirty dishes there that have kept their grime all these years. With all this clutter, there may be something useful hidden. There are two door in the kitchen. One is on the west wall and the other the east wall.
-SHORT DESC: The kitchen sink has some dish soap on the side that might come in handy. It might be helpful to start cleaning the place up to put things in the right order.
+LONG DESC: The Kitchen is an absolute mess. Culinary equipment covers the countertops and old menus and orders are strewn across the floor. The sink has a leaky faucet that looks like it hasn't been touched in years. With all this clutter, there may be something useful hidden. There are two doors from here, one on the west wall to the Ballroom and the other on the east wall to the Pantry.
+SHORT DESC: The kitchen sink has some dish soap on the side that might come in handy. This whole kitchen is a mess, but there may be something useful left behind in this room.
 ADDITIONAL DESC: You can barely make out something unusual at the bottom of the sink. Try cleaning the dishes to find out what it is.
 FEATURE: DirtyDishes
 FEATURE: Record1

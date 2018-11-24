@@ -1,8 +1,8 @@
 ROOM NAME: Pantry
 CONNECTION:West door|Kitchen|kitchen, west, west door
 CONNECTION:Stairs down|Basement|basement, stairs down, stairs, down
-LONG DESC: Inside the pantry there's plenty of canned food items that line the shelves. The light reflects off of the equipment and products, yet something else catches your eye -- a padlock. There seem to be no clues in the pantry as to what could unlock it or what's behind the small door, but a four digit number could open the door to this mysterious room. There is a door to the west and stairs going down.
-SHORT DESC: The only numbers seen in this room are the expiration dates on the canned food items stacked on the shelves. Try looking in another room for a 4 digit combination to open the padlock on the wall. There is a door to the west and stairs going down.
+LONG DESC: Inside the Pantry, every inch of space seems to be covered with supplies that accumulated by staff. This room was organized well to feed and host the many guests that visited over the years. It's a bit quieter in this room and you can faintly feel a breeze coming from the other side of the padlock. There is a door to the west going back to the Kitchen and stairs going down to the Basement.
+SHORT DESC: The Pantry has shelves filled with supplies that can be seen from the moonlight pouring in from the Kitchen. This room was accessed frequently by staff and all items in here appear to be worn down from use. There is a door to the west and stairs going down.
 ADDITIONAL DESC: Another room may contain the 4 digit combination to be used on the padlock in this room. There is a door to the west and stairs going down.
 UNLOCKED_TEXT: The padlock clicks open after you enter the correct combination.
 LOCKED_DOOR: Basement

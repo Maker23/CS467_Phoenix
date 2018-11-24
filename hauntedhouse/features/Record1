@@ -2,6 +2,7 @@ NAME: Record|record
 TEXT_NEVERSEEN: You see an old dusty record with no center label.
 TEXT_SEEN: A record sits where you left it.
 TEXT_TAKING: You pickup the record and place it in your inventory.
+TEXT_EXAMINE: The record looks to be in great condition, and it was a crowd favorite back in the day!
 TEXT_ONFLOOR: The record sits on the floor where you dropped it.
 WEIGHT: 1
 TRIGGERS: null

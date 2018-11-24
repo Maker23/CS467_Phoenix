@@ -6,7 +6,7 @@ CONNECTION:Door4|Study|study, door 4, 4, southeast,Door4,door4
 CONNECTION:Door5|Balcony|balcony, door 5, 5, east, east door,Door5,door5
 CONNECTION:Stairs down|Foyer|foyer, stairs down, down, downstairs
 CONNECTION:Stairs up|Marble Stairs|Marble Stairs, stairs up, up, upstairs,Marble, marble
-LONG DESC: The 2nd floor hallway wraps around the stairs so that you can access either the Bedroom, Nursery, Library, Study, and Balcony. The ground looks worn from all the guests and visitors who have extended their stay on this floor. Though the first floor was empty, the second floor may hold some unexpected guests, so watch out for ghosts!
+LONG DESC: The 2nd floor hallway wraps around the stairs so that you can access either the Bedroom, Nursery, Library, Study, and Balcony. The ground looks worn from all the guests and visitors who have extended their stay on this floor, and black-and-white photographs are framed between each of the doors. Though the first floor seemed empty, the second floor may hold some unexpected guests, so watch out for ghosts!
 SHORT DESC: The 2nd floor serves as an entry point for just about every room on the second floor! Check out the hidden clues in either the Bedroom, Nursery, Library, Study, and Balcony, and watch out for ghosts!
 ADDITIONAL DESC: The door to the Library, Study, and Balcony appear to be unlocked if you don't have a key for the Bedroom or Nursery.
 UNLOCKED_TEXT: Using the Bronze Key you are able to unlock the door.

@@ -1,8 +1,8 @@
 ROOM NAME: Library
 CONNECTION:North Door|2nd Floor Hallway|2ndFloorHallway, north, north door,hallway,Hallway,2nd
 CONNECTION:East Door|Study|study, east, east door
-LONG DESC: This Library, unlike the Conservatory downstairs, has minimal dust and spiderwebs covering the bookshelves. It's almost as if these books have been opened up and read recently by someone ... or something. The condition of these shelves seem so out of place from the rest of the house! There are hundreds of books to choose from, but one in particular may hold a clue. There are doors on the north wall and the east wall.
-SHORT DESC: The lighting and layout of this room was intended to allow any guest to read from any of the books filling the shelves. There are so many to choose from, but ones with fewer dust residue stand out from the rest. Try reading a book to find out what clue lies in this room!
-ADDITIONAL DESC: Read a book to find out what clue was left behind in the Library.
+LONG DESC: This Library, unlike the Conservatory downstairs, has minimal dust and spiderwebs covering the shelves. It's almost as if this room has recently been visited by someone ... or something! A spider is hanging from the center of the ceiling and a chair occupies the back corner of the room. There is an exit on the north wall to the 2nd Floor Hallway and an exit on the east wall to the Study.
+SHORT DESC: The Library was not a popular spot on the 2nd Floor with guests, but for some reason there doesn't seem to be that much dust covering the items in this room. To leave the Library, there is a door on the north wall to the 2nd Floor Hallway and a door on the east wall to the Study.
+ADDITIONAL DESC: Examine the shelves, the contents may reveal a clue for you to escape this house!
 FEATURE: LibraryShelves
 FEATURE: Book1

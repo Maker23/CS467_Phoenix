@@ -1,9 +1,9 @@
 ROOM NAME: Nursery
-CONNECTION:North Right Side|2nd Floor Hallway|2ndFloorHallway, north right side, upper right, north right,right,2nd,hall,hallway
-CONNECTION:North Left Side|Closet|closet, north left side, upper left, north left,left
-LONG DESC: Storybook paintings cover the walls; the furniture is thick with dust.  There are two doors to the north, one west side and one east side.
-SHORT DESC: You're in a children's nursery.
-ADDITIONAL DESC: Nursery Additional Desc
+CONNECTION:North Right Side|2nd Floor Hallway|2ndFloorHallway, north right side, upper right, north right,right,2nd,hall,hallway,east
+CONNECTION:North Left Side|Closet|closet, north left side, upper left, north left,left,west
+LONG DESC: Storybook paintings cover the walls of this Nursery, and what was once bright colors have now turned to dull, muted tones from sun exposure. The furniture is thick with dust and a tree branch is scratching the window outside due to the storm. The withered branch's shadow dances across the room. There are two doors to the north, one west side exit that leads to the Closet and one east side exit that leads to the 2nd Floor Hallway.
+SHORT DESC: Beautiful portraits of Nursery stories cover the walls, and toys are seen in the corner below with story books. There are two exits on the north wall, the east side has a door to the 2nd Floor Hallway, and the west side has an exit to the Closet.
+ADDITIONAL DESC: There may be more to be seen in the Nursery if you are looking through a different lens.
 FEATURE: BabyRattle
 FEATURE: NurseryGhost
 FEATURE: NurseryFurniture

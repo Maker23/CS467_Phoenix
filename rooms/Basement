@@ -1,8 +1,0 @@
-ROOM NAME: Basement
-CONNECTION:Stairs going up|Pantry|pantry, stairs, stairs up, up
-LONG DESC: The Basement, unlike every other room in the house, is silent. There's no windows to see the storm outside, and the only light in this room is coming from the Pantry upstairs. Something to light the way would be very helpful to get an idea of what exactly this room holds. The only exit from here is to go back up the stairs to the Pantry.
-SHORT DESC: There's something on the wall that doesn't quite look like handwriting. In fact, it appears to be a little puzzling. Try to observe it a little closer to understand what this room holds for you.
-ADDITIONAL DESC: Try using the lighter on the ground to get a better view of what the wall says.
-FEATURE: Puzzle1
-FEATURE: Lighter
-TEXT_TO_UNLOCK: 1894

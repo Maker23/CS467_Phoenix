@@ -173,10 +173,19 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 	//
 	else if (userChoice->Verb == (validVerbs)go ) 
 	{
-		nextRoom = currentRoom->goRoom(userChoice->Noun, this);
-		if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
+		Feature * theNoun = housePtr->getFeaturePtr(userChoice->Noun);
+		if ( theNoun &&  userChoice->inputVerb.compare("move") == 0 ) {
+			// This is a terrible hack...
+			userChoice->Verb = (validVerbs)take;
+			nextRoom = actOnFeature(currentRoom, userChoice);
+		}
+		else 
 		{
-			nextRoom->Examine(this);
+			nextRoom = currentRoom->goRoom(userChoice->Noun, this);
+			if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
+			{
+				nextRoom->Examine(this);
+			}
 		}
 	}
 	else if (userChoice->Verb == (validVerbs)open && nextroomKeyName.length() > 0){
@@ -495,7 +504,7 @@ GameState::GameState(std::string Na)
 	housePtr = NULL;
 	puzzle = NULL;
 	GameTest = false;
-	GameDirectory = "./";
+	GameDirectory = "./hauntedhouse/";
 
 	GameTask[0] = false;
 	GameTask[1] = false;
@@ -599,7 +608,7 @@ void LongString::Wrap() {
   // First get the current window size
 	ioctl(0, TIOCGWINSZ, &WS);
 	WrapLength=WS.ws_col;
-	if ( WrapLength > 80) WrapLength=80; // Hardcoded for readability
+	if ( WrapLength > 77) WrapLength=77; // Hardcoded for readability
 	searchPos = WrapLength - 12; // Hardcoded.  Sad.  TODO.
 	WrapText = Text;
 
@@ -831,6 +840,11 @@ void GameState::saveGame(Room *currentRoom) {
 
 	std::vector<std::string> stringVector;
 	std::string saveString = "";
+	std::string saveFileName;
+
+	saveFileName.append(GameDirectory);
+	saveFileName.append("saveGame.txt");
+
 
 	// need to save current room key
 	saveString.append("CURRENT_ROOM:");
@@ -874,7 +888,7 @@ void GameState::saveGame(Room *currentRoom) {
 	saveString.append(housePtr->getRoomLockedDoorsSaveString());
 
 	//if(DEBUG_BRENT) std::cout << saveString << std::endl;
-   std::ofstream of("saveGame.txt");
+   std::ofstream of(saveFileName);
    of << saveString;
    of.close();
    std::cout << "Game saved." << std::endl;
@@ -892,8 +906,12 @@ Room * GameState::loadGame(Room *currentRoom) {
 	char * nptr;
 	Feature *feature;
 	Room *room;
+	std::string loadFileName;
 
-	loadFile.open("saveGame.txt");  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
+	loadFileName.append(GameDirectory);
+	loadFileName.append("saveGame.txt");
+
+	loadFile.open(loadFileName);  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
 	if (loadFile.is_open())
 	{
 

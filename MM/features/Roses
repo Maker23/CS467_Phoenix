@@ -1,0 +1,8 @@
+NAME: Roses|roses,rose
+ACTIONS: take|take,pick
+TEXT_NEVERSEEN: A vase of beautiful red roses sits on a small round french cafe table. Their dark crimson color and intense fragrance draw your attention.
+TEXT_SEEN: A vase of red roses sits on a jardin table.
+TEXT_TAKING: You pull a rose from the vase and tuck it into your pocket.
+TEXT_EXAMINE: The fragrance is mesmerizing, conjuring visions of fairy-tale gardens.
+SOLVED: true
+WEIGHT: 1

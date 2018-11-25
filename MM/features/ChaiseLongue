@@ -1,0 +1,8 @@
+NAME: ChaiseLongue|chaiselongue,long,lounge,chair,chaise
+ACTIONS: use|sit,lay,lie
+TEXT_NEVERSEEN: TextChaise
+TEXT_SEEN: TextChaise
+TEXT_EXAMINE: Text examine chaise
+WEIGHT: 20
+TEXT_SOLVING: Your eyes close. In a moment you're asleep and dreaming vividly of a grand rose garden with an 18th century gothic castle rising up behind it.
+USES: Roses

@@ -23,6 +23,7 @@
 #include <typeindex>
 #include <sys/types.h>
 #include <dirent.h>
+#include <sstream>
 #include "utilities.hpp"
 #include "house.hpp"
 #include "feature.hpp"
@@ -57,6 +58,39 @@ House::~House()
 
 	houseMap.clear();
 	houseFeatures.clear();
+}
+
+Room *House::buildHouse()
+{ 
+	string lineStr, filename;
+	ifstream cfgfile;
+	filename.append(fileDirectory);
+	filename.append("game.cfg");
+
+	cfgfile.open(filename.c_str());  // .c_str() got from https://stackoverflow.com/questions/19531269/c-void-function-with-file-stream-error
+	if (cfgfile.is_open())
+	{
+	   while (std::getline(cfgfile, lineStr))  
+   	{
+			if (lineStr.substr(0,1).find("#") != std::string::npos )
+			{
+				// Skip lines that begin with # for comments
+				continue;
+			}
+   		if(lineStr.find("START_ROOM:") != std::string::npos)
+   		{
+   			startingRoom = lineStr.substr(11, lineStr.length()-1);
+				continue;
+   		}
+   	}
+	}
+	else
+	{
+		cout << "Error opening room file '" <<  filename << "'. Exiting...\n";
+		exit(1);
+	}
+
+	return buildHouse(startingRoom);
 }
 
 /*

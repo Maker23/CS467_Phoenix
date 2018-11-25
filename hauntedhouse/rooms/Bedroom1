@@ -1,0 +1,8 @@
+ROOM NAME: Bedroom1
+CONNECTION:East Door|2nd Floor Hallway|2ndFloorHallway, 2nd floor hallway, east, east door, hallway,2nd,hall
+CONNECTION:South Door|Closet|closet, south, south door
+LONG DESC: The Bedroom was continuously used to host guests, and it can be seen in the wear and tear of this room. The history in here feels rich since travelers near and far have left their mark in some way on this room, mostly by peeling wallpaper or writing in the guest book. The furniture layout is minimal in this room, and  From here, the exits are on the south wall to the Closet and east wall to the 2nd Floor Hallway.
+SHORT DESC: The room feels very bare with its minimal layout to host guests. Many guests have visited this room, there may be something useful left behind! From here, the exits are on the south wall to the Closet and the east wall to the 2nd Floor Hallway.
+ADDITIONAL DESC: The furniture in this room appears empty, but it's strange the spectacles and wooden box are the only items left after all these years. From here, the exits are on the south and east walls.
+FEATURE: WoodBox1
+FEATURE: Spectacles

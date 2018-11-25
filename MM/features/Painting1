@@ -1,0 +1,6 @@
+NAME: Painting|painting
+TEXT_NEVERSEEN: A vivid painting hangs on the wall, it's vivid colors and harsh shapes a jarring interruption to the otherwise blank walls.
+TEXT_SEEN: A painting hangs on the wall.
+TEXT_EXAMINE: The bright colors, geometric patterns and odd figures are oddly compelling.  You see a creature that might be a lion, something that might be a branch or a tentacle, and a reclining figure, but the landscape is nonsensical. A brass plate on the frame declares this to be 'The Dream', by Heinrich Campendonk
+SOLVED:true
+WEIGHT: 100

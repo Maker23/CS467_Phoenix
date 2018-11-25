@@ -36,7 +36,8 @@ int main(int argc, char *argv[])
 	cmdLineFlags(argc, argv, &GS);
 
 	house = new House(GS.GameDirectory);
-	currentRoom = house->buildHouse("Foyer");
+	//currentRoom = house->buildHouse("Foyer");
+	currentRoom = house->buildHouse();
 	GS.housePtr = house;
 	GS.puzzle = new Puzzle(CRYPTED_STRING, CLEAR_STRING);
 

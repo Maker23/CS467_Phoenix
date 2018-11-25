@@ -1,0 +1,7 @@
+ROOM NAME: MasterBedroom
+CONNECTION:South Door|3rd Floor Hallway|south door, door, hallway, south
+LONG DESC: Few have had the privilege of stepping foot in the Master Bedroom. A vaulted ceiling, as well as paintings that cover the walls all around, have incredible detail. Above the bed's headboard stands a portrait of the owners of this house, smiling back at you as if to congratulate you for reaching the most important room in this house. There is a single door on the south wall leading back to the 3rd Floor Hallway.
+SHORT DESC: The Master Bedroom spacious -- and haunted! Be careful navigating through this room, it may have just what you need to escape! The exit on the south wall leads back to the 3rd Floor Hallway.
+ADDITIONAL DESC: The Master Bedroom is haunted by ghosts, but is the room the owner left the Final Key in.
+FEATURE: MasterGhost
+FEATURE: FinalKey

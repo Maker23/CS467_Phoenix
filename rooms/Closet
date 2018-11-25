@@ -1,8 +1,0 @@
-ROOM NAME: Closet
-CONNECTION:North Door|Bedroom1|bedroom1, north, north door, bedroom
-CONNECTION:South Door|Nursery|nursery, south, south door
-LONG DESC: You open up the closet door and swarms of moths fly out of the darkness! The coats and outer garments forgotten by previous guests are tattered and outdated, but there may just be something of use in this closet underneath it all. The closet is small, and while pushing the garments around a bit, there doesn't appear to be anything out of the ordinary, but the shelf above the clothing rack may hold a clue. There are two doors in this room. One is on the north wall and another on the south wall.
-SHORT DESC: The closet is filled with old jackets and coats on a rack, but nothing is seen in or under the clothing. The only other option would be to search the shelf above the closet rack. From here, you can exit the door to the north or south.
-ADDITIONAL DESC: Get the camera on the closet shelf, it may come in handy along the way! Exit the north or south door from the Closet.
-FEATURE: ClosetShelf
-FEATURE: Camera

@@ -1,7 +1,0 @@
-ROOM NAME: MasterBedroom
-CONNECTION:West Door|3rd Floor Hallway|west, west door, door, hallway
-LONG DESC: The Master Bedroom has a vaulted ceiling with elaborate detail, as well as paintings that cover the walls all around the room. However, what captures your attention the most in this room is the ghost hovering in the center of the room. It doesn't move at all, just stares straight back at you, the unsuspected guest! Through the transparent being, you see an object, almost as if the ghost is guarding it. There is a single door on the west wall leading back to the 3rd Floor Hallway.
-SHORT DESC: The Master Bedroom spacious -- and haunted! Be careful navigating through this room, it may have just what you need to escape! The exit on the west wall leads back to the 3rd Floor Hallway.
-ADDITIONAL DESC: The Master Bedroom is haunted by ghosts, but is the room the owner left the Final Key in.
-FEATURE: MasterGhost
-FEATURE: FinalKey

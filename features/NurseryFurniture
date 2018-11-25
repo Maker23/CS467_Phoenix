@@ -1,8 +1,0 @@
-NAME: NurseryFurniture|furniture
-ACTIONS: use|dust,clean
-TEXT_NEVERSEEN: A dusty rocking chair and crib are in the corners. 
-TEXT_SEEN:  A dusty rocking chair and crib are in the corners. 
-TEXT_EXAMINE_SOLVED: A rocking chair and crib are in the corners. Dust is in the air.
-TEXT_USING: Clouds of dust fly everywhere, choking you for a moment and stinging your eyes.
-WEIGHT: 100
-TRIGGERS: null

@@ -1,8 +1,0 @@
-NAME: CannedFood|cannedfood,Cans,cans,Can,can
-TEXT_NEVERSEEN: You see a canned food item on the pantry shelf.
-TEXT_SEEN: A canned food item appears to be on the pantry shelf.
-TEXT_EXAMINE: As you look closer, the canned food has a huge dent on the side of it, but appears unopened.
-TEXT_TAKING: You try to take the canned item, but it's stuck to the shelf.
-WEIGHT: 100
-TRIGGERS: null
-DEPENDS_ON: null

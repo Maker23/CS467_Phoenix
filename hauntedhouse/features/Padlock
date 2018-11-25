@@ -1,0 +1,15 @@
+# Do not use 'lock' as a synonym here, we use that for the 2ndFloorDoors
+NAME: Padlock|padlock
+ACTIONS: unlock|open,use,try,jimmy
+ACTIONS: hit|break
+TEXT_NEVERSEEN: A padlock locks a doorway down to the basement.
+TEXT_SEEN: There's a padlock on the door.
+TEXT_EXAMINE: There are 4 dials to set a number for it to unlock.
+# Logic doesn't currently support taking the padlock
+TEXT_TAKING: You pick up the padlock and put it in your pocket.
+TEXT_EXAMINE_SOLVED: The padlock is open.
+TEXT_SOLVING: You enter 1894 on the lock and hear it click open.
+TEXT_HINT: You need a four-digit combination to unlock the padlock. There's a clue hidden somewhere in the house.
+WEIGHT: 100
+TEXT_TO_SOLVE: 1894
+UNLOCKS: Basement

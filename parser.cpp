@@ -371,6 +371,7 @@ Parser::getVerb(std::string verbString) {
 	else if ((verbString.compare("look") == 0 )||  //sets the validVerb to 0
 			(verbString.compare("investigate") == 0 ) ||
 			(verbString.compare("examine") == 0) ||
+			(verbString.compare("search") == 0) ||
       (verbString.compare("read") == 0) ||
       (verbString.compare("where") == 0) ||
       (verbString.compare("Look") == 0 )||

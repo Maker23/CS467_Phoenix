@@ -1,0 +1,7 @@
+NAME: SunflowerDream
+TEXT_NEVERSEEN: 
+TEXT_SEEN: 
+TEXT_EXAMINE: 
+WEIGHT: 20
+TEXT_SOLVING: Your eyes close, and then they open - but now you can tell you're dreaming.  You stand in the doorway of a Kansas farmhouse on a bright summer morning. Suddenly someone behind you calls out, 'Dorothy - time for breakfast!'
+DEPENDS_ON_INVENTORY: Sunflowers

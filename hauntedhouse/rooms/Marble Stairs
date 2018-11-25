@@ -1,0 +1,7 @@
+ROOM NAME: Marble Stairs
+CONNECTION:Hall|3rd Floor Hallway|3rdFloorHallway, hall, south,hallway,up,3rd
+CONNECTION:Stairs Down|2nd Floor Hallway|2ndFloorHallway, down, downstairs,stairs,2nd
+LONG DESC: There is just enough light from the 2nd Floor Hallway to see an oil lamp hung on the wall. This marble staircase provided a grand welcome to the 3rd Floor where the owners spent most of their time. Though the 3rd Floor can be accessed, it's much too dark to walk up that way if the stairs aren't lit. The other exit can be found back down the stairs to the 2nd Floor Hallway.
+SHORT DESC: The 3rd and 2nd floor hallways lead off from this staircase. An oil lamp hangs on the wall.
+ADDITIONAL DESC: The Oil Lamps on the stairs to the 3rd Floor Hallway must be lit to access the 3rd Floor. Find a lighter somewhere in the house to light the way! If the 3rd Floor Hallway is not accessible, stairs down will lead you back to the 2nd Floor Hallway.
+FEATURE: Floor3Lamps

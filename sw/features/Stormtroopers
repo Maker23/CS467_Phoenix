@@ -1,0 +1,6 @@
+NAME: Stormtroopers|stormtroopers, stormtrooper, trooper
+TEXT_NEVERSEEN: Two stormtroopers stand ready for action.
+TEXT_SEEN: Two stormtroopers stand ready for action.
+TEXT_EXAMINE: As you examine them, one of them says "Our forces are making our way through the ship. Rebels are fighting in isolated spots, but mostly on the run. We are looking for the princess as we make our way through the rebel ship."
+WEIGHT: 100
+DEPENDS_ON: null

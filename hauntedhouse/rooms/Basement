@@ -1,0 +1,8 @@
+ROOM NAME: Basement
+CONNECTION:Stairs going up|Pantry|pantry, stairs, stairs up, up
+LONG DESC: The Basement is the quietest room in the house so far. There's no windows to see the storm outside, and the only light in this room is coming from the Pantry upstairs. Something to light the way would be very helpful to get an idea of what exactly this room holds. The only exit from here is to go back up the stairs to the Pantry.
+SHORT DESC: The noise finally dies down as you stand in the Basement. A mouse scurries across the floor, but can be barely seen since the main source of light in this room is coming from the only exit in this room, the Kitchen upstairs.
+ADDITIONAL DESC: Try solving the puzzle on the wall, it seems to be encrypted!
+FEATURE: Puzzle1
+FEATURE: Lighter
+TEXT_TO_UNLOCK: 1894

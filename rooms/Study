@@ -1,9 +1,0 @@
-ROOM NAME: Study
-CONNECTION:North Wall Left|2nd Floor Hallway|2ndFloorHallway, upper left, north left, north wall left,left,2nd,hall,hallway
-CONNECTION:North Wall Right|Balcony|balcony, upper right, north right, north east, ne, north wall right,right,north
-CONNECTION:west|Library|west, library, west door
-LONG DESC: The Study was one of the few rooms off limits to guests as it served as the second floor office for the owner. Though there is no lights, the moonlight shining through the window shows the desk and the directory that lies on top. A musty smell . There are 3 doors in the room. There are two doors on the north wall, one on the left side of the wall and another on the right side. There is another door on the west wall.
-SHORT DESC: The window is positioned at the center of the wall and you wonder if it's possible to open as a possible escape. A directory lies on the desk that may be valuable on your journey as well. There are two doors on the north wall, one on the left side of the wall and another on the right side. There is another door on the west wall.
-ADDITIONAL DESC: The window and directory both seem to be features to check out in this room.
-FEATURE: Window
-FEATURE: Directory

@@ -64,7 +64,7 @@ go hallway
 go Master Bedroom
 use the camera
 get the final key
-go west
+go south
 go outside
 go down
 go west

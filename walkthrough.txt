@@ -55,3 +55,20 @@ inventory
 #
 go hallway
 light the lamp
+go hall
+go bedroom2
+say hello to the moose
+shake the rattle
+get the amulet
+go hallway
+go Master Bedroom
+use the camera
+get the final key
+go west
+go outside
+go down
+go west
+go down
+open the front door
+unlock the front door
+go outside

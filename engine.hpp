@@ -92,7 +92,7 @@ public:
 	LongString(std::string inPut) {
 		Text = inPut;
 		WrapText = "";
-		WrapLength=80; // default
+		WrapLength=77; // default
 	};
 
 	std::string getWrappedText() {

@@ -173,10 +173,19 @@ Room * GameState::actInRoom(Room * currentRoom, Choice * userChoice)
 	//
 	else if (userChoice->Verb == (validVerbs)go ) 
 	{
-		nextRoom = currentRoom->goRoom(userChoice->Noun, this);
-		if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
+		Feature * theNoun = housePtr->getFeaturePtr(userChoice->Noun);
+		if ( theNoun &&  userChoice->inputVerb.compare("move") == 0 ) {
+			// This is a terrible hack...
+			userChoice->Verb = (validVerbs)take;
+			nextRoom = actOnFeature(currentRoom, userChoice);
+		}
+		else 
 		{
-			nextRoom->Examine(this);
+			nextRoom = currentRoom->goRoom(userChoice->Noun, this);
+			if ( nextRoom != currentRoom )  // that's right, we're comparing pointers now
+			{
+				nextRoom->Examine(this);
+			}
 		}
 	}
 	else if (userChoice->Verb == (validVerbs)open && nextroomKeyName.length() > 0){
@@ -599,7 +608,7 @@ void LongString::Wrap() {
   // First get the current window size
 	ioctl(0, TIOCGWINSZ, &WS);
 	WrapLength=WS.ws_col;
-	if ( WrapLength > 80) WrapLength=80; // Hardcoded for readability
+	if ( WrapLength > 77) WrapLength=77; // Hardcoded for readability
 	searchPos = WrapLength - 12; // Hardcoded.  Sad.  TODO.
 	WrapText = Text;
 

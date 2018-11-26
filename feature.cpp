@@ -486,8 +486,9 @@ bool Feature::solveFeature(GameState *GS, std::string solveString="")
 	{
 		if(DEBUG_FEATURES) std::cout << "     solveString.length() == 0, set completedSolveString true" << std::endl;
 	}
-	else
+	else if ( getStringByKey("textToSolve").length() > 0 )
 	{
+		if(DEBUG_FEATURES) std::cout << "     line 491" << std::endl;
 		if(strToLowercase(solveString).compare(strToLowercase(getStringByKey("textToSolve"))) == 0)
 		{
 			if(DEBUG_FEATURES) std::cout << "     strings match, set completedSolveString true" << std::endl;

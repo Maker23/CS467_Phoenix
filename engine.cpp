@@ -721,7 +721,7 @@ void GameState::unlockFeature(Room * currentRoom, Choice * userChoice)
 	// We can probably delete this actually, since it's handled in
 	// actOnFeature above.
 	if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] Noun (" << userChoice->Noun << ") is a feature." << std::endl;
-	if(currentRoom->isFeatureInThisRoom(userChoice->Noun))
+	if (featureWithinReach(currentRoom, userChoice->Noun))
 	{
 		feature = housePtr->getFeaturePtr(userChoice->Noun);
 		if(DEBUG_LOCK)
@@ -735,6 +735,7 @@ void GameState::unlockFeature(Room * currentRoom, Choice * userChoice)
 		}
 	}
 
+	if(DEBUG_LOCK) std::cout << "    Calling solveFeature on " << feature->getStringByKey("name") << std::endl;
 	if( ! feature->solveFeature(this, strToLowercase(userChoice->Subject)))
 	{
 		if(DEBUG_LOCK) std::cout << "    [DEBUG_LOCK] feature not solved, can't unlock" << std::endl;

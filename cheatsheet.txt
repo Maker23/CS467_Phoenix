@@ -1,0 +1,62 @@
+look rug
+move rug
+get note
+look at note
+move west
+move kitchen
+clean dishes
+get record
+move west
+play record
+go kitchen
+go pantry
+look padlock
+unlock padlock 1894
+go basement
+# When prompted after next command, to solve the puzzle: From a little spark may burst the flame which lights the lamp to reveal the game.
+solve the puzzle
+take lighter
+move up
+go kitchen
+go ballroom
+go foyer
+go conservatory
+play eac on the piano
+get the key
+go foyer
+go up
+light the lamp
+go bedroom1
+open box
+get glasses
+go closet
+examine shelf
+get camera
+go north
+go east
+unlock nursery
+go nursery
+dust furniture
+use camera
+get rattle
+go right
+go up
+go hallway
+light the lamp
+go hall
+go bedroom2
+say hello to the moose
+shake the rattle
+get the amulet
+go hallway
+go Master Bedroom
+use the camera
+get the final key
+go south
+go outside
+go down
+go west
+go down
+open the front door
+unlock the front door
+go outside

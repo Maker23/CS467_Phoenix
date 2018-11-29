@@ -1,9 +1,0 @@
-go to the conservatory
-play eac on the piano
-get key
-inventory
-move foyer
-go ballroom
-go kitchen
-wash dishes
-get record

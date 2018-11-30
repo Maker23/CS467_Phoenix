@@ -1,0 +1,22 @@
+To start the Haunted House game in normal mode, type
+
+   ./game 
+
+There are in-game instructions; some of them will print automatically, and
+you can see additional instructions by typing "help" or "hint"
+
+The file "cheatsheet.txt" contains all the commands, in order, that a player
+could use to finish the game.  You can also have the game play through this
+file automatically by typing
+
+   ./game -test cheatsheet.txt
+
+Note that you will have to cut-and-paste the solution to the cryptogram into
+the game when it reaches that point; the solution is printed out in the 
+instructions as the test runs, and can also be seen in the cheatsheet.txt file.
+
+Two additional, partial games are included to demonstrate the capabilities 
+of the game interpreter. There is no need to recompile the binary; simply type
+
+	 ./game -dir sw    (for the Star Wars partial game)
+   ./game -dir MM    (for the Modern Mansion partial game)
